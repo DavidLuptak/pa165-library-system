@@ -22,9 +22,8 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String name;
 
-//    @ManyToMany
-//    private List<Book> books = new ArrayList<Book>();
-
+    @ManyToMany
+    private List<Book> books = new ArrayList<Book>();
 
     public Category() {
     }
@@ -49,13 +48,13 @@ public class Category {
         this.name = name;
     }
 
-//    public void addBook(Book book) {
-//        this.books.add(book);
-//    }
-//
-//    public List<Book> getBooks() {
-//        return Collections.unmodifiableList(books);
-//    }
+    public void addBook(Book book) {
+        this.books.add(book);
+    }
+
+    public List<Book> getBooks() {
+        return Collections.unmodifiableList(books);
+    }
 
 
     @Override
