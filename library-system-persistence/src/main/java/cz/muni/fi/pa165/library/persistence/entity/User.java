@@ -95,7 +95,7 @@ public class User {
             return false;
         }
         User user = (User) obj;
-        return Objects.equals(user.id, id);
+        return Objects.equals(user.id, this.id);
     }
 
     @Override
