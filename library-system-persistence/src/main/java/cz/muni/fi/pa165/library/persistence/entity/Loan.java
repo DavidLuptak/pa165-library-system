@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.library.persistence.entity;
 
+import cz.muni.fi.pa165.library.persistence.enums.BookState;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +17,7 @@ import javax.persistence.Temporal;
  */
 @Entity
 public class Loan {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -84,15 +87,59 @@ public class Loan {
         this.returned = returned;
     }
 	
-    //todo: create enum BookState
-    //@Column
-    //private BookState returnBookState;
-    //
-    //public BookState getReturnBookState() {
-    //    return this.returnBookState;
-    //}
-    //
-    //public void setReturnBookState(BookState returnBookState) {
-    //    this.returnBookState = returnBookState;
-    //}
+    @Column
+    private BookState returnBookState;
+    
+    public BookState getReturnBookState() {
+        return this.returnBookState;
+    }
+    
+    public void setReturnBookState(BookState returnBookState) {
+        this.returnBookState = returnBookState;
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + Objects.hashCode(this.id);
+        hash = 53 * hash + Objects.hashCode(this.book);
+        hash = 53 * hash + Objects.hashCode(this.user);
+        hash = 53 * hash + Objects.hashCode(this.loanDate);
+        hash = 53 * hash + Objects.hashCode(this.returnDate);
+        hash = 53 * hash + (this.returned ? 1 : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Loan other = (Loan) obj;
+        if (this.returned != other.returned) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.book, other.book)) {
+            return false;
+        }
+        if (!Objects.equals(this.user, other.user)) {
+            return false;
+        }
+        if (!Objects.equals(this.loanDate, other.loanDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.returnDate, other.returnDate)) {
+            return false;
+        }
+        return true;
+    }
 }
