@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.library.persistence.entity;
+package cz.muni.fi.pa165.library.entity;
 
 import java.util.ArrayList;
 import java.util.Collections;

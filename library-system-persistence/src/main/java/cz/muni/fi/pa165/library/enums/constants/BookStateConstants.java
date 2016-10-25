@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.library.persistence.enums.constants;
+package cz.muni.fi.pa165.library.enums.constants;
 
 /**
  *
