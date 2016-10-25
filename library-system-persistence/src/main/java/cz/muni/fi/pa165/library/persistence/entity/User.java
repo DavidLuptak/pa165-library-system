@@ -40,7 +40,7 @@ public class User {
     @NotNull
     private String address;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "Users")
     private final Set<Loan> loans;
 
     public User() {
