@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.library.persistence.enums;
 
-import cz.muni.fi.pa165.library.persistence.constants.BookStateConstants;
+import cz.muni.fi.pa165.library.persistence.enums.constants.BookStateConstants;
 
 /**
  *
