@@ -10,12 +10,12 @@ import java.util.List;
 public interface LoanDao {
 
     void create(Loan loan);
-
+    
+    void delete(Loan loan);
+    
     void update(Loan loan);
 
     Loan findById(Long id);
 
     List<Loan> findAll();
-
-    void delete(Loan loan);
 }
