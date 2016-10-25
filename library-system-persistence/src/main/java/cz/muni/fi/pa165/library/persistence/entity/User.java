@@ -5,6 +5,7 @@
  */
 package cz.muni.fi.pa165.library.persistence.entity;
 
+import cz.muni.fi.pa165.library.enums.UserRole;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -12,7 +13,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
 
 /**
  *
@@ -25,6 +25,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    private String passwordHash;
+
 
     @Column(nullable = false, unique = true)
     @Pattern(regexp = ".+@.+\\....?")
@@ -39,6 +42,10 @@ public class User {
 
     @NotNull
     private String address;
+    
+    @NotNull
+    private UserRole userRole;
+       
 
     @OneToMany(mappedBy = "Users")
     private final Set<Loan> loans;
@@ -53,6 +60,14 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+        
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public String getEmail() {
@@ -87,6 +102,26 @@ public class User {
         this.address = address;
     }
 
+    public Set<Loan> getLoans() {
+        return Collections.unmodifiableSet(loans);
+    }
+
+    public void addLoan(Loan loan) {
+        this.loans.add(loan);
+    }
+
+    public void removeLoan(Loan loan) {
+        this.loans.remove(loan);
+    }
+    
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -95,14 +130,15 @@ public class User {
         if (!(obj instanceof User)) {
             return false;
         }
-        User user = (User) obj;
-        return Objects.equals(user.id, this.id);
+        User other = (User) obj;
+       
+        return getEmail() != null ? this.getEmail().equals(other.getEmail()) : other.getEmail()== null;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + Objects.hashCode(this.id);
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.email);
         return hash;
     }
 
