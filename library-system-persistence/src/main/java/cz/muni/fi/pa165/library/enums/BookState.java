@@ -1,25 +1,29 @@
 package cz.muni.fi.pa165.library.enums;
 
-import cz.muni.fi.pa165.library.enums.constants.BookStateConstants;
 
 /**
  *
  * @author Bedrich Said
  */
 public enum BookState {
-    NEW(BookStateConstants.NEW),
-    LIGHT_DAMAGE(BookStateConstants.LIGHT_DAMAGE),
-    MEDIUM_DAMAGE(BookStateConstants.MEDIUM_DAMAGE),
-    HEAVY_DAMAGE(BookStateConstants.HEAVY_DAMAGE),
-    REMOVED(BookStateConstants.REMOVED);
+    NEW ("New"),
+    LIGHT_DAMAGE ("Lightly damaged"),
+    MEDIUM_DAMAGE ("Moderately damaged"),
+    HEAVY_DAMAGE ("Heavily damaged"),
+    REMOVED ("Missing");
 
-    private final String value;
+    private final String name;       
 
-    BookState(String value) {
-        this.value = value;
+    private BookState(String s) {
+        name = s;
     }
 
-    public String getValue() {
-        return value;
+    public boolean equalsName(String otherName) {
+        return (otherName == null) ? false : name.equals(otherName);
+    }
+
+    @Override
+    public String toString() {
+       return this.name;
     }
 }
