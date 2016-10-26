@@ -1,0 +1,11 @@
+[User]-(Browse books),
+[User]-(Browse book categories),
+[User]-(CRUD loans),
+[User]-(Logout),
+[User]-(Login),
+[Admin]-(Login),
+[Admin]-(Logout),
+[Admin]-(CRUD loans),
+[Admin]-(CRUD the users in the system),
+[Admin]-(CRUD the books),
+[Admin]-(CRUD the book categories)
