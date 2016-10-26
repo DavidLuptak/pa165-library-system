@@ -15,52 +15,52 @@ public interface BookDao {
      * Saves the given book into the database
      * @param book to be saved
      */
-    void createBook(Book book);
+    void create(Book book);
 
     /**
      * Updates the given book in the database
      * @param book to be updated
      */
-    void updateBook(Book book);
+    void update(Book book);
 
     /**
      * Deletes the given book from the database
      * @param book to be deleted
      */
-    void deleteBook(Book book);
+    void delete(Book book);
 
     /**
      * Finds a book with the given id in the database
      * @param id of searched book
      * @return found book
      */
-    Book findBookById(long id);
+    Book findById(long id);
 
     /**
      * Finds books that belong to the given category in the database
      * @param category searched category
      * @return found books
      */
-    List<Book> findBooksByCategory(Category category);
+    List<Book> findByCategory(Category category);
 
     /**
      * Finds books that are written by the given author in the database
      * @param author searched author
      * @return found books
      */
-    List<Book> findBooksByAuthor(String author);
+    List<Book> findByAuthor(String author);
 
     /**
      * Finds books with the given name in the database
      * @param name searched name
      * @return found books
      */
-    List<Book> findBooksByName(String name);
+    List<Book> findByName(String name);
 
     /**
      * Finds all books in the database
      * @return list of all books
      */
-    List<Book> findAllBooks();
+    List<Book> findAll();
 
 }

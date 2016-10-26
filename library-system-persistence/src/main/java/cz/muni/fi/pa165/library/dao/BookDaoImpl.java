@@ -20,32 +20,32 @@ public class BookDaoImpl implements BookDao {
     private EntityManager em;
 
     @Override
-    public void createBook(Book book) {
+    public void create(Book book) {
         validateBook(book);
         Validate.isTrue(book.getId() == null, "book's id should be null");
         em.persist(book);
     }
 
     @Override
-    public void updateBook(Book book) {
+    public void update(Book book) {
         validateBook(book);
         Validate.notNull(book.getId());
         em.merge(book);
     }
 
     @Override
-    public void deleteBook(Book book) {
+    public void delete(Book book) {
         Validate.notNull(book.getId());
         em.remove(book);
     }
 
     @Override
-    public Book findBookById(long id) {
+    public Book findById(long id) {
         return em.find(Book.class, id);
     }
 
     @Override
-    public List<Book> findBooksByCategory(Category category) {
+    public List<Book> findByCategory(Category category) {
         Validate.notNull(category);
         return em.createQuery("SELECT b FROM Book b where b.category = :category", Book.class)
             .setParameter("category", category).getResultList();
@@ -53,7 +53,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public List<Book> findBooksByAuthor(String author) {
+    public List<Book> findByAuthor(String author) {
         Validate.notNull(author);
         return em.createQuery("SELECT b FROM Book b where b.author = :author", Book.class)
             .setParameter("author", author).getResultList();
@@ -61,7 +61,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public List<Book> findBooksByName(String name) {
+    public List<Book> findByName(String name) {
         Validate.notNull(name);
         return em.createQuery("SELECT b FROM Book b where b.name = :name", Book.class)
             .setParameter("name", name).getResultList();
@@ -69,7 +69,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public List<Book> findAllBooks() {
+    public List<Book> findAll() {
         return em.createQuery("SELECT b FROM Book b", Book.class).getResultList();
 
     }
