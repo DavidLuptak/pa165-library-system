@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cz.muni.fi.pa165.library.persistence.dao;
-import cz.muni.fi.pa165.library.persistence.entity.User;
+package cz.muni.fi.pa165.library.dao;
+import cz.muni.fi.pa165.library.entity.User;
 import java.util.List;
 /**
  *

@@ -1,6 +1,6 @@
-package cz.muni.fi.pa165.library.persistence.entity;
+package cz.muni.fi.pa165.library.entity;
 
-import cz.muni.fi.pa165.library.persistence.enums.BookState;
+import cz.muni.fi.pa165.library.enums.BookState;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -21,7 +21,7 @@ public class Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     public void setId(Long id) {
         this.id = id;
     }

@@ -1,7 +1,6 @@
-package cz.muni.fi.pa165.library.persistence.entity;
+package cz.muni.fi.pa165.library.entity;
 
 import javax.persistence.*;
-import javax.swing.text.StringContent;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;

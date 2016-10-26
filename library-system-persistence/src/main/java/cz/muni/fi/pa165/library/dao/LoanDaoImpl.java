@@ -1,6 +1,6 @@
-package cz.muni.fi.pa165.library.persistence.dao;
+package cz.muni.fi.pa165.library.dao;
 
-import cz.muni.fi.pa165.library.persistence.entity.Loan;
+import cz.muni.fi.pa165.library.entity.Loan;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
