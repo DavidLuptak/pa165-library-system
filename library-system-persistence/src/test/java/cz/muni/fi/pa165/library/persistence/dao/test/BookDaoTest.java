@@ -91,7 +91,7 @@ public class BookDaoTest {
     @Test
     public void testFindByName() {
         Set<Book> expected = new HashSet<>();
-        expected.add(book2);
+        expected.add(book1);
         Set<Book> actual = new HashSet<>(bookDao.findByName("Book Name 1"));
         assertEquals(expected, actual);
     }
