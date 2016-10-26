@@ -1,9 +1,9 @@
-package cz.muni.fi.pa165.library.persistence.dao;
+package cz.muni.fi.pa165.library.dao;
 
 import java.util.List;
 
-import cz.muni.fi.pa165.library.persistence.entity.Book;
-import cz.muni.fi.pa165.library.persistence.entity.Category;
+import cz.muni.fi.pa165.library.entity.Book;
+import cz.muni.fi.pa165.library.entity.Category;
 
 /**
  * @author Lenka (433591)
