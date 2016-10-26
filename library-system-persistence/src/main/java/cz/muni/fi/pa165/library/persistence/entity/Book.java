@@ -30,11 +30,13 @@ public class Book {
     @ManyToMany(mappedBy = "books")
     private List<Category> categories;
 
-    //// TODO:
-    //private BookState state;
+    @OneToMany
+    private List<BookCopy> bookCopies;
 
     public Book() {
         this.categories = new ArrayList<Category>();
+        this.bookCopies = new ArrayList<BookCopy>();
+
     }
 
     public Book(String name, String author, String isbn) {
@@ -82,6 +84,14 @@ public class Book {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public List<BookCopy> getBookCopies() {
+        return Collections.unmodifiableList(bookCopies);
+    }
+
+    public void setBookCopies(List<BookCopy> bookCopies) {
+        this.bookCopies = bookCopies;
     }
 
     @Override
