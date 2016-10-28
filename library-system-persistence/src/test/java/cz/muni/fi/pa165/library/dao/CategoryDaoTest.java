@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.library.dao;
 
+import cz.muni.fi.pa165.library.LibraryApplicationContext;
 import cz.muni.fi.pa165.library.entity.Category;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

@@ -42,7 +42,7 @@ public class User {
     private UserRole userRole;
        
 
-    @OneToMany(orphanRemoval = true, mappedBy = "Users")
+    @OneToMany(orphanRemoval = true, mappedBy = "user")
     private final Set<Loan> loans;
 
     public User() {

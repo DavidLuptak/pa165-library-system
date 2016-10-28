@@ -12,6 +12,7 @@ import org.apache.commons.lang.Validate;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
 //import org.springframework.stereotype.Repository;
 
 /**
@@ -19,7 +20,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author Martin
  */
-//@Repository
+@Repository
 public class UserDaoImpl implements UserDao {
 
     @PersistenceContext

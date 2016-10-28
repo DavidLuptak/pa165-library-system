@@ -23,7 +23,7 @@ public interface CategoryDao {
      * @param id of the entity
      * @return the entity with the respective id
      */
-    Category findById(Category id);
+    Category findById(Long id);
 
     /**
      * Returns Category entity with the respective name.
