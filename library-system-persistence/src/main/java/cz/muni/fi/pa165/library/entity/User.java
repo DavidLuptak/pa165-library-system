@@ -15,6 +15,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * Library User entity.
  *
  * @author Martin
  */
@@ -28,10 +29,9 @@ public class User {
     
     private String passwordHash;
 
-
-    @Column(nullable = false, unique = true)
-    @Pattern(regexp = ".+@.+\\....?")
     @NotNull
+    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.+[a-zA-Z]{2,}$")
+    @Column(unique = true)
     private String email;
 
     @NotNull
@@ -47,7 +47,7 @@ public class User {
     private UserRole userRole;
        
 
-    @OneToMany(mappedBy = "Users")
+    @OneToMany(orphanRemoval = true, mappedBy = "Users")
     private final Set<Loan> loans;
 
     public User() {
@@ -107,11 +107,11 @@ public class User {
     }
 
     public void addLoan(Loan loan) {
-        this.loans.add(loan);
+        loans.add(loan);
     }
 
     public void removeLoan(Loan loan) {
-        this.loans.remove(loan);
+        loans.remove(loan);
     }
     
     public UserRole getUserRole() {

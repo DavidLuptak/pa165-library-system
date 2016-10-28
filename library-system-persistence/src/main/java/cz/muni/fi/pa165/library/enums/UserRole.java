@@ -10,5 +10,5 @@ package cz.muni.fi.pa165.library.enums;
  * @author xmlynar
  */
 public enum UserRole {
-    ADMIN, USER
+    ADMIN, MEMBER
 }

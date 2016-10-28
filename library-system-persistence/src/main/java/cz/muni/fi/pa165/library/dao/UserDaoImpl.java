@@ -14,6 +14,7 @@ import javax.persistence.PersistenceContext;
 //import org.springframework.stereotype.Repository;
 
 /**
+ * Implementation of UserDao entity.
  *
  * @author Martin
  */
