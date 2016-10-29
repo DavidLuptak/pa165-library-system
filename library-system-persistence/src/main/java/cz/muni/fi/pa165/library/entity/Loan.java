@@ -26,17 +26,6 @@ public class Loan {
     }
     
     @ManyToOne
-    private Book book;
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-    
-    @ManyToOne
     private User user;
 
     public User getUser() {
@@ -109,7 +98,6 @@ public class Loan {
     public int hashCode() {
         int hash = 3;
         hash = 53 * hash + Objects.hashCode(this.id);
-        hash = 53 * hash + Objects.hashCode(this.book);
         hash = 53 * hash + Objects.hashCode(this.user);
         hash = 53 * hash + Objects.hashCode(this.loanDate);
         hash = 53 * hash + Objects.hashCode(this.returnDate);
@@ -133,9 +121,6 @@ public class Loan {
             return false;
         }
         if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.book, other.book)) {
             return false;
         }
         if (!Objects.equals(this.user, other.user)) {

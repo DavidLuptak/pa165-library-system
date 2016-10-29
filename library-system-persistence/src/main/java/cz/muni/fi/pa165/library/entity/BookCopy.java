@@ -20,7 +20,6 @@ public class BookCopy {
     @ManyToOne
     private Book book;
 
-    @NotNull
     @ManyToOne
     private Loan loan;
 

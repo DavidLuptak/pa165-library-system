@@ -107,6 +107,7 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
         dbLoan.addBookCopy(dbBookCopy21);
         dbLoan.setLoanDate(new Date());
         dbLoan.setUser(dbUser);
+        dbLoan.setReturned(false);
         loanDao.create(dbLoan);
     }
 
