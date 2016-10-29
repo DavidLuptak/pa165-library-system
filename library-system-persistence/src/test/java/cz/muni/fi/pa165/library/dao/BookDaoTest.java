@@ -2,15 +2,15 @@ package cz.muni.fi.pa165.library.dao;
 
 import cz.muni.fi.pa165.library.LibraryApplicationContext;
 import cz.muni.fi.pa165.library.entity.Book;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -27,7 +27,7 @@ import static org.junit.Assert.*;
 @ContextConfiguration(classes = LibraryApplicationContext.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
-public class BookDaoTest {
+public class BookDaoTest extends AbstractTestNGSpringContextTests {
 
     @Inject
     private BookDao bookDao;
@@ -36,7 +36,7 @@ public class BookDaoTest {
     private Book book2;
     private Book book3;
 
-    @Before
+    @BeforeMethod
     public void setUp() {
         book1 = new Book();
         book1.setName("Book Name 1");
@@ -62,7 +62,7 @@ public class BookDaoTest {
         assertNotNull(book3.getId());
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void testCreateNullName() {
         Book newBook = new Book();
         bookDao.create(newBook);
@@ -108,7 +108,7 @@ public class BookDaoTest {
         assertNull(bookDao.findById(book2.getId()));
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void testDeleteNonexistent() {
         Book newBook = new Book();
         newBook.setId(100L);

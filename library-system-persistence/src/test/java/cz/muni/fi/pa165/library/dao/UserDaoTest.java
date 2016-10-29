@@ -191,6 +191,7 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testFindAll() throws Exception {
+        assertEquals(userDao.findAll().size(), 0);
         userDao.create(user1);
         userDao.create(user2);
 
