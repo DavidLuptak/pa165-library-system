@@ -22,140 +22,138 @@ import static org.junit.Assert.*;
 @ContextConfiguration(classes = LibraryApplicationContext.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
-public class CategoryDaoTest extends AbstractTestNGSpringContextTests {
+public class CategoryDaoTest extends AbstractTestNGSpringContextTests{
 
     @PersistenceContext
     public EntityManager em;
 
     @Inject
-    public CategoryDao categoryDao;
+    CategoryDao categoryDao;
 
-    private Category existingCategory1;
-    private Category existingCategory2;
-    private Category existingCategory3;
+    private Category dbCategory1;
+    private Category dbCategory2;
+    private Category dbCategory3;
     private Category category1;
 
     @BeforeMethod
     public void setUp(){
         category1 = new Category();
-        category1.setName("Travel");
-        existingCategory1 = new Category();
-        existingCategory1.setName("Drama");
-        existingCategory2 = new Category();
-        existingCategory2.setName("Horror");
-        existingCategory3 = new Category();
-        existingCategory3.setName("Romance");
-        categoryDao.create(existingCategory1);
-        categoryDao.create(existingCategory2);
-        categoryDao.create(existingCategory3);
+        category1.setName("category1Name");
+        dbCategory1 = new Category();
+        dbCategory1.setName("dbCategory1Name");
+        dbCategory2 = new Category();
+        dbCategory2.setName("dbCategory2Name");
+        dbCategory3 = new Category();
+        dbCategory3.setName("dbCategory3Name");
+        categoryDao.create(dbCategory1);
+        categoryDao.create(dbCategory2);
+        categoryDao.create(dbCategory3);
     }
 
-
-
     @Test(expectedExceptions = NullPointerException.class)
-    public void testCreateNullCategory() {
+    public void createNullCategory() {
         categoryDao.create(null);
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testCreateCategoryWithoutName(){
+    public void createCategoryWithoutName(){
         categoryDao.create(new Category());
     }
 
     @Test
-    public void testCreateCategorySetsId(){
-        assertNotNull(existingCategory1.getId());
+    public void createCategorySetsId(){
+        assertNotNull(dbCategory1.getId());
     }
 
     @Test(expectedExceptions = EntityExistsException.class)
-    public void testCreateCategoryAfterItHasBeenCreated(){
-        categoryDao.create(existingCategory1);
+    public void createCategoryAfterItHasBeenCreated(){
+        categoryDao.create(dbCategory1);
     }
 
     @Test(expectedExceptions = EntityExistsException.class)
-    public void testCreateSameCategory(){
-        existingCategory1.setId(null);
-        categoryDao.create(existingCategory1);
+    public void createSameCategory(){
+        dbCategory1.setId(null);
+        categoryDao.create(dbCategory1);
     }
 
     @Test
-    public void testFindCategoryById() {
-        assertEquals(existingCategory1,categoryDao.findById(existingCategory1.getId()));
-        assertEquals(existingCategory2,categoryDao.findById(existingCategory2.getId()));
+    public void findCategoryById() {
+        assertEquals(dbCategory1,categoryDao.findById(dbCategory1.getId()));
+        assertNotEquals(dbCategory1,categoryDao.findById(dbCategory2.getId()));
     }
 
     @Test
-    public void testFindCategoryWithNonExistingId(){
+    public void findCategoryWithNonExistingId(){
         assertNull(categoryDao.findById(100L));
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testFindCategoryWithNullId() {
+    public void findCategoryWithNullId() {
         categoryDao.findById(null);
     }
 
     @Test
-    public void testFindCategoryByName() {
-        assertEquals(existingCategory1,categoryDao.findByName(existingCategory1.getName()));
-        assertEquals(existingCategory2,categoryDao.findByName(existingCategory2.getName()));
-        assertNotEquals(existingCategory1,categoryDao.findByName(existingCategory2.getName()));
+    public void findCategoryByName() {
+        assertEquals(dbCategory1,categoryDao.findByName(dbCategory1.getName()));
+        assertThat(dbCategory1,is(equalTo(categoryDao.findByName(dbCategory1.getName()))));
+        assertEquals(dbCategory2,categoryDao.findByName(dbCategory2.getName()));
+        assertNotEquals(dbCategory1,categoryDao.findByName(dbCategory2.getName()));
     }
 
     @Test
-    public void testFindNotSavedCategory(){
+    public void findNotSavedCategory(){
         assertNull(categoryDao.findByName(category1.getName()));
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testFindCategoryWithNullName() {
+    public void findCategoryWithNullName() {
         categoryDao.findByName(null);
     }
 
     @Test
-    public void testFindAllCategories() {
+    public void findAllCategories() {
         assertEquals(3,categoryDao.findAll());
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testUpdateNullCategory(){
+    public void updateNullCategory(){
         categoryDao.update(null);
     }
 
     @Test
-    public void testUpdateCategoryWithNullName(){
-        existingCategory1.setName(null);
-        categoryDao.update(existingCategory1);
+    public void updateCategoryWithNullName(){
+        dbCategory1.setName(null);
+        categoryDao.update(dbCategory1);
     }
 
     @Test
-    public void testUpdateCategoryNameToNonExistingOne(){
-        existingCategory1.setName("XXAB");
-        categoryDao.update(existingCategory1);
-        Category category = categoryDao.findById(existingCategory1.getId());
-        assertEquals(category,existingCategory1);
+    public void updateCategoryNameToNonExistingOne(){
+        dbCategory1.setName("dbCategory1FakeName");
+        categoryDao.update(dbCategory1);
+        Category category = categoryDao.findById(dbCategory1.getId());
+        assertEquals(category, dbCategory1);
     }
 
     @Test(expectedExceptions = EntityExistsException.class)
-    public void testUpdateCategoryNameToExisingOne(){
-        existingCategory1.setName(existingCategory2.getName());
-        categoryDao.update(existingCategory1);
+    public void updateCategoryNameToExisingOne(){
+        dbCategory1.setName(dbCategory2.getName());
+        categoryDao.update(dbCategory1);
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testDeleteNullCategory() throws Exception {
+    public void deleteNullCategory() throws Exception {
         categoryDao.delete(null);
     }
 
     @Test
-    public void testDeleteCategory(){
-        categoryDao.delete(existingCategory2);
+    public void deleteCategory(){
+        categoryDao.delete(dbCategory2);
         assertEquals(2,categoryDao.findAll().size());
-        assertFalse(categoryDao.findAll().contains(existingCategory2));
+        assertFalse(categoryDao.findAll().contains(dbCategory2));
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testDeleteNotStoredCategory(){
+    public void deleteNotStoredCategory(){
         categoryDao.delete(category1);
     }
-
 }

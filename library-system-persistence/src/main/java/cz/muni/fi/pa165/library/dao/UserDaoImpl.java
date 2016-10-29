@@ -13,7 +13,6 @@ import org.apache.commons.lang.Validate;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
-//import org.springframework.stereotype.Repository;
 
 /**
  * Implementation of UserDao entity.
@@ -61,6 +60,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findById(Long id) {
+        Validate.notNull(id);
         return em.find(User.class, id);
     }
 

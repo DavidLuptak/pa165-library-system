@@ -38,7 +38,7 @@ public class User {
     @NotNull
     private String address;
     
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private UserRole userRole;
        
 
@@ -137,4 +137,15 @@ public class User {
         return hash;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", givenName='" + givenName + '\'' +
+                ", surname='" + surname + '\'' +
+                ", address='" + address + '\'' +
+                ", userRole=" + userRole +
+                ", loans=" + loans +
+                '}';
+    }
 }

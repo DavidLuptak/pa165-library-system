@@ -10,5 +10,17 @@ package cz.muni.fi.pa165.library.enums;
  * @author xmlynar
  */
 public enum UserRole {
-    ADMIN, MEMBER
+    ADMIN("Admin"), MEMBER("Member");
+
+    private final String name;
+
+    private UserRole(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+    
 }
