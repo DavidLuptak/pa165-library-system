@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.library.dao;
 
 import cz.muni.fi.pa165.library.LibraryApplicationContext;
 import cz.muni.fi.pa165.library.entity.Category;
+import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -25,11 +26,8 @@ import static org.junit.Assert.*;
 @Transactional
 public class CategoryDaoTest extends AbstractTestNGSpringContextTests{
 
-    @PersistenceContext
-    public EntityManager em;
-
     @Inject
-    CategoryDao categoryDao;
+    private CategoryDao categoryDao;
 
     private Category dbCategory1;
     private Category dbCategory2;

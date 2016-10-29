@@ -27,7 +27,7 @@ import static org.testng.Assert.*;
 @ContextConfiguration(classes = LibraryApplicationContext.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
-public class UserDaoImplTest extends AbstractTestNGSpringContextTests {
+public class UserDaoTest extends AbstractTestNGSpringContextTests {
 
     @Inject
     private UserDao userDao;
@@ -136,8 +136,10 @@ public class UserDaoImplTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testRemove() throws Exception {
         userDao.create(user1);
+        userDao.create(user2);
         userDao.remove(user1);
         assertNull(userDao.findById(user1.getId()));
+        assertNotNull(userDao.findById(user2.getId()));
     }
 
     @Test(expectedExceptions = DataAccessException.class)

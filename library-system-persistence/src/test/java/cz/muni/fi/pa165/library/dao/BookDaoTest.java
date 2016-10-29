@@ -7,7 +7,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
@@ -22,12 +24,10 @@ import static org.junit.Assert.*;
  *
  * @author Bedrich Said
  */
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = LibraryApplicationContext.class)
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
 public class BookDaoTest {
-    @PersistenceContext
-    private EntityManager em;
 
     @Inject
     private BookDao bookDao;
@@ -50,10 +50,9 @@ public class BookDaoTest {
         book3.setName("Light Damaged Book Name 3");
         book3.setIsbn("3L");
         // book3.setState(BookState.LIGHT_DAMAGE);
-        em.persist(book1);
-        em.persist(book2);
-        em.persist(book3);
-        em.flush();
+        bookDao.create(book1);
+        bookDao.create(book2);
+        bookDao.create(book3);
     }
 
     @Test
@@ -73,7 +72,7 @@ public class BookDaoTest {
     public void testUpdate() {
         book1.setName("changed");
         bookDao.update(book1);
-        assertEquals("changed", em.find(Book.class, book1.getId())
+        assertEquals("changed", bookDao.findById(book1.getId())
                 .getName());
     }
 
@@ -106,7 +105,7 @@ public class BookDaoTest {
     @Test
     public void testDelete() {
         bookDao.delete(book2);
-        assertNull(em.find(Book.class, book2.getId()));
+        assertNull(bookDao.findById(book2.getId()));
     }
 
     @Test(expected = DataAccessException.class)

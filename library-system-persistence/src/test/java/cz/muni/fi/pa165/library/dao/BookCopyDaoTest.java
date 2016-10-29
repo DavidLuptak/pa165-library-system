@@ -32,23 +32,19 @@ import static org.junit.Assert.*;
 @Transactional
 public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
 
-    @PersistenceContext
-    public EntityManager em;
+    @Inject
+    private BookCopyDao bookCopyDao;
 
     @Inject
-    BookCopyDao bookCopyDao;
+    private LoanDao loanDao;
 
     @Inject
-    LoanDao loanDao;
+    private UserDao userDao;
 
     @Inject
-    UserDao userDao;
-
-    @Inject
-    BookDao bookDao;
+    private BookDao bookDao;
 
     private User dbUser;
-
     private Loan dbLoan;
 
     private Book dbBook1;
@@ -135,8 +131,8 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void findBookCopyById(){
-        assertEquals(dbBookCopy11,bookCopyDao.findById(dbBookCopy11.getId()));
-        assertNotEquals(dbBookCopy11,bookCopyDao.findById(dbBookCopy21.getId()));
+        assertEquals(dbBookCopy11, bookCopyDao.findById(dbBookCopy11.getId()));
+        assertNotEquals(dbBookCopy11, bookCopyDao.findById(dbBookCopy21.getId()));
     }
 
     @Test(expectedExceptions = DataAccessException.class)
@@ -171,14 +167,14 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
     public void updateBookCopyState(){
         dbBookCopy11.setBookState(BookState.MEDIUM_DAMAGE);
         bookCopyDao.update(dbBookCopy11);
-        assertEquals(BookState.MEDIUM_DAMAGE,bookCopyDao.findById(dbBookCopy11.getId()).getBookState());
+        assertEquals(BookState.MEDIUM_DAMAGE, bookCopyDao.findById(dbBookCopy11.getId()).getBookState());
     }
 
     @Test
     public void updateBookCopyBook(){
         dbBookCopy11.setBook(dbBook2);
         bookCopyDao.update(dbBookCopy11);
-        assertEquals(dbBook2,bookCopyDao.findById(dbBookCopy11.getId()).getBook());
+        assertEquals(dbBook2, bookCopyDao.findById(dbBookCopy11.getId()).getBook());
     }
 
     @Test(expectedExceptions = DataAccessException.class)
