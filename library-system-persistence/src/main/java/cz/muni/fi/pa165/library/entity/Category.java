@@ -21,7 +21,7 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "categories")
     private List<Book> books = new ArrayList<Book>();
 
     public Category() {

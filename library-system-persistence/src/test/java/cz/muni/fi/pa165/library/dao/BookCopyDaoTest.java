@@ -22,6 +22,7 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import static org.junit.Assert.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -68,6 +69,7 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
         dbUser.setGivenName("dbUserGivenName");
         dbUser.setSurname("dbUserSurname");
         dbUser.setUserRole(UserRole.MEMBER);
+        dbUser.setPasswordHash("hash123");
         userDao.create(dbUser);
 
         dbBook1 = new Book();
@@ -75,9 +77,9 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
         dbBook1.setAuthor("dbBook1Author");
         dbBook1.setIsbn("0-14-020652-3");
         dbBook2 = new Book();
-        dbBook1.setName("dbBook2Name");
-        dbBook1.setAuthor("dbBook2Author");
-        dbBook1.setIsbn("0-14-020652-3");
+        dbBook2.setName("dbBook2Name");
+        dbBook2.setAuthor("dbBook2Author");
+        dbBook2.setIsbn("0-14-020652-4");
         bookDao.create(dbBook1);
         bookDao.create(dbBook2);
 
@@ -103,7 +105,7 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
 
         dbLoan = new Loan();
         dbLoan.addBookCopy(dbBookCopy11);
-        dbLoan.addBookCOpy(dbBookCopy21);
+        dbLoan.addBookCopy(dbBookCopy21);
         dbLoan.setLoanDate(new Date());
         dbLoan.setUser(dbUser);
         loanDao.create(dbLoan);
@@ -154,7 +156,7 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void findBookCopies(){
-        Set<BookCopy> bookCopySet = bookCopyDao.findByBook(dbBook1);
+        List<BookCopy> bookCopySet = bookCopyDao.findByBook(dbBook1);
         assertTrue(bookCopySet.contains(dbBookCopy11));
         assertTrue(bookCopySet.contains(dbBookCopy12));
         assertFalse(bookCopySet.contains(dbBookCopy21));

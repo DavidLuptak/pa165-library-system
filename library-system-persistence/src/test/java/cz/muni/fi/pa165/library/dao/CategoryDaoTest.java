@@ -95,7 +95,7 @@ public class CategoryDaoTest extends AbstractTestNGSpringContextTests{
     @Test
     public void findCategoryByName() {
         assertEquals(dbCategory1,categoryDao.findByName(dbCategory1.getName()));
-        assertThat(dbCategory1,is(equalTo(categoryDao.findByName(dbCategory1.getName()))));
+        // assertThat(dbCategory1,is(equalTo(categoryDao.findByName(dbCategory1.getName()))));
         assertEquals(dbCategory2,categoryDao.findByName(dbCategory2.getName()));
         assertNotEquals(dbCategory1,categoryDao.findByName(dbCategory2.getName()));
     }

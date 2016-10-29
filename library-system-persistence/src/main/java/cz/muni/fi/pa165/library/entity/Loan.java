@@ -1,15 +1,10 @@
 package cz.muni.fi.pa165.library.entity;
 
 import cz.muni.fi.pa165.library.enums.BookState;
-import java.util.Date;
-import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
+
+import java.util.*;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -97,7 +92,19 @@ public class Loan {
     public void setReturnBookState(BookState returnBookState) {
         this.returnBookState = returnBookState;
     }
-    
+
+    @NotNull
+    @OneToMany(mappedBy = "loan")
+    private List<BookCopy> bookCopies = new ArrayList<>();
+
+    public List<BookCopy> getBookCopy() {
+        return Collections.unmodifiableList(bookCopies);
+    }
+
+    public void addBookCopy(BookCopy bookCopy){
+        this.bookCopies.add(bookCopy);
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;

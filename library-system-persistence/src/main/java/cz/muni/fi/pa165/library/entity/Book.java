@@ -27,15 +27,15 @@ public class Book {
     @Column(nullable = false, unique = true)
     private String isbn;
 
-    @ManyToMany(mappedBy = "books")
-    private List<Category> categories;
+    @ManyToMany
+    private List<Category> categories = new ArrayList<>();
 
-    @OneToMany
-    private List<BookCopy> bookCopies;
+    @OneToMany(mappedBy = "book")
+    private List<BookCopy> bookCopies = new ArrayList<>();
 
     public Book() {
-        this.categories = new ArrayList<Category>();
-        this.bookCopies = new ArrayList<BookCopy>();
+        // this.categories = new ArrayList<Category>();
+        // this.bookCopies = new ArrayList<BookCopy>();
 
     }
 

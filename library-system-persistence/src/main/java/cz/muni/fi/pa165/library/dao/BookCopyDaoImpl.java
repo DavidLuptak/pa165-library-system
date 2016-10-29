@@ -8,12 +8,13 @@ import javax.persistence.PersistenceContext;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.BookCopy;
 import org.apache.commons.lang.Validate;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Lenka (433591)
  * @version 26.10.2016
  */
-//@Reposittory
+@Repository
 public class BookCopyDaoImpl implements BookCopyDao {
 
     @PersistenceContext

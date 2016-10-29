@@ -21,6 +21,10 @@ public class BookCopy {
     private Book book;
 
     @NotNull
+    @ManyToOne
+    private Loan loan;
+
+    @NotNull
     private BookState bookState;
 
     public Long getId() {

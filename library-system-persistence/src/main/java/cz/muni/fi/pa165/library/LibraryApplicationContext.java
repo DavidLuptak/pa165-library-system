@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.library;
 
-import cz.muni.fi.pa165.library.dao.UserDao;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -22,6 +21,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories
+@ComponentScan(basePackages = "cz.muni.fi.pa165.library.dao")
 public class LibraryApplicationContext {
 
     /**

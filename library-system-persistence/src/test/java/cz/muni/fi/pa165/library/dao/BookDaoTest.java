@@ -1,19 +1,7 @@
-package cz.muni.fi.pa165.library.persistence.dao.test;
+package cz.muni.fi.pa165.library.dao;
 
-import cz.muni.fi.pa165.dao.BookDao;
-import cz.muni.fi.pa165.entity.Book;
-import cz.muni.fi.pa165.enums.BookState;
-import cz.muni.fi.pa165.spring.LibrarySpringContext;
-import java.util.HashSet;
-import java.util.Set;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-
+import cz.muni.fi.pa165.library.LibraryApplicationContext;
+import cz.muni.fi.pa165.library.entity.Book;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,12 +10,20 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.junit.Assert.*;
+
 /**
  *
  * @author Bedrich Said
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = LibrarySpringContext.class)
+@ContextConfiguration(classes = LibraryApplicationContext.class)
 @Transactional
 public class BookDaoTest {
     @PersistenceContext
@@ -44,16 +40,16 @@ public class BookDaoTest {
     public void setUp() {
         book1 = new Book();
         book1.setName("Book Name 1");
-        book1.setIsbn(1L);
-        book1.setState(BookState.NEW);
+        book1.setIsbn("1L");
+        // book1.setState(BookState.NEW);
         book2 = new Book();
         book2.setName("Very Long Long Long Long Long Book Name 2");
-        book2.setIsbn(2L);
-        book2.setState(BookState.NEW);
+        book2.setIsbn("2L");
+        // book2.setState(BookState.NEW);
         book3 = new Book();
         book3.setName("Light Damaged Book Name 3");
-        book3.setIsbn(3L);
-        book3.setState(BookState.LIGHT_DAMAGE);
+        book3.setIsbn("3L");
+        // book3.setState(BookState.LIGHT_DAMAGE);
         em.persist(book1);
         em.persist(book2);
         em.persist(book3);
@@ -118,8 +114,8 @@ public class BookDaoTest {
         Book newBook = new Book();
         newBook.setId(100L);
         newBook.setName("New Added Book Name 4");
-        newBook.setState(BookState.NEW);
-        newBook.setIsbn(100L);
+        // newBook.setState(BookState.NEW);
+        newBook.setIsbn("100L");
         bookDao.delete(newBook);
     }
 }

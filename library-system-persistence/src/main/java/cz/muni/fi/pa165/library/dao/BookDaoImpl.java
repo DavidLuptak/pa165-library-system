@@ -8,12 +8,13 @@ import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Category;
 
 import org.apache.commons.lang.Validate;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Lenka (433591)
  * @version 25.10.2016
  */
-//@Repository
+@Repository
 public class BookDaoImpl implements BookDao {
 
     @PersistenceContext
