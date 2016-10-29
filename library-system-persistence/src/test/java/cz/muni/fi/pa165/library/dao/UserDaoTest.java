@@ -2,14 +2,11 @@ package cz.muni.fi.pa165.library.dao;
 
 import java.util.List;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import cz.muni.fi.pa165.library.LibraryApplicationContext;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.enums.UserRole;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -134,28 +131,28 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void testRemove() throws Exception {
+    public void testDelete() throws Exception {
         userDao.create(user1);
         userDao.create(user2);
-        userDao.remove(user1);
+        userDao.delete(user1);
         assertNull(userDao.findById(user1.getId()));
         assertNotNull(userDao.findById(user2.getId()));
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void testRemoveUserWithNullId() throws Exception {
-        userDao.remove(user1);
+    public void testDeleteUserWithNullId() throws Exception {
+        userDao.delete(user1);
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void testRemoveNullUser() throws Exception {
-        userDao.remove(null);
+    public void testDeleteNullUser() throws Exception {
+        userDao.delete(null);
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void testRemoveNonExistingUser() throws Exception {
+    public void testDeleteNonExistingUser() throws Exception {
         user1.setId(2L);
-        userDao.remove(user1);
+        userDao.delete(user1);
     }
 
     @Test

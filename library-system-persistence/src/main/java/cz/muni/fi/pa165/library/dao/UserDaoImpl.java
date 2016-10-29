@@ -33,7 +33,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void remove(User user) throws DataAccessException{
+    public void delete(User user) throws DataAccessException{
         em.remove(user);
     }
 

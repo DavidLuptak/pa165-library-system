@@ -20,11 +20,11 @@ public interface UserDao {
     public void create(User user);
 
     /**
-     * Removes the given user from the database.
+     * Deletes the given user from the database.
      *
-     * @param user to be removed
+     * @param user to be deleted
      */
-    public void remove(User user);
+    public void delete(User user);
 
     /**
      * Finds all users in the database.
