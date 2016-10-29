@@ -12,6 +12,8 @@ import org.apache.commons.lang.Validate;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -26,15 +28,12 @@ public class UserDaoImpl implements UserDao {
     private EntityManager em;
     
     @Override
-    public void create(User user) {
-        validateUser(user);
-        Validate.isTrue(user.getId() == null, "User's id should be null");
+    public void create(User user) throws DataAccessException {
         em.persist(user);
     }
 
     @Override
-    public void remove(User user) {
-        Validate.notNull(user.getId());
+    public void remove(User user) throws DataAccessException{
         em.remove(user);
     }
 
@@ -44,30 +43,22 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findByEmail(String email) {
-        Validate.notNull(email);
-        Validate.notEmpty(email);
+    public User findByEmail(String email) throws DataAccessException {
         List<User> resultList = em.createQuery("SELECT u FROM Users u where u.email = :email", User.class)
                 .setParameter("email", email).getResultList();
         if (resultList.isEmpty()) {
             return null;
         }
-        if (resultList.size() > 1) {
-            throw new IllegalStateException("There should exist only one user with email: " + email + "but there are: " + resultList.size());
-        }
         return resultList.get(0);
     }
 
     @Override
-    public User findById(Long id) {
-        Validate.notNull(id);
+    public User findById(Long id) throws DataAccessException {
         return em.find(User.class, id);
     }
 
     @Override
-    public void update(User user) {
-        validateUser(user);
-        Validate.notNull(user.getId());
+    public void update(User user) throws DataAccessException{
         em.merge(user);
     }
 
