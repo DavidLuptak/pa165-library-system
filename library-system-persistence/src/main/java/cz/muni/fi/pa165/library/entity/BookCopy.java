@@ -1,9 +1,9 @@
 package cz.muni.fi.pa165.library.entity;
 
+import cz.muni.fi.pa165.library.enums.BookState;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-
-import cz.muni.fi.pa165.library.enums.BookState;
 
 /**
  * @author Lenka (433591)

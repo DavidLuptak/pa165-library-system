@@ -1,14 +1,13 @@
 package cz.muni.fi.pa165.library.dao;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.BookCopy;
 import org.apache.commons.lang.Validate;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.List;
 
 /**
  * @author Lenka (433591)

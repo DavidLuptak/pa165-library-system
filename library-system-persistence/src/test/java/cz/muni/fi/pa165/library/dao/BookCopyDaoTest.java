@@ -7,23 +7,22 @@ import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.enums.UserRole;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
+import javax.inject.Inject;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.inject.Inject;
 import javax.transaction.Transactional;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.ContextConfiguration;
-import org.testng.annotations.Test;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import static org.junit.Assert.*;
-
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
+
+import static org.junit.Assert.*;
 
 /**
  * Created by Martin on 29.10.2016.

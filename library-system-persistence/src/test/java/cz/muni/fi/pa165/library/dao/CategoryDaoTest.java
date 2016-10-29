@@ -2,18 +2,19 @@ package cz.muni.fi.pa165.library.dao;
 
 import cz.muni.fi.pa165.library.LibraryApplicationContext;
 import cz.muni.fi.pa165.library.entity.Category;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import javax.inject.Inject;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.inject.Inject;
 import javax.transaction.Transactional;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+
 import static org.junit.Assert.*;
 /**
  * Created by Martin on 28.10.2016.
