@@ -40,14 +40,14 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> findAll() {
-        return em.createQuery("SELECT u FROM Users u", User.class).getResultList();
+        return em.createQuery("SELECT u FROM User u", User.class).getResultList();
     }
 
     @Override
     public User findByEmail(String email) {
         Validate.notNull(email);
         Validate.notEmpty(email);
-        List<User> resultList = em.createQuery("SELECT u FROM Users u where u.email = :email", User.class)
+        List<User> resultList = em.createQuery("SELECT u FROM User u where u.email = :email", User.class)
                 .setParameter("email", email).getResultList();
         if (resultList.isEmpty()) {
             return null;

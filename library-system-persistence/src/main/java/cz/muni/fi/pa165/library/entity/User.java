@@ -21,7 +21,8 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
+    @NotNull
     private String passwordHash;
 
     @NotNull
@@ -47,6 +48,16 @@ public class User {
 
     public User() {
         this.loans = new HashSet<>();
+        this.userRole = UserRole.MEMBER;
+    }
+
+    public User(String givenName, String surname, String email, String address, UserRole userRole) {
+        this();
+        this.givenName = givenName;
+        this.surname = surname;
+        this.email = email;
+        this.address = address;
+        this.userRole = userRole;
     }
 
     public Long getId() {

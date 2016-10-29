@@ -94,6 +94,10 @@ public class Book {
         this.bookCopies = bookCopies;
     }
 
+    public void addBookCopy(BookCopy bookCopy) {
+        bookCopies.add(bookCopy);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
