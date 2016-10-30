@@ -1,9 +1,5 @@
 package cz.muni.fi.pa165.library.dao;
 
-import java.util.List;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-
 import cz.muni.fi.pa165.library.LibraryApplicationContext;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.enums.UserRole;
@@ -14,6 +10,10 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import javax.inject.Inject;
+import javax.transaction.Transactional;
+import java.util.List;
 
 import static org.testng.Assert.*;
 
@@ -197,7 +197,7 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
 
         List<User> users = userDao.findAll();
         assertNotNull(users);
-        assertTrue(users.size() == 2);
+        assertEquals(users.size(), 2);
         assertTrue(users.contains(user1));
         assertTrue(users.contains(user2));
     }
@@ -215,16 +215,6 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         assertEquals(actual.getPasswordHash(), expected.getPasswordHash());
 
     }
-
-
-
-
-
-
-
-
-
-
 
 
 }
