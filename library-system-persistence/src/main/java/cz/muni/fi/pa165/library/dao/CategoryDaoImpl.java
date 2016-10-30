@@ -1,9 +1,11 @@
 package cz.muni.fi.pa165.library.dao;
 
 import cz.muni.fi.pa165.library.entity.Category;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
@@ -43,9 +45,12 @@ public class CategoryDaoImpl implements CategoryDao {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("name is not valid");
         }
-
-        return em.createQuery("SELECT c FROM Category c WHERE c.name = :name",Category.class)
-            .setParameter("name", name).getSingleResult();
+        try {
+            return em.createQuery("SELECT c FROM Category c WHERE c.name = :name", Category.class)
+                .setParameter("name", name).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override

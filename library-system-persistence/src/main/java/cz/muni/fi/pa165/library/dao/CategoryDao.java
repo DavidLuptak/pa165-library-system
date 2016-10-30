@@ -46,7 +46,7 @@ public interface CategoryDao {
      * Returns Category entity with the respective name.
      *
      * @param name of the entity
-     * @return the entity with the respective name
+     * @return the entity with the respective name or null if such entity does not exist
      */
     Category findByName(String name);
 
