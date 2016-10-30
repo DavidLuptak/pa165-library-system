@@ -57,6 +57,7 @@ public class Loan {
     }
 
     public void setReturnDate(Date returnDate) {
+        if(returnDate.before(getLoanDate())) throw new IllegalArgumentException("returnDate is before loanDate");
         this.returnDate = returnDate;
     }
     

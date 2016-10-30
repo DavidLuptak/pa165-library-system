@@ -19,6 +19,7 @@ import org.springframework.dao.DataAccessException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 import java.util.Date;
 import java.util.List;
 
@@ -112,15 +113,10 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
         bookCopyDao.create(null);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void createBookCopyWithoutBookSet(){
         bookCopy1.setBook(null);
         bookCopyDao.create(bookCopy1);
-    }
-
-    @Test(expectedExceptions = DataAccessException.class)
-    public void createBookCopyAfterItHasBeenCreated(){
-        bookCopyDao.create(dbBookCopy11);
     }
 
     @Test
@@ -143,11 +139,6 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
     @Test
     public void findBookCopyWithNonExistingId(){
         assertNull(bookCopyDao.findById(100L));
-    }
-
-    @Test(expectedExceptions = DataAccessException.class)
-    public void findBookCopiesByNullBook(){
-        bookCopyDao.findByBook(null);
     }
 
     @Test
@@ -189,11 +180,5 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
         assertNotNull(bookCopyDao.findById(dbBookCopy21.getId()));
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
-    public void deleteNotStoredBookCopy(){
-        bookCopyDao.delete(bookCopy1);
-    }
-
-    //TODO more complex tests
-
+    //TODO: bookcopy handling loan
 }

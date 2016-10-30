@@ -239,7 +239,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         aLoan.setUser(joshua);
         loanDao.update(aLoan);
         Assert.assertEquals(aLoan.getUser(), joshua);
-        assertDeepEquals(aLoan, aLoan);
+        assertDeepEquals(loanDao.findById(aLoan.getId()), aLoan);
     }
 
     @Test
@@ -249,7 +249,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
 
         aLoan.setUser(null);
         loanDao.update(aLoan);
-        assertDeepEquals(aLoan, aLoan);
+        assertDeepEquals(loanDao.findById(aLoan.getId()), aLoan);
     }
 
     @Test
@@ -259,7 +259,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
 
         aLoan.setUser(new User());
         loanDao.update(aLoan);
-        assertDeepEquals(aLoan, aLoan);
+        assertDeepEquals(loanDao.findById(aLoan.getId()), aLoan);
     }
 
     @Test(expectedExceptions = DataAccessException.class)
