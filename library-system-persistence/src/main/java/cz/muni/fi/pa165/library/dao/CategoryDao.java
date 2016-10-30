@@ -5,6 +5,8 @@ import cz.muni.fi.pa165.library.entity.Category;
 import java.util.List;
 
 /**
+ * DAO contract for the Category entity.
+ *
  * @author Dávid Lupták
  * @version 25.10.2016
  */

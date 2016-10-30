@@ -55,24 +55,19 @@ public class Category {
         return Collections.unmodifiableList(books);
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null) return false;
         if (!(o instanceof Category)) return false;
 
         Category category = (Category) o;
 
-        if (!id.equals(category.id)) return false;
-        return name.equals(category.name);
+        return getName() != null ? getName().equals(category.getName()) : category.getName() == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
-        return result;
+        return getName() != null ? getName().hashCode() : 0;
     }
 }
