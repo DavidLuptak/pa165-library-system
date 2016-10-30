@@ -28,13 +28,9 @@ public class BookCopy {
     private List<Loan> loans;
 
     @NotNull
-    private boolean isLoaned;
-
-    @NotNull
     private BookState bookState;
 
     public BookCopy() {
-        isLoaned = false;
         loans = new ArrayList<>();
         bookState = BookState.NEW;
     }
@@ -68,16 +64,7 @@ public class BookCopy {
     }
 
     public void addLoan(Loan loan){
-        if(!isLoaned()) throw new IllegalStateException("Book is currently loaned");
         loans.add(loan);
-    }
-
-    public boolean isLoaned() {
-        return isLoaned;
-    }
-
-    public void setLoaned(boolean loaned) {
-        isLoaned = loaned;
     }
 
     @Override
