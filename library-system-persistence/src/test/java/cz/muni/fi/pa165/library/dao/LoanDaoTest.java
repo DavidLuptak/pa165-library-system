@@ -227,8 +227,8 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         loanDao.create(aLoan);
 
         aLoan.setReturnBookState(BookState.HEAVY_DAMAGE);
-        Loan updatedLoan1 = loanDao.update(aLoan);
-        Assert.assertEquals(updatedLoan1.getReturnBookState(), BookState.HEAVY_DAMAGE);
+        loanDao.update(aLoan);
+        Assert.assertEquals(aLoan.getReturnBookState(), BookState.HEAVY_DAMAGE);
     }
 
     @Test
@@ -237,9 +237,9 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         loanDao.create(aLoan);
 
         aLoan.setUser(joshua);
-        Loan updatedLoan1 = loanDao.update(aLoan);
-        Assert.assertEquals(updatedLoan1.getUser(), joshua);
-        assertDeepEquals(updatedLoan1, aLoan);
+        loanDao.update(aLoan);
+        Assert.assertEquals(aLoan.getUser(), joshua);
+        assertDeepEquals(aLoan, aLoan);
     }
 
     @Test
@@ -248,8 +248,8 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         loanDao.create(aLoan);
 
         aLoan.setUser(null);
-        Loan updatedLoan1 = loanDao.update(aLoan);
-        assertDeepEquals(updatedLoan1, aLoan);
+        loanDao.update(aLoan);
+        assertDeepEquals(aLoan, aLoan);
     }
 
     @Test
@@ -258,8 +258,8 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         loanDao.create(aLoan);
 
         aLoan.setUser(new User());
-        Loan updatedLoan1 = loanDao.update(aLoan);
-        assertDeepEquals(updatedLoan1, aLoan);
+        loanDao.update(aLoan);
+        assertDeepEquals(aLoan, aLoan);
     }
 
     @Test(expectedExceptions = DataAccessException.class)
@@ -269,7 +269,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
 
         // such method needed
         // aLoan.removeBookCopy(effectiveJava42);
-        Loan updatedLoan1 = loanDao.update(aLoan);
+        loanDao.update(aLoan);
     }
 
     @Test

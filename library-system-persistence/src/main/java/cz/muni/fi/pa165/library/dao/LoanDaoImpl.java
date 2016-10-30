@@ -23,8 +23,7 @@ public class LoanDaoImpl implements LoanDao {
 
     @Override
     public void delete(Loan loan) {
-        //todo
-        //em.remove(findById(loan.getId()));
+        em.remove(loan);
     }
 
     @Override

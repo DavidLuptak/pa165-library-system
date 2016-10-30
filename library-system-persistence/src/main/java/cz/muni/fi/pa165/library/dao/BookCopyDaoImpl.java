@@ -2,7 +2,6 @@ package cz.muni.fi.pa165.library.dao;
 
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.BookCopy;
-import org.apache.commons.lang.Validate;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -44,11 +43,5 @@ public class BookCopyDaoImpl implements BookCopyDao {
         return em.createQuery("SELECT b FROM BookCopy b where b.book = :book", BookCopy.class)
             .setParameter("book", book).getResultList();
 
-    }
-
-    private void validateBookCopy(BookCopy bookCopy) {
-        Validate.notNull(bookCopy);
-        Validate.notNull(bookCopy.getBook());
-        Validate.notNull(bookCopy.getBookState());
     }
 }
