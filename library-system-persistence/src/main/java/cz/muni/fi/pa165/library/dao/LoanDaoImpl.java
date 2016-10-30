@@ -13,6 +13,7 @@ import java.util.List;
  */
 @Repository
 public class LoanDaoImpl implements LoanDao {
+
     @PersistenceContext
     private EntityManager em;
     

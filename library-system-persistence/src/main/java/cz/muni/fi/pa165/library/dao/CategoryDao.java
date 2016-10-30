@@ -20,6 +20,21 @@ public interface CategoryDao {
     void create(Category category);
 
     /**
+     * Updates already persisted Category entity in the database.
+     *
+     * @param category to be updated
+     * @return merged Category entity
+     */
+    Category update(Category category);
+
+    /**
+     * Deletes the Category entity from the persistence context
+     *
+     * @param category to be deleted
+     */
+    void delete(Category category);
+
+    /**
      * Returns Category entity with the respective id.
      *
      * @param id of the entity
@@ -42,18 +57,5 @@ public interface CategoryDao {
      */
     List<Category> findAll();
 
-    /**
-     * Updates already persisted Category entity in the database.
-     *
-     * @param category to be updated
-     * @return merged Category entity
-     */
-    Category update(Category category);
 
-    /**
-     * Deletes the Category entity from the persistence context
-     *
-     * @param category to be deleted
-     */
-    void delete(Category category);
 }

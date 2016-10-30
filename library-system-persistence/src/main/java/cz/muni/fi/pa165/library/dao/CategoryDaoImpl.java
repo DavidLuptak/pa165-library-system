@@ -23,6 +23,17 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
+    public Category update(Category category) {
+        return em.merge(category);
+    }
+
+    @Override
+    public void delete(Category category) {
+        em.remove(findById(category.getId()));
+
+    }
+
+    @Override
     public Category findById(Long id) {
         return em.find(Category.class, id);
     }
@@ -33,7 +44,8 @@ public class CategoryDaoImpl implements CategoryDao {
             throw new IllegalArgumentException("name is not valid");
         }
 
-        return em.createQuery("SELECT c FROM Category c WHERE c.name = :name",Category.class).setParameter("name", name).getSingleResult();
+        return em.createQuery("SELECT c FROM Category c WHERE c.name = :name",Category.class)
+            .setParameter("name", name).getSingleResult();
     }
 
     @Override
@@ -41,14 +53,5 @@ public class CategoryDaoImpl implements CategoryDao {
         return em.createQuery("SELECT  c FROM  Category  c", Category.class).getResultList();
     }
 
-    @Override
-    public Category update(Category category) {
-        return em.merge(category);
-    }
 
-    @Override
-    public void delete(Category category) {
-        em.remove(findById(category.getId()));
-
-    }
 }

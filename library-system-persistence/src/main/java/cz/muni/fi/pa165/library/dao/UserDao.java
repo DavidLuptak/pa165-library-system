@@ -12,34 +12,27 @@ import java.util.List;
  * @author Martin
  */
 public interface UserDao {
+
     /**
      * Saves the given user into the database.
      *
      * @param user to be created
      */
-    public void create(User user);
+    void create(User user);
+
+    /**
+     * Updates the given user in the database.
+     *
+     * @param user to be updated
+     */
+    void update(User user);
 
     /**
      * Deletes the given user from the database.
      *
      * @param user to be deleted
      */
-    public void delete(User user);
-
-    /**
-     * Finds all users in the database.
-     *
-     * @return found users
-     */
-    public List<User> findAll();
-
-    /**
-     * Finds users with the given email in the database.
-     *
-     * @param email of the searched user
-     * @return found users
-     */
-    public User findByEmail(String email);
+    void delete(User user);
 
     /**
      * Finds a user with the given id in the database.
@@ -47,12 +40,22 @@ public interface UserDao {
      * @param id of searched user
      * @return found user
      */
-    public User findById(Long id);
+    User findById(Long id);
 
     /**
-     * Updates the given user in the database.
+     * Finds users with the given email in the database.
      *
-     * @param user to be updated
+     * @param email of the searched user
+     * @return found users
      */
-    public void update(User user);
+    User findByEmail(String email);
+
+    /**
+     * Finds all users in the database.
+     *
+     * @return found users
+     */
+    List<User> findAll();
+
+
 }
