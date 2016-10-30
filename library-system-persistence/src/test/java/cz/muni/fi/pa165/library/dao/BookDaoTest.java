@@ -13,12 +13,13 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.validation.ConstraintViolationException;
 import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 
 /**
  *
@@ -42,17 +43,17 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
         book1.setName("Book Name 1");
         book1.setIsbn("1L");
         book1.setAuthor("AB");
-        // book1.setState(BookState.NEW);
+
         book2 = new Book();
         book2.setName("Very Long Long Long Long Long Book Name 2");
         book2.setIsbn("2L");
         book2.setAuthor("CD");
-        // book2.setState(BookState.NEW);
+
         book3 = new Book();
         book3.setName("Light Damaged Book Name 3");
         book3.setIsbn("3L");
         book3.setAuthor("EF");
-        // book3.setState(BookState.LIGHT_DAMAGE);
+
         bookDao.create(book1);
         bookDao.create(book2);
         bookDao.create(book3);
@@ -65,7 +66,7 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
         assertNotNull(book3.getId());
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void testCreateNullName() {
         Book newBook = new Book();
         bookDao.create(newBook);
@@ -81,8 +82,9 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testFindById() {
-        assertSame(book2, bookDao.findById(book2.getId()));
-        assertSame(book3, bookDao.findById(book3.getId()));
+        assertDeepEquals(bookDao.findById(book2.getId()), book2);
+        assertDeepEquals(bookDao.findById(book3.getId()), book3);
+
         assertNull(bookDao.findById(100L));
     }
 
@@ -116,8 +118,17 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
         Book newBook = new Book();
         newBook.setId(100L);
         newBook.setName("New Added Book Name 4");
-        // newBook.setState(BookState.NEW);
         newBook.setIsbn("100L");
         bookDao.delete(newBook);
+    }
+
+    private void assertDeepEquals(Book actual, Book expected) {
+        assertNotNull(actual);
+        assertNotNull(expected);
+        assertEquals(actual.getId(), expected.getId());
+        assertEquals(actual.getName(), expected.getName());
+        assertEquals(actual.getAuthor(), expected.getAuthor());
+        assertEquals(actual.getIsbn(), expected.getIsbn());
+
     }
 }
