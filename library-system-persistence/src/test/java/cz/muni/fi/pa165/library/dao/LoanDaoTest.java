@@ -59,8 +59,8 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     public void createUser() {
         joshua = new User();
         joshua.setEmail("joshua@java.com");
-        joshua.setGivenName("Joshua");
-        joshua.setSurname("Bloch");
+        joshua.setFirstName("Joshua");
+        joshua.setLastName("Bloch");
         joshua.setAddress("Somewhere in the space");
         joshua.setUserRole(UserRole.MEMBER);
         joshua.setPasswordHash("hash123");

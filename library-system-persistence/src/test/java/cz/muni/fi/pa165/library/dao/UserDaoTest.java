@@ -59,13 +59,13 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test(expectedExceptions = DataAccessException.class)
     public void testCreateUserWithNullName() throws Exception {
-        user1.setGivenName(null);
+        user1.setFirstName(null);
         userDao.create(user1);
     }
 
     @Test(expectedExceptions = DataAccessException.class)
     public void testCreateUserWithNullSurName() throws Exception {
-        user1.setSurname(null);
+        user1.setLastName(null);
         userDao.create(user1);
     }
 
@@ -90,8 +90,8 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testUpdate() throws Exception {
         userDao.create(user1);
-        user1.setGivenName("Jozef");
-        user1.setSurname("Maly");
+        user1.setFirstName("Jozef");
+        user1.setLastName("Maly");
         user1.setEmail("jozko@abc.com");
         user1.setAddress("Bratislava");
         user1.setUserRole(UserRole.ADMIN);
@@ -122,7 +122,7 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
     @Test(expectedExceptions = DataAccessException.class)
     public void testUpdateInvalidUser() throws Exception {
         userDao.create(user1);
-        user1.setGivenName(null);
+        user1.setFirstName(null);
         user1.setEmail("@sas");
         user1.setUserRole(UserRole.ADMIN);
 
@@ -207,8 +207,8 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         assertNotNull(actual);
         assertNotNull(expected);
         assertEquals(actual.getId(), expected.getId());
-        assertEquals(actual.getGivenName(), expected.getGivenName());
-        assertEquals(actual.getSurname(), expected.getSurname());
+        assertEquals(actual.getFirstName(), expected.getFirstName());
+        assertEquals(actual.getLastName(), expected.getLastName());
         assertEquals(actual.getAddress(), expected.getAddress());
         assertEquals(actual.getEmail(), expected.getEmail());
         assertEquals(actual.getUserRole(), expected.getUserRole());

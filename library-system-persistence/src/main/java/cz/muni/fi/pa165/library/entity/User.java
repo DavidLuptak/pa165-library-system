@@ -31,17 +31,16 @@ public class User {
     private String email;
 
     @NotNull
-    private String givenName;
+    private String firstName;
 
     @NotNull
-    private String surname;
+    private String lastName;
 
     @NotNull
     private String address;
     
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
-       
 
     @OneToMany(orphanRemoval = true, mappedBy = "user")
     private final Set<Loan> loans;
@@ -51,10 +50,10 @@ public class User {
         this.userRole = UserRole.MEMBER;
     }
 
-    public User(String givenName, String surname, String email, String address, UserRole userRole) {
+    public User(String firstName, String lastName, String email, String address, UserRole userRole) {
         this();
-        this.givenName = givenName;
-        this.surname = surname;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.address = address;
         this.userRole = userRole;
@@ -84,20 +83,20 @@ public class User {
         this.email = email;
     }
 
-    public String getGivenName() {
-        return givenName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setGivenName(String givenName) {
-        this.givenName = givenName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getAddress() {
@@ -152,8 +151,8 @@ public class User {
     public String toString() {
         return "User{" +
                 "email='" + email + '\'' +
-                ", givenName='" + givenName + '\'' +
-                ", surname='" + surname + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", address='" + address + '\'' +
                 ", userRole=" + userRole +
                 ", loans=" + loans +

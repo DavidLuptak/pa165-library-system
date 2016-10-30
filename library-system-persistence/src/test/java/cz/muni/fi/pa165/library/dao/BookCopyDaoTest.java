@@ -16,8 +16,7 @@ import org.testng.annotations.Test;
 
 import javax.inject.Inject;
 import org.springframework.dao.DataAccessException;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
 import java.util.Date;
@@ -62,8 +61,8 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
         dbUser = new User();
         dbUser.setAddress("dbUserAdress");
         dbUser.setEmail("dbUserEmail@Email.email");
-        dbUser.setGivenName("dbUserGivenName");
-        dbUser.setSurname("dbUserSurname");
+        dbUser.setFirstName("dbUserGivenName");
+        dbUser.setLastName("dbUserSurname");
         dbUser.setUserRole(UserRole.MEMBER);
         dbUser.setPasswordHash("hash123");
         userDao.create(dbUser);
