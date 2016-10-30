@@ -21,6 +21,11 @@ import javax.validation.ConstraintViolationException;
 import java.util.Date;
 import java.util.List;
 
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+
 /**
  * Test suite for the Loan DAO
  *
@@ -95,7 +100,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         Loan aLoan = getJoshuaLoan();
         loanDao.create(aLoan);
 
-        Assert.assertNotNull(aLoan.getId());
+        assertNotNull(aLoan.getId());
     }
 
     @Test(expectedExceptions = DataAccessException.class)
@@ -108,46 +113,19 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         loanDao.create(new Loan());
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
-    public void createReturnedLoanWithoutReturnDate() {
-        Loan aLoan = new Loan();
-        aLoan.setUser(joshua);
-        aLoan.addBookCopy(effectiveJava42);
-        aLoan.setLoanDate(new Date());
-        aLoan.setReturned(true);
-
-        loanDao.create(aLoan);
-    }
-
-    @Test(expectedExceptions = DataAccessException.class)
-    public void createNotReturnedLoanWithReturnDate() {
-        Loan aLoan = new Loan();
-        aLoan.setUser(joshua);
-        aLoan.addBookCopy(effectiveJava42);
-        aLoan.setLoanDate(new Date());
-        aLoan.setReturnDate(new Date());
-        aLoan.setReturned(false);
-
-        loanDao.create(aLoan);
-    }
-
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void createLoanWithoutBookCopy() {
         Loan aLoan = new Loan();
         aLoan.setUser(joshua);
         aLoan.setLoanDate(new Date());
-        aLoan.setReturned(false);
-
         loanDao.create(aLoan);
     }
 
-    @Test
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void createLoanWithoutUser() {
         Loan aLoan = getJoshuaLoan();
         aLoan.setUser(null);
-
         loanDao.create(aLoan);
-        Assert.assertNotNull(aLoan.getId());
     }
 
     @Test
@@ -165,42 +143,14 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         assertDeepEquals(resultLoan2, bLoan);
     }
 
-//    @Test
-//    public void findLoanByIdWithoutAnyBookCopy() {
-//        Loan aLoan = new Loan();
-//        aLoan.setUser(joshua);
-//        aLoan.setLoanDate(new Date());
-//        aLoan.setReturned(false);
-//
-//        loanDao.create(aLoan);
-//
-//        Loan resultLoan1 = loanDao.findById(aLoan.getId());
-//        Assert.assertEquals(resultLoan1.getBookCopy().size(), 0);
-//    }
-
-    @Test
-    public void findLoanByIdWithoutUser() {
-        Loan aLoan = getJoshuaLoan();
-        aLoan.setUser(null);
-        loanDao.create(aLoan);
-
-        Loan resultLoan1 = loanDao.findById(aLoan.getId());
-        Assert.assertEquals(resultLoan1.getUser(), null);
-    }
-
     @Test(expectedExceptions = DataAccessException.class)
     public void findLoanByNullId() {
         loanDao.findById(null);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test
     public void findNotPersistedLoanById() {
-        Loan aLoan = getBlochLoan();
-        loanDao.create(aLoan);
-
-        Loan bLoan = getJoshuaLoan();
-
-        Loan result1 = loanDao.findById(bLoan.getId());
+        assertNull(loanDao.findById(56L));
     }
 
     @Test
@@ -212,13 +162,15 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         loanDao.create(bLoan);
 
         List<Loan> resultLoans = loanDao.findAll();
-        Assert.assertNotNull(resultLoans);
-        Assert.assertEquals(resultLoans.size(), 2);
+        assertNotNull(resultLoans);
+        assertEquals(resultLoans.size(), 2);
+        assertTrue(resultLoans.contains(aLoan));
+        assertTrue(resultLoans.contains(bLoan));
     }
 
     @Test
     public void findAllLoansEmpty() {
-        Assert.assertEquals(loanDao.findAll().size(), 0);
+        assertEquals(loanDao.findAll().size(), 0);
     }
 
     @Test
@@ -228,7 +180,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
 
         aLoan.setReturnBookState(BookState.HEAVY_DAMAGE);
         loanDao.update(aLoan);
-        Assert.assertEquals(aLoan.getReturnBookState(), BookState.HEAVY_DAMAGE);
+        assertEquals(aLoan.getReturnBookState(), BookState.HEAVY_DAMAGE);
     }
 
     @Test
@@ -238,37 +190,24 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
 
         aLoan.setUser(joshua);
         loanDao.update(aLoan);
-        Assert.assertEquals(aLoan.getUser(), joshua);
+        assertEquals(aLoan.getUser(), joshua);
         assertDeepEquals(loanDao.findById(aLoan.getId()), aLoan);
     }
 
-    @Test
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void updateNullUser() {
         Loan aLoan = getBlochLoan();
         loanDao.create(aLoan);
 
         aLoan.setUser(null);
         loanDao.update(aLoan);
-        assertDeepEquals(loanDao.findById(aLoan.getId()), aLoan);
     }
 
-    @Test
-    public void updateEmptyUser() {
-        Loan aLoan = getBlochLoan();
-        loanDao.create(aLoan);
-
-        aLoan.setUser(new User());
-        loanDao.update(aLoan);
-        assertDeepEquals(loanDao.findById(aLoan.getId()), aLoan);
-    }
-
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void updateLoanNoBookCopy() {
         Loan aLoan = getJoshuaLoan();
         loanDao.create(aLoan);
-
-        // such method needed
-        // aLoan.removeBookCopy(effectiveJava42);
+        aLoan.setBookCopy(null);
         loanDao.update(aLoan);
     }
 
@@ -280,9 +219,10 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         Loan bLoan = getBlochLoan();
         loanDao.create(bLoan);
 
-        Assert.assertEquals(loanDao.findAll().size(), 2);
+        assertEquals(loanDao.findAll().size(), 2);
         loanDao.delete(aLoan);
-        Assert.assertEquals(loanDao.findAll().size(), 1);
+        assertEquals(loanDao.findAll().size(), 1);
+        assertNull(loanDao.findById(aLoan.getId()));
     }
 
     @Test(expectedExceptions = DataAccessException.class)
@@ -300,8 +240,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         Loan blochLoan = new Loan();
         blochLoan.setLoanDate(new Date());
         blochLoan.setReturnBookState(BookState.NEW);
-        blochLoan.setReturned(false);
-        blochLoan.addBookCopy(effectiveJava42);
+        blochLoan.setBookCopy(effectiveJava42);
         blochLoan.setUser(joshua);
 
         return blochLoan;
@@ -312,21 +251,20 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         joshuaLoan.setLoanDate(new Date());
         joshuaLoan.setReturnDate(new Date());
         joshuaLoan.setReturnBookState(BookState.LIGHT_DAMAGE);
-        joshuaLoan.setReturned(true);
-        joshuaLoan.addBookCopy(effectiveJava42);
+        joshuaLoan.setBookCopy(effectiveJava42);
         joshuaLoan.setUser(joshua);
 
         return joshuaLoan;
     }
 
     private void assertDeepEquals(Loan loan1, Loan loan2) {
-        Assert.assertEquals(loan1, loan2);
-        Assert.assertEquals(loan1.getId(), loan2.getId());
-        Assert.assertEquals(loan1.getUser(), loan2.getUser());
-        Assert.assertEquals(loan1.getLoanDate(), loan2.getLoanDate());
-        Assert.assertEquals(loan1.getReturnDate(), loan2.getReturnDate());
-        Assert.assertEquals(loan1.getReturnBookState(), loan2.getReturnBookState());
-        Assert.assertEquals(loan1.isReturned(), loan2.isReturned());
-        Assert.assertEquals(loan1.getBookCopy(), loan2.getBookCopy());
+        assertEquals(loan1, loan2);
+        assertEquals(loan1.getId(), loan2.getId());
+        assertEquals(loan1.getUser(), loan2.getUser());
+        assertEquals(loan1.getLoanDate(), loan2.getLoanDate());
+        assertEquals(loan1.getReturnDate(), loan2.getReturnDate());
+        assertEquals(loan1.getReturnBookState(), loan2.getReturnBookState());
+        assertEquals(loan1.isReturned(), loan2.isReturned());
+        assertEquals(loan1.getBookCopy(), loan2.getBookCopy());
     }
 }
