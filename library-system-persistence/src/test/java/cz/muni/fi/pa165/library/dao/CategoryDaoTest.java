@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.library.dao;
 
 import cz.muni.fi.pa165.library.LibraryApplicationContext;
+import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Category;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
@@ -30,24 +31,50 @@ public class CategoryDaoTest extends AbstractTestNGSpringContextTests{
     @Inject
     private CategoryDao categoryDao;
 
+    @Inject
+    private BookDao bookDao;
+
     private Category dbCategory1;
     private Category dbCategory2;
     private Category dbCategory3;
     private Category category1;
 
+    private Book dbBook1;
+    private Book dbBook2;
+    private Book dbBook3;
+
     @BeforeMethod
     public void setUp(){
+        dbBook1 = new Book();
+        dbBook1.setName("Book Name 1");
+        dbBook1.setIsbn("1L");
+        dbBook1.setAuthor("AB");
+
+        dbBook2 = new Book();
+        dbBook2.setName("Very Long Long Long Long Long Book Name 2");
+        dbBook2.setIsbn("2L");
+        dbBook2.setAuthor("CD");
+
+        dbBook3 = new Book();
+        dbBook3.setName("Light Damaged Book Name 3");
+        dbBook3.setIsbn("3L");
+        dbBook3.setAuthor("EF");
+
         category1 = new Category();
         category1.setName("category1Name");
         dbCategory1 = new Category();
         dbCategory1.setName("dbCategory1Name");
+        dbCategory1.addBook(dbBook1);
         dbCategory2 = new Category();
         dbCategory2.setName("dbCategory2Name");
+        dbCategory2.addBook(dbBook2);
         dbCategory3 = new Category();
         dbCategory3.setName("dbCategory3Name");
         categoryDao.create(dbCategory1);
         categoryDao.create(dbCategory2);
         categoryDao.create(dbCategory3);
+
+
     }
 
     @Test(expectedExceptions = DataAccessException.class)
@@ -110,7 +137,7 @@ public class CategoryDaoTest extends AbstractTestNGSpringContextTests{
         dbCategory1.setName(null);
         categoryDao.update(dbCategory1);
         Category tmp = categoryDao.findById(dbCategory1.getId());
-        System.out.println("laskd");
+        System.out.println(tmp.getName());
     }
 
     @Test
@@ -128,6 +155,18 @@ public class CategoryDaoTest extends AbstractTestNGSpringContextTests{
     }
 
     @Test
+    public void updateCategoryAddBook(){
+        dbCategory1.addBook(dbBook3);
+        assertTrue(dbCategory1.getBooks().contains(dbBook3));
+    }
+
+    @Test
+    public void updateCategoryRemoveBook(){
+        dbCategory2.removeBook(dbBook2);
+        assertFalse(dbCategory1.getBooks().contains(dbBook2));
+    }
+
+    @Test
     public void deleteCategory(){
         categoryDao.delete(dbCategory2);
         assertEquals(2, categoryDao.findAll().size());
@@ -138,7 +177,5 @@ public class CategoryDaoTest extends AbstractTestNGSpringContextTests{
     public void deleteNotStoredCategory(){
         categoryDao.delete(category1);
     }
-
-    //TODO category handling books
 
 }

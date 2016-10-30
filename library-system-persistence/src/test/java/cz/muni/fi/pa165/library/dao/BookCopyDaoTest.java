@@ -45,7 +45,9 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
     private BookDao bookDao;
 
     private User dbUser;
-    private Loan dbLoan;
+
+    private Loan dbLoan1;
+    private Loan dbLoan2;
 
     private Book dbBook1;
     private Book dbBook2;
@@ -53,7 +55,6 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
     private BookCopy dbBookCopy11;
     private BookCopy dbBookCopy12;
     private BookCopy dbBookCopy21;
-    private BookCopy dbBookCopy22;
     private BookCopy bookCopy1;
 
     @BeforeMethod
@@ -88,22 +89,23 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
         dbBookCopy21 = new BookCopy();
         dbBookCopy21.setBook(dbBook2);
         dbBookCopy21.setBookState(BookState.HEAVY_DAMAGE);
-        dbBookCopy22 = new BookCopy();
-        dbBookCopy22.setBook(dbBook2);
-        dbBookCopy22.setBookState(BookState.LIGHT_DAMAGE);
         bookCopy1 = new BookCopy();
         bookCopy1.setBook(dbBook1);
         bookCopy1.setBookState(BookState.MEDIUM_DAMAGE);
         bookCopyDao.create(dbBookCopy11);
         bookCopyDao.create(dbBookCopy12);
         bookCopyDao.create(dbBookCopy21);
-        bookCopyDao.create(dbBookCopy22);
 
-        dbLoan = new Loan();
-        dbLoan.setBookCopy(dbBookCopy11);
-        dbLoan.setLoanDate(new Date());
-        dbLoan.setUser(dbUser);
-        loanDao.create(dbLoan);
+        dbLoan1 = new Loan();
+        dbLoan1.setBookCopy(dbBookCopy11);
+        dbLoan1.setLoanDate(new Date());
+        dbLoan1.setUser(dbUser);
+        dbLoan2 = new Loan();
+        dbLoan2.setBookCopy(dbBookCopy12);
+        dbLoan2.setLoanDate(new Date());
+        dbLoan2.setUser(dbUser);
+        loanDao.create(dbLoan1);
+        loanDao.create(dbLoan2);
     }
 
     @Test(expectedExceptions = DataAccessException.class)
@@ -179,5 +181,4 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
         assertNotNull(bookCopyDao.findById(dbBookCopy21.getId()));
     }
 
-    //TODO: bookcopy handling loan
 }

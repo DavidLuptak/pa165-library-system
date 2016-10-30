@@ -18,7 +18,7 @@ public class Category {
     private Long id;
 
     @NotNull
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String name;
 
     @ManyToMany(mappedBy = "categories")
@@ -52,6 +52,10 @@ public class Category {
 
     public List<Book> getBooks() {
         return Collections.unmodifiableList(books);
+    }
+
+    public void removeBook(Book book){
+        this.books.remove(book);
     }
 
     @Override
