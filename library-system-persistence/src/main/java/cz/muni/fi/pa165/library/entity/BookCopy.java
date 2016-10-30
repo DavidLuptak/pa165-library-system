@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.library.enums.BookState;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class BookCopy {
     @ManyToOne
     private Book book;
 
-    @OneToMany(mappedBy = "bookCopy",orphanRemoval = true)
+    @OneToMany(mappedBy = "bookCopy", orphanRemoval = true)
     private List<Loan> loans;
 
     @NotNull
@@ -31,6 +32,12 @@ public class BookCopy {
 
     @NotNull
     private BookState bookState;
+
+    public BookCopy() {
+        isLoaned = false;
+        loans = new ArrayList<>();
+        bookState = BookState.NEW;
+    }
 
     public Long getId() {
         return id;

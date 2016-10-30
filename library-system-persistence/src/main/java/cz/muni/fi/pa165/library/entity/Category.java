@@ -22,12 +22,12 @@ public class Category {
     private String name;
 
     @ManyToMany(mappedBy = "categories")
-    private List<Book> books = new ArrayList<Book>();
+    private List<Book> books = new ArrayList<>();
 
     public Category() {}
 
-    public Category(Long id) {
-        this.id = id;
+    public Category(String name) {
+        this.name = name;
     }
 
     public Long getId() {

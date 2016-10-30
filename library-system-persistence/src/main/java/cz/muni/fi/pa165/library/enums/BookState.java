@@ -14,12 +14,12 @@ public enum BookState {
 
     private final String name;       
 
-    private BookState(String s) {
+    BookState(String s) {
         name = s;
     }
 
     public boolean equalsName(String otherName) {
-        return (otherName == null) ? false : name.equals(otherName);
+        return otherName != null && name.equals(otherName);
     }
 
     @Override

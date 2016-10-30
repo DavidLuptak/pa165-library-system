@@ -29,9 +29,6 @@ public class Loan {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date returnDate;
 
-    @NotNull
-    private boolean returned = false;
-
     @Column
     private BookState returnBookState;
 
@@ -73,11 +70,7 @@ public class Loan {
     }
 
     public boolean isReturned() {
-        return returned;
-    }
-
-    public void setReturned(boolean returned) {
-        this.returned = returned;
+        return returnDate != null;
     }
 
     public BookState getReturnBookState() {
@@ -97,43 +90,24 @@ public class Loan {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + Objects.hashCode(this.id);
-        hash = 53 * hash + Objects.hashCode(this.user);
-        hash = 53 * hash + Objects.hashCode(this.loanDate);
-        hash = 53 * hash + Objects.hashCode(this.returnDate);
-        hash = 53 * hash + (this.returned ? 1 : 0);
-        return hash;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Loan)) return false;
+
+        Loan loan = (Loan) o;
+
+        if (getUser() != null ? !getUser().equals(loan.getUser()) : loan.getUser() != null) return false;
+        if (getLoanDate() != null ? !getLoanDate().equals(loan.getLoanDate()) : loan.getLoanDate() != null)
+            return false;
+        return getBookCopy() != null ? getBookCopy().equals(loan.getBookCopy()) : loan.getBookCopy() == null;
+
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Loan other = (Loan) obj;
-        if (this.returned != other.returned) {
-            return false;
-        }
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.user, other.user)) {
-            return false;
-        }
-        if (!Objects.equals(this.loanDate, other.loanDate)) {
-            return false;
-        }
-        if (!Objects.equals(this.returnDate, other.returnDate)) {
-            return false;
-        }
-        return true;
+    public int hashCode() {
+        int result = getUser() != null ? getUser().hashCode() : 0;
+        result = 31 * result + (getLoanDate() != null ? getLoanDate().hashCode() : 0);
+        result = 31 * result + (getBookCopy() != null ? getBookCopy().hashCode() : 0);
+        return result;
     }
 }
