@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 import static org.testng.Assert.*;
@@ -57,31 +58,31 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         userDao.create(user1);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void testCreateUserWithNullName() throws Exception {
         user1.setFirstName(null);
         userDao.create(user1);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void testCreateUserWithNullSurName() throws Exception {
         user1.setLastName(null);
         userDao.create(user1);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void testCreateUserWithNullEmail() throws Exception {
         user1.setEmail(null);
         userDao.create(user1);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void testCreateUserWithNullAddress() throws Exception {
         user1.setAddress(null);
         userDao.create(user1);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void testCreateUserWithInvalidEmail() throws Exception {
         user1.setEmail("lalala@");
         userDao.create(user1);
@@ -119,7 +120,7 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         userDao.update(null);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void testUpdateInvalidUser() throws Exception {
         userDao.create(user1);
         user1.setFirstName(null);
