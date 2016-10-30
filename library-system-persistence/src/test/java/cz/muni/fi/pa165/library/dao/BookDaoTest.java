@@ -41,14 +41,17 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
         book1 = new Book();
         book1.setName("Book Name 1");
         book1.setIsbn("1L");
+        book1.setAuthor("AB");
         // book1.setState(BookState.NEW);
         book2 = new Book();
         book2.setName("Very Long Long Long Long Long Book Name 2");
         book2.setIsbn("2L");
+        book2.setAuthor("CD");
         // book2.setState(BookState.NEW);
         book3 = new Book();
         book3.setName("Light Damaged Book Name 3");
         book3.setIsbn("3L");
+        book3.setAuthor("EF");
         // book3.setState(BookState.LIGHT_DAMAGE);
         bookDao.create(book1);
         bookDao.create(book2);
