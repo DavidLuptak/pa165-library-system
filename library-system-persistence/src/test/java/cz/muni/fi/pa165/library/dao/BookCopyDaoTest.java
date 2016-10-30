@@ -137,7 +137,7 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test(expectedExceptions = DataAccessException.class)
     public void findBookCopyWithNullId(){
-        bookCopyDao.findById((Long) null);
+        bookCopyDao.findById(null);
     }
 
     @Test

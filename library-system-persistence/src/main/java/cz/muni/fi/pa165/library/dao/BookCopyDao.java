@@ -34,7 +34,7 @@ public interface BookCopyDao {
      * @param id of searched bookCopy
      * @return found bookCopy
      */
-    BookCopy findById(long id);
+    BookCopy findById(Long id);
 
     /**
      * Finds all copies of the given book in the database
