@@ -24,8 +24,7 @@ public class Category {
     @ManyToMany(mappedBy = "categories")
     private List<Book> books = new ArrayList<Book>();
 
-    public Category() {
-    }
+    public Category() {}
 
     public Category(Long id) {
         this.id = id;

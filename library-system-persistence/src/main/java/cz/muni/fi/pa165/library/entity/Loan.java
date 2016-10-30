@@ -16,17 +16,36 @@ public class Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    public void setId(Long id) {
-        this.id = id;
-    }
+
+    @NotNull
+    @ManyToOne
+    private User user;
+
+    @NotNull
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date loanDate;
+
+    @Column
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date returnDate;
+
+    @NotNull
+    private boolean returned = false;
+
+    @Column
+    private BookState returnBookState;
+
+    @NotNull
+    @ManyToOne
+    private BookCopy bookCopy;
 
     public Long getId() {
         return this.id;
     }
-    
-    @ManyToOne
-    private User user;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public User getUser() {
         return user;
@@ -36,10 +55,6 @@ public class Loan {
         this.user = user;
     }
 
-    @Column(nullable = false)
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date loanDate;
-    
     public Date getLoanDate() {
         return loanDate;
     }
@@ -47,11 +62,7 @@ public class Loan {
     public void setLoanDate(Date loanDate) {
         this.loanDate = loanDate;
     }
-    
-    @Column
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date returnDate;
-    
+
     public Date getReturnDate() {
         return this.returnDate;
     }
@@ -60,9 +71,6 @@ public class Loan {
         if(returnDate.before(getLoanDate())) throw new IllegalArgumentException("returnDate is before loanDate");
         this.returnDate = returnDate;
     }
-    
-    @Column(nullable = false)
-    private boolean returned = false;
 
     public boolean isReturned() {
         return returned;
@@ -71,28 +79,21 @@ public class Loan {
     public void setReturned(boolean returned) {
         this.returned = returned;
     }
-	
-    @Column
-    private BookState returnBookState;
-    
+
     public BookState getReturnBookState() {
         return this.returnBookState;
     }
-    
+
     public void setReturnBookState(BookState returnBookState) {
         this.returnBookState = returnBookState;
     }
 
-    @NotNull
-    @OneToMany(mappedBy = "loan")
-    private List<BookCopy> bookCopies = new ArrayList<>();
-
-    public List<BookCopy> getBookCopy() {
-        return Collections.unmodifiableList(bookCopies);
+    public BookCopy getBookCopy() {
+        return bookCopy;
     }
 
-    public void addBookCopy(BookCopy bookCopy){
-        this.bookCopies.add(bookCopy);
+    public void setBookCopy(BookCopy bookCopy) {
+        this.bookCopy = bookCopy;
     }
 
     @Override

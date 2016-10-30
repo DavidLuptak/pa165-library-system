@@ -4,6 +4,9 @@ import cz.muni.fi.pa165.library.enums.BookState;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Collections;
+import java.util.List;
+
 
 /**
  * @author Lenka (433591)
@@ -20,8 +23,11 @@ public class BookCopy {
     @ManyToOne
     private Book book;
 
-    @ManyToOne
-    private Loan loan;
+    @OneToMany(mappedBy = "bookCopy",orphanRemoval = true)
+    private List<Loan> loans;
+
+    @NotNull
+    private boolean isLoaned;
 
     @NotNull
     private BookState bookState;
@@ -48,6 +54,23 @@ public class BookCopy {
 
     public void setBookState(BookState bookState) {
         this.bookState = bookState;
+    }
+
+    public List<Loan> getLoans() {
+        return Collections.unmodifiableList(loans);
+    }
+
+    public void addLoan(Loan loan){
+        if(!isLoaned()) throw new IllegalStateException("Book is currently loaned");
+        loans.add(loan);
+    }
+
+    public boolean isLoaned() {
+        return isLoaned;
+    }
+
+    public void setLoaned(boolean loaned) {
+        isLoaned = loaned;
     }
 
     @Override

@@ -8,7 +8,7 @@ import java.util.List;
  * @author Bedrich Said
  */
 public interface LoanDao {
-
+    //TODO: documentation
     void create(Loan loan);
     
     void delete(Loan loan);
