@@ -71,6 +71,7 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
         dbBook1.setName("dbBook1Name");
         dbBook1.setAuthor("dbBook1Author");
         dbBook1.setIsbn("0-14-020652-3");
+
         dbBook2 = new Book();
         dbBook2.setName("dbBook2Name");
         dbBook2.setAuthor("dbBook2Author");
@@ -99,11 +100,9 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
         bookCopyDao.create(dbBookCopy22);
 
         dbLoan = new Loan();
-        dbLoan.addBookCopy(dbBookCopy11);
-        dbLoan.addBookCopy(dbBookCopy21);
+        dbLoan.setBookCopy(dbBookCopy11);
         dbLoan.setLoanDate(new Date());
         dbLoan.setUser(dbUser);
-        dbLoan.setReturned(false);
         loanDao.create(dbLoan);
     }
 
@@ -143,6 +142,7 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
     @Test
     public void findBookCopies(){
         List<BookCopy> bookCopySet = bookCopyDao.findByBook(dbBook1);
+        assertEquals(2, bookCopySet.size());
         assertTrue(bookCopySet.contains(dbBookCopy11));
         assertTrue(bookCopySet.contains(dbBookCopy12));
         assertFalse(bookCopySet.contains(dbBookCopy21));
