@@ -73,8 +73,6 @@ public class CategoryDaoTest extends AbstractTestNGSpringContextTests{
         categoryDao.create(dbCategory1);
         categoryDao.create(dbCategory2);
         categoryDao.create(dbCategory3);
-
-
     }
 
     @Test(expectedExceptions = DataAccessException.class)
@@ -85,6 +83,12 @@ public class CategoryDaoTest extends AbstractTestNGSpringContextTests{
     @Test(expectedExceptions = ConstraintViolationException.class)
     public void createCategoryWithoutName(){
         categoryDao.create(new Category());
+    }
+
+    @Test(expectedExceptions = DataAccessException.class)
+    public void createCategoryWithExistingName(){
+        category1.setName(dbCategory1.getName());
+        categoryDao.create(category1);
     }
 
     @Test
@@ -132,26 +136,12 @@ public class CategoryDaoTest extends AbstractTestNGSpringContextTests{
         categoryDao.update(null);
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
-    public void updateCategoryWithNullName(){
-        dbCategory1.setName(null);
-        categoryDao.update(dbCategory1);
-        Category tmp = categoryDao.findById(dbCategory1.getId());
-        System.out.println(tmp.getName());
-    }
-
     @Test
     public void updateCategoryNameToNonExistingOne(){
         dbCategory1.setName("dbCategory1FakeName");
         categoryDao.update(dbCategory1);
         Category category = categoryDao.findById(dbCategory1.getId());
         assertEquals(category, dbCategory1);
-    }
-
-    @Test(expectedExceptions = ConstraintViolationException.class)
-    public void updateCategoryNameToExistingOne(){
-        dbCategory1.setName(dbCategory2.getName());
-        categoryDao.update(dbCategory1);
     }
 
     @Test
