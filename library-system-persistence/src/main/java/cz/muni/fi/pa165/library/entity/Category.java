@@ -18,17 +18,16 @@ public class Category {
     private Long id;
 
     @NotNull
-    @Column(nullable = false, unique = true)
+    @Column(unique = true, nullable = false)
     private String name;
 
     @ManyToMany(mappedBy = "categories")
-    private List<Book> books = new ArrayList<Book>();
+    private List<Book> books = new ArrayList<>();
 
-    public Category() {
-    }
+    public Category() {}
 
-    public Category(Long id) {
-        this.id = id;
+    public Category(String name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -55,24 +54,23 @@ public class Category {
         return Collections.unmodifiableList(books);
     }
 
+    public void removeBook(Book book){
+        this.books.remove(book);
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null) return false;
         if (!(o instanceof Category)) return false;
 
         Category category = (Category) o;
 
-        if (!id.equals(category.id)) return false;
-        return name.equals(category.name);
+        return getName() != null ? getName().equals(category.getName()) : category.getName() == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
-        return result;
+        return getName() != null ? getName().hashCode() : 0;
     }
 }

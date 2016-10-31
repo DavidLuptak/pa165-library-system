@@ -14,7 +14,7 @@ public enum UserRole {
 
     private final String name;
 
-    private UserRole(String name) {
+    UserRole(String name) {
         this.name = name;
     }
 

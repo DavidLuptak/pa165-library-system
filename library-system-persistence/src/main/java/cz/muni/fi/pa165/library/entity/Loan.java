@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.library.entity;
 
 import cz.muni.fi.pa165.library.enums.BookState;
-import java.io.Serializable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,22 +11,38 @@ import java.util.*;
  * @author Bedrich Said
  */
 @Entity
-public class Loan implements Serializable {
+public class Loan {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    public void setId(Long id) {
-        this.id = id;
-    }
+
+    @NotNull
+    @ManyToOne
+    private User user;
+
+    @NotNull
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date loanDate;
+
+    @Column
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date returnDate;
+
+    @Column
+    private BookState returnBookState;
+
+    @NotNull
+    @ManyToOne
+    private BookCopy bookCopy;
 
     public Long getId() {
         return this.id;
     }
-    
-    @ManyToOne
-    private User user;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public User getUser() {
         return user;
@@ -37,10 +52,6 @@ public class Loan implements Serializable {
         this.user = user;
     }
 
-    @Column(nullable = false)
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date loanDate;
-    
     public Date getLoanDate() {
         return loanDate;
     }
@@ -48,88 +59,55 @@ public class Loan implements Serializable {
     public void setLoanDate(Date loanDate) {
         this.loanDate = loanDate;
     }
-    
-    @Column
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date returnDate;
-    
+
     public Date getReturnDate() {
         return this.returnDate;
     }
 
     public void setReturnDate(Date returnDate) {
+        if(returnDate.before(getLoanDate())) throw new IllegalArgumentException("returnDate is before loanDate");
         this.returnDate = returnDate;
     }
-    
-    @Column(nullable = false)
-    private boolean returned = false;
 
     public boolean isReturned() {
-        return returned;
+        return returnDate != null;
     }
 
-    public void setReturned(boolean returned) {
-        this.returned = returned;
-    }
-	
-    @Column
-    private BookState returnBookState;
-    
     public BookState getReturnBookState() {
         return this.returnBookState;
     }
-    
+
     public void setReturnBookState(BookState returnBookState) {
         this.returnBookState = returnBookState;
     }
 
-    @NotNull
-    @OneToMany(mappedBy = "loan")
-    private List<BookCopy> bookCopies = new ArrayList<>();
-
-    public List<BookCopy> getBookCopy() {
-        return Collections.unmodifiableList(bookCopies);
+    public BookCopy getBookCopy() {
+        return bookCopy;
     }
 
-    public void addBookCopy(BookCopy bookCopy){
-        this.bookCopies.add(bookCopy);
+    public void setBookCopy(BookCopy bookCopy) {
+        this.bookCopy = bookCopy;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Loan)) return false;
+
+        Loan loan = (Loan) o;
+
+        if (getUser() != null ? !getUser().equals(loan.getUser()) : loan.getUser() != null) return false;
+        if (getLoanDate() != null ? !getLoanDate().equals(loan.getLoanDate()) : loan.getLoanDate() != null)
+            return false;
+        return getBookCopy() != null ? getBookCopy().equals(loan.getBookCopy()) : loan.getBookCopy() == null;
+
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + Objects.hashCode(this.id);
-        hash = 53 * hash + Objects.hashCode(this.user);
-        hash = 53 * hash + Objects.hashCode(this.loanDate);
-        hash = 53 * hash + Objects.hashCode(this.returnDate);
-        hash = 53 * hash + (this.returned ? 1 : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Loan other = (Loan) obj;
-        if (this.returned != other.returned) {
-            return false;
-        }
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.user, other.user)) {
-            return false;
-        }
-        if (!Objects.equals(this.loanDate, other.loanDate)) {
-            return false;
-        }
-        return Objects.equals(this.returnDate, other.returnDate);
+        int result = getUser() != null ? getUser().hashCode() : 0;
+        result = 31 * result + (getLoanDate() != null ? getLoanDate().hashCode() : 0);
+        result = 31 * result + (getBookCopy() != null ? getBookCopy().hashCode() : 0);
+        return result;
     }
 }

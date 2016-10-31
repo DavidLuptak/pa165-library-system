@@ -2,32 +2,33 @@ package cz.muni.fi.pa165.library.dao;
 
 import cz.muni.fi.pa165.library.LibraryApplicationContext;
 import cz.muni.fi.pa165.library.entity.Book;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.validation.ConstraintViolationException;
 import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 
 /**
  *
  * @author Bedrich Said
  */
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = LibraryApplicationContext.class)
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
-public class BookDaoTest {
-    @PersistenceContext
-    private EntityManager em;
+public class BookDaoTest extends AbstractTestNGSpringContextTests {
 
     @Inject
     private BookDao bookDao;
@@ -36,24 +37,26 @@ public class BookDaoTest {
     private Book book2;
     private Book book3;
 
-    @Before
+    @BeforeMethod
     public void setUp() {
         book1 = new Book();
         book1.setName("Book Name 1");
         book1.setIsbn("1L");
-        // book1.setState(BookState.NEW);
+        book1.setAuthor("AB");
+
         book2 = new Book();
         book2.setName("Very Long Long Long Long Long Book Name 2");
         book2.setIsbn("2L");
-        // book2.setState(BookState.NEW);
+        book2.setAuthor("CD");
+
         book3 = new Book();
         book3.setName("Light Damaged Book Name 3");
         book3.setIsbn("3L");
-        // book3.setState(BookState.LIGHT_DAMAGE);
-        em.persist(book1);
-        em.persist(book2);
-        em.persist(book3);
-        em.flush();
+        book3.setAuthor("EF");
+
+        bookDao.create(book1);
+        bookDao.create(book2);
+        bookDao.create(book3);
     }
 
     @Test
@@ -63,7 +66,7 @@ public class BookDaoTest {
         assertNotNull(book3.getId());
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void testCreateNullName() {
         Book newBook = new Book();
         bookDao.create(newBook);
@@ -73,14 +76,15 @@ public class BookDaoTest {
     public void testUpdate() {
         book1.setName("changed");
         bookDao.update(book1);
-        assertEquals("changed", em.find(Book.class, book1.getId())
+        assertEquals("changed", bookDao.findById(book1.getId())
                 .getName());
     }
 
     @Test
     public void testFindById() {
-        assertSame(book2, bookDao.findById(book2.getId()));
-        assertSame(book3, bookDao.findById(book3.getId()));
+        assertDeepEquals(bookDao.findById(book2.getId()), book2);
+        assertDeepEquals(bookDao.findById(book3.getId()), book3);
+
         assertNull(bookDao.findById(100L));
     }
 
@@ -106,16 +110,25 @@ public class BookDaoTest {
     @Test
     public void testDelete() {
         bookDao.delete(book2);
-        assertNull(em.find(Book.class, book2.getId()));
+        assertNull(bookDao.findById(book2.getId()));
     }
 
-    @Test(expected = DataAccessException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void testDeleteNonexistent() {
         Book newBook = new Book();
         newBook.setId(100L);
         newBook.setName("New Added Book Name 4");
-        // newBook.setState(BookState.NEW);
         newBook.setIsbn("100L");
         bookDao.delete(newBook);
+    }
+
+    private void assertDeepEquals(Book actual, Book expected) {
+        assertNotNull(actual);
+        assertNotNull(expected);
+        assertEquals(actual.getId(), expected.getId());
+        assertEquals(actual.getName(), expected.getName());
+        assertEquals(actual.getAuthor(), expected.getAuthor());
+        assertEquals(actual.getIsbn(), expected.getIsbn());
+
     }
 }

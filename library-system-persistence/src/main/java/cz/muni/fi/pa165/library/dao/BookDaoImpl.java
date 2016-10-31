@@ -2,7 +2,6 @@ package cz.muni.fi.pa165.library.dao;
 
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Category;
-import org.apache.commons.lang.Validate;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -21,21 +20,16 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public void create(Book book) {
-        validateBook(book);
-        Validate.isTrue(book.getId() == null, "book's id should be null");
         em.persist(book);
     }
 
     @Override
     public void update(Book book) {
-        validateBook(book);
-        Validate.notNull(book.getId());
         em.merge(book);
     }
 
     @Override
     public void delete(Book book) {
-        Validate.notNull(book.getId());
         em.remove(book);
     }
 
@@ -46,7 +40,6 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public List<Book> findByCategory(Category category) {
-        Validate.notNull(category);
         return em.createQuery("SELECT b FROM Book b where b.category = :category", Book.class)
             .setParameter("category", category).getResultList();
 
@@ -54,7 +47,6 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public List<Book> findByAuthor(String author) {
-        Validate.notNull(author);
         return em.createQuery("SELECT b FROM Book b where b.author = :author", Book.class)
             .setParameter("author", author).getResultList();
 
@@ -62,7 +54,6 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public List<Book> findByName(String name) {
-        Validate.notNull(name);
         return em.createQuery("SELECT b FROM Book b where b.name = :name", Book.class)
             .setParameter("name", name).getResultList();
 
@@ -74,14 +65,5 @@ public class BookDaoImpl implements BookDao {
 
     }
 
-    private void validateBook(Book book) {
-        Validate.notNull(book);
-        Validate.notNull(book.getName());
-        Validate.notEmpty(book.getName());
-        Validate.notNull(book.getAuthor());
-        Validate.notEmpty(book.getAuthor());
-        Validate.notNull(book.getIsbn());
-        Validate.notEmpty(book.getIsbn());
-    }
 
 }

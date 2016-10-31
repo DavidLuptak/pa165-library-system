@@ -13,6 +13,7 @@ import java.util.List;
  */
 @Repository
 public class LoanDaoImpl implements LoanDao {
+
     @PersistenceContext
     private EntityManager em;
     
@@ -23,8 +24,7 @@ public class LoanDaoImpl implements LoanDao {
 
     @Override
     public void delete(Loan loan) {
-        //todo
-        //em.remove(findById(loan.getId()));
+        em.remove(loan);
     }
 
     @Override

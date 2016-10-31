@@ -34,13 +34,9 @@ public class Book {
     private List<BookCopy> bookCopies = new ArrayList<>();
 
     public Book() {
-        // this.categories = new ArrayList<Category>();
-        // this.bookCopies = new ArrayList<BookCopy>();
-
     }
 
     public Book(String name, String author, String isbn) {
-        this();
         this.name = name;
         this.author = author;
         this.isbn = isbn;
@@ -92,6 +88,10 @@ public class Book {
 
     public void setBookCopies(List<BookCopy> bookCopies) {
         this.bookCopies = bookCopies;
+    }
+
+    public void addBookCopy(BookCopy bookCopy) {
+        bookCopies.add(bookCopy);
     }
 
     @Override

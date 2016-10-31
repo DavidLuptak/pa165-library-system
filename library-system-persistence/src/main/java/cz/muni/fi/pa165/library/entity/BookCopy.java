@@ -4,6 +4,10 @@ import cz.muni.fi.pa165.library.enums.BookState;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 
 /**
  * @author Lenka (433591)
@@ -20,11 +24,16 @@ public class BookCopy {
     @ManyToOne
     private Book book;
 
-    @ManyToOne
-    private Loan loan;
+    @OneToMany(mappedBy = "bookCopy", orphanRemoval = true)
+    private List<Loan> loans;
 
     @NotNull
     private BookState bookState;
+
+    public BookCopy() {
+        loans = new ArrayList<>();
+        bookState = BookState.NEW;
+    }
 
     public Long getId() {
         return id;
@@ -48,6 +57,14 @@ public class BookCopy {
 
     public void setBookState(BookState bookState) {
         this.bookState = bookState;
+    }
+
+    public List<Loan> getLoans() {
+        return Collections.unmodifiableList(loans);
+    }
+
+    public void addLoan(Loan loan){
+        loans.add(loan);
     }
 
     @Override
