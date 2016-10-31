@@ -9,6 +9,8 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
+ * Implementation of the DAO contract for the Category entity.
+ *
  * @author Dávid Lupták
  * @version 29.10.2016
  */
@@ -45,7 +47,7 @@ public class CategoryDaoImpl implements CategoryDao {
         }
         try {
             return em.createQuery("SELECT c FROM Category c WHERE c.name = :name", Category.class)
-                .setParameter("name", name).getSingleResult();
+                    .setParameter("name", name).getSingleResult();
         } catch (NoResultException e) {
             return null;
         }

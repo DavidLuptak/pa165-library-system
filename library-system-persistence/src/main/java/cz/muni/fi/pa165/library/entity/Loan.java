@@ -8,6 +8,9 @@ import javax.validation.constraints.NotNull;
 import java.util.*;
 
 /**
+ * Entity class representing Loan in the library system.
+ * It serves for the purpose of making a loan of book copies.
+ * More than one book copy can be included in a single loan.
  *
  * @author Bedrich Said
  */

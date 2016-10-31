@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * Entity class representing Category in the library system.
+ *
  * @author David Luptak
  * @version 20.10.2016
  */

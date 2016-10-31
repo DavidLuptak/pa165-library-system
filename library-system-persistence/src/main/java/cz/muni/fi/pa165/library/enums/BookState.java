@@ -1,18 +1,18 @@
 package cz.muni.fi.pa165.library.enums;
 
-
 /**
+ * Status of the book condition.
  *
  * @author Bedrich Said
  */
 public enum BookState {
-    NEW ("New"),
-    LIGHT_DAMAGE ("Lightly damaged"),
-    MEDIUM_DAMAGE ("Moderately damaged"),
-    HEAVY_DAMAGE ("Heavily damaged"),
-    REMOVED ("Missing");
+    NEW("New"),
+    LIGHT_DAMAGE("Lightly damaged"),
+    MEDIUM_DAMAGE("Moderately damaged"),
+    HEAVY_DAMAGE("Heavily damaged"),
+    REMOVED("Missing");
 
-    private final String name;       
+    private final String name;
 
     BookState(String s) {
         name = s;
@@ -24,6 +24,6 @@ public enum BookState {
 
     @Override
     public String toString() {
-       return this.name;
+        return this.name;
     }
 }

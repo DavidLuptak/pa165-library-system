@@ -9,6 +9,8 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
+ * Implementation of the DAO contract for the Book entity.
+ *
  * @author Lenka (433591)
  * @version 25.10.2016
  */
@@ -44,7 +46,7 @@ public class BookDaoImpl implements BookDao {
             throw new IllegalArgumentException("Category is not valid");
         }
         return em.createQuery("SELECT b FROM Book b where b.category = :category", Book.class)
-            .setParameter("category", category).getResultList();
+                .setParameter("category", category).getResultList();
 
     }
 
@@ -54,7 +56,7 @@ public class BookDaoImpl implements BookDao {
             throw new IllegalArgumentException("Author is not valid");
         }
         return em.createQuery("SELECT b FROM Book b where b.author = :author", Book.class)
-            .setParameter("author", author).getResultList();
+                .setParameter("author", author).getResultList();
 
     }
 
@@ -64,7 +66,7 @@ public class BookDaoImpl implements BookDao {
             throw new IllegalArgumentException("Name is not valid");
         }
         return em.createQuery("SELECT b FROM Book b where b.name = :name", Book.class)
-            .setParameter("name", name).getResultList();
+                .setParameter("name", name).getResultList();
 
     }
 

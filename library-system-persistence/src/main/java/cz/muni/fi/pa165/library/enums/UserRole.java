@@ -1,16 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.library.enums;
 
 /**
+ * Roles of the users in the system.
  *
  * @author xmlynar
  */
 public enum UserRole {
-    ADMIN("Admin"), MEMBER("Member");
+    /**
+     * User with administrative privileges.
+     */
+    ADMIN("Admin"),
+
+    /**
+     * User with basic privileges.
+     */
+    MEMBER("Member");
 
     private final String name;
 
@@ -22,5 +26,5 @@ public enum UserRole {
     public String toString() {
         return name;
     }
-    
+
 }

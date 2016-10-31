@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
+ * Implementation of the DAO contract for the Loan entity.
  *
  * @author Bedrich Said
  */
@@ -16,7 +17,7 @@ public class LoanDaoImpl implements LoanDao {
 
     @PersistenceContext
     private EntityManager em;
-    
+
     @Override
     public void create(Loan loan) {
         em.persist(loan);

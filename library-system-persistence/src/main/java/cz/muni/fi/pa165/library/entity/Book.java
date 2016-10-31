@@ -8,6 +8,10 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * Entity class representing Book in the library system.
+ * A book can have multiple (printed) copies out there.
+ * Searching books in a system is based on this entity.
+ *
  * @author Lenka (433591)
  * @version 22.10.2016
  */

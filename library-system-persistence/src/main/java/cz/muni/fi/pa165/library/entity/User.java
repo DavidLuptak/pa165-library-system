@@ -11,7 +11,9 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * Library User entity.
+ * Entity class representing User in the library system.
+ * Two roles ('member' by default and 'administrator'
+ * with the administrative privileges) exists out there.
  *
  * @author Martin
  */

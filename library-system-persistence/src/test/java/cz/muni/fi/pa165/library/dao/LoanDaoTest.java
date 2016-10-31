@@ -20,13 +20,10 @@ import javax.validation.ConstraintViolationException;
 import java.util.Date;
 import java.util.List;
 
-import static org.testng.Assert.assertNull;
-import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.*;
 
 /**
- * Test suite for the Loan DAO
+ * Test suite for the Loan DAO.
  *
  * @author Dávid Lupták
  * @version 26.10.2016

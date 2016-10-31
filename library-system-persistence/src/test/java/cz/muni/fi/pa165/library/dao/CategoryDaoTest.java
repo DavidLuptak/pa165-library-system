@@ -18,14 +18,18 @@ import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
 
 import static org.junit.Assert.*;
+
 /**
- * Created by Martin on 28.10.2016.
+ * Test suite for the Category DAO.
+ *
+ * @author Martin
+ * @version 28.10.2016
  */
 
 @ContextConfiguration(classes = LibraryApplicationContext.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
-public class CategoryDaoTest extends AbstractTestNGSpringContextTests{
+public class CategoryDaoTest extends AbstractTestNGSpringContextTests {
 
     @PersistenceContext
     EntityManager em;
@@ -46,7 +50,7 @@ public class CategoryDaoTest extends AbstractTestNGSpringContextTests{
     private Book dbBook3;
 
     @BeforeMethod
-    public void setUp(){
+    public void setUp() {
         dbBook1 = new Book();
         dbBook1.setName("Book Name 1");
         dbBook1.setIsbn("1L");
@@ -83,18 +87,18 @@ public class CategoryDaoTest extends AbstractTestNGSpringContextTests{
     }
 
     @Test(expectedExceptions = ConstraintViolationException.class)
-    public void createCategoryWithoutName(){
+    public void createCategoryWithoutName() {
         categoryDao.create(new Category());
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void createCategoryWithExistingName(){
+    public void createCategoryWithExistingName() {
         category1.setName(dbCategory1.getName());
         categoryDao.create(category1);
     }
 
     @Test
-    public void createCategorySetsId(){
+    public void createCategorySetsId() {
         assertNotNull(dbCategory1.getId());
     }
 
@@ -105,7 +109,7 @@ public class CategoryDaoTest extends AbstractTestNGSpringContextTests{
     }
 
     @Test
-    public void findCategoryWithNonExistingId(){
+    public void findCategoryWithNonExistingId() {
         assertNull(categoryDao.findById(100L));
     }
 
@@ -134,12 +138,12 @@ public class CategoryDaoTest extends AbstractTestNGSpringContextTests{
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void updateNullCategory(){
+    public void updateNullCategory() {
         categoryDao.update(null);
     }
 
     @Test
-    public void updateCategoryNameToNonExistingOne(){
+    public void updateCategoryNameToNonExistingOne() {
         dbCategory1.setName("dbCategory1FakeName");
         categoryDao.update(dbCategory1);
         Category category = categoryDao.findById(dbCategory1.getId());
@@ -147,33 +151,33 @@ public class CategoryDaoTest extends AbstractTestNGSpringContextTests{
     }
 
     @Test(expectedExceptions = ConstraintViolationException.class)
-    public void updateCategoryNameToNull(){
+    public void updateCategoryNameToNull() {
         dbCategory1.setName(null);
         categoryDao.update(dbCategory1);
         em.flush();
     }
 
     @Test
-    public void updateCategoryAddBook(){
+    public void updateCategoryAddBook() {
         dbCategory1.addBook(dbBook3);
         assertTrue(dbCategory1.getBooks().contains(dbBook3));
     }
 
     @Test
-    public void updateCategoryRemoveBook(){
+    public void updateCategoryRemoveBook() {
         dbCategory2.removeBook(dbBook2);
         assertFalse(dbCategory1.getBooks().contains(dbBook2));
     }
 
     @Test
-    public void deleteCategory(){
+    public void deleteCategory() {
         categoryDao.delete(dbCategory2);
         assertEquals(2, categoryDao.findAll().size());
         assertNull(categoryDao.findById(dbCategory2.getId()));
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void deleteNotStoredCategory(){
+    public void deleteNotStoredCategory() {
         categoryDao.delete(category1);
     }
 

@@ -11,6 +11,10 @@ import java.util.List;
 
 
 /**
+ * Entity class representing BookCopy in the library system.
+ * A bookCopy is exactly one (printed) copy of a book.
+ * Making a loan in a system is based on this entity.
+ *
  * @author Lenka (433591)
  * @version 25.10.2016
  */

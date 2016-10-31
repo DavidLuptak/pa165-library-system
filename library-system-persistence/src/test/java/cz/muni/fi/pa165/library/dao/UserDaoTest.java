@@ -21,6 +21,8 @@ import java.util.List;
 import static org.testng.Assert.*;
 
 /**
+ * Test suite for the User DAO.
+ *
  * @author Lenka (433591)
  * @version 29.10.2016
  */

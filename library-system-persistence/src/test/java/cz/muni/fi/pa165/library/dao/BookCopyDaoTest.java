@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.enums.UserRole;
+import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -15,8 +16,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
-import org.springframework.dao.DataAccessException;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -27,7 +26,10 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Created by Martin on 29.10.2016.
+ * Test suite for the BookCopy DAO.
+ *
+ * @author Martin
+ * @version 29.10.2016
  */
 @ContextConfiguration(classes = LibraryApplicationContext.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
@@ -63,7 +65,7 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
     private BookCopy bookCopy1;
 
     @BeforeMethod
-    public void setUp(){
+    public void setUp() {
         dbUser = new User();
         dbUser.setAddress("dbUserAdress");
         dbUser.setEmail("dbUserEmail@Email.email");
@@ -114,40 +116,40 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void createNullBookCopy(){
+    public void createNullBookCopy() {
         bookCopyDao.create(null);
     }
 
     @Test(expectedExceptions = ConstraintViolationException.class)
-    public void createBookCopyWithoutBookSet(){
+    public void createBookCopyWithoutBookSet() {
         bookCopy1.setBook(null);
         bookCopyDao.create(bookCopy1);
     }
 
     @Test
-    public void createBookCopySetsId(){
+    public void createBookCopySetsId() {
         assertNotNull(dbBookCopy11.getId());
         assertNotNull(dbBookCopy21.getId());
     }
 
     @Test
-    public void findBookCopyById(){
+    public void findBookCopyById() {
         assertEquals(dbBookCopy11, bookCopyDao.findById(dbBookCopy11.getId()));
         assertNotEquals(dbBookCopy11, bookCopyDao.findById(dbBookCopy21.getId()));
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void findBookCopyWithNullId(){
+    public void findBookCopyWithNullId() {
         bookCopyDao.findById(null);
     }
 
     @Test
-    public void findBookCopyWithNonExistingId(){
+    public void findBookCopyWithNonExistingId() {
         assertNull(bookCopyDao.findById(100L));
     }
 
     @Test
-    public void findBookCopies(){
+    public void findBookCopies() {
         List<BookCopy> bookCopySet = bookCopyDao.findByBook(dbBook1);
         assertEquals(2, bookCopySet.size());
         assertTrue(bookCopySet.contains(dbBookCopy11));
@@ -156,38 +158,38 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void updateNullBookCopy(){
+    public void updateNullBookCopy() {
         bookCopyDao.update(null);
     }
 
     @Test
-    public void updateBookCopyState(){
+    public void updateBookCopyState() {
         dbBookCopy11.setBookState(BookState.MEDIUM_DAMAGE);
         bookCopyDao.update(dbBookCopy11);
         assertEquals(BookState.MEDIUM_DAMAGE, bookCopyDao.findById(dbBookCopy11.getId()).getBookState());
     }
 
     @Test(expectedExceptions = ConstraintViolationException.class)
-    public void updateBookCopyNullBook(){
+    public void updateBookCopyNullBook() {
         dbBookCopy11.setBook(null);
         bookCopyDao.update(dbBookCopy11);
         em.flush();
     }
 
     @Test
-    public void updateBookCopyBook(){
+    public void updateBookCopyBook() {
         dbBookCopy11.setBook(dbBook2);
         bookCopyDao.update(dbBookCopy11);
         assertEquals(dbBook2, bookCopyDao.findById(dbBookCopy11.getId()).getBook());
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void deleteNullBookCopy(){
+    public void deleteNullBookCopy() {
         bookCopyDao.delete(null);
     }
 
     @Test
-    public void deleteBookCopy(){
+    public void deleteBookCopy() {
         bookCopyDao.delete(dbBookCopy11);
         assertNull(bookCopyDao.findById(dbBookCopy11.getId()));
         assertNotNull(bookCopyDao.findById(dbBookCopy21.getId()));

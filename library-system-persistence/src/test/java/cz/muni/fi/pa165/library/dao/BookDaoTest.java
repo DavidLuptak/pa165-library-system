@@ -16,11 +16,12 @@ import javax.validation.ConstraintViolationException;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
 /**
+ * Test suite for the Book DAO.
  *
  * @author Bedrich Said
  */
