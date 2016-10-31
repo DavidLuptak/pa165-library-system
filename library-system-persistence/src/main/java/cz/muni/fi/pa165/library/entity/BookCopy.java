@@ -15,7 +15,7 @@ import java.util.List;
  * @version 25.10.2016
  */
 @Entity
-public class BookCopy implements Serializable {
+public class BookCopy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

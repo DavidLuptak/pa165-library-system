@@ -12,7 +12,7 @@ import java.util.List;
  * @version 22.10.2016
  */
 @Entity
-public class Book implements Serializable {
+public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

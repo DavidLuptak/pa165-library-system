@@ -12,7 +12,7 @@ import java.util.List;
  * @version 20.10.2016
  */
 @Entity
-public class Category implements Serializable {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

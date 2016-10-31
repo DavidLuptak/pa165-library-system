@@ -12,7 +12,7 @@ import java.util.*;
  * @author Bedrich Said
  */
 @Entity
-public class Loan implements Serializable {
+public class Loan {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

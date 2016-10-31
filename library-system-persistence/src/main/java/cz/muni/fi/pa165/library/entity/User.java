@@ -17,7 +17,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "Users")
-public class User implements Serializable {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
