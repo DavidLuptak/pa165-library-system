@@ -12,6 +12,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
 import java.util.List;
@@ -26,6 +28,9 @@ import static org.testng.Assert.*;
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
 public class UserDaoTest extends AbstractTestNGSpringContextTests {
+
+    @PersistenceContext
+    EntityManager em;
 
     @Inject
     private UserDao userDao;
@@ -129,6 +134,7 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
 
         userDao.update(user1);
 
+        em.flush();
     }
 
     @Test

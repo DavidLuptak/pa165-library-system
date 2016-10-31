@@ -47,6 +47,7 @@ public interface CategoryDao {
      *
      * @param name of the entity
      * @return the entity with the respective name or null if such entity does not exist
+     * @throws IllegalArgumentException if name is null or empty
      */
     Category findByName(String name);
 

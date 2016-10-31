@@ -40,6 +40,9 @@ public class BookCopyDaoImpl implements BookCopyDao {
 
     @Override
     public List<BookCopy> findByBook(Book book) {
+        if (book == null){
+            throw new IllegalArgumentException("Book is not valid");
+        }
         return em.createQuery("SELECT b FROM BookCopy b where b.book = :book", BookCopy.class)
             .setParameter("book", book).getResultList();
 

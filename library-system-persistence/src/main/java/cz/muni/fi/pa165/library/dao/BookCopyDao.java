@@ -40,6 +40,7 @@ public interface BookCopyDao {
      * Finds all copies of the given book in the database
      * @param book searched book
      * @return found copies
+     * @throws IllegalArgumentException if book is null
      */
     List<BookCopy> findByBook(Book book);
 }

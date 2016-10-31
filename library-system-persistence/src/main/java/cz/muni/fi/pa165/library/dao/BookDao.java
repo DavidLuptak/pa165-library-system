@@ -41,6 +41,7 @@ public interface BookDao {
      * Finds books that belong to the given category in the database
      * @param category searched category
      * @return found books
+     * @throws IllegalArgumentException if category is null
      */
     List<Book> findByCategory(Category category) ;
 
@@ -48,6 +49,7 @@ public interface BookDao {
      * Finds books that are written by the given author in the database
      * @param author searched author
      * @return found books
+     * @throws IllegalArgumentException if author is null or empty
      */
     List<Book> findByAuthor(String author) ;
 
@@ -55,6 +57,7 @@ public interface BookDao {
      * Finds books with the given name in the database
      * @param name searched name
      * @return found books
+     * @throws IllegalArgumentException if name is null or empty
      */
     List<Book> findByName(String name) ;
 

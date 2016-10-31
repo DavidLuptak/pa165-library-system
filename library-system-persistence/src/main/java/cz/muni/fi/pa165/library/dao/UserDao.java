@@ -46,7 +46,8 @@ public interface UserDao {
      * Finds users with the given email in the database.
      *
      * @param email of the searched user
-     * @return found users
+     * @return the user entity with the respective email or null if such entity does not exist
+     * @throws IllegalArgumentException if email is null or empty
      */
     User findByEmail(String email);
 

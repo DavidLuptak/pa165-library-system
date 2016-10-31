@@ -6,13 +6,12 @@
 package cz.muni.fi.pa165.library.dao;
 
 import cz.muni.fi.pa165.library.entity.User;
-import java.util.List;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-
-import org.springframework.dao.DataAccessException;
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
 /**
  * Implementation of UserDao entity.
@@ -24,7 +23,7 @@ public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
     private EntityManager em;
-    
+
     @Override
     public void create(User user) {
         em.persist(user);
@@ -37,7 +36,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void delete(User user) {
-        em.remove(user);
+        em.remove(findById(user.getId()));
     }
 
     @Override
@@ -46,23 +45,22 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findByEmail(String email)  {
-        List<User> resultList = em.createQuery("SELECT u FROM User u where u.email = :email", User.class)
-            .setParameter("email", email).getResultList();
-        if (resultList.isEmpty()) {
+    public User findByEmail(String email) {
+        if (email == null || email.isEmpty()) {
+            throw new IllegalArgumentException("Email is not valid");
+        }
+        try {
+            return em.createQuery("SELECT u FROM User u where u.email = :email", User.class)
+                    .setParameter("email", email).getSingleResult();
+        } catch (NoResultException e) {
             return null;
         }
-        return resultList.get(0);
     }
 
     @Override
     public List<User> findAll() {
         return em.createQuery("SELECT u FROM User u", User.class).getResultList();
     }
-
-
-
-
 
 
 }

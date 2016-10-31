@@ -32,7 +32,6 @@ public class CategoryDaoImpl implements CategoryDao {
     @Override
     public void delete(Category category) {
         em.remove(findById(category.getId()));
-
     }
 
     @Override
@@ -43,7 +42,7 @@ public class CategoryDaoImpl implements CategoryDao {
     @Override
     public Category findByName(String name) {
         if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("name is not valid");
+            throw new IllegalArgumentException("Name is not valid");
         }
         try {
             return em.createQuery("SELECT c FROM Category c WHERE c.name = :name", Category.class)
