@@ -19,6 +19,9 @@ public class LoanDaoImpl implements LoanDao {
     
     @Override
     public void create(Loan loan) {
+        if(loan == null) {
+            throw new NullPointerException("Cannot add null Loan into the database.");
+        }
         em.persist(loan);
     }
 
