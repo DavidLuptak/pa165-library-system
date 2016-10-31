@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.library.entity;
 
 import cz.muni.fi.pa165.library.enums.BookState;
+import java.io.Serializable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,7 +12,7 @@ import java.util.*;
  * @author Bedrich Said
  */
 @Entity
-public class Loan {
+public class Loan implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -129,9 +130,6 @@ public class Loan {
         if (!Objects.equals(this.loanDate, other.loanDate)) {
             return false;
         }
-        if (!Objects.equals(this.returnDate, other.returnDate)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.returnDate, other.returnDate);
     }
 }
