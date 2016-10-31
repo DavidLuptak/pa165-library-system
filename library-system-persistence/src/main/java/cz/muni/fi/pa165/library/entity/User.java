@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.library.entity;
 
 import cz.muni.fi.pa165.library.enums.UserRole;
+import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -16,7 +17,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "Users")
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

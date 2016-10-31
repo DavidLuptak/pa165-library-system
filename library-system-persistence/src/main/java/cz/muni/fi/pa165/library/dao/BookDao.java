@@ -4,7 +4,6 @@ import java.util.List;
 
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Category;
-import org.springframework.dao.DataAccessException;
 
 /**
  * @author Lenka (433591)

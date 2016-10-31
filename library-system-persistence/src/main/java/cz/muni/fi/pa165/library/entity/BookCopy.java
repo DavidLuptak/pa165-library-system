@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.library.entity;
 
 import cz.muni.fi.pa165.library.enums.BookState;
+import java.io.Serializable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,7 +15,7 @@ import java.util.List;
  * @version 25.10.2016
  */
 @Entity
-public class BookCopy {
+public class BookCopy implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.library.entity;
 
+import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.List;
  * @version 22.10.2016
  */
 @Entity
-public class Book {
+public class Book implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,15 +29,17 @@ public class Book {
     private String isbn;
 
     @ManyToMany
-    private List<Category> categories = new ArrayList<>();
+    private List<Category> categories;
 
     @OneToMany(mappedBy = "book")
     private List<BookCopy> bookCopies = new ArrayList<>();
 
     public Book() {
+        this.categories = new ArrayList<>();
     }
 
     public Book(String name, String author, String isbn) {
+        this.categories = new ArrayList<>();
         this.name = name;
         this.author = author;
         this.isbn = isbn;

@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.library.entity;
 
+import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.List;
  * @version 20.10.2016
  */
 @Entity
-public class Category {
+public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,11 +23,13 @@ public class Category {
     private String name;
 
     @ManyToMany(mappedBy = "categories")
-    private List<Book> books = new ArrayList<>();
+    private List<Book> books;
 
-    public Category() {}
+    public Category() {this.books = new ArrayList<>();
+}
 
     public Category(String name) {
+        this.books = new ArrayList<>();
         this.name = name;
     }
 
