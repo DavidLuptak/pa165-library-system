@@ -18,7 +18,7 @@ public class Category {
     private Long id;
 
     @NotNull
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String name;
 
     @ManyToMany(mappedBy = "categories")

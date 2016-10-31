@@ -17,6 +17,8 @@ import org.testng.annotations.Test;
 import javax.inject.Inject;
 import org.springframework.dao.DataAccessException;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
 import java.util.Date;
@@ -31,6 +33,9 @@ import static org.junit.Assert.*;
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
 public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
+
+    @PersistenceContext
+    EntityManager em;
 
     @Inject
     private BookCopyDao bookCopyDao;
@@ -160,6 +165,13 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
         dbBookCopy11.setBookState(BookState.MEDIUM_DAMAGE);
         bookCopyDao.update(dbBookCopy11);
         assertEquals(BookState.MEDIUM_DAMAGE, bookCopyDao.findById(dbBookCopy11.getId()).getBookState());
+    }
+
+    @Test(expectedExceptions = ConstraintViolationException.class)
+    public void updateBookCopyNullBook(){
+        dbBookCopy11.setBook(null);
+        bookCopyDao.update(dbBookCopy11);
+        em.flush();
     }
 
     @Test

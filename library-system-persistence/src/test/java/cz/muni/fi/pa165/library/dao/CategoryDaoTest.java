@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
 
@@ -27,6 +28,9 @@ import static org.junit.Assert.*;
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
 public class CategoryDaoTest extends AbstractTestNGSpringContextTests{
+
+    @PersistenceContext
+    EntityManager em;
 
     @Inject
     private CategoryDao categoryDao;
@@ -142,6 +146,13 @@ public class CategoryDaoTest extends AbstractTestNGSpringContextTests{
         categoryDao.update(dbCategory1);
         Category category = categoryDao.findById(dbCategory1.getId());
         assertEquals(category, dbCategory1);
+    }
+
+    @Test(expectedExceptions = ConstraintViolationException.class)
+    public void updateCategoryNameToNull(){
+        dbCategory1.setName(null);
+        categoryDao.update(dbCategory1);
+        em.flush();
     }
 
     @Test
