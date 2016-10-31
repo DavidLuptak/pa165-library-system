@@ -24,7 +24,7 @@ public class LoanDaoImpl implements LoanDao {
 
     @Override
     public void delete(Loan loan) {
-        em.remove(loan);
+        em.remove(findById(loan.getId()));
     }
 
     @Override

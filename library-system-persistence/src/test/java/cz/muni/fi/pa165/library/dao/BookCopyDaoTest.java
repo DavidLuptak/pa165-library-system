@@ -169,7 +169,7 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
         assertEquals(dbBook2, bookCopyDao.findById(dbBookCopy11.getId()).getBook());
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = NullPointerException.class)
     public void deleteNullBookCopy(){
         bookCopyDao.delete(null);
     }

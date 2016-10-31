@@ -201,14 +201,21 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
 
         aLoan.setUser(null);
         loanDao.update(aLoan);
+
+        // needs to be synchronized
+        em.flush();
     }
 
     @Test(expectedExceptions = ConstraintViolationException.class)
     public void updateLoanNoBookCopy() {
         Loan aLoan = getJoshuaLoan();
         loanDao.create(aLoan);
+
         aLoan.setBookCopy(null);
         loanDao.update(aLoan);
+
+        // needs to be synchronized
+        em.flush();
     }
 
     @Test
@@ -225,7 +232,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         assertNull(loanDao.findById(aLoan.getId()));
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = NullPointerException.class)
     public void deleteNullLoan(){
         loanDao.delete(null);
     }

@@ -145,7 +145,7 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         userDao.delete(user1);
     }
 
-    @Test(expectedExceptions = DataAccessException.class)
+    @Test(expectedExceptions = NullPointerException.class)
     public void testDeleteNullUser() throws Exception {
         userDao.delete(null);
     }
