@@ -110,17 +110,6 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void testUpdateNonExistingUser() throws Exception {
-        user1.setId(1L);
-        userDao.update(user1);
-    }
-
-    @Test(expectedExceptions = DataAccessException.class)
-    public void testUpdateUserWithNullId() throws Exception {
-        userDao.update(user1);
-    }
-
-    @Test(expectedExceptions = DataAccessException.class)
     public void testUpdateNullUser() throws Exception {
         userDao.update(null);
     }
