@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.library.entity;
 
-import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -109,7 +108,6 @@ public class Book {
         Book book = (Book) o;
 
         return getIsbn() != null ? getIsbn().equals(book.getIsbn()) : book.getIsbn() == null;
-
     }
 
     @Override

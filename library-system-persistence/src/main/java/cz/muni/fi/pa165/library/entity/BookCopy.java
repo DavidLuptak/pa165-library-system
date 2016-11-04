@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.library.entity;
 
 import cz.muni.fi.pa165.library.enums.BookState;
-import java.io.Serializable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -68,7 +67,7 @@ public class BookCopy {
         return Collections.unmodifiableList(loans);
     }
 
-    public void addLoan(Loan loan){
+    public void addLoan(Loan loan) {
         loans.add(loan);
     }
 
@@ -79,8 +78,7 @@ public class BookCopy {
 
         BookCopy bookCopy = (BookCopy) o;
 
-        if (getId() == null ? bookCopy.getId() != null : !getId().equals(bookCopy.getId()) )
-
+        if (getId() == null ? bookCopy.getId() != null : !getId().equals(bookCopy.getId()))
             return false;
 
         return getBook() == null ? bookCopy.getBook() == null : getBook().equals(bookCopy.getBook());

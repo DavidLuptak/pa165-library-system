@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.library.entity;
 
 import cz.muni.fi.pa165.library.enums.UserRole;
-import java.io.Serializable;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -41,7 +41,7 @@ public class User {
 
     @NotNull
     private String address;
-    
+
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
@@ -69,7 +69,7 @@ public class User {
     public void setId(Long id) {
         this.id = id;
     }
-        
+
     public String getPasswordHash() {
         return passwordHash;
     }
@@ -121,7 +121,7 @@ public class User {
     public void removeLoan(Loan loan) {
         loans.remove(loan);
     }
-    
+
     public UserRole getUserRole() {
         return userRole;
     }
@@ -132,15 +132,12 @@ public class User {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof User)) {
-            return false;
-        }
+        if (this == obj) return true;
+        if (!(obj instanceof User)) return false;
+
         User other = (User) obj;
-       
-        return getEmail() != null ? this.getEmail().equals(other.getEmail()) : other.getEmail()== null;
+
+        return getEmail() != null ? this.getEmail().equals(other.getEmail()) : other.getEmail() == null;
     }
 
     @Override

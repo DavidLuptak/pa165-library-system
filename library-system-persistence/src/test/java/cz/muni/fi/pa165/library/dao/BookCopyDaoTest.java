@@ -67,7 +67,7 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
     @BeforeMethod
     public void setUp() {
         dbUser = new User();
-        dbUser.setAddress("dbUserAdress");
+        dbUser.setAddress("dbUserAddress");
         dbUser.setEmail("dbUserEmail@Email.email");
         dbUser.setFirstName("dbUserGivenName");
         dbUser.setLastName("dbUserSurname");

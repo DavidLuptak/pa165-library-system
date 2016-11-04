@@ -1,11 +1,10 @@
 package cz.muni.fi.pa165.library.entity;
 
 import cz.muni.fi.pa165.library.enums.BookState;
-import java.io.Serializable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.Date;
 
 /**
  * Entity class representing Loan in the library system.
@@ -16,7 +15,7 @@ import java.util.*;
  */
 @Entity
 public class Loan {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -69,7 +68,7 @@ public class Loan {
     }
 
     public void setReturnDate(Date returnDate) {
-        if(returnDate.before(getLoanDate())) throw new IllegalArgumentException("returnDate is before loanDate");
+        if (returnDate.before(getLoanDate())) throw new IllegalArgumentException("returnDate is before loanDate");
         this.returnDate = returnDate;
     }
 
@@ -104,7 +103,6 @@ public class Loan {
         if (getLoanDate() != null ? !getLoanDate().equals(loan.getLoanDate()) : loan.getLoanDate() != null)
             return false;
         return getBookCopy() != null ? getBookCopy().equals(loan.getBookCopy()) : loan.getBookCopy() == null;
-
     }
 
     @Override
