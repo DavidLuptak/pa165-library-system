@@ -43,15 +43,6 @@ public interface BookDao {
     Book findById(long id);
 
     /**
-     * Finds books that belong to the given category in the database
-     *
-     * @param category searched category
-     * @return found books
-     * @throws IllegalArgumentException if category is null
-     */
-    List<Book> findByCategory(Category category);
-
-    /**
      * Finds books that are written by the given author in the database
      *
      * @param author searched author

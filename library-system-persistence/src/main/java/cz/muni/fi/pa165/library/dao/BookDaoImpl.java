@@ -41,16 +41,6 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public List<Book> findByCategory(Category category) {
-        if (category == null) {
-            throw new IllegalArgumentException("Category is not valid");
-        }
-        return em.createQuery("SELECT b FROM Book b where b.category = :category", Book.class)
-                .setParameter("category", category).getResultList();
-
-    }
-
-    @Override
     public List<Book> findByAuthor(String author) {
         if (author == null || author.isEmpty()) {
             throw new IllegalArgumentException("Author is not valid");
