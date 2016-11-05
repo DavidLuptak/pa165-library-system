@@ -13,7 +13,9 @@ import org.testng.annotations.Test;
 
 import javax.inject.Inject;
 import javax.validation.ConstraintViolationException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertNull;
@@ -80,6 +82,11 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
                 .getName());
     }
 
+    @Test(expectedExceptions = DataAccessException.class)
+    public void testFindByIdNull() {
+        bookDao.findById(null);
+    }
+
     @Test
     public void testFindById() {
         assertDeepEquals(bookDao.findById(book2.getId()), book2);
@@ -88,12 +95,59 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
         assertNull(bookDao.findById(100L));
     }
 
+    @Test(expectedExceptions = DataAccessException.class)
+    public void testFindByNameNull() {
+        bookDao.findByName(null);
+    }
+
     @Test
     public void testFindByName() {
         Set<Book> expected = new HashSet<>();
         expected.add(book1);
         Set<Book> actual = new HashSet<>(bookDao.findByName("Book Name 1"));
         assertEquals(expected, actual);
+    }
+
+    @Test(expectedExceptions = DataAccessException.class)
+    public void testFindByAuthorNull() {
+        bookDao.findByAuthor(null);
+    }
+
+    @Test
+    public void testFindByAuthorNonAuthor() {
+        List<Book> bookList = bookDao.findByAuthor("Joshua Bloch");
+        assertNotNull(bookList);
+        assertEquals(bookList.size(), 0);
+    }
+
+    @Test
+    public void testFindByAuthor() {
+        String author = book1.getAuthor();
+        List<Book> expected = new ArrayList<>();
+        expected.add(book1);
+
+        List<Book> actual = bookDao.findByAuthor(author);
+        assertEquals(actual, expected);
+    }
+
+    @Test
+    public void testFindByAuthorMultiple() {
+        String author = book1.getAuthor();
+        List<Book> expected = new ArrayList<>();
+        expected.add(book1);
+
+        Book anotherBookOfTheSameAuthor = new Book();
+        anotherBookOfTheSameAuthor.setName("Another name");
+        anotherBookOfTheSameAuthor.setIsbn("Another isbn");
+        anotherBookOfTheSameAuthor.setAuthor(book1.getAuthor());
+        bookDao.create(anotherBookOfTheSameAuthor);
+        expected.add(anotherBookOfTheSameAuthor);
+
+        List<Book> actual = bookDao.findByAuthor(author);
+        assertEquals(actual.size(), 2);
+        assertEquals(actual, expected);
+        assertDeepEquals(actual.get(0), book1);
+        assertDeepEquals(actual.get(1), anotherBookOfTheSameAuthor);
     }
 
     @Test
@@ -129,6 +183,5 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
         assertEquals(actual.getName(), expected.getName());
         assertEquals(actual.getAuthor(), expected.getAuthor());
         assertEquals(actual.getIsbn(), expected.getIsbn());
-
     }
 }

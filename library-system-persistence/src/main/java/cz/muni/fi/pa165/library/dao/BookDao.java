@@ -40,7 +40,7 @@ public interface BookDao {
      * @param id of searched book
      * @return found book
      */
-    Book findById(long id);
+    Book findById(Long id);
 
     /**
      * Finds books that are written by the given author in the database

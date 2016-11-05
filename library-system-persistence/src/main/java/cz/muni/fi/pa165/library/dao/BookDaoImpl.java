@@ -36,7 +36,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public Book findById(long id) {
+    public Book findById(Long id) {
         return em.find(Book.class, id);
     }
 
