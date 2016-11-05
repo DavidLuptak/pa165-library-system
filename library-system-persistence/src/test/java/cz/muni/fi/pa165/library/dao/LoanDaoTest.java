@@ -92,7 +92,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void createLoan() {
+    public void testCreateLoan() {
         Loan aLoan = getJoshuaLoan();
         loanDao.create(aLoan);
 
@@ -100,17 +100,17 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void createNullLoan() {
+    public void testCreateNullLoan() {
         loanDao.create(null);
     }
 
     @Test(expectedExceptions = ConstraintViolationException.class)
-    public void createEmptyLoan() {
+    public void testCreateEmptyLoan() {
         loanDao.create(new Loan());
     }
 
     @Test(expectedExceptions = ConstraintViolationException.class)
-    public void createLoanWithoutBookCopy() {
+    public void testCreateLoanWithoutBookCopy() {
         Loan aLoan = new Loan();
         aLoan.setUser(joshua);
         aLoan.setLoanDate(new Date());
@@ -118,14 +118,14 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = ConstraintViolationException.class)
-    public void createLoanWithoutUser() {
+    public void testCreateLoanWithoutUser() {
         Loan aLoan = getJoshuaLoan();
         aLoan.setUser(null);
         loanDao.create(aLoan);
     }
 
     @Test
-    public void findLoanById() {
+    public void testFindLoanById() {
         Loan aLoan = getJoshuaLoan();
         loanDao.create(aLoan);
 
@@ -140,17 +140,17 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void findLoanByNullId() {
+    public void testFindLoanByNullId() {
         loanDao.findById(null);
     }
 
     @Test
-    public void findNotPersistedLoanById() {
+    public void testFindNotPersistedLoanById() {
         assertNull(loanDao.findById(56L));
     }
 
     @Test
-    public void findAllLoans() {
+    public void testFindAllLoans() {
         Loan aLoan = getBlochLoan();
         loanDao.create(aLoan);
 
@@ -165,12 +165,12 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void findAllLoansEmpty() {
+    public void testFindAllLoansEmpty() {
         assertEquals(loanDao.findAll().size(), 0);
     }
 
     @Test
-    public void updateLoan() {
+    public void testUpdateLoan() {
         Loan aLoan = getJoshuaLoan();
         loanDao.create(aLoan);
 
@@ -180,7 +180,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void updateUser() {
+    public void testUpdateUser() {
         Loan aLoan = getBlochLoan();
         loanDao.create(aLoan);
 
@@ -191,7 +191,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = ConstraintViolationException.class)
-    public void updateNullUser() {
+    public void testUpdateNullUser() {
         Loan aLoan = getBlochLoan();
         loanDao.create(aLoan);
 
@@ -203,7 +203,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = ConstraintViolationException.class)
-    public void updateLoanNoBookCopy() {
+    public void testUpdateLoanNoBookCopy() {
         Loan aLoan = getJoshuaLoan();
         loanDao.create(aLoan);
 
@@ -215,7 +215,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void deleteLoan() {
+    public void testDeleteLoan() {
         Loan aLoan = getJoshuaLoan();
         loanDao.create(aLoan);
 
@@ -229,12 +229,12 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void deleteNullLoan(){
+    public void testDeleteNullLoan(){
         loanDao.delete(null);
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void deleteNotPersistedLoan(){
+    public void testDeleteNotPersistedLoan(){
         Loan aLoan = getJoshuaLoan();
         loanDao.delete(aLoan);
     }

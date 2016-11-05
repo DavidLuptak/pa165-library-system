@@ -82,44 +82,44 @@ public class CategoryDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void createNullCategory() {
+    public void testCreateNullCategory() {
         categoryDao.create(null);
     }
 
     @Test(expectedExceptions = ConstraintViolationException.class)
-    public void createCategoryWithoutName() {
+    public void testCreateCategoryWithoutName() {
         categoryDao.create(new Category());
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void createCategoryWithExistingName() {
+    public void testCreateCategoryWithExistingName() {
         category1.setName(dbCategory1.getName());
         categoryDao.create(category1);
     }
 
     @Test
-    public void createCategorySetsId() {
+    public void testCreateCategorySetsId() {
         assertNotNull(dbCategory1.getId());
     }
 
     @Test
-    public void findCategoryById() {
+    public void testFindCategoryById() {
         assertEquals(dbCategory1, categoryDao.findById(dbCategory1.getId()));
         assertNotEquals(dbCategory1, categoryDao.findById(dbCategory2.getId()));
     }
 
     @Test
-    public void findCategoryWithNonExistingId() {
+    public void testFindCategoryWithNonExistingId() {
         assertNull(categoryDao.findById(100L));
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void findCategoryWithNullId() {
+    public void testFindCategoryWithNullId() {
         categoryDao.findById(null);
     }
 
     @Test
-    public void findCategoryByName() {
+    public void testFindCategoryByName() {
         assertEquals(dbCategory1, categoryDao.findByName(dbCategory1.getName()));
 
         assertEquals(dbCategory2, categoryDao.findByName(dbCategory2.getName()));
@@ -128,22 +128,22 @@ public class CategoryDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void findCategoryWithNullName() {
+    public void testFindCategoryWithNullName() {
         categoryDao.findByName(null);
     }
 
     @Test
-    public void findAllCategories() {
+    public void testFindAllCategories() {
         assertEquals(3, categoryDao.findAll().size());
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void updateNullCategory() {
+    public void testUpdateNullCategory() {
         categoryDao.update(null);
     }
 
     @Test
-    public void updateCategoryNameToNonExistingOne() {
+    public void testUpdateCategoryNameToNonExistingOne() {
         dbCategory1.setName("dbCategory1FakeName");
         categoryDao.update(dbCategory1);
         Category category = categoryDao.findById(dbCategory1.getId());
@@ -151,33 +151,33 @@ public class CategoryDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = ConstraintViolationException.class)
-    public void updateCategoryNameToNull() {
+    public void testUpdateCategoryNameToNull() {
         dbCategory1.setName(null);
         categoryDao.update(dbCategory1);
         em.flush();
     }
 
     @Test
-    public void updateCategoryAddBook() {
+    public void testUpdateCategoryAddBook() {
         dbCategory1.addBook(dbBook3);
         assertTrue(dbCategory1.getBooks().contains(dbBook3));
     }
 
     @Test
-    public void updateCategoryRemoveBook() {
+    public void testUpdateCategoryRemoveBook() {
         dbCategory2.removeBook(dbBook2);
         assertFalse(dbCategory1.getBooks().contains(dbBook2));
     }
 
     @Test
-    public void deleteCategory() {
+    public void testDeleteCategory() {
         categoryDao.delete(dbCategory2);
         assertEquals(2, categoryDao.findAll().size());
         assertNull(categoryDao.findById(dbCategory2.getId()));
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void deleteNotStoredCategory() {
+    public void testDeleteNotStoredCategory() {
         categoryDao.delete(category1);
     }
 
