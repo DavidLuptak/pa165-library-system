@@ -17,6 +17,8 @@
 
     <modules>
         <module>library-system-persistence</module>
+        <module>library-system-service</module>
+        <module>library-system-api</module>
     </modules>
     <build>
         <pluginManagement>
