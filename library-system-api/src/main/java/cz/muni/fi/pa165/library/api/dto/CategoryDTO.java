@@ -1,5 +1,9 @@
 package cz.muni.fi.pa165.library.api.dto;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author Lenka (433591)
  * @version 12.11.2016
@@ -9,6 +13,12 @@ public class CategoryDTO {
     private Long id;
     
     private String name;
+
+    private List<BookDTO> books;
+
+    public CategoryDTO() {
+        books = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;
@@ -26,6 +36,13 @@ public class CategoryDTO {
         this.name = name;
     }
 
+    public List<BookDTO> getBooks() {
+        return Collections.unmodifiableList(books);
+    }
+
+    public void setBooks(List<BookDTO> books) {
+        this.books = books;
+    }
 
     @Override
     public boolean equals(Object o) {
