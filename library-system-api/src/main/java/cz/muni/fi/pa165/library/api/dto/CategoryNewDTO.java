@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.library.api.dto;
 
-import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * @author Lenka (433591)
@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
  */
 public class CategoryNewDTO {
 
-    @NotNull
+    @NotBlank
     private String name;
 
     public String getName() {
