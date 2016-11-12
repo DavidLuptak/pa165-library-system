@@ -16,8 +16,9 @@ public interface CategoryFacade {
      * Creates new category
      *
      * @param dto to be created
+     * @return id of the added category
      */
-    void create(CategoryNewDTO dto);
+    Long create(CategoryNewDTO dto);
 
     /**
      * Updates already existing CategoryDTO
@@ -29,9 +30,9 @@ public interface CategoryFacade {
     /**
      * Deletes the CategoryDTO
      *
-     * @param dto to be deleted
+     * @param id of the category to be deleted
      */
-    void delete(CategoryDTO dto);
+    void delete(Long id);
 
     /**
      * Returns CategoryDTO with the respective id.

@@ -5,40 +5,58 @@ import java.util.List;
 import cz.muni.fi.pa165.library.api.dto.CategoryDTO;
 import cz.muni.fi.pa165.library.api.dto.CategoryNewDTO;
 import cz.muni.fi.pa165.library.api.facade.CategoryFacade;
+import cz.muni.fi.pa165.library.entity.Category;
+import cz.muni.fi.pa165.library.service.BeanMappingService;
+import cz.muni.fi.pa165.library.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author Lenka (433591)
  * @version 12.11.2016
  */
+@Service
+@Transactional
 public class CategoryFacadeImpl implements CategoryFacade {
 
-    @Override
-    public void create(CategoryNewDTO dto) {
+    @Autowired
+    private CategoryService categoryService;
 
+    @Autowired
+    private BeanMappingService beanMappingService;
+
+    @Override
+    public Long create(CategoryNewDTO dto) {
+        Category category = new Category();
+        category.setName(dto.getName());
+        categoryService.create(category);
+        return category.getId();
     }
 
     @Override
     public void update(CategoryDTO dto) {
-
+        Category category = beanMappingService.mapTo(dto, Category.class);
+        categoryService.update(category);
     }
 
     @Override
-    public void delete(CategoryDTO dto) {
-
+    public void delete(Long id) {
+        categoryService.delete(categoryService.findById(id));
     }
 
     @Override
     public CategoryDTO findById(Long id) {
-        return null;
+        return beanMappingService.mapTo(categoryService.findById(id), CategoryDTO.class);
     }
 
     @Override
     public CategoryDTO findByName(String name) {
-        return null;
+        return beanMappingService.mapTo(categoryService.findByName(name), CategoryDTO.class);
     }
 
     @Override
     public List<CategoryDTO> findAll() {
-        return null;
+        return beanMappingService.mapTo(categoryService.findAll(), CategoryDTO.class);
     }
 }
