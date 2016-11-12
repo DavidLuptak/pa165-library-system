@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.library.system.api.facade;
 
 import cz.muni.fi.pa165.library.system.api.dto.BookDTO;
-import cz.muni.fi.pa165.library.system.api.dto.CreateBookDTO;
+import cz.muni.fi.pa165.library.system.api.dto.BookNewDTO;
 import cz.muni.fi.pa165.library.enums.BookState;
 import java.util.List;
 
@@ -17,7 +17,7 @@ public interface BookFacade {
      * @param book book to be persisted
      * @return new book id
      */
-    Long createBook(CreateBookDTO book);
+    Long createBook(BookNewDTO book);
 
     /**
      * Returns book with given id or null
