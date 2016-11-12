@@ -1,6 +1,4 @@
-package cz.muni.fi.pa165.library.system.api.dto;
-
-import javax.validation.constraints.NotNull;
+package cz.muni.fi.pa165.library.api.dto;
 
 /**
  * @author Lenka (433591)
