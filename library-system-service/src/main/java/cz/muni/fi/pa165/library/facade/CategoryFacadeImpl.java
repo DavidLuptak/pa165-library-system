@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.library.service.facade;
+package cz.muni.fi.pa165.library.facade;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import cz.muni.fi.pa165.library.api.dto.CategoryDTO;
 import cz.muni.fi.pa165.library.api.dto.CategoryNewDTO;
 import cz.muni.fi.pa165.library.api.facade.CategoryFacade;
 import cz.muni.fi.pa165.library.entity.Category;
-import cz.muni.fi.pa165.library.service.BeanMappingService;
 import cz.muni.fi.pa165.library.service.CategoryService;
+import cz.muni.fi.pa165.library.service.mapping.BeanMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

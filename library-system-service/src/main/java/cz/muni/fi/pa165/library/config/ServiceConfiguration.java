@@ -1,8 +1,8 @@
-package cz.muni.fi.pa165.library.service.config;
+package cz.muni.fi.pa165.library.config;
 
 import cz.muni.fi.pa165.library.LibraryApplicationContext;
-import cz.muni.fi.pa165.library.service.BeanMappingService;
-import cz.muni.fi.pa165.library.service.facade.CategoryFacadeImpl;
+import cz.muni.fi.pa165.library.facade.CategoryFacadeImpl;
+import cz.muni.fi.pa165.library.service.CategoryServiceImpl;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.dozer.loader.api.BeanMappingBuilder;
@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import(LibraryApplicationContext.class)
-@ComponentScan(basePackageClasses = {CategoryFacadeImpl.class, BeanMappingService.class})
+@ComponentScan(basePackageClasses = {CategoryFacadeImpl.class, CategoryServiceImpl.class})
 public class ServiceConfiguration {
 
     @Bean
@@ -33,7 +33,7 @@ public class ServiceConfiguration {
     public class DozerCustomConfig extends BeanMappingBuilder {
         @Override
         protected void configure() {
-            //TO DO
+            //TODO
         }
     }
 }
