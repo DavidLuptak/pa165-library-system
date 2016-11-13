@@ -41,7 +41,7 @@ public interface UserDao {
     User findById(Long id);
 
     /**
-     * Finds users with the given email in the database.
+     * Finds a user with the given email in the database.
      *
      * @param email of the searched user
      * @return the user entity with the respective email or null if such entity does not exist

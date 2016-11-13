@@ -146,16 +146,4 @@ public class User {
         hash = 53 * hash + Objects.hashCode(this.getEmail());
         return hash;
     }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", address='" + address + '\'' +
-                ", userRole=" + userRole +
-                ", loans=" + loans +
-                '}';
-    }
 }
