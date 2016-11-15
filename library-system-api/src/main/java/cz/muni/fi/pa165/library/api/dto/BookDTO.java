@@ -62,4 +62,6 @@ public class BookDTO {
     /*public void setLoans(List<LoanDTO> loans) {
         this.loans = loans;
     }*/
+    
+    //todo: generate equals and hash code
 }
