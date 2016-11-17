@@ -1,9 +1,9 @@
-package cz.muni.fi.pa165.library.api.facade;
+package cz.muni.fi.pa165.library.facade;
 
 import java.util.List;
 
-import cz.muni.fi.pa165.library.api.dto.CategoryDTO;
-import cz.muni.fi.pa165.library.api.dto.CategoryNewDTO;
+import cz.muni.fi.pa165.library.dto.CategoryDTO;
+import cz.muni.fi.pa165.library.dto.CategoryNewDTO;
 
 
 /**

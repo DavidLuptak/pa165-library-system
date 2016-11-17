@@ -1,14 +1,13 @@
 package cz.muni.fi.pa165.library.facade;
 
-import cz.muni.fi.pa165.library.api.dto.LoanDTO;
-import cz.muni.fi.pa165.library.api.dto.LoanNewDTO;
-import cz.muni.fi.pa165.library.api.exception.NoEntityFoundException;
-import cz.muni.fi.pa165.library.api.facade.LoanFacade;
+import cz.muni.fi.pa165.library.dto.LoanDTO;
+import cz.muni.fi.pa165.library.dto.LoanNewDTO;
+import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.service.LoanService;
 import cz.muni.fi.pa165.library.service.UserService;
-import cz.muni.fi.pa165.library.service.mapping.BeanMappingService;
+import cz.muni.fi.pa165.library.mapping.BeanMappingService;
 
 import javax.inject.Inject;
 import java.util.List;

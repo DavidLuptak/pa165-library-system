@@ -1,7 +1,7 @@
-package cz.muni.fi.pa165.library.api.facade;
+package cz.muni.fi.pa165.library.facade;
 
-import cz.muni.fi.pa165.library.api.dto.LoanDTO;
-import cz.muni.fi.pa165.library.api.dto.LoanNewDTO;
+import cz.muni.fi.pa165.library.dto.LoanDTO;
+import cz.muni.fi.pa165.library.dto.LoanNewDTO;
 
 import java.util.List;
 

@@ -1,9 +1,7 @@
-package cz.muni.fi.pa165.library.api.dto;
+package cz.muni.fi.pa165.library.dto;
 
 import cz.muni.fi.pa165.library.enums.UserRole;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;

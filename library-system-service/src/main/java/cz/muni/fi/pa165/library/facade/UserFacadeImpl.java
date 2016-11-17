@@ -1,12 +1,11 @@
 package cz.muni.fi.pa165.library.facade;
 
-import cz.muni.fi.pa165.library.api.dto.UserAuthenticateDTO;
-import cz.muni.fi.pa165.library.api.dto.UserDTO;
-import cz.muni.fi.pa165.library.api.facade.UserFacade;
+import cz.muni.fi.pa165.library.dto.UserAuthenticateDTO;
+import cz.muni.fi.pa165.library.dto.UserDTO;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.enums.UserRole;
 import cz.muni.fi.pa165.library.service.UserService;
-import cz.muni.fi.pa165.library.service.mapping.BeanMappingService;
+import cz.muni.fi.pa165.library.mapping.BeanMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

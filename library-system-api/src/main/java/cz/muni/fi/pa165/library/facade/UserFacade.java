@@ -1,7 +1,7 @@
-package cz.muni.fi.pa165.library.api.facade;
+package cz.muni.fi.pa165.library.facade;
 
-import cz.muni.fi.pa165.library.api.dto.UserAuthenticateDTO;
-import cz.muni.fi.pa165.library.api.dto.UserDTO;
+import cz.muni.fi.pa165.library.dto.UserAuthenticateDTO;
+import cz.muni.fi.pa165.library.dto.UserDTO;
 import cz.muni.fi.pa165.library.enums.UserRole;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.library.service.mapping;
+package cz.muni.fi.pa165.library.mapping;
 
 import java.util.Collection;
 import java.util.List;

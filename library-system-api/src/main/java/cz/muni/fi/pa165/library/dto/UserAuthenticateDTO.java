@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.library.api.dto;
+package cz.muni.fi.pa165.library.dto;
 
 /**
  * Created by Martin on 13.11.2016.

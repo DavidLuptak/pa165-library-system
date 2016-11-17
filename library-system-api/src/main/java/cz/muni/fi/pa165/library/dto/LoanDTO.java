@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.library.api.dto;
+package cz.muni.fi.pa165.library.dto;
 
 import cz.muni.fi.pa165.library.enums.BookState;
 

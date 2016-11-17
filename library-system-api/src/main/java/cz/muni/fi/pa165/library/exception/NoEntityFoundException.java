@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.library.api.exception;
+package cz.muni.fi.pa165.library.exception;
 
 /**
  * Exception thrown when requested entity not found.
