@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.library.dao;
 
 import cz.muni.fi.pa165.library.entity.Loan;
+import cz.muni.fi.pa165.library.entity.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -36,6 +37,11 @@ public class LoanDaoImpl implements LoanDao {
     @Override
     public Loan findById(Long id) {
         return em.find(Loan.class, id);
+    }
+
+    @Override
+    public List<Loan> findByUser(User user) {
+        return em.createQuery("SELECT loan FROM Loan loan WHERE loan.user = :user", Loan.class).setParameter("user", user).getResultList();
     }
 
     @Override

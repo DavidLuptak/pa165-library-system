@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.library.dao;
 
 import cz.muni.fi.pa165.library.entity.Loan;
+import cz.muni.fi.pa165.library.entity.User;
 
 import java.util.List;
 
@@ -39,6 +40,14 @@ public interface LoanDao {
      * @return found loan
      */
     Loan findById(Long id);
+
+    /**
+     * Finds loans for the respective user
+     *
+     * @param user    for whom the loans will be found
+     * @return  list of all user's loans
+     */
+    List<Loan> findByUser(User user);
 
     /**
      * Finds all loans in the database
