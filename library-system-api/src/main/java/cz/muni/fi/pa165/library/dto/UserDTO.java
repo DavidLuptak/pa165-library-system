@@ -8,7 +8,8 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * Created by Martin on 13.11.2016.
+ * @author Martin
+ * @version 13.11.2016
  */
 public class UserDTO {
     private Long id;

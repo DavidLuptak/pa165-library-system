@@ -1,11 +1,11 @@
 package cz.muni.fi.pa165.library.service;
 
-import java.util.List;
-
 import cz.muni.fi.pa165.library.dao.CategoryDao;
 import cz.muni.fi.pa165.library.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author Lenka (433591)

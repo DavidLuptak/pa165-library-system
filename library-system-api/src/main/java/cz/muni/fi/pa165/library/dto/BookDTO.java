@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.library.dto;
 import cz.muni.fi.pa165.library.enums.BookState;
 
 /**
- *
  * @author Bedrich Said
  */
 public class BookDTO {
@@ -62,6 +61,6 @@ public class BookDTO {
     /*public void setLoans(List<LoanDTO> loans) {
         this.loans = loans;
     }*/
-    
+
     //todo: generate equals and hash code
 }

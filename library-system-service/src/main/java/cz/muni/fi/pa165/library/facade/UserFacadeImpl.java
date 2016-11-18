@@ -4,8 +4,8 @@ import cz.muni.fi.pa165.library.dto.UserAuthenticateDTO;
 import cz.muni.fi.pa165.library.dto.UserDTO;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.enums.UserRole;
-import cz.muni.fi.pa165.library.service.UserService;
 import cz.muni.fi.pa165.library.mapping.BeanMappingService;
+import cz.muni.fi.pa165.library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * Created by Martin on 13.11.2016.
+ * @author Martin
+ * @version 13.11.2016
  */
 
 @Service
@@ -29,7 +30,7 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     public void register(UserDTO userDTO, String unencryptedPassword) {
         User user = beanMappingService.mapTo(userDTO, User.class);
-        userService.register(user,unencryptedPassword);
+        userService.register(user, unencryptedPassword);
         userDTO.setId(user.getId());
     }
 

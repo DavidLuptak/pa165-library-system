@@ -3,11 +3,12 @@ package cz.muni.fi.pa165.library.facade;
 import cz.muni.fi.pa165.library.dto.BookDTO;
 import cz.muni.fi.pa165.library.dto.BookNewDTO;
 import cz.muni.fi.pa165.library.enums.BookState;
+
 import java.util.List;
 
 /**
  * Facade layer for Book entity
- * 
+ *
  * @author Bedrich Said
  */
 public interface BookFacade {
@@ -53,7 +54,7 @@ public interface BookFacade {
      * Sets book current state. Can be set only to a worse (or the same) state
      * than it already was
      *
-     * @param bookId book id
+     * @param bookId   book id
      * @param newState new state to be set
      */
     void setState(Long bookId, BookState newState);

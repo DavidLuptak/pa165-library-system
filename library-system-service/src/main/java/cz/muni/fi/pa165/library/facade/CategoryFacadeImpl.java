@@ -1,15 +1,15 @@
 package cz.muni.fi.pa165.library.facade;
 
-import java.util.List;
-
 import cz.muni.fi.pa165.library.dto.CategoryDTO;
 import cz.muni.fi.pa165.library.dto.CategoryNewDTO;
 import cz.muni.fi.pa165.library.entity.Category;
-import cz.muni.fi.pa165.library.service.CategoryService;
 import cz.muni.fi.pa165.library.mapping.BeanMappingService;
+import cz.muni.fi.pa165.library.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author Lenka (433591)

@@ -6,14 +6,15 @@ import cz.muni.fi.pa165.library.enums.UserRole;
 import java.util.List;
 
 /**
- * Created by Martin on 13.11.2016.
+ * @author Martin
+ * @version 13.11.2016
  */
 public interface UserService {
 
     /**
      * Registers the given user with given unencrypted password.
      *
-     * @param user to be created
+     * @param user                to be created
      * @param unencryptedPassword of registering user
      */
     void register(User user, String unencryptedPassword);
@@ -59,7 +60,7 @@ public interface UserService {
     /**
      * Gets user's userRole
      *
-     * @param user
+     * @param user    for whom to get the userRole
      * @return user's UserRole
      */
     UserRole userRole(User user);
@@ -67,7 +68,7 @@ public interface UserService {
     /**
      * Try to authenticate a user. Return true only if the hashed password matches the records.
      *
-     * @param user to be authenticated
+     * @param user                to be authenticated
      * @param unencryptedPassword of authenticating user
      * @return whether authentication succeeds
      */

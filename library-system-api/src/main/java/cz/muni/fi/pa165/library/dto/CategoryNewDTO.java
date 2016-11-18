@@ -38,7 +38,7 @@ public class CategoryNewDTO {
     @Override
     public String toString() {
         return "CategoryNewDTO{" +
-            "name='" + name + '\'' +
-            '}';
+                "name='" + name + '\'' +
+                '}';
     }
 }

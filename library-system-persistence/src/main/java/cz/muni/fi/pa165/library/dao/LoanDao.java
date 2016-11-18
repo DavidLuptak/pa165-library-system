@@ -44,8 +44,8 @@ public interface LoanDao {
     /**
      * Finds loans for the respective user
      *
-     * @param user    for whom the loans will be found
-     * @return  list of all user's loans
+     * @param user for whom the loans will be found
+     * @return list of all user's loans
      */
     List<Loan> findByUser(User user);
 

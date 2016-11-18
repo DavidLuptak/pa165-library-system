@@ -12,9 +12,14 @@ import java.util.List;
 public interface LoanFacade {
 
     Long create(LoanNewDTO loanDTO);
+
     void update(LoanDTO loanDTO);
+
     void delete(Long id);
+
     LoanDTO findById(Long id);
+
     List<LoanDTO> findByUser(Long userId);
+
     List<LoanDTO> findAll();
 }

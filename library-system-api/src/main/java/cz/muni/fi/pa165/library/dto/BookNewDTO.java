@@ -1,13 +1,13 @@
 package cz.muni.fi.pa165.library.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- *
  * @author Bedrich Said
  */
 public class BookNewDTO {
@@ -58,6 +58,6 @@ public class BookNewDTO {
     public void addCollectionId(Long id) {
         collectionIds.add(id);
     }
-    
+
     //todo: generate equals and hash code
 }

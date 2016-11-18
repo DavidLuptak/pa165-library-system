@@ -1,9 +1,9 @@
 package cz.muni.fi.pa165.library.mapping;
 
+import org.dozer.Mapper;
+
 import java.util.Collection;
 import java.util.List;
-
-import org.dozer.Mapper;
 
 /**
  * @author Lenka (433591)

@@ -12,7 +12,8 @@ import java.security.SecureRandom;
 import java.util.List;
 
 /**
- * Created by Martin on 13.11.2016.
+ * @author Martin
+ * @version 13.11.2016
  */
 public class UserServiceImpl implements UserService {
 
@@ -85,8 +86,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public static boolean validatePassword(String password, String correctHash) {
-        if(password==null) return false;
-        if(correctHash==null) throw new IllegalArgumentException("password hash is null");
+        if (password == null) return false;
+        if (correctHash == null) throw new IllegalArgumentException("password hash is null");
         String[] params = correctHash.split(":");
         int iterations = Integer.parseInt(params[0]);
         byte[] salt = fromHex(params[1]);

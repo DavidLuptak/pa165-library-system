@@ -229,12 +229,12 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = NullPointerException.class)
-    public void testDeleteNullLoan(){
+    public void testDeleteNullLoan() {
         loanDao.delete(null);
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void testDeleteNotPersistedLoan(){
+    public void testDeleteNotPersistedLoan() {
         Loan aLoan = getJoshuaLoan();
         loanDao.delete(aLoan);
     }

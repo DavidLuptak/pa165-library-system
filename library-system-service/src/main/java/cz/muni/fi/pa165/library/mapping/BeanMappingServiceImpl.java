@@ -1,12 +1,12 @@
 package cz.muni.fi.pa165.library.mapping;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Lenka (433591)
@@ -31,7 +31,7 @@ public class BeanMappingServiceImpl implements BeanMappingService {
     @Override
     public <T> List<T> mapTo(Collection<?> sourceObjects, Class<T> destinationClass) {
 
-        List<T> mappedCollection = new ArrayList<T>();
+        List<T> mappedCollection = new ArrayList<>();
 
         for (Object object : sourceObjects) {
             mappedCollection.add(dozer.map(object, destinationClass));

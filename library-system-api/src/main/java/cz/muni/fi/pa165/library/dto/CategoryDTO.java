@@ -11,7 +11,7 @@ import java.util.List;
 public class CategoryDTO {
 
     private Long id;
-    
+
     private String name;
 
     private List<BookDTO> books;
@@ -63,7 +63,7 @@ public class CategoryDTO {
     @Override
     public String toString() {
         return "CategoryNewDTO{" +
-            "name='" + name + '\'' +
-            '}';
+                "name='" + name + '\'' +
+                '}';
     }
 }
