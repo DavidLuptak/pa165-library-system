@@ -9,8 +9,16 @@ public class BookDTO {
     private Long id;
     private String name;
     private String authorName;
-    private Long isbn;
-    private BookState state;
+    private String isbn;
+
+    public BookDTO() {
+    }
+
+    public BookDTO(String name, String authorName, String isbn) {
+        this.name = name;
+        this.authorName = authorName;
+        this.isbn = isbn;
+    }
 
     //private List<LoanDTO> loans;
 
@@ -38,20 +46,12 @@ public class BookDTO {
         this.authorName = authorName;
     }
 
-    public Long getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Long isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
-    }
-
-    public BookState getState() {
-        return state;
-    }
-
-    public void setState(BookState state) {
-        this.state = state;
     }
 
     /*public List<LoanDTO> getLoans() {

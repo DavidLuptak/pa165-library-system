@@ -10,13 +10,22 @@ import java.util.Date;
 public class LoanNewDTO {
 
     @NotNull
-    private Date loanDate;
-
-    @NotNull
     private Long userId;
 
     @NotNull
     private Long bookCopyId;
+
+    @NotNull
+    private Date loanDate;
+
+    public LoanNewDTO() {
+    }
+
+    public LoanNewDTO(Long userId, Long bookCopyId, Date loanDate) {
+        this.userId = userId;
+        this.bookCopyId = bookCopyId;
+        this.loanDate = loanDate;
+    }
 
     public Date getLoanDate() {
         return loanDate;

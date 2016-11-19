@@ -2,12 +2,15 @@ package cz.muni.fi.pa165.library.facade;
 
 import cz.muni.fi.pa165.library.dto.LoanDTO;
 import cz.muni.fi.pa165.library.dto.LoanNewDTO;
+import cz.muni.fi.pa165.library.entity.BookCopy;
 import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.mapping.BeanMappingService;
+import cz.muni.fi.pa165.library.service.BookCopyService;
 import cz.muni.fi.pa165.library.service.LoanService;
 import cz.muni.fi.pa165.library.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,13 +25,16 @@ import java.util.List;
 @Transactional
 public class LoanFacadeImpl implements LoanFacade {
 
-    @Inject
+    @Autowired
     private LoanService loanService;
 
-    @Inject
+    @Autowired
     private UserService userService;
 
-    @Inject
+    @Autowired
+    private BookCopyService bookCopyService;
+
+    @Autowired
     private BeanMappingService beanMappingService;
 
     @Override
@@ -38,6 +44,8 @@ public class LoanFacadeImpl implements LoanFacade {
         }
 
         Loan loan = beanMappingService.mapTo(loanDTO, Loan.class);
+        loan.setUser(userService.findById(loanDTO.getUserId()));
+        loan.setBookCopy(bookCopyService.findById(loanDTO.getBookCopyId()));
 
         loanService.create(loan);
         return loan.getId();

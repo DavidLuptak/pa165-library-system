@@ -25,6 +25,10 @@ public class Loan {
     private User user;
 
     @NotNull
+    @ManyToOne
+    private BookCopy bookCopy;
+
+    @NotNull
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date loanDate;
 
@@ -35,9 +39,16 @@ public class Loan {
     @Column
     private BookState returnBookState;
 
-    @NotNull
-    @ManyToOne
-    private BookCopy bookCopy;
+
+
+    public Loan() {
+    }
+
+    public Loan(User user, BookCopy bookCopy, Date loanDate) {
+        this.user = user;
+        this.bookCopy = bookCopy;
+        this.loanDate = loanDate;
+    }
 
     public Long getId() {
         return this.id;

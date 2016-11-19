@@ -39,6 +39,11 @@ public class BookCopy {
         bookState = BookState.NEW;
     }
 
+    public BookCopy(Book book, BookState bookState) {
+        this.book = book;
+        this.bookState = bookState;
+    }
+
     public Long getId() {
         return id;
     }

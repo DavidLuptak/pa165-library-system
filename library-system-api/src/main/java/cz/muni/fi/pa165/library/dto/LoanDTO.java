@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.library.dto;
 import cz.muni.fi.pa165.library.enums.BookState;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -20,6 +21,8 @@ public class LoanDTO {
     private Date returnDate;
 
     private BookState bookState;
+
+    private BookCopyDTO bookCopy;
 
     public Long getId() {
         return id;
@@ -59,6 +62,14 @@ public class LoanDTO {
 
     public void setBookState(BookState bookState) {
         this.bookState = bookState;
+    }
+
+    public BookCopyDTO getBookCopy() {
+        return bookCopy;
+    }
+
+    public void setBookCopy(BookCopyDTO bookCopy) {
+        this.bookCopy = bookCopy;
     }
 
     @Override
