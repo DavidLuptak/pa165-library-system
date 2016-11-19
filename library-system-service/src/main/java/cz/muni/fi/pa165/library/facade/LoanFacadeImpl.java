@@ -8,6 +8,8 @@ import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.mapping.BeanMappingService;
 import cz.muni.fi.pa165.library.service.LoanService;
 import cz.muni.fi.pa165.library.service.UserService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -16,6 +18,8 @@ import java.util.List;
  * @author Dávid Lupták
  * @version 15.11.2016
  */
+@Service
+@Transactional
 public class LoanFacadeImpl implements LoanFacade {
 
     @Inject
