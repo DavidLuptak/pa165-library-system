@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.library.dao.UserDao;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.enums.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -15,6 +16,7 @@ import java.util.List;
  * @author Martin
  * @version 13.11.2016
  */
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired

@@ -11,6 +11,8 @@ public class CategoryNewDTO {
     @NotBlank
     private String name;
 
+    //TODO: budeme potrebovat List<Long> bookIds?
+
     public String getName() {
         return name;
     }
