@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.library.dto;
 import cz.muni.fi.pa165.library.enums.BookState;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -90,5 +89,17 @@ public class LoanDTO {
     @Override
     public int hashCode() {
         return Objects.hash(getUser(), getLoanDate(), getReturnDate(), getBookState());
+    }
+
+    @Override
+    public String toString() {
+        return "LoanDTO{" +
+                "id=" + id +
+                ", user=" + user +
+                ", loanDate=" + loanDate +
+                ", returnDate=" + returnDate +
+                ", bookState=" + bookState +
+                ", bookCopy=" + bookCopy +
+                '}';
     }
 }

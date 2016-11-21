@@ -37,7 +37,7 @@ public class Loan {
     private Date returnDate;
 
     @Column
-    private BookState returnBookState;
+    private BookState bookState;
 
 
 
@@ -87,12 +87,12 @@ public class Loan {
         return returnDate != null;
     }
 
-    public BookState getReturnBookState() {
-        return this.returnBookState;
+    public BookState getBookState() {
+        return this.bookState;
     }
 
-    public void setReturnBookState(BookState returnBookState) {
-        this.returnBookState = returnBookState;
+    public void setBookState(BookState returnBookState) {
+        this.bookState = returnBookState;
     }
 
     public BookCopy getBookCopy() {
@@ -122,5 +122,17 @@ public class Loan {
         result = 31 * result + (getLoanDate() != null ? getLoanDate().hashCode() : 0);
         result = 31 * result + (getBookCopy() != null ? getBookCopy().hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Loan{" +
+                "id=" + id +
+                ", user=" + user +
+                ", bookCopy=" + bookCopy +
+                ", loanDate=" + loanDate +
+                ", returnDate=" + returnDate +
+                ", returnBookState=" + bookState +
+                '}';
     }
 }

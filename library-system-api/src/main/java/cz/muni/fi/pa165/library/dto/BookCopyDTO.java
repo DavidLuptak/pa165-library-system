@@ -16,6 +16,10 @@ public class BookCopyDTO {
 
     //TODO: budeme potrebovat List<Loan> loans?
 
+
+    public BookCopyDTO() {
+    }
+
     public BookCopyDTO(BookDTO book) {
         this.book = book;
         bookState = BookState.NEW;

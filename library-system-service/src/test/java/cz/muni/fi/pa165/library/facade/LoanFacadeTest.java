@@ -1,14 +1,8 @@
 package cz.muni.fi.pa165.library.facade;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
-import javax.inject.Inject;
-
 import cz.muni.fi.pa165.library.config.ServiceConfiguration;
-import cz.muni.fi.pa165.library.dto.*;
+import cz.muni.fi.pa165.library.dto.LoanDTO;
+import cz.muni.fi.pa165.library.dto.LoanNewDTO;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.BookCopy;
 import cz.muni.fi.pa165.library.entity.Loan;
@@ -16,20 +10,22 @@ import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.enums.UserRole;
 import cz.muni.fi.pa165.library.mapping.BeanMappingService;
+import cz.muni.fi.pa165.library.mapping.BeanMappingServiceImpl;
 import cz.muni.fi.pa165.library.service.BookCopyService;
 import cz.muni.fi.pa165.library.service.LoanService;
 import cz.muni.fi.pa165.library.service.UserService;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static org.mockito.Matchers.any;
+import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.*;
@@ -51,12 +47,12 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
     @Mock
     private BookCopyService bookCopyService;
 
-    @Mock
-    private BeanMappingService beanMappingService;
-
+    @Spy
     @Inject
+    private final BeanMappingService beanMappingService = new BeanMappingServiceImpl();
+
     @InjectMocks
-    private LoanFacade loanFacade;
+    private LoanFacade loanFacade = new LoanFacadeImpl();
 
     private LoanNewDTO newLoan;
     private User user;
@@ -79,7 +75,7 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         bookCopy.setId(1L);
         loan = new Loan(user, bookCopy, new Date());
         loan.setId(1L);
-        loan.setReturnBookState(BookState.LIGHT_DAMAGE);
+        loan.setBookState(BookState.LIGHT_DAMAGE);
         loan.setReturnDate(new Date());
     }
 
@@ -147,11 +143,11 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
     }
 
     private void assertEqualsLoanAndLoanDTO(Loan loan, LoanDTO dto) {
-        assertEquals(dto.getUser().getId(), user.getId());
-        assertEquals(dto.getBookCopy().getId(), bookCopy.getId());
-        assertEquals(dto.getLoanDate(), loan.getLoanDate());
-        assertEquals(dto.getBookState(), loan.getReturnBookState());
-        assertEquals(dto.getReturnDate(), loan.getReturnDate());
+        assertEquals(loan.getUser().getId(), dto.getUser().getId());
+        assertEquals(loan.getBookCopy().getId(), dto.getBookCopy().getId());
+        assertEquals(loan.getLoanDate(), dto.getLoanDate());
+        assertEquals(loan.getBookState(), dto.getBookState());
+        assertEquals(loan.getReturnDate(), dto.getReturnDate());
     }
 
 }
