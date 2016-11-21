@@ -23,7 +23,8 @@ import javax.validation.ConstraintViolationException;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.testng.Assert.*;
+
 
 /**
  * Test suite for the BookCopy DAO.

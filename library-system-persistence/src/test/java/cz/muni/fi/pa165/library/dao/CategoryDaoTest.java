@@ -17,7 +17,8 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
 
-import static org.junit.Assert.*;
+import static org.testng.Assert.*;
+
 
 /**
  * Test suite for the Category DAO.
