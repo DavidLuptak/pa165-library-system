@@ -22,7 +22,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -54,19 +54,25 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
     @InjectMocks
     private LoanFacade loanFacade = new LoanFacadeImpl();
 
-    private LoanNewDTO newLoan;
+    @Captor
+    private ArgumentCaptor<Loan> loanArgumentCaptor;
+
+    private LoanNewDTO loanNewDTO;
     private User user;
+    private User user2;
     private BookCopy bookCopy;
+    private BookCopy bookCopy2;
     private Book book;
     private Loan loan;
+    private Loan loan2;
 
     @BeforeClass
-    public void setUp() throws Exception {
+    public void initMockito() {
         MockitoAnnotations.initMocks(this);
     }
 
     @BeforeMethod
-    public void setUpMethod() throws Exception {
+    public void initEntities() {
         user = new User("Jan", "Novak", "jan@lala.com", "Brno", UserRole.MEMBER);
         user.setId(1L);
         book = new Book("Pride and Prejudice", "Jane Austen", "28392883829");
@@ -77,47 +83,57 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         loan.setId(1L);
         loan.setBookState(BookState.LIGHT_DAMAGE);
         loan.setReturnDate(new Date());
+
+        user2 = new User("Ondrej", "Velky", "ondrej@abc.com", "Praha", UserRole.ADMIN);
+        user2.setId(2L);
+        bookCopy2 = new BookCopy(book, BookState.MEDIUM_DAMAGE);
+        bookCopy2.setId(2L);
+        loan2 = new Loan(user2, bookCopy2, new Date());
+    }
+
+    @BeforeMethod(dependsOnMethods = "initEntities")
+    public void initMocksBehaviour() {
+        // findById
+        when(loanService.findById(1L)).thenReturn(loan);
+        when(bookCopyService.findById(1L)).thenReturn(bookCopy);
+        when(userService.findById(1L)).thenReturn(user);
+
+        // findByUser
+        when(loanService.findByUser(user)).thenReturn(Arrays.asList(loan));
+
+        // findAll
+        when(loanService.findAll()).thenReturn(Arrays.asList(loan, loan2));
     }
 
     @Test
-    public void testCreate() throws Exception {
-        Date now = new Date();
-        newLoan = new LoanNewDTO(user.getId(), bookCopy.getId(), new Date());
+    public void testCreate() {
+        loanNewDTO = new LoanNewDTO(user.getId(), bookCopy.getId(), new Date());
+        loanFacade.create(loanNewDTO);
 
-        when(userService.findById(1L)).thenReturn(user);
-        when(bookCopyService.findById(1L)).thenReturn(bookCopy);
-        ArgumentCaptor<Loan> captor = ArgumentCaptor.forClass(Loan.class);
+        verify(loanService).create(loanArgumentCaptor.capture());
 
-        loanFacade.create(newLoan);
-        verify(loanService).create(captor.capture());
+        Loan entity = loanArgumentCaptor.getValue();
 
-        Loan entity = captor.getValue();
         assertNull(entity.getId());
         assertSame(user, entity.getUser());
         assertSame(bookCopy, entity.getBookCopy());
     }
 
     @Test
-    public void testDelete() throws Exception {
-        when(loanService.findById(1L)).thenReturn(loan);
+    public void testDelete() {
         loanFacade.delete(1L);
         verify(loanService).delete(loan);
     }
 
     @Test
-    public void testFindById() throws Exception {
-        when(loanService.findById(1L)).thenReturn(loan);
+    public void testFindById() {
         LoanDTO dto = loanFacade.findById(1L);
         assertNotNull(dto);
         assertEqualsLoanAndLoanDTO(loan, dto);
     }
 
     @Test
-    public void testFindByUser() throws Exception {
-        List<Loan> loans = new ArrayList<>();
-        loans.add(loan);
-        when(loanService.findByUser(user)).thenReturn(loans);
-        when(loanService.findById(1L)).thenReturn(loan);
+    public void testFindByUser() {
         List<LoanDTO> result = loanFacade.findByUser(1L);
         assertNotNull(result);
         assertEquals(result.size(), 1);
@@ -126,20 +142,11 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
 
     @Test
     public void testFindAll() {
-        User user2 = new User("Ondrej", "Velky", "ondrej@abc.com", "Praha", UserRole.ADMIN);
-        user2.setId(2L);
-        BookCopy bookCopy2 = new BookCopy(book, BookState.MEDIUM_DAMAGE);
-        bookCopy2.setId(2L);
-        Loan loan2 = new Loan(user2, bookCopy2, new Date());
-        List<Loan> loans = new ArrayList<>();
-        loans.add(loan);
-        loans.add(loan2);
-        when(loanService.findAll()).thenReturn(loans);
-        List<LoanDTO> dtos = loanFacade.findAll();
-        assertNotNull(dtos);
-        assertEquals(2, dtos.size());
-        assertEqualsLoanAndLoanDTO(loan, dtos.get(0));
-        assertEqualsLoanAndLoanDTO(loan2, dtos.get(1));
+        List<LoanDTO> loanDTOs = loanFacade.findAll();
+        assertNotNull(loanDTOs);
+        assertEquals(loanDTOs.size(), 2);
+        assertEqualsLoanAndLoanDTO(loan, loanDTOs.get(0));
+        assertEqualsLoanAndLoanDTO(loan2, loanDTOs.get(1));
     }
 
     private void assertEqualsLoanAndLoanDTO(Loan loan, LoanDTO dto) {
