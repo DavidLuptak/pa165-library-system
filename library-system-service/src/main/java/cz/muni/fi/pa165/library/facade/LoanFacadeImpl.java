@@ -2,7 +2,6 @@ package cz.muni.fi.pa165.library.facade;
 
 import cz.muni.fi.pa165.library.dto.LoanDTO;
 import cz.muni.fi.pa165.library.dto.LoanNewDTO;
-import cz.muni.fi.pa165.library.entity.BookCopy;
 import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
@@ -10,7 +9,6 @@ import cz.muni.fi.pa165.library.mapping.BeanMappingService;
 import cz.muni.fi.pa165.library.service.BookCopyService;
 import cz.muni.fi.pa165.library.service.LoanService;
 import cz.muni.fi.pa165.library.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,16 +23,16 @@ import java.util.List;
 @Transactional
 public class LoanFacadeImpl implements LoanFacade {
 
-    @Autowired
+    @Inject
     private LoanService loanService;
 
-    @Autowired
+    @Inject
     private UserService userService;
 
-    @Autowired
+    @Inject
     private BookCopyService bookCopyService;
 
-    @Autowired
+    @Inject
     private BeanMappingService beanMappingService;
 
     @Override

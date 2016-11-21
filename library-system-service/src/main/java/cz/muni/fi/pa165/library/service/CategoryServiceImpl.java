@@ -2,9 +2,9 @@ package cz.muni.fi.pa165.library.service;
 
 import cz.muni.fi.pa165.library.dao.CategoryDao;
 import cz.muni.fi.pa165.library.entity.Category;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.util.List;
 
 /**
@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    @Autowired
+    @Inject
     private CategoryDao categoryDao;
 
     @Override

@@ -1,13 +1,12 @@
 package cz.muni.fi.pa165.library.service;
 
-import java.util.List;
-
 import cz.muni.fi.pa165.library.dao.BookCopyDao;
-import cz.muni.fi.pa165.library.dao.BookDao;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.BookCopy;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.inject.Inject;
+import java.util.List;
 
 /**
  * @author Lenka (433591)
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class BookCopyServiceImpl implements BookCopyService {
 
-    @Autowired
+    @Inject
     private BookCopyDao bookCopyDao;
 
     @Override
