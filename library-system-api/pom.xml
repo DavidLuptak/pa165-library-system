@@ -7,8 +7,12 @@
         <artifactId>library-system</artifactId>
         <version>0.2-SNAPSHOT</version>
     </parent>
+
     <artifactId>library-system-api</artifactId>
+    <name>Library System API</name>
+
     <packaging>jar</packaging>
+
     <dependencies>
         <dependency>
             <groupId>org.hibernate</groupId>

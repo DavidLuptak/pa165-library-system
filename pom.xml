@@ -21,6 +21,25 @@
         <module>library-system-api</module>
     </modules>
 
+    <developers>
+        <developer>
+            <name>Lenka Janečková</name>
+            <email>433591@mail.muni.cz</email>
+        </developer>
+        <developer>
+            <name>Dávid Lupták</name>
+            <email>422640@mail.muni.cz</email>
+        </developer>
+        <developer>
+            <name>Martin Mlynárik</name>
+            <email>410038@mail.muni.cz</email>
+        </developer>
+        <developer>
+            <name>Bedřich Said</name>
+            <email>bedrich.said@gmail.com</email>
+        </developer>
+    </developers>
+
     <build>
         <pluginManagement>
             <plugins>

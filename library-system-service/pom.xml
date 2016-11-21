@@ -7,19 +7,22 @@
         <artifactId>library-system</artifactId>
         <version>0.2-SNAPSHOT</version>
     </parent>
+
     <artifactId>library-system-service</artifactId>
+    <name>Library System Service</name>
+
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>cz.muni.fi.pa165</groupId>
             <artifactId>library-system-persistence</artifactId>
-            <version>0.2-SNAPSHOT</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>cz.muni.fi.pa165</groupId>
             <artifactId>library-system-api</artifactId>
-            <version>0.2-SNAPSHOT</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.inject</groupId>
@@ -43,6 +46,12 @@
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>javax.el</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.7</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
