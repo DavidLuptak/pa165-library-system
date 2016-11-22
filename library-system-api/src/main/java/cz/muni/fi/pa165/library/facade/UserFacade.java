@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.library.facade;
 import cz.muni.fi.pa165.library.dto.UserAuthenticateDTO;
 import cz.muni.fi.pa165.library.dto.UserDTO;
 import cz.muni.fi.pa165.library.enums.UserRole;
+import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 
 import java.util.List;
 
@@ -16,6 +17,9 @@ public interface UserFacade {
      *
      * @param user                to be created
      * @param unencryptedPassword of registering user
+     * @throws IllegalArgumentException if user is null
+     * @throws IllegalArgumentException if unencryptedPassword is null or empty
+     * @throws NoEntityFoundException   if user does not exist
      */
     void register(UserDTO user, String unencryptedPassword);
 
@@ -23,6 +27,8 @@ public interface UserFacade {
      * Updates the given user.
      *
      * @param user to be updated
+     * @throws IllegalArgumentException if user is null
+     * @throws NoEntityFoundException   if user does not exist
      */
     void update(UserDTO user);
 
@@ -30,6 +36,8 @@ public interface UserFacade {
      * Deletes the given user.
      *
      * @param id of user to be deleted
+     * @throws IllegalArgumentException if user id is null
+     * @throws NoEntityFoundException   if user does not exist
      */
     void delete(Long id);
 
@@ -38,6 +46,8 @@ public interface UserFacade {
      *
      * @param id of searched user
      * @return found user
+     * @throws IllegalArgumentException if user id is null
+     * @throws NoEntityFoundException   if user does not exist
      */
     UserDTO findById(Long id);
 
@@ -47,6 +57,7 @@ public interface UserFacade {
      * @param email of the searched user
      * @return the user entity with the respective email or null if such entity does not exist
      * @throws IllegalArgumentException if email is null or empty
+     * @throws NoEntityFoundException   if user does not exist
      */
     UserDTO findByEmail(String email);
 
@@ -60,8 +71,9 @@ public interface UserFacade {
     /**
      * Gets user's userRole
      *
-     * @param user    for whom to get the userRole
+     * @param user for whom to get the userRole
      * @return user's UserRole
+     * @throws IllegalArgumentException if user is null
      */
     UserRole userRole(UserDTO user);
 
@@ -70,6 +82,8 @@ public interface UserFacade {
      *
      * @param user to be authenticated
      * @return whether authentication succeeds
+     * @throws IllegalArgumentException if user is null
+     * @throws NoEntityFoundException   if user does not exist
      */
     boolean authenticate(UserAuthenticateDTO user);
 }
