@@ -41,6 +41,9 @@ public class LoanDaoImpl implements LoanDao {
 
     @Override
     public List<Loan> findByUser(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User is not valid.");
+        }
         return em.createQuery("SELECT loan FROM Loan loan WHERE loan.user = :user", Loan.class).setParameter("user", user).getResultList();
     }
 
