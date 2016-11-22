@@ -74,6 +74,7 @@ public interface UserFacade {
      * @param user for whom to get the userRole
      * @return user's UserRole
      * @throws IllegalArgumentException if user is null
+     * @throws NoEntityFoundException   if user does not exist
      */
     UserRole userRole(UserDTO user);
 

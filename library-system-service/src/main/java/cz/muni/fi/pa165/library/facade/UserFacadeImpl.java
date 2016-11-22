@@ -37,9 +37,6 @@ public class UserFacadeImpl implements UserFacade {
             throw new IllegalArgumentException("Unencrypted password cannot be null nor empty.");
         }
         User user = beanMappingService.mapTo(userDTO, User.class);
-        if (user == null) {
-            throw new NoEntityFoundException("User not found during register.");
-        }
         userService.register(user, unencryptedPassword);
         userDTO.setId(user.getId());
     }
@@ -50,7 +47,7 @@ public class UserFacadeImpl implements UserFacade {
             throw new IllegalArgumentException("User cannot be null.");
         }
         User user = beanMappingService.mapTo(userDTO, User.class);
-        if (user == null) {
+        if (userService.findById(user.getId()) == null) {
             throw new NoEntityFoundException("User not found during update.");
         }
         userService.update(user);
@@ -99,22 +96,26 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public UserRole userRole(UserDTO user) {
-        if (user == null) {
-            throw new IllegalArgumentException("User cannot be null.");
-        }
-        return userService.userRole(beanMappingService.mapTo(user, User.class));
-    }
-
-    @Override
-    public boolean authenticate(UserAuthenticateDTO userDTO) {
+    public UserRole userRole(UserDTO userDTO) {
         if (userDTO == null) {
             throw new IllegalArgumentException("User cannot be null.");
         }
-        User user = userService.findById(userDTO.getUserId());
+        User user = beanMappingService.mapTo(userDTO, User.class);
+        if (userService.findById(user.getId()) == null) {
+            throw new NoEntityFoundException("User not found during getting user role.");
+        }
+        return userService.userRole(user);
+    }
+
+    @Override
+    public boolean authenticate(UserAuthenticateDTO userAuthenticateDTO) {
+        if (userAuthenticateDTO == null) {
+            throw new IllegalArgumentException("User cannot be null.");
+        }
+        User user = userService.findById(userAuthenticateDTO.getUserId());
         if (user == null) {
             throw new NoEntityFoundException("User not found during authenticate.");
         }
-        return userService.authenticate(user, userDTO.getPassword());
+        return userService.authenticate(user, userAuthenticateDTO.getPassword());
     }
 }
