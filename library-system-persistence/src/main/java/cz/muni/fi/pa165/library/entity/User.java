@@ -43,14 +43,12 @@ public class User {
     private String address;
 
     @Enumerated(EnumType.STRING)
-    private UserRole userRole;
+    private UserRole userRole = UserRole.MEMBER;
 
     @OneToMany(orphanRemoval = true, mappedBy = "user")
-    private final Set<Loan> loans;
+    private final Set<Loan> loans = new HashSet<>();
 
     public User() {
-        this.loans = new HashSet<>();
-        this.userRole = UserRole.MEMBER;
     }
 
     public User(String firstName, String lastName, String email, String address, UserRole userRole) {
@@ -60,6 +58,16 @@ public class User {
         this.email = email;
         this.address = address;
         this.userRole = userRole;
+    }
+
+    private User(UserBuilder userBuilder) {
+        this.id = userBuilder.id;
+        this.email = userBuilder.email;
+        this.passwordHash = userBuilder.passwordHash;
+        this.firstName = userBuilder.firstName;
+        this.lastName = userBuilder.lastName;
+        this.address = userBuilder.address;
+        this.userRole = userBuilder.userRole;
     }
 
     public Long getId() {
@@ -145,5 +153,53 @@ public class User {
         int hash = 7;
         hash = 53 * hash + Objects.hashCode(this.getEmail());
         return hash;
+    }
+
+    public static class UserBuilder {
+        private final String email;
+        private Long id;
+        private String passwordHash;
+        private String firstName;
+        private String lastName;
+        private String address;
+        private UserRole userRole;
+
+        public UserBuilder(String email) {
+            this.email = email;
+        }
+
+        public UserBuilder setId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public UserBuilder setPasswordHash(String passwordHash) {
+            this.passwordHash = passwordHash;
+            return this;
+        }
+
+        public UserBuilder setFirstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public UserBuilder setLastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public UserBuilder setAddress(String address) {
+            this.address = address;
+            return this;
+        }
+
+        public UserBuilder setUserRole(UserRole userRole) {
+            this.userRole = userRole;
+            return this;
+        }
+
+        public User build() {
+            return new User(this);
+        }
     }
 }
