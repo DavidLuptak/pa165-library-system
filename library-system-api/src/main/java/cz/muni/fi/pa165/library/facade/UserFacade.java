@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.library.facade;
 
 import cz.muni.fi.pa165.library.dto.UserAuthenticateDTO;
 import cz.muni.fi.pa165.library.dto.UserDTO;
+import cz.muni.fi.pa165.library.dto.UserNewDTO;
 import cz.muni.fi.pa165.library.enums.UserRole;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 
@@ -16,12 +17,11 @@ public interface UserFacade {
      * Registers the given user with given unencrypted password.
      *
      * @param user                to be created
-     * @param unencryptedPassword of registering user
      * @throws IllegalArgumentException if user is null
      * @throws IllegalArgumentException if unencryptedPassword is null or empty
      * @throws NoEntityFoundException   if user does not exist
      */
-    void register(UserDTO user, String unencryptedPassword);
+    Long register(UserNewDTO user, String unencryptedPassword);
 
     /**
      * Updates the given user.

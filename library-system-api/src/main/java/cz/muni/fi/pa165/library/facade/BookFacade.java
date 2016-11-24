@@ -21,6 +21,22 @@ public interface BookFacade {
     Long createBook(BookNewDTO book);
 
     /**
+     * Updates the given book in the database
+     *
+     * @param book to be updated
+     */
+    void updateBook(BookDTO bookDTO);
+
+    /**
+     * Finds books that are written by the given author in the database
+     *
+     * @param author searched author
+     * @return found books
+     * @throws IllegalArgumentException if author is null or empty
+     */
+    List<BookDTO> findByAuthor(String author);
+
+    /**
      * Returns book with given id or null
      *
      * @param id book id
@@ -49,13 +65,4 @@ public interface BookFacade {
      * @param bookId book id
      */
     void delete(Long bookId);
-
-    /**
-     * Sets book current state. Can be set only to a worse (or the same) state
-     * than it already was
-     *
-     * @param bookId   book id
-     * @param newState new state to be set
-     */
-    void setState(Long bookId, BookState newState);
 }

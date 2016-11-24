@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.library.facade;
 
 import cz.muni.fi.pa165.library.dto.UserAuthenticateDTO;
 import cz.muni.fi.pa165.library.dto.UserDTO;
+import cz.muni.fi.pa165.library.dto.UserNewDTO;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.enums.UserRole;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
@@ -29,7 +30,7 @@ public class UserFacadeImpl implements UserFacade {
     private BeanMappingService beanMappingService;
 
     @Override
-    public void register(UserDTO userDTO, String unencryptedPassword) {
+    public Long register(UserNewDTO userDTO, String unencryptedPassword) {
         if (userDTO == null) {
             throw new IllegalArgumentException("User cannot be null.");
         }
@@ -39,6 +40,7 @@ public class UserFacadeImpl implements UserFacade {
         User user = beanMappingService.mapTo(userDTO, User.class);
         userService.register(user, unencryptedPassword);
         userDTO.setId(user.getId());
+        return userDTO.getId();
     }
 
     @Override
