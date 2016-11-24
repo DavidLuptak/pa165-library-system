@@ -11,13 +11,18 @@ public class CategoryNewDTO {
     @NotBlank
     private String name;
 
-    //TODO: budeme potrebovat List<Long> bookIds?
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
+        this.name = name;
+    }
+
+    public CategoryNewDTO() {
+    }
+
+    public CategoryNewDTO(String name) {
         this.name = name;
     }
 

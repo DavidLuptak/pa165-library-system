@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.library.service;
 
 import cz.muni.fi.pa165.library.dao.BookDao;
 import cz.muni.fi.pa165.library.entity.Book;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  * @author Martin
  * @version 24.11.2016.
  */
+@Service
 public class BookServiceImpl implements BookService {
     @Inject
     private BookDao bookDao;

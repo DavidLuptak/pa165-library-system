@@ -12,8 +12,6 @@ public class BookCopyNewDTO {
 
     private BookState bookState;
 
-    //TODO: budeme potrebovat List<Loan> loans?
-
 
     public BookCopyNewDTO() {
     }

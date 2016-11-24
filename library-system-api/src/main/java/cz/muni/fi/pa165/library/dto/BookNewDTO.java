@@ -23,6 +23,16 @@ public class BookNewDTO {
     private Long isbn;
     private List<Long> collectionIds = new ArrayList<>();
 
+    public BookNewDTO() {
+    }
+
+    public BookNewDTO(String name, String authorName, Long isbn, List<Long> collectionIds) {
+        this.name = name;
+        this.authorName = authorName;
+        this.isbn = isbn;
+        this.collectionIds = collectionIds;
+    }
+
     public String getName() {
         return name;
     }

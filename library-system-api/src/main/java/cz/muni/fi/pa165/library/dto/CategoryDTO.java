@@ -20,6 +20,11 @@ public class CategoryDTO {
         books = new ArrayList<>();
     }
 
+    public CategoryDTO(String name) {
+        this();
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }
