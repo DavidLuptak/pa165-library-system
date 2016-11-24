@@ -21,7 +21,7 @@ public interface UserFacade {
      * @throws IllegalArgumentException if unencryptedPassword is null or empty
      * @throws NoEntityFoundException   if user does not exist
      */
-    Long register(UserNewDTO user, String unencryptedPassword);
+    Long register(UserNewDTO userNewDTO, String unencryptedPassword);
 
     /**
      * Updates the given user.
@@ -30,7 +30,7 @@ public interface UserFacade {
      * @throws IllegalArgumentException if user is null
      * @throws NoEntityFoundException   if user does not exist
      */
-    void update(UserDTO user);
+    void update(UserDTO userDTO);
 
     /**
      * Deletes the given user.
@@ -76,7 +76,7 @@ public interface UserFacade {
      * @throws IllegalArgumentException if user is null
      * @throws NoEntityFoundException   if user does not exist
      */
-    UserRole userRole(UserDTO user);
+    UserRole userRole(UserDTO userDTO);
 
     /**
      * Try to authenticate a user. Return true only if the hashed password matches the records.
@@ -86,5 +86,5 @@ public interface UserFacade {
      * @throws IllegalArgumentException if user is null
      * @throws NoEntityFoundException   if user does not exist
      */
-    boolean authenticate(UserAuthenticateDTO user);
+    boolean authenticate(UserAuthenticateDTO userDTO);
 }

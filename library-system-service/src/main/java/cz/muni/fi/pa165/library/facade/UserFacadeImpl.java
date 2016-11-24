@@ -30,17 +30,17 @@ public class UserFacadeImpl implements UserFacade {
     private BeanMappingService beanMappingService;
 
     @Override
-    public Long register(UserNewDTO userDTO, String unencryptedPassword) {
-        if (userDTO == null) {
+    public Long register(UserNewDTO userNewDTO, String unencryptedPassword) {
+        if (userNewDTO == null) {
             throw new IllegalArgumentException("User cannot be null.");
         }
         if (unencryptedPassword == null || unencryptedPassword.isEmpty()) {
             throw new IllegalArgumentException("Unencrypted password cannot be null nor empty.");
         }
-        User user = beanMappingService.mapTo(userDTO, User.class);
+        User user = beanMappingService.mapTo(userNewDTO, User.class);
         userService.register(user, unencryptedPassword);
-        userDTO.setId(user.getId());
-        return userDTO.getId();
+        userNewDTO.setId(user.getId());
+        return userNewDTO.getId();
     }
 
     @Override

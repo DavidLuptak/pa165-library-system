@@ -7,7 +7,8 @@ import cz.muni.fi.pa165.library.dto.BookDTO;
 import java.util.List;
 
 /**
- * Created by Martin on 24.11.2016.
+ * @author Martin
+ * @version 24.11.2016.
  */
 public interface BookCopyFacade {
     /**
@@ -15,21 +16,21 @@ public interface BookCopyFacade {
      *
      * @param bookCopy to be saved
      */
-    Long create(BookCopyNewDTO bookCopy);
+    Long create(BookCopyNewDTO bookCopyNewDTO);
 
     /**
      * Updates the given bookCopy in the database
      *
      * @param bookCopy to be updated
      */
-    void update(BookCopyDTO bookCopy);
+    void update(BookCopyDTO bookCopyDTO);
 
     /**
      * Deletes the given bookCopy from the database
      *
      * @param bookCopy to be deleted
      */
-    void delete(BookCopyDTO bookCopy);
+    void delete(Long id);
 
     /**
      * Finds a bookCopy with the given id in the database
@@ -46,5 +47,5 @@ public interface BookCopyFacade {
      * @return found copies
      * @throws IllegalArgumentException if book is null
      */
-    List<BookCopyDTO> findByBook(BookDTO book);
+    List<BookCopyDTO> findByBook(BookDTO bookDTO);
 }

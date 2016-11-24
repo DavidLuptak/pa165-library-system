@@ -26,16 +26,15 @@ public class CategoryFacadeImpl implements CategoryFacade {
     private BeanMappingService beanMappingService;
 
     @Override
-    public Long create(CategoryNewDTO dto) {
-        Category category = new Category();
-        category.setName(dto.getName());
+    public Long create(CategoryNewDTO categoryNewDTO) {
+        Category category = beanMappingService.mapTo(categoryNewDTO, Category.class);
         categoryService.create(category);
         return category.getId();
     }
 
     @Override
-    public void update(CategoryDTO dto) {
-        Category category = beanMappingService.mapTo(dto, Category.class);
+    public void update(CategoryDTO categoryDTO) {
+        Category category = beanMappingService.mapTo(categoryDTO, Category.class);
         categoryService.update(category);
     }
 

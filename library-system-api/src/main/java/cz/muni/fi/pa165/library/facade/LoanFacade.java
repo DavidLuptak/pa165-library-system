@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface LoanFacade {
 
-    Long create(LoanNewDTO loanDTO);
+    Long create(LoanNewDTO loanNewDTO);
 
     void update(LoanDTO loanDTO);
 

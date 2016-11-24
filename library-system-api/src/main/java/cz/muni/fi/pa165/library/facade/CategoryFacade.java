@@ -18,14 +18,14 @@ public interface CategoryFacade {
      * @param dto to be created
      * @return id of the added category
      */
-    Long create(CategoryNewDTO dto);
+    Long create(CategoryNewDTO categoryNewDTO);
 
     /**
      * Updates already existing CategoryDTO
      *
      * @param dto to be updated
      */
-    void update(CategoryDTO dto);
+    void update(CategoryDTO categoryDTO);
 
     /**
      * Deletes the CategoryDTO

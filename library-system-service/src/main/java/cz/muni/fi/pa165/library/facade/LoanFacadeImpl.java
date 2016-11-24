@@ -36,14 +36,14 @@ public class LoanFacadeImpl implements LoanFacade {
     private BeanMappingService beanMappingService;
 
     @Override
-    public Long create(LoanNewDTO loanDTO) {
-        if (loanDTO == null) {
+    public Long create(LoanNewDTO loanNewDTO) {
+        if (loanNewDTO == null) {
             throw new IllegalArgumentException("Loan cannot be null.");
         }
 
-        Loan loan = beanMappingService.mapTo(loanDTO, Loan.class);
-        loan.setUser(userService.findById(loanDTO.getUserId()));
-        loan.setBookCopy(bookCopyService.findById(loanDTO.getBookCopyId()));
+        Loan loan = beanMappingService.mapTo(loanNewDTO, Loan.class);
+        loan.setUser(userService.findById(loanNewDTO.getUserId()));
+        loan.setBookCopy(bookCopyService.findById(loanNewDTO.getBookCopyId()));
 
         loanService.create(loan);
         return loan.getId();
