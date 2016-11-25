@@ -74,4 +74,11 @@ public interface UserService {
      */
     boolean authenticate(User user, String unencryptedPassword);
 
+    /**
+     * Find users who are loaning something
+     *
+     * @return users who have atleas one not returned loan
+     */
+    List<User> findUsersWithNotReturnedLoans();
+
 }

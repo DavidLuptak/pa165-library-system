@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Martin
@@ -129,4 +130,11 @@ public class UserServiceImpl implements UserService {
         return paddingLength > 0 ? String.format("%0" + paddingLength + "d", 0) + hex : hex;
     }
 
+    @Override
+    public List<User> findUsersWithNotReturnedLoans() {
+        return userDao.findAll().stream()
+                .filter(user -> user.getLoans().stream()
+                    .anyMatch(loan -> !loan.isReturned()))
+                .collect(Collectors.toList());
+    }
 }
