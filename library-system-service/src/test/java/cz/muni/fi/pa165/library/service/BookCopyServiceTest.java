@@ -37,7 +37,7 @@ import static org.testng.Assert.assertSame;
  * @version 25.11.2016.
  */
 @ContextConfiguration(classes = ServiceConfiguration.class)
-public class BookCopyTest extends AbstractTransactionalTestNGSpringContextTests {
+public class BookCopyServiceTest extends AbstractTransactionalTestNGSpringContextTests {
 
     @Mock
     private BookCopyDao bookCopyDao;
