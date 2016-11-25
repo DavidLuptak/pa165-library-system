@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.library.entity.BookCopy;
 import cz.muni.fi.pa165.library.entity.Category;
 import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.exception.LibrarySystemDataAccessException;
+import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
 import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -94,13 +95,13 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
                 Book book = (Book) argument;
                 if (book.getName() == null) {
-                    throw new LibrarySystemDataAccessException("Name is null.");
+                    throw new LibraryDAOException("Name is null.");
                 }
                 if (book.getAuthor() == null) {
-                    throw new LibrarySystemDataAccessException("Author is null.");
+                    throw new LibraryDAOException("Author is null.");
                 }
                 if (book.getIsbn() == null) {
-                    throw new LibrarySystemDataAccessException("ISBN is null.");
+                    throw new LibraryDAOException("ISBN is null.");
                 }
 
                 book.setId(1L);
@@ -134,6 +135,11 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
         verify(bookDao).create(book3);
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCreateNull(){
+        bookService.create(null);
+    }
+
     @Test
     public void testUpdate() {
         Book updated = bookService.update(book3);
@@ -146,10 +152,20 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
         assertEquals(updated.getIsbn(), book3.getIsbn());
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testUpdateNull(){
+        bookService.update(null);
+    }
+
     @Test
     public void testDelete() {
         bookService.delete(book1);
         verify(bookDao).delete(book1);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testDeleteNull(){
+        bookService.delete(null);
     }
 
     @Test
@@ -162,13 +178,27 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
     public void testFindByNonExistingId() {
         assertNull(bookService.findById(3L));
         verify(bookDao).findById(3L);
+    }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindByNullId(){
+        bookService.findById(null);
     }
 
     @Test
     public void testFindByAuthor() {
         assertEquals(bookService.findByAuthor(book1.getAuthor()), Arrays.asList(book1, book2));
         verify(bookDao).findByAuthor(book1.getAuthor());
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindByNullAuthor(){
+        bookService.findByAuthor(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindByEmptyAuthor(){
+        bookService.findByAuthor("");
     }
 
     @Test
@@ -181,6 +211,16 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
     public void testFindByName() {
         assertEquals(bookService.findByName(book1.getName()), Arrays.asList(book1));
         verify(bookDao).findByName(book1.getName());
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindByNullName(){
+        bookService.findByName(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindByEmptyName(){
+        bookService.findByName("");
     }
 
     @Test
