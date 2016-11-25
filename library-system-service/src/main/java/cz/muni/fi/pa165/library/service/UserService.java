@@ -23,8 +23,9 @@ public interface UserService {
      * Updates the given user.
      *
      * @param user to be updated
+     * @return updated User entity
      */
-    void update(User user);
+    User update(User user);
 
     /**
      * Deletes the given user.
@@ -60,7 +61,7 @@ public interface UserService {
     /**
      * Gets user's userRole
      *
-     * @param user    for whom to get the userRole
+     * @param user for whom to get the userRole
      * @return user's UserRole
      */
     UserRole userRole(User user);

@@ -23,8 +23,9 @@ public interface CategoryDao {
      * Updates already persisted Category entity in the database.
      *
      * @param category to be updated
+     * @return merged Category entity
      */
-    void update(Category category);
+    Category update(Category category);
 
     /**
      * Deletes the Category entity from the persistence context

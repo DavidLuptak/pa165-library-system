@@ -30,8 +30,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void update(User user) {
-        userDao.update(user);
+    public User update(User user) {
+        return userDao.update(user);
     }
 
     @Override
@@ -134,7 +134,7 @@ public class UserServiceImpl implements UserService {
     public List<User> findUsersWithNotReturnedLoans() {
         return userDao.findAll().stream()
                 .filter(user -> user.getLoans().stream()
-                    .anyMatch(loan -> !loan.isReturned()))
+                        .anyMatch(loan -> !loan.isReturned()))
                 .collect(Collectors.toList());
     }
 }

@@ -9,10 +9,7 @@ import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.enums.UserRole;
 import cz.muni.fi.pa165.library.exception.LibrarySystemDataAccessException;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.test.context.ContextConfiguration;
@@ -41,6 +38,9 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
     @InjectMocks
     private LoanService loanService = new LoanServiceImpl();
+
+    @Captor
+    private ArgumentCaptor<Loan> loanArgumentCaptor;
 
     private User user;
     private Loan loan;
@@ -97,6 +97,9 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
             }
         }).when(loanDao).create(any(Loan.class));
 
+        // update
+        when(loanDao.update(loan)).thenReturn(loan);
+
         Mockito.doThrow(new LibrarySystemDataAccessException("User not found.")).when(loanDao).findByUser(new User());
     }
 
@@ -116,6 +119,22 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
     public void testCreateNoUser() {
         Loan loan = new Loan(null, bookCopy, new Date());
         loanService.create(loan);
+    }
+
+    @Test
+    public void testUpdate() {
+        Loan updated = loanService.update(loan);
+
+        verify(loanDao).update(loanArgumentCaptor.capture());
+        Loan captured = loanArgumentCaptor.getValue();
+        assertEquals(captured, loan);
+        assertEquals(captured.getUser(), loan.getUser());
+        assertEquals(captured.getBookCopy(), loan.getBookCopy());
+        assertEquals(captured.getLoanDate(), loan.getLoanDate());
+        assertEquals(updated, loan);
+        assertEquals(updated.getUser(), loan.getUser());
+        assertEquals(updated.getBookCopy(), loan.getBookCopy());
+        assertEquals(updated.getLoanDate(), loan.getLoanDate());
     }
 
     @Test

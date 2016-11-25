@@ -49,6 +49,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
     private long newlyPersistedId = 42L;
     private long notPersistedId = 666L;
+    private long byUpdatePersistedId = 41L;
     private String alreadyPersistedEmail = "already@persisted.email";
 
     private Loan returnedLoan;
@@ -155,9 +156,11 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
                 }
 
                 User user = (User) argument;
-                // TODO
+                if (user.getId() == null) {
+                    user.setId(byUpdatePersistedId);
+                }
 
-                return null;
+                return user;
             }
         }).when(userDao).update(any(User.class));
 
@@ -208,11 +211,10 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testUpdate() {
-        userService.update(userPersistedA);
+        User updated = userService.update(userPersistedA);
 
         verify(userDao).update(userArgumentCaptor.capture());
         assertDeepEquals(userArgumentCaptor.getValue(), userPersistedA);
-        User updated = userService.findById(userPersistedA.getId()); // preferably to be returned on update method
         assertDeepEquals(updated, userPersistedA);
     }
 
@@ -223,8 +225,8 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testUpdateNonExisting() {
-        userService.update(userToBePersisted);
-        // TODO
+        User updated = userService.update(userToBePersisted);
+        assertDeepEquals(updated, userToBePersisted);
     }
 
     @Test

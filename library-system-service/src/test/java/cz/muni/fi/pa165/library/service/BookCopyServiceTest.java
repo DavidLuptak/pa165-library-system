@@ -9,10 +9,7 @@ import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.enums.UserRole;
 import cz.muni.fi.pa165.library.exception.LibrarySystemDataAccessException;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.test.context.ContextConfiguration;
@@ -25,12 +22,8 @@ import java.util.Arrays;
 import java.util.Date;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNull;
-import static org.testng.Assert.assertSame;
+import static org.mockito.Mockito.*;
+import static org.testng.Assert.*;
 
 /**
  * @author Martin
@@ -44,6 +37,9 @@ public class BookCopyServiceTest extends AbstractTransactionalTestNGSpringContex
 
     @InjectMocks
     private BookCopyService bookCopyService = new BookCopyServiceImpl();
+
+    @Captor
+    private ArgumentCaptor<BookCopy> bookCopyArgumentCaptor;
 
     private BookCopy bookCopy1;
     private BookCopy bookCopy2;
@@ -77,7 +73,7 @@ public class BookCopyServiceTest extends AbstractTransactionalTestNGSpringContex
         when(bookCopyDao.findById(3L)).thenReturn(null);
 
         // findByBook
-        when(bookCopyDao.findByBook(book1)).thenReturn(Arrays.asList(bookCopy1,bookCopy2));
+        when(bookCopyDao.findByBook(book1)).thenReturn(Arrays.asList(bookCopy1, bookCopy2));
         when(bookCopyDao.findByBook(null)).thenReturn(Arrays.asList());
 
         // create
@@ -101,6 +97,8 @@ public class BookCopyServiceTest extends AbstractTransactionalTestNGSpringContex
                 return null;
             }
         }).when(bookCopyDao).create(any(BookCopy.class));
+
+        when(bookCopyDao.update(bookCopy2)).thenReturn(bookCopy2);
     }
 
     @Test
@@ -123,10 +121,18 @@ public class BookCopyServiceTest extends AbstractTransactionalTestNGSpringContex
         verify(bookCopyDao).create(bookCopy1);
     }
 
-    //TODO:
     @Test
     public void testUpdate() {
+        BookCopy updated = bookCopyService.update(bookCopy2);
 
+        verify(bookCopyDao).update(bookCopyArgumentCaptor.capture());
+        BookCopy captured = bookCopyArgumentCaptor.getValue();
+        assertEquals(captured, bookCopy2);
+        assertEquals(captured.getBook(), bookCopy2.getBook());
+        assertEquals(captured.getBookState(), bookCopy2.getBookState());
+        assertEquals(updated, bookCopy2);
+        assertEquals(updated.getBook(), bookCopy2.getBook());
+        assertEquals(updated.getBookState(), bookCopy2.getBookState());
     }
 
     @Test
@@ -149,13 +155,13 @@ public class BookCopyServiceTest extends AbstractTransactionalTestNGSpringContex
 
     @Test
     public void testFindByBook() {
-        assertEquals(bookCopyService.findByBook(book1),Arrays.asList(bookCopy1,bookCopy2));
+        assertEquals(bookCopyService.findByBook(book1), Arrays.asList(bookCopy1, bookCopy2));
         verify(bookCopyDao).findByBook(book1);
     }
 
     @Test
     public void testFindByNullBook() {
-        assertEquals(bookCopyService.findByBook(null),Arrays.asList());
+        assertEquals(bookCopyService.findByBook(null), Arrays.asList());
         verify(bookCopyDao).findByBook(null);
     }
 }

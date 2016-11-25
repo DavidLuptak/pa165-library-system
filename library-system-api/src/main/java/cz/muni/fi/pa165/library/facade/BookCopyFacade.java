@@ -2,11 +2,12 @@ package cz.muni.fi.pa165.library.facade;
 
 import cz.muni.fi.pa165.library.dto.BookCopyDTO;
 import cz.muni.fi.pa165.library.dto.BookCopyNewDTO;
-import cz.muni.fi.pa165.library.dto.BookDTO;
 
 import java.util.List;
 
 /**
+ * Facade layer for the BookCopy entity.
+ *
  * @author Martin
  * @version 24.11.2016.
  */

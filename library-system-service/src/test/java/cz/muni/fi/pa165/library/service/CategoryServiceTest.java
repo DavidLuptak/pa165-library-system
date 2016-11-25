@@ -5,9 +5,7 @@ import cz.muni.fi.pa165.library.dao.CategoryDao;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Category;
 import cz.muni.fi.pa165.library.exception.LibrarySystemDataAccessException;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.test.context.ContextConfiguration;
@@ -36,6 +34,9 @@ public class CategoryServiceTest extends AbstractTransactionalTestNGSpringContex
     @InjectMocks
     private CategoryService categoryService = new CategoryServiceImpl();
 
+    @Captor
+    private ArgumentCaptor<Category> categoryArgumentCaptor;
+
     private Category category1;
     private Category category2;
     private Book book1;
@@ -47,14 +48,14 @@ public class CategoryServiceTest extends AbstractTransactionalTestNGSpringContex
     }
 
     @BeforeMethod
-    public void initEntities(){
+    public void initEntities() {
         category1 = new Category("categoryName1");
         category1.setId(1L);
         category2 = new Category("categoryName2");
         category2.setId(2L);
-        book1 = new Book("bookName1","bookAuthor1","1111111111");
+        book1 = new Book("bookName1", "bookAuthor1", "1111111111");
         book1.setId(1L);
-        book2 = new Book("bookName2","bookAuthor2","2222222222");
+        book2 = new Book("bookName2", "bookAuthor2", "2222222222");
         book2.setId(2L);
     }
 
@@ -70,7 +71,7 @@ public class CategoryServiceTest extends AbstractTransactionalTestNGSpringContex
         when(categoryDao.findByName("not existing")).thenReturn(null);
 
         // findAll
-        when(categoryDao.findAll()).thenReturn(Arrays.asList(category1,category2));
+        when(categoryDao.findAll()).thenReturn(Arrays.asList(category1, category2));
 
         // create
         doAnswer(new Answer() {
@@ -90,10 +91,13 @@ public class CategoryServiceTest extends AbstractTransactionalTestNGSpringContex
                 return null;
             }
         }).when(categoryDao).create(any(Category.class));
+
+        // update
+        when(categoryDao.update(category1)).thenReturn(category1);
     }
 
     @Test
-    public void testCreate(){
+    public void testCreate() {
         category1.addBook(book1);
         categoryService.create(category1);
         verify(categoryDao).create(category1);
@@ -105,14 +109,20 @@ public class CategoryServiceTest extends AbstractTransactionalTestNGSpringContex
         verify(categoryDao).create(category2);
     }
 
-    //TODO:
     @Test
-    public void testUpdate(){
+    public void testUpdate() {
+        Category updated = categoryService.update(category1);
 
+        verify(categoryDao).update(categoryArgumentCaptor.capture());
+        Category captured = categoryArgumentCaptor.getValue();
+        assertEquals(captured, category1);
+        assertEquals(captured.getName(), category1.getName());
+        assertEquals(updated, category1);
+        assertEquals(updated.getName(), category1.getName());
     }
 
     @Test
-    public void testDelete(){
+    public void testDelete() {
         categoryService.delete(category1);
         verify(categoryDao).delete(category1);
     }
@@ -130,20 +140,20 @@ public class CategoryServiceTest extends AbstractTransactionalTestNGSpringContex
     }
 
     @Test
-    public void testFindByName(){
-        assertEquals(categoryService.findByName(category1.getName()),category1);
+    public void testFindByName() {
+        assertEquals(categoryService.findByName(category1.getName()), category1);
         verify(categoryDao).findByName(category1.getName());
     }
 
     @Test
-    public void testFindByNonExistingName(){
+    public void testFindByNonExistingName() {
         assertNull(categoryService.findByName("not existing"));
         verify(categoryDao).findByName("not existing");
     }
 
     @Test
-    public void testFindAll(){
-        assertEquals(categoryService.findAll(),Arrays.asList(category1,category2));
+    public void testFindAll() {
+        assertEquals(categoryService.findAll(), Arrays.asList(category1, category2));
         verify(categoryDao).findAll();
     }
 }

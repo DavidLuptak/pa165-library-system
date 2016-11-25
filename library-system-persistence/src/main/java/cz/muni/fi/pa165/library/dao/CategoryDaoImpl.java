@@ -26,8 +26,8 @@ public class CategoryDaoImpl implements CategoryDao {
     }
 
     @Override
-    public void update(Category category) {
-        em.merge(category);
+    public Category update(Category category) {
+        return em.merge(category);
     }
 
     @Override

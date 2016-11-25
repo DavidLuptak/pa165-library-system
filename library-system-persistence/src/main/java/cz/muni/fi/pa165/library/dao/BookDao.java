@@ -23,8 +23,9 @@ public interface BookDao {
      * Updates the given book in the database
      *
      * @param book to be updated
+     * @return merged Book entity
      */
-    void update(Book book);
+    Book update(Book book);
 
     /**
      * Deletes the given book from the database

@@ -5,8 +5,9 @@ import cz.muni.fi.pa165.library.dto.CategoryNewDTO;
 
 import java.util.List;
 
-
 /**
+ * Facade layer for the Category entity.
+ *
  * @author Lenka (433591)
  * @version 12.11.2016
  */
