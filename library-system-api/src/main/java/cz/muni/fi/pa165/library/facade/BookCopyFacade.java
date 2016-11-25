@@ -35,7 +35,7 @@ public interface BookCopyFacade {
      *
      * @param id of bookCopy to be deleted
      * @throws IllegalArgumentException if id is null
-     * @throws NoEntityFoundException if bookCopy cant be retrieved from database
+     * @throws NoEntityFoundException   if bookCopy cant be retrieved from database
      */
     void delete(Long id);
 
@@ -45,7 +45,7 @@ public interface BookCopyFacade {
      * @param id of searched bookCopy
      * @return found bookCopy
      * @throws IllegalArgumentException if id is null
-     * @throws NoEntityFoundException if bookCopy cant be retrieved from database
+     * @throws NoEntityFoundException   if bookCopy cant be retrieved from database
      */
     BookCopyDTO findById(Long id);
 
@@ -55,7 +55,7 @@ public interface BookCopyFacade {
      * @param bookId of searched book
      * @return found copies
      * @throws IllegalArgumentException if book is null
-     * @throws NoEntityFoundException if book cant be retrieved from database
+     * @throws NoEntityFoundException   if book cant be retrieved from database
      */
     List<BookCopyDTO> findByBook(Long bookId);
 }

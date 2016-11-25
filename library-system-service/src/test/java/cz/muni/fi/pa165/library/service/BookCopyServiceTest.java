@@ -11,7 +11,6 @@ import cz.muni.fi.pa165.library.enums.UserRole;
 import cz.muni.fi.pa165.library.exception.LibrarySystemDataAccessException;
 import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.annotations.BeforeClass;
@@ -77,25 +76,23 @@ public class BookCopyServiceTest extends AbstractTransactionalTestNGSpringContex
         when(bookCopyDao.findByBook(null)).thenReturn(Arrays.asList());
 
         // create
-        doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                Object argument = invocation.getArguments()[0];
-                if (argument == null) {
-                    throw new IllegalArgumentException("Argument is null.");
-                }
-
-                BookCopy bookCopy = (BookCopy) argument;
-                if (bookCopy.getBook() == null) {
-                    throw new LibrarySystemDataAccessException("Book is null.");
-                }
-                if (bookCopy.getBookState() == null) {
-                    throw new LibrarySystemDataAccessException("BookState is null.");
-                }
-
-                bookCopy.setId(1L);
-                return null;
+        doAnswer((InvocationOnMock invocation) -> {
+            Object argument = invocation.getArguments()[0];
+            if (argument == null) {
+                throw new IllegalArgumentException("Argument is null.");
             }
+
+            BookCopy bookCopy = (BookCopy) argument;
+            if (bookCopy.getBook() == null) {
+                throw new LibrarySystemDataAccessException("Book is null.");
+            }
+            if (bookCopy.getBookState() == null) {
+                throw new LibrarySystemDataAccessException("BookState is null.");
+            }
+
+            bookCopy.setId(1L);
+            return null;
+
         }).when(bookCopyDao).create(any(BookCopy.class));
 
         when(bookCopyDao.update(bookCopy2)).thenReturn(bookCopy2);

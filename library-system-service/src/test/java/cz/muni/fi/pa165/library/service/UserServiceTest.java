@@ -7,7 +7,6 @@ import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.enums.UserRole;
 import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeClass;
@@ -123,67 +122,61 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         when(userService.findByEmail("x@x.x")).thenReturn(null);
 
         // findAll
-        when(userService.findAll()).thenReturn(Arrays.asList(userPersistedA, userPersistedB,userPersistedC));
+        when(userService.findAll()).thenReturn(Arrays.asList(userPersistedA, userPersistedB, userPersistedC));
 
-        doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                Object argument = invocation.getArguments()[0];
-                if (argument == null) {
-                    throw new IllegalArgumentException("Argument is null.");
-                }
-
-                User user = (User) argument;
-                if (user.getId() != null) {
-                    throw new EntityExistsException("Entity with ID=" + user.getId() + " already exists.");
-                }
-
-                if (user.getEmail().equals(alreadyPersistedEmail)) {
-                    throw new ConstraintViolationException("Duplicate email attempt.", null);
-                }
-
-                user.setId(newlyPersistedId);
-                return null;
+        doAnswer((InvocationOnMock invocation) -> {
+            Object argument = invocation.getArguments()[0];
+            if (argument == null) {
+                throw new IllegalArgumentException("Argument is null.");
             }
+
+            User user = (User) argument;
+            if (user.getId() != null) {
+                throw new EntityExistsException("Entity with ID=" + user.getId() + " already exists.");
+            }
+
+            if (user.getEmail().equals(alreadyPersistedEmail)) {
+                throw new ConstraintViolationException("Duplicate email attempt.", null);
+            }
+
+            user.setId(newlyPersistedId);
+            return null;
+
         }).when(userDao).create(any(User.class));
 
-        doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                Object argument = invocation.getArguments()[0];
-                if (argument == null) {
-                    throw new IllegalArgumentException("Argument is null.");
-                }
-
-                User user = (User) argument;
-                if (user.getId() == null) {
-                    user.setId(byUpdatePersistedId);
-                }
-
-                return user;
+        doAnswer((InvocationOnMock invocation) -> {
+            Object argument = invocation.getArguments()[0];
+            if (argument == null) {
+                throw new IllegalArgumentException("Argument is null.");
             }
+
+            User user = (User) argument;
+            if (user.getId() == null) {
+                user.setId(byUpdatePersistedId);
+            }
+
+            return user;
+
         }).when(userDao).update(any(User.class));
 
-        doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                Object argument = invocation.getArguments()[0];
-                if (argument == null) {
-                    throw new IllegalArgumentException("Argument is null.");
-                }
-
-                User user = (User) argument;
-
-                if (user.getId() == null) {
-                    throw new IllegalArgumentException("Delete non-persisted user attempt.");
-                }
-
-                if (user.getId() == notPersistedId) {
-                    throw new IllegalArgumentException("Delete non-persisted user attempt.");
-                }
-
-                return null;
+        doAnswer((InvocationOnMock invocation) -> {
+            Object argument = invocation.getArguments()[0];
+            if (argument == null) {
+                throw new IllegalArgumentException("Argument is null.");
             }
+
+            User user = (User) argument;
+
+            if (user.getId() == null) {
+                throw new IllegalArgumentException("Delete non-persisted user attempt.");
+            }
+
+            if (user.getId() == notPersistedId) {
+                throw new IllegalArgumentException("Delete non-persisted user attempt.");
+            }
+
+            return null;
+
         }).when(userDao).delete(any(User.class));
     }
 
@@ -193,17 +186,17 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         assertEquals((long) userToBePersisted.getId(), newlyPersistedId);
     }
 
-    @Test(enabled = false)
+    @Test(expectedExceptions = EntityExistsException.class)
     public void testCreateAlreadyPersisted() {
         userService.register(userPersistedA, "bla");
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class, enabled = false)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testCreateNull() {
         userService.register(null, "bla");
     }
 
-    @Test(enabled = false)
+    @Test(expectedExceptions = EntityExistsException.class)
     public void testCreateDuplicateEmail() {
         userToBePersisted.setEmail(alreadyPersistedEmail);
         userService.register(userToBePersisted, "bla");
@@ -277,7 +270,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         assertDeepEquals(foundUser, userPersistedA);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class, enabled = false)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testFindByEmailNull() {
         userService.findByEmail(null);
     }
@@ -316,7 +309,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         assertEquals(authenticated, true);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class, enabled = false)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testAuthenticateNull() {
         userService.authenticate(null, "bla");
     }

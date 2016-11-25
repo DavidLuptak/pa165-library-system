@@ -18,38 +18,38 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void create(Book book) {
-        if(book == null) throw new IllegalArgumentException("book is null");
+        if (book == null) throw new IllegalArgumentException("book is null");
         bookDao.create(book);
     }
 
     @Override
     public Book update(Book book) {
-        if(book == null) throw new IllegalArgumentException("book is null");
+        if (book == null) throw new IllegalArgumentException("book is null");
         return bookDao.update(book);
     }
 
     @Override
     public void delete(Book book) {
-        if(book == null) throw new IllegalArgumentException("book is null");
+        if (book == null) throw new IllegalArgumentException("book is null");
         bookDao.delete(book);
     }
 
     @Override
     public Book findById(Long id) {
-        if(id == null) throw new IllegalArgumentException("id is null");
+        if (id == null) throw new IllegalArgumentException("id is null");
         return bookDao.findById(id);
     }
 
     @Override
     public List<Book> findByAuthor(String author) {
-        if(author == null || author.isEmpty()) throw new IllegalArgumentException("author is null or empty");
+        if (author == null || author.isEmpty()) throw new IllegalArgumentException("author is null or empty");
         return bookDao.findByAuthor(author);
     }
 
     @Override
     public List<Book> findByName(String name) {
 
-        if(name == null || name.isEmpty()) throw new IllegalArgumentException("name is null or empty");
+        if (name == null || name.isEmpty()) throw new IllegalArgumentException("name is null or empty");
         return bookDao.findByName(name);
     }
 

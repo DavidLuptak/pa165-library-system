@@ -18,7 +18,7 @@ public interface UserFacade {
     /**
      * Registers the given user with given unencrypted password.
      *
-     * @param userNewDTO to be created
+     * @param userNewDTO          to be created
      * @param unencryptedPassword of user
      * @throws IllegalArgumentException if user is null
      * @throws IllegalArgumentException if unencryptedPassword is null or empty
