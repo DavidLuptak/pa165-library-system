@@ -1,7 +1,9 @@
 package cz.muni.fi.pa165.library.dto;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Dávid Lupták
@@ -13,7 +15,7 @@ public class LoanNewDTO {
     private Long userId;
 
     @NotNull
-    private Long bookCopyId;
+    private List<Long> bookCopyIds = new ArrayList<>();
 
     @NotNull
     private Date loanDate;
@@ -21,9 +23,9 @@ public class LoanNewDTO {
     public LoanNewDTO() {
     }
 
-    public LoanNewDTO(Long userId, Long bookCopyId, Date loanDate) {
+    public LoanNewDTO(Long userId, List<Long> bookCopyIds, Date loanDate) {
         this.userId = userId;
-        this.bookCopyId = bookCopyId;
+        this.bookCopyIds = bookCopyIds;
         this.loanDate = loanDate;
     }
 
@@ -43,12 +45,12 @@ public class LoanNewDTO {
         this.userId = userId;
     }
 
-    public Long getBookCopyId() {
-        return bookCopyId;
+    public List<Long> getBookCopyIds() {
+        return bookCopyIds;
     }
 
-    public void setBookCopyId(Long bookCopyId) {
-        this.bookCopyId = bookCopyId;
+    public void setBookCopyIds(List<Long> bookCopyIds) {
+        this.bookCopyIds = bookCopyIds;
     }
 
     @Override
@@ -61,7 +63,7 @@ public class LoanNewDTO {
 
         if (!getLoanDate().equals(that.getLoanDate())) return false;
         if (getUserId() != null ? !getUserId().equals(that.getUserId()) : that.getUserId() != null) return false;
-        return getBookCopyId().equals(that.getBookCopyId());
+        return getBookCopyIds().equals(that.getBookCopyIds());
 
     }
 
@@ -69,7 +71,7 @@ public class LoanNewDTO {
     public int hashCode() {
         int result = getLoanDate().hashCode();
         result = 31 * result + (getUserId() != null ? getUserId().hashCode() : 0);
-        result = 31 * result + getBookCopyId().hashCode();
+        result = 31 * result + getBookCopyIds().hashCode();
         return result;
     }
 }

@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.library.facade;
 
 import cz.muni.fi.pa165.library.dto.LoanDTO;
 import cz.muni.fi.pa165.library.dto.LoanNewDTO;
+import cz.muni.fi.pa165.library.entity.BookCopy;
 import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,17 +38,24 @@ public class LoanFacadeImpl implements LoanFacade {
     private BeanMappingService beanMappingService;
 
     @Override
-    public Long create(LoanNewDTO loanNewDTO) {
+    public List<Long> create(LoanNewDTO loanNewDTO) {
         if (loanNewDTO == null) {
             throw new IllegalArgumentException("Loan cannot be null.");
         }
 
-        Loan loan = beanMappingService.mapTo(loanNewDTO, Loan.class);
-        loan.setUser(userService.findById(loanNewDTO.getUserId()));
-        loan.setBookCopy(bookCopyService.findById(loanNewDTO.getBookCopyId()));
+        List<Long> loans = new ArrayList<>();
+        User user = checkNullAndExistenceOfUser(loanNewDTO.getUserId());
 
-        loanService.create(loan);
-        return loan.getId();
+        for (Long id : loanNewDTO.getBookCopyIds()) {
+            Loan loan = beanMappingService.mapTo(loanNewDTO, Loan.class);
+            loan.setUser(user);
+            loan.setBookCopy(checkNullAndExistenceOfBookCopy(id));
+
+            loanService.create(loan);
+            loans.add(loan.getId());
+        }
+
+        return loans;
     }
 
     @Override
@@ -66,6 +75,9 @@ public class LoanFacadeImpl implements LoanFacade {
 
     @Override
     public void delete(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Loan id cannot be null.");
+        }
         Loan loan = loanService.findById(id);
         if (loan == null) {
             throw new NoEntityFoundException("Loan not found during delete.");
@@ -76,6 +88,9 @@ public class LoanFacadeImpl implements LoanFacade {
 
     @Override
     public LoanDTO findById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Loan id cannot be null.");
+        }
         Loan loan = loanService.findById(id);
         if (loan == null) {
             throw new NoEntityFoundException("Loan not found during findById.");
@@ -86,6 +101,9 @@ public class LoanFacadeImpl implements LoanFacade {
 
     @Override
     public List<LoanDTO> findByUser(Long userId) {
+        if (userId == null) {
+            throw new IllegalArgumentException("User id cannot be null.");
+        }
         User user = userService.findById(userId);
         if (user == null) {
             throw new NoEntityFoundException("User not found during findByUser.");
@@ -97,5 +115,36 @@ public class LoanFacadeImpl implements LoanFacade {
     @Override
     public List<LoanDTO> findAll() {
         return beanMappingService.mapTo(loanService.findAll(), LoanDTO.class);
+    }
+
+    /**
+     * Argument checking for the User entity.
+     *
+     * @param id id of user as an argument
+     * @return existing user
+     * @throws IllegalArgumentException if user id is null
+     * @throws NoEntityFoundException   if user does not exist
+     */
+    private User checkNullAndExistenceOfUser(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("User id cannot be null.");
+        }
+        User user = userService.findById(id);
+        if (user == null) {
+            throw new NoEntityFoundException("User cannot be found.");
+        }
+        return user;
+    }
+
+    private BookCopy checkNullAndExistenceOfBookCopy(Long id){
+        if (id == null) {
+            throw new IllegalArgumentException("BookCopy id cannot be null.");
+        }
+        BookCopy bookCopy = bookCopyService.findById(id);
+        if (bookCopy == null) {
+            throw new NoEntityFoundException("BookCopy cannot be found.");
+        }
+        return bookCopy;
+
     }
 }

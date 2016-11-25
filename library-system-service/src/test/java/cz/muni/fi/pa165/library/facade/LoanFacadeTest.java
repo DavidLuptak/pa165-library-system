@@ -107,7 +107,7 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
 
     @Test
     public void testCreate() {
-        loanNewDTO = new LoanNewDTO(user.getId(), bookCopy.getId(), new Date());
+        loanNewDTO = new LoanNewDTO(user.getId(), Arrays.asList(bookCopy.getId()), new Date());
         loanFacade.create(loanNewDTO);
 
         verify(loanService).create(loanArgumentCaptor.capture());
