@@ -103,6 +103,12 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
 
         // findAll
         when(loanService.findAll()).thenReturn(Arrays.asList(loan, loan2));
+
+        // findNotReturnedUserLoans
+        when(loanService.findNotReturnedUserLoans(user)).thenReturn(Arrays.asList(loan, loan2));
+
+        // findReturnedUserLoans
+        when(loanService.findReturnedUserLoans(user)).thenReturn(Arrays.asList(loan, loan2));
     }
 
     @Test
@@ -121,7 +127,16 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
 
     @Test
     public void testUpdate() {
-        // TODO
+        LoanDTO loanDTO = new LoanDTO();
+        loanDTO.setId(loan.getId());
+        loanDTO.setBookState(BookState.LIGHT_DAMAGE);
+      //  loanDTO.setBookCopy(loan.getBookCopy());
+        loanDTO.setLoanDate(loan.getLoanDate());
+      //  loanDTO.setUser(loan.getUser());
+        loanDTO.setReturnDate(loan.getReturnDate());
+        verify(loanService).update(loanArgumentCaptor.capture());
+
+        //TODO:
     }
 
     @Test
@@ -152,6 +167,24 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         assertEquals(loanDTOs.size(), 2);
         assertEqualsLoanAndLoanDTO(loan, loanDTOs.get(0));
         assertEqualsLoanAndLoanDTO(loan2, loanDTOs.get(1));
+    }
+
+    @Test
+    public void testFindNotReturnedUserLoans() {
+        List<LoanDTO> result = loanFacade.findNotReturnedUserLoans(user.getId());
+        assertNotNull(result);
+        assertEquals(result.size(), 2);
+        assertEqualsLoanAndLoanDTO(loan, result.get(0));
+        assertEqualsLoanAndLoanDTO(loan2, result.get(1));
+    }
+
+    @Test
+    public void testFindReturnedUserLoans() {
+        List<LoanDTO> result = loanFacade.findReturnedUserLoans(user.getId());
+        assertNotNull(result);
+        assertEquals(result.size(), 2);
+        assertEqualsLoanAndLoanDTO(loan, result.get(0));
+        assertEqualsLoanAndLoanDTO(loan2, result.get(1));
     }
 
     private void assertEqualsLoanAndLoanDTO(Loan loan, LoanDTO dto) {

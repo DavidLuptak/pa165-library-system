@@ -91,6 +91,9 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
         // findAll
         when(userService.findAll()).thenReturn(Arrays.asList(userA, userB));
 
+        // findUsersWithNotReturnedLoans
+        when(userService.findUsersWithNotReturnedLoans()).thenReturn(Arrays.asList(userA, userB));
+
         // auth
         when(userService.authenticate(any(User.class), anyString())).thenReturn(true);
     }
@@ -262,6 +265,14 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
         userFacade.authenticate(userAuthenticateDTO);
     }
 
+    @Test
+    public void testFindUsersWithNotReturnedLoans() throws Exception {
+        List<UserDTO> list = userFacade.findUsersWithNotReturnedLoans();
+
+        assertEquals(list.size(), 2);
+        assertDeepEquals(list.get(0), userA);
+        assertDeepEquals(list.get(1), userB);
+    }
 
     private void assertDeepEquals(UserDTO userDTO, User user) {
         assertEquals(userDTO.getId(), user.getId());

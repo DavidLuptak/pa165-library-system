@@ -116,9 +116,12 @@ public class BookCopyFacadeTest extends AbstractTransactionalTestNGSpringContext
         bookCopyFacade.update(bookCopyDTO);
 
         verify(bookCopyService).update(bookCopyArgumentCaptor.capture());
-        assertEquals(bookCopyDTO.getBookState(),BookState.LIGHT_DAMAGE);
-        assertEquals(bookCopyDTO.getBook(),bookDTO);
-        assertEquals(bookCopyDTO.getId(),bookCopy1.getId());
+
+        BookCopy entity = bookCopyArgumentCaptor.getValue();
+
+        assertEquals(entity.getBookState(),BookState.LIGHT_DAMAGE);
+        assertEquals(entity.getBook().getId(),bookDTO.getId());
+        assertEquals(entity.getId(),bookCopy1.getId());
     }
 
     @Test

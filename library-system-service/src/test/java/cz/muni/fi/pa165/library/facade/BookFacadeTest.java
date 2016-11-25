@@ -104,9 +104,12 @@ public class BookFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         bookFacade.update(bookDTO);
 
         verify(bookService).update(bookArgumentCaptor.capture());
-        assertEquals(bookDTO.getName(), book2.getName());
-        assertEquals(bookDTO.getAuthor(), book1.getAuthor());
-        assertEquals(bookDTO.getId(), book1.getId());
+
+        Book entity = bookArgumentCaptor.getValue();
+
+        assertEquals(entity.getName(), book2.getName());
+        assertEquals(entity.getAuthor(), book1.getAuthor());
+        assertEquals(entity.getId(), book1.getId());
     }
 
     @Test
@@ -124,7 +127,10 @@ public class BookFacadeTest extends AbstractTransactionalTestNGSpringContextTest
 
     @Test
     public void testFindByAuthor() {
-        // TODO
+        List<BookDTO> bookDTOs = bookFacade.findByAuthor(book1.getAuthor());
+        assertEquals(bookDTOs.size(), 2);
+        assertDeepEquals(book1, bookDTOs.get(0));
+        assertDeepEquals(book2, bookDTOs.get(1));
     }
 
     @Test
