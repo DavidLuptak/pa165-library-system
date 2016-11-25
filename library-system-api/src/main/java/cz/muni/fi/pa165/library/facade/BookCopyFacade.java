@@ -47,5 +47,5 @@ public interface BookCopyFacade {
      * @return found copies
      * @throws IllegalArgumentException if book is null
      */
-    List<BookCopyDTO> findByBook(BookDTO bookDTO);
+    List<BookCopyDTO> findByBook(Long bookId);
 }

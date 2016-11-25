@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.library.dto;
 import cz.muni.fi.pa165.library.enums.BookState;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
 public class BookDTO {
     private Long id;
     private String name;
-    private String authorName;
+    private String author;
     private String isbn;
     private List<CategoryDTO> categories;
     private List<BookCopyDTO> bookCopies;
@@ -21,9 +22,9 @@ public class BookDTO {
         bookCopies = new ArrayList<>();
     }
 
-    public BookDTO(String name, String authorName, String isbn, List<CategoryDTO> categories, List<BookCopyDTO> bookCopies) {
+    public BookDTO(String name, String author, String isbn, List<CategoryDTO> categories, List<BookCopyDTO> bookCopies) {
         this.name = name;
-        this.authorName = authorName;
+        this.author = author;
         this.isbn = isbn;
         this.categories = categories;
         this.bookCopies = bookCopies;
@@ -45,12 +46,12 @@ public class BookDTO {
         this.name = name;
     }
 
-    public String getAuthorName() {
-        return authorName;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getIsbn() {
@@ -62,19 +63,27 @@ public class BookDTO {
     }
 
     public List<CategoryDTO> getCategories() {
-        return categories;
+        return Collections.unmodifiableList(categories);
     }
 
-    public void setCategories(List<CategoryDTO> categories) {
-        this.categories = categories;
+    public void addCategory(CategoryDTO category) {
+        this.categories.add(category);
+    }
+
+    public void removeCategory(CategoryDTO category) {
+        this.categories.remove(category);
     }
 
     public List<BookCopyDTO> getBookCopies() {
-        return bookCopies;
+        return Collections.unmodifiableList(bookCopies);
     }
 
-    public void setBookCopies(List<BookCopyDTO> bookCopies) {
-        this.bookCopies = bookCopies;
+    public void addBookCopy(BookCopyDTO bookCopy) {
+        this.bookCopies.add(bookCopy);
+    }
+
+    public void removeBookCopy(BookCopyDTO bookCopy) {
+        this.bookCopies.remove(bookCopy);
     }
 
     @Override

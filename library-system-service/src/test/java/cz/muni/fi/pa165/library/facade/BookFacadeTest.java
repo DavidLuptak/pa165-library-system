@@ -4,7 +4,9 @@ import cz.muni.fi.pa165.library.config.ServiceConfiguration;
 import cz.muni.fi.pa165.library.dto.BookDTO;
 import cz.muni.fi.pa165.library.dto.BookNewDTO;
 import cz.muni.fi.pa165.library.entity.Book;
+import cz.muni.fi.pa165.library.entity.BookCopy;
 import cz.muni.fi.pa165.library.entity.Category;
+import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.mapping.BeanMappingService;
 import cz.muni.fi.pa165.library.mapping.BeanMappingServiceImpl;
 import cz.muni.fi.pa165.library.service.BookService;
@@ -17,6 +19,7 @@ import org.testng.annotations.Test;
 
 import javax.inject.Inject;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -65,7 +68,7 @@ public class BookFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         book1 = new Book("bookName1", "bookAuthor1", "1111111111");
         book1.setId(1L);
         book2 = new Book("bookName2", "bookAuthor1", "2222222222");
-        book1.setId(2L);
+        book2.setId(2L);
         category11 = new Category("categoryName11");
         category11.setId(11L);
         category12 = new Category("categoryName12");
@@ -97,7 +100,8 @@ public class BookFacadeTest extends AbstractTransactionalTestNGSpringContextTest
 
     @Test
     public void testUpdate() {
-        bookDTO = new BookDTO(book1.getName(),book1.getAuthor(),book1.getIsbn(), Arrays.asList(category11.getId(),category12.getId()));
+        bookDTO = new BookDTO();
+        bookDTO.setAuthor(book1.getAuthor());
         bookDTO.setId(book1.getId());
         bookDTO.setName(book2.getName());
 
@@ -105,6 +109,8 @@ public class BookFacadeTest extends AbstractTransactionalTestNGSpringContextTest
 
         verify(bookService).update(bookArgumentCaptor.capture());
         assertEquals(bookDTO.getName(),book2.getName());
+        assertEquals(bookDTO.getAuthor(),book1.getAuthor());
+        assertEquals(bookDTO.getId(),book1.getId());
     }
 
     @Test
@@ -117,44 +123,35 @@ public class BookFacadeTest extends AbstractTransactionalTestNGSpringContextTest
     public void testFindById() {
         bookDTO = bookFacade.findById(book1.getId());
         assertNotNull(bookDTO);
-        assertDeepEquals(category1, bookDTO);
+        assertDeepEquals(book1, bookDTO);
     }
 
     @Test
     public void testFindByName() {
-        bookDTO = bookFacade.findByName(book1.getName());
+        List<BookDTO> bookDTOs = bookFacade.findByName(book1.getName());
         assertNotNull(bookDTO);
-        assertEqualsCategoryAndCategoryDTO(category1, bookDTO);
+        assertDeepEquals(book1, bookDTOs.get(0));
+        assertDeepEquals(book2, bookDTOs.get(1));
     }
 
     @Test
     public void testFindAll() {
-        List<bookDTO> categoryDTOs = categoryFacade.findAll();
-        assertNotNull(categoryDTOs);
-        assertEquals(categoryDTOs.size(), 2);
-        assertEqualsCategoryAndCategoryDTO(category1, categoryDTOs.get(0));
-        assertEqualsCategoryAndCategoryDTO(category2, categoryDTOs.get(1));
+        List<BookDTO> bookDTOs = bookFacade.findAll();
+        assertNotNull(bookDTOs);
+        assertEquals(bookDTOs.size(), 2);
+        assertDeepEquals(book1, bookDTOs.get(0));
+        assertDeepEquals(book2, bookDTOs.get(1));
     }
 
     private void assertDeepEquals(Book book1, BookDTO bookDTO){
         assertEquals(book1.getName(),bookDTO.getName());
         assertEquals(book1.getAuthor(),bookDTO.getAuthor());
-        assertEquals(book1.getBookCopies(),bookDTO.getBookCopies());
-        assertEquals(book1.getCategories(),bookDTO.getCategories());
         assertEquals(book1.getIsbn(),bookDTO.getIsbn());
     }
 
     private void assertDeepEquals(Book book1, Book book2){
         assertEquals(book1.getName(),book2.getName());
         assertEquals(book1.getAuthor(),book2.getAuthor());
-        assertEquals(book1.getBookCopies(),book2.getBookCopies());
-        assertEquals(book1.getCategories(),book2.getCategories());
         assertEquals(book1.getIsbn(),book2.getIsbn());
     }
-
-
-
-
-
-
 }

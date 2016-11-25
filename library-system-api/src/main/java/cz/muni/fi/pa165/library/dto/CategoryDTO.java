@@ -45,8 +45,13 @@ public class CategoryDTO {
         return Collections.unmodifiableList(books);
     }
 
-    public void setBooks(List<BookDTO> books) {
-        this.books = books;
+
+    public void addBook(BookDTO book) {
+        this.books.add(book);
+    }
+
+    public void removeBook(BookDTO book) {
+        this.books.remove(book);
     }
 
     @Override

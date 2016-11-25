@@ -17,7 +17,7 @@ public class BookNewDTO {
 
     @NotBlank
     @Size(max = 50)
-    private String authorName;
+    private String author;
 
     @NotNull
     private String isbn;
@@ -25,9 +25,9 @@ public class BookNewDTO {
     public BookNewDTO() {
     }
 
-    public BookNewDTO(String name, String authorName, String isbn) {
+    public BookNewDTO(String name, String author, String isbn) {
         this.name = name;
-        this.authorName = authorName;
+        this.author = author;
         this.isbn = isbn;
     }
 
@@ -39,12 +39,12 @@ public class BookNewDTO {
         this.name = name;
     }
 
-    public String getAuthorName() {
-        return authorName;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getIsbn() {

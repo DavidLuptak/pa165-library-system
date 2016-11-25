@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.library.dto;
 import cz.muni.fi.pa165.library.enums.BookState;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ public class BookCopyDTO {
 
     private BookState bookState;
 
-    private List<LoanDTO> loans;
+    private final List<LoanDTO> loans;
 
     public BookCopyDTO() {
         loans = new ArrayList<>();
@@ -54,11 +55,15 @@ public class BookCopyDTO {
     }
 
     public List<LoanDTO> getLoans() {
-        return loans;
+        return Collections.unmodifiableList(loans);
     }
 
-    public void setLoans(List<LoanDTO> loans) {
-        this.loans = loans;
+    public void addLoan(LoanDTO loan) {
+        this.loans.add(loan);
+    }
+
+    public void removeLoan(LoanDTO loan) {
+        this.loans.remove(loan);
     }
 
     @Override

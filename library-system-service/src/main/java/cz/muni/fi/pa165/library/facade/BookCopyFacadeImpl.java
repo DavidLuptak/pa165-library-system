@@ -5,8 +5,10 @@ import cz.muni.fi.pa165.library.dto.BookCopyNewDTO;
 import cz.muni.fi.pa165.library.dto.BookDTO;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.BookCopy;
+import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.mapping.BeanMappingService;
 import cz.muni.fi.pa165.library.service.BookCopyService;
+import cz.muni.fi.pa165.library.service.BookService;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -23,6 +25,9 @@ public class BookCopyFacadeImpl implements BookCopyFacade {
 
     @Inject
     BookCopyService bookCopyService;
+
+    @Inject
+    BookService bookService;
 
     @Inject
     private BeanMappingService beanMappingService;
@@ -51,8 +56,12 @@ public class BookCopyFacadeImpl implements BookCopyFacade {
     }
 
     @Override
-    public List<BookCopyDTO> findByBook(BookDTO bookDTO) {
-        Book book = beanMappingService.mapTo(bookDTO, Book.class);
+    public List<BookCopyDTO> findByBook(Long bookId) {
+
+        Book book = bookService.findById(bookId);
+        if (book == null) {
+            throw new NoEntityFoundException("User not found during findByUser.");
+        }
         return beanMappingService.mapTo(bookCopyService.findByBook(book),BookCopyDTO.class);
     }
 }

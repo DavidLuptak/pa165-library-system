@@ -102,7 +102,8 @@ public class CategoryFacadeTest extends AbstractTransactionalTestNGSpringContext
 
     @Test
     public void testUpdate() {
-        categoryDTO = new CategoryDTO(category2.getName());
+        categoryDTO = new CategoryDTO();
+        categoryDTO.setName(category2.getName());
         categoryDTO.setId(category1.getId());
 
         categoryFacade.update(categoryDTO);
@@ -118,7 +119,8 @@ public class CategoryFacadeTest extends AbstractTransactionalTestNGSpringContext
 
     @Test(expectedExceptions = NoEntityFoundException.class)
     public void testUpdateNonExisting() {
-        categoryDTO = new CategoryDTO("cat");
+        categoryDTO = new CategoryDTO();
+        categoryDTO.setName("cat");
         categoryDTO.setId(0L);
 
         categoryFacade.update(categoryDTO);
