@@ -243,7 +243,7 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
     @Test(expectedExceptions = LibraryDAOException.class)
     public void testFindNotReturnedUserLoansByNonExistingUser() {
-        loanService.findByUser(new User());
+        loanService.findNotReturnedUserLoans(new User());
         verify(loanDao).findByUser(new User());
     }
 
@@ -263,7 +263,7 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
     @Test(expectedExceptions = LibraryDAOException.class)
     public void testFindReturnedUserLoansByNonExistingUser() {
-        loanService.findByUser(new User());
+        loanService.findReturnedUserLoans(new User());
         verify(loanDao).findByUser(new User());
     }
 }
