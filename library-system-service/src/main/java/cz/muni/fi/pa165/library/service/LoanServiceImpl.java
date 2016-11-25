@@ -100,7 +100,7 @@ public class LoanServiceImpl implements LoanService {
                     .collect(Collectors.toList());
 
         } catch (IllegalArgumentException ex) {
-            throw new LibrarySystemDataAccessException("Error during loan find all.", ex);
+            throw new LibrarySystemDataAccessException("Error during loan findNotReturnedUserLoans.", ex);
         }
     }
 
@@ -112,7 +112,7 @@ public class LoanServiceImpl implements LoanService {
                     .sorted((l1,l2) -> l1.getLoanDate().compareTo(l2.getLoanDate()))
                     .collect(Collectors.toList());
         }catch (IllegalArgumentException ex) {
-            throw new LibrarySystemDataAccessException("Error during loan find all.", ex);
+            throw new LibrarySystemDataAccessException("Error during loan findNotReturnedUserLoans.", ex);
         }
     }
 }

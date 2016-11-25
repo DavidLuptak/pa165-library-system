@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.library.service;
 
 import cz.muni.fi.pa165.library.config.ServiceConfiguration;
 import cz.muni.fi.pa165.library.dao.UserDao;
+import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.enums.UserRole;
 import org.mockito.*;
@@ -16,6 +17,7 @@ import org.testng.annotations.Test;
 import javax.persistence.EntityExistsException;
 import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import static org.mockito.Matchers.any;
@@ -42,11 +44,17 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
     private User userPersistedA;
     private User userPersistedB;
+    private User userPersistedC;
     private User userToBePersisted;
 
     private long newlyPersistedId = 42L;
     private long notPersistedId = 666L;
     private String alreadyPersistedEmail = "already@persisted.email";
+
+    private Loan returnedLoan;
+    private Loan notReturnedLoan;
+    private Loan returnedLoan2;
+    private Loan notReturnedLoan2;
 
     @BeforeClass
     public void setupMockito() {
@@ -71,12 +79,36 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
                 .setPasswordHash("b")
                 .build();
 
+        userPersistedC = new User.UserBuilder("c@c.com")
+                .setId(3L)
+                .setFirstName("First C name")
+                .setLastName("Last C name")
+                .setAddress("Somewhere in the space")
+                .setPasswordHash("c")
+                .build();
+
         userToBePersisted = new User.UserBuilder("ab@ab.com")
                 .setFirstName("New name")
                 .setLastName("New surname")
                 .setAddress("Right here righ now")
                 .setPasswordHash("abbaa")
                 .build();
+
+        //for harder function
+        returnedLoan = new Loan();
+        returnedLoan.setLoanDate(new Date(5));
+        returnedLoan.setReturnDate(new Date(10));
+        notReturnedLoan = new Loan();
+        returnedLoan2 = new Loan();
+        returnedLoan2.setLoanDate(new Date(5));
+        returnedLoan2.setReturnDate(new Date(10));
+        notReturnedLoan2 = new Loan();
+
+        userPersistedA.addLoan(notReturnedLoan);
+        userPersistedB.addLoan(returnedLoan);
+        userPersistedC.addLoan(returnedLoan2);
+        userPersistedC.addLoan(notReturnedLoan2);
+
     }
 
     @BeforeMethod
@@ -90,7 +122,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         when(userService.findByEmail("x@x.x")).thenReturn(null);
 
         // findAll
-        when(userService.findAll()).thenReturn(Arrays.asList(userPersistedA, userPersistedB));
+        when(userService.findAll()).thenReturn(Arrays.asList(userPersistedA, userPersistedB,userPersistedC));
 
         doAnswer(new Answer() {
             @Override
@@ -257,9 +289,10 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
     public void testFindAll() {
         List<User> list = userService.findAll();
 
-        assertEquals(list.size(), 2);
+        assertEquals(list.size(), 3);
         assertDeepEquals(list.get(0), userPersistedA);
         assertDeepEquals(list.get(1), userPersistedB);
+        assertDeepEquals(list.get(2), userPersistedC);
     }
 
     @Test
@@ -293,6 +326,15 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         user.setPasswordHash("alb");
 
         userService.authenticate(user, "bla");
+    }
+
+    @Test
+    public void testFindUsersWithNotReturnedLoans() {
+        List<User> list = userService.findUsersWithNotReturnedLoans();
+
+        assertEquals(list.size(), 2);
+        assertDeepEquals(list.get(0), userPersistedA);
+        assertDeepEquals(list.get(1), userPersistedC);
     }
 
     private void assertDeepEquals(User userA, User userB) {

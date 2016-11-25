@@ -158,4 +158,13 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
         verify(loanDao).findAll();
     }
 
+    @Test
+    public void testFindNotReturnedUserLoans(){
+
+    }
+    
+    @Test
+    public void testFindReturnedUserLoans(){
+
+    }
 }
