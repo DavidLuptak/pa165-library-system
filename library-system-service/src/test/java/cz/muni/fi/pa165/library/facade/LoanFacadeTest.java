@@ -1,8 +1,10 @@
 package cz.muni.fi.pa165.library.facade;
 
 import cz.muni.fi.pa165.library.config.ServiceConfiguration;
+import cz.muni.fi.pa165.library.dto.BookCopyDTO;
 import cz.muni.fi.pa165.library.dto.LoanDTO;
 import cz.muni.fi.pa165.library.dto.LoanNewDTO;
+import cz.muni.fi.pa165.library.dto.UserDTO;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.BookCopy;
 import cz.muni.fi.pa165.library.entity.Loan;
@@ -58,6 +60,8 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
     private ArgumentCaptor<Loan> loanArgumentCaptor;
 
     private LoanNewDTO loanNewDTO;
+    private BookCopyDTO bookCopyDTO;
+    private UserDTO userDTO;
     private User user;
     private User user2;
     private BookCopy bookCopy;
@@ -127,16 +131,30 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
 
     @Test
     public void testUpdate() {
+        bookCopyDTO = new BookCopyDTO();
+        bookCopyDTO.setId(1L);
+        userDTO = new UserDTO();
+        userDTO.setId(1L);
+
         LoanDTO loanDTO = new LoanDTO();
         loanDTO.setId(loan.getId());
-        loanDTO.setBookState(BookState.LIGHT_DAMAGE);
-      //  loanDTO.setBookCopy(loan.getBookCopy());
-        loanDTO.setLoanDate(loan.getLoanDate());
-      //  loanDTO.setUser(loan.getUser());
-        loanDTO.setReturnDate(loan.getReturnDate());
+        loanDTO.setBookState(BookState.HEAVY_DAMAGE);
+        loanDTO.setBookCopy(bookCopyDTO);
+        loanDTO.setLoanDate(new Date(10));
+        loanDTO.setUser(userDTO);
+        loanDTO.setReturnDate(new Date(20));
+
+        loanFacade.update(loanDTO);
+
         verify(loanService).update(loanArgumentCaptor.capture());
 
-        //TODO:
+        Loan entity = loanArgumentCaptor.getValue();
+        assertEquals(entity.getId(),loan.getId());
+        assertEquals(entity.getBookState(),BookState.HEAVY_DAMAGE);
+        assertEquals(entity.getLoanDate(),new Date(10));
+        assertEquals(entity.getReturnDate(), new Date(20));
+        assertEquals(entity.getUser().getId(), new Long(1));
+        assertEquals(entity.getBookCopy().getId(), new Long(1));
     }
 
     @Test
