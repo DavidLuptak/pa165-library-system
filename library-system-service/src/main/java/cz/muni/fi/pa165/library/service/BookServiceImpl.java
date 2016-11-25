@@ -42,7 +42,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findByAuthor(String author) {
-        if(author == null || author.isEmpty()) throw new IllegalArgumentException("id is null or empty");
+        if(author == null || author.isEmpty()) throw new IllegalArgumentException("author is null or empty");
         return bookDao.findByAuthor(author);
     }
 
