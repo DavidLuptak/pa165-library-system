@@ -24,17 +24,16 @@ public class ServiceConfiguration {
     @Bean
     public Mapper dozer() {
         DozerBeanMapper dozer = new DozerBeanMapper();
-        dozer.addMapping(new DozerCustomConfig());
+        //dozer.addMapping(new DozerCustomConfig());
         return dozer;
     }
 
-    /**
-     * Custom config for Dozer
-     */
-    public class DozerCustomConfig extends BeanMappingBuilder {
-        @Override
-        protected void configure() {
-            //TODO
-        }
-    }
+//    /**
+//     * Custom config for Dozer
+//     */
+//    public class DozerCustomConfig extends BeanMappingBuilder {
+//        @Override
+//        protected void configure() {
+//        }
+//    }
 }
