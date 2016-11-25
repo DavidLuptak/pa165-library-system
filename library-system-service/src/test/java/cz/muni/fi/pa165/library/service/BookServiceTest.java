@@ -9,7 +9,6 @@ import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.exception.LibrarySystemDataAccessException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -22,12 +21,8 @@ import org.testng.annotations.Test;
 import java.util.Arrays;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNull;
-import static org.testng.Assert.assertSame;
+import static org.mockito.Mockito.*;
+import static org.testng.Assert.*;
 
 /**
  * @author Martin
@@ -49,6 +44,7 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
     private Book book1;
     private Book book2;
+    private Book book3;
     private Category category1;
     private Category category2;
     private BookCopy bookCopy;
@@ -59,6 +55,8 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
         book1.setId(1L);
         book2 = new Book("bookName2", "bookAuthor1", "2222222222");
         book2.setId(2L);
+        book3 = new Book("bookName3", "bookAuthor2", "3333333333");
+        book3.setId(3L);
         category1 = new Category("categoryName11");
         category1.setId(1L);
         category2 = new Category("categoryName12");
@@ -120,16 +118,16 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
     @Test
     public void testCreateNoCategory() {
-        book1.addBookCopy(bookCopy);
-        bookService.create(book1);
-        verify(bookDao).create(book1);
+        book2.addBookCopy(bookCopy);
+        bookService.create(book2);
+        verify(bookDao).create(book2);
     }
 
     @Test
     public void testCreateNoBookCopy() {
-        book1.addCategory(category1);
-        bookService.create(book1);
-        verify(bookDao).create(book1);
+        book3.addCategory(category1);
+        bookService.create(book3);
+        verify(bookDao).create(book3);
     }
 
     //TODO: do

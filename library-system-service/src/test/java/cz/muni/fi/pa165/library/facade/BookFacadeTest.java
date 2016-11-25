@@ -4,9 +4,7 @@ import cz.muni.fi.pa165.library.config.ServiceConfiguration;
 import cz.muni.fi.pa165.library.dto.BookDTO;
 import cz.muni.fi.pa165.library.dto.BookNewDTO;
 import cz.muni.fi.pa165.library.entity.Book;
-import cz.muni.fi.pa165.library.entity.BookCopy;
 import cz.muni.fi.pa165.library.entity.Category;
-import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.mapping.BeanMappingService;
 import cz.muni.fi.pa165.library.mapping.BeanMappingServiceImpl;
 import cz.muni.fi.pa165.library.service.BookService;
@@ -23,9 +21,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertNull;
+import static org.testng.Assert.*;
 
 /**
  * @author Martin
@@ -80,14 +76,14 @@ public class BookFacadeTest extends AbstractTransactionalTestNGSpringContextTest
     @BeforeMethod(dependsOnMethods = "initEntities")
     public void initMockBehaviour() {
         when(bookService.findById(book1.getId())).thenReturn(book1);
-        when(bookService.findByName(book1.getName())).thenReturn(Arrays.asList(book1,book2));
-        when(bookService.findByAuthor(book1.getAuthor())).thenReturn(Arrays.asList(book1,book2));
+        when(bookService.findByName(book1.getName())).thenReturn(Arrays.asList(book1, book2));
+        when(bookService.findByAuthor(book1.getAuthor())).thenReturn(Arrays.asList(book1, book2));
         when(bookService.findAll()).thenReturn(Arrays.asList(book1, book2));
     }
 
     @Test
     public void testCreate() {
-        bookNewDTO = new BookNewDTO(book1.getName(),book1.getAuthor(),book1.getIsbn());
+        bookNewDTO = new BookNewDTO(book1.getName(), book1.getAuthor(), book1.getIsbn());
         bookFacade.create(bookNewDTO);
 
         verify(bookService).create(bookArgumentCaptor.capture());
@@ -108,9 +104,9 @@ public class BookFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         bookFacade.update(bookDTO);
 
         verify(bookService).update(bookArgumentCaptor.capture());
-        assertEquals(bookDTO.getName(),book2.getName());
-        assertEquals(bookDTO.getAuthor(),book1.getAuthor());
-        assertEquals(bookDTO.getId(),book1.getId());
+        assertEquals(bookDTO.getName(), book2.getName());
+        assertEquals(bookDTO.getAuthor(), book1.getAuthor());
+        assertEquals(bookDTO.getId(), book1.getId());
     }
 
     @Test
@@ -124,6 +120,11 @@ public class BookFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         bookDTO = bookFacade.findById(book1.getId());
         assertNotNull(bookDTO);
         assertDeepEquals(book1, bookDTO);
+    }
+
+    @Test
+    public void testFindByAuthor() {
+        // TODO
     }
 
     @Test
@@ -143,15 +144,15 @@ public class BookFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         assertDeepEquals(book2, bookDTOs.get(1));
     }
 
-    private void assertDeepEquals(Book book1, BookDTO bookDTO){
-        assertEquals(book1.getName(),bookDTO.getName());
-        assertEquals(book1.getAuthor(),bookDTO.getAuthor());
-        assertEquals(book1.getIsbn(),bookDTO.getIsbn());
+    private void assertDeepEquals(Book book1, BookDTO bookDTO) {
+        assertEquals(book1.getName(), bookDTO.getName());
+        assertEquals(book1.getAuthor(), bookDTO.getAuthor());
+        assertEquals(book1.getIsbn(), bookDTO.getIsbn());
     }
 
-    private void assertDeepEquals(Book book1, Book book2){
-        assertEquals(book1.getName(),book2.getName());
-        assertEquals(book1.getAuthor(),book2.getAuthor());
-        assertEquals(book1.getIsbn(),book2.getIsbn());
+    private void assertDeepEquals(Book book1, Book book2) {
+        assertEquals(book1.getName(), book2.getName());
+        assertEquals(book1.getAuthor(), book2.getAuthor());
+        assertEquals(book1.getIsbn(), book2.getIsbn());
     }
 }

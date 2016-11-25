@@ -39,8 +39,7 @@ public class UserFacadeImpl implements UserFacade {
         }
         User user = beanMappingService.mapTo(userNewDTO, User.class);
         userService.register(user, unencryptedPassword);
-        userNewDTO.setId(user.getId());
-        return userNewDTO.getId();
+        return user.getId();
     }
 
     @Override

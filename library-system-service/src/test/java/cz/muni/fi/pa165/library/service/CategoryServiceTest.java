@@ -7,7 +7,6 @@ import cz.muni.fi.pa165.library.entity.Category;
 import cz.muni.fi.pa165.library.exception.LibrarySystemDataAccessException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -20,12 +19,9 @@ import org.testng.annotations.Test;
 import java.util.Arrays;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
-import static org.testng.Assert.assertSame;
 
 /**
  * @author Martin
@@ -105,8 +101,8 @@ public class CategoryServiceTest extends AbstractTransactionalTestNGSpringContex
 
     @Test
     public void testCreateNoBook() {
-        categoryService.create(category1);
-        verify(categoryDao).create(category1);
+        categoryService.create(category2);
+        verify(categoryDao).create(category2);
     }
 
     //TODO:

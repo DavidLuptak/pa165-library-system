@@ -2,7 +2,6 @@ package cz.muni.fi.pa165.library.facade;
 
 import cz.muni.fi.pa165.library.dto.BookCopyDTO;
 import cz.muni.fi.pa165.library.dto.BookCopyNewDTO;
-import cz.muni.fi.pa165.library.dto.BookDTO;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.BookCopy;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
@@ -34,6 +33,9 @@ public class BookCopyFacadeImpl implements BookCopyFacade {
 
     @Override
     public Long create(BookCopyNewDTO bookCopyNewDTO) {
+        if (bookCopyNewDTO == null) {
+            throw new IllegalArgumentException("Book cannot be null.");
+        }
         BookCopy bookCopy = beanMappingService.mapTo(bookCopyNewDTO, BookCopy.class);
         bookCopyService.create(bookCopy);
         return bookCopy.getId();
@@ -41,27 +43,51 @@ public class BookCopyFacadeImpl implements BookCopyFacade {
 
     @Override
     public void update(BookCopyDTO bookCopyDTO) {
+        if (bookCopyDTO == null) {
+            throw new IllegalArgumentException("Book copy cannot be null.");
+        }
         BookCopy bookCopy = beanMappingService.mapTo(bookCopyDTO, BookCopy.class);
+        if (bookCopyService.findById(bookCopy.getId()) == null) {
+            throw new NoEntityFoundException("Book copy not found during update.");
+        }
         bookCopyService.update(bookCopy);
     }
 
     @Override
     public void delete(Long id) {
-        bookCopyService.delete(bookCopyService.findById(id));
+        if (id == null) {
+            throw new IllegalArgumentException("Book copy id cannot be null.");
+        }
+        BookCopy bookCopy = bookCopyService.findById(id);
+        if (bookCopy == null) {
+            throw new NoEntityFoundException("Book copy not found during delete.");
+        }
+        bookCopyService.delete(bookCopy);
     }
 
     @Override
     public BookCopyDTO findById(Long id) {
-        return beanMappingService.mapTo(bookCopyService.findById(id),BookCopyDTO.class);
+        if (id == null) {
+            throw new IllegalArgumentException("User id cannot be null.");
+        }
+        BookCopy bookCopy = bookCopyService.findById(id);
+        if (bookCopy == null) {
+            throw new NoEntityFoundException("Book copy not found during findById.");
+        }
+
+        return beanMappingService.mapTo(bookCopy, BookCopyDTO.class);
     }
 
     @Override
     public List<BookCopyDTO> findByBook(Long bookId) {
-
+        if (bookId == null) {
+            throw new IllegalArgumentException("Book id cannot be null.");
+        }
         Book book = bookService.findById(bookId);
         if (book == null) {
-            throw new NoEntityFoundException("User not found during findByUser.");
+            throw new NoEntityFoundException("Book not found during findByBook.");
         }
-        return beanMappingService.mapTo(bookCopyService.findByBook(book),BookCopyDTO.class);
+
+        return beanMappingService.mapTo(bookCopyService.findByBook(book), BookCopyDTO.class);
     }
 }

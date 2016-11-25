@@ -120,6 +120,11 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
     }
 
     @Test
+    public void testUpdate() {
+        // TODO
+    }
+
+    @Test
     public void testDelete() {
         loanFacade.delete(1L);
         verify(loanService).delete(loan);
