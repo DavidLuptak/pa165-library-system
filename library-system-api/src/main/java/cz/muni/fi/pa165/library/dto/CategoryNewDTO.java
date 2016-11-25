@@ -11,6 +11,13 @@ public class CategoryNewDTO {
     @NotBlank
     private String name;
 
+    public CategoryNewDTO() {
+    }
+
+    public CategoryNewDTO(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
@@ -19,33 +26,18 @@ public class CategoryNewDTO {
         this.name = name;
     }
 
-    public CategoryNewDTO() {
-    }
-
-    public CategoryNewDTO(String name) {
-        this.name = name;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof CategoryNewDTO)) return false;
 
-        CategoryNewDTO that = (CategoryNewDTO) o;
+        CategoryNewDTO category = (CategoryNewDTO) o;
 
-        return getName() != null ? getName().equals(that.getName()) : that.getName() == null;
-
+        return getName() != null ? getName().equals(category.getName()) : category.getName() == null;
     }
 
     @Override
     public int hashCode() {
         return getName() != null ? getName().hashCode() : 0;
-    }
-
-    @Override
-    public String toString() {
-        return "CategoryNewDTO{" +
-                "name='" + name + '\'' +
-                '}';
     }
 }

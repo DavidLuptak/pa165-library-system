@@ -12,7 +12,6 @@ public class BookCopyNewDTO {
 
     private BookState bookState;
 
-
     public BookCopyNewDTO() {
     }
 

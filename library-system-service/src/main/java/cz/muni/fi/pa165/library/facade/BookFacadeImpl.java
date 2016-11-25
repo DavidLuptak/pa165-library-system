@@ -26,16 +26,21 @@ public class BookFacadeImpl implements BookFacade {
     private BeanMappingService beanMappingService;
 
     @Override
-    public Long createBook(BookNewDTO bookNewDTO) {
+    public Long create(BookNewDTO bookNewDTO) {
         Book book = beanMappingService.mapTo(bookNewDTO,Book.class);
         bookService.create(book);
         return book.getId();
     }
 
     @Override
-    public void updateBook(BookDTO bookDTO) {
+    public void update(BookDTO bookDTO) {
         Book book = beanMappingService.mapTo(bookDTO,Book.class);
         bookService.update(book);
+    }
+
+    @Override
+    public void delete(Long bookId) {
+        bookService.delete(bookService.findById(bookId));
     }
 
     @Override
@@ -56,10 +61,5 @@ public class BookFacadeImpl implements BookFacade {
     @Override
     public List<BookDTO> findAll() {
         return beanMappingService.mapTo(bookService.findAll(),BookDTO.class);
-    }
-
-    @Override
-    public void delete(Long bookId) {
-        bookService.delete(bookService.findById(bookId));
     }
 }

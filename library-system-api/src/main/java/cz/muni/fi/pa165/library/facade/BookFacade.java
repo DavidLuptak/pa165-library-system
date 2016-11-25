@@ -18,14 +18,21 @@ public interface BookFacade {
      * @param book book to be persisted
      * @return new book id
      */
-    Long createBook(BookNewDTO bookNewDTO);
+    Long create(BookNewDTO bookNewDTO);
 
     /**
      * Updates the given book in the database
      *
      * @param book to be updated
      */
-    void updateBook(BookDTO bookDTO);
+    void update(BookDTO bookDTO);
+
+    /**
+     * Removes book from the database
+     *
+     * @param bookId book id
+     */
+    void delete(Long bookId);
 
     /**
      * Finds books that are written by the given author in the database
@@ -58,11 +65,4 @@ public interface BookFacade {
      * @return list of all books
      */
     List<BookDTO> findAll();
-
-    /**
-     * Removes book from the database
-     *
-     * @param bookId book id
-     */
-    void delete(Long bookId);
 }

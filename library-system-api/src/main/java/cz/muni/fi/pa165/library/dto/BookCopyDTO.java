@@ -2,6 +2,9 @@ package cz.muni.fi.pa165.library.dto;
 
 import cz.muni.fi.pa165.library.enums.BookState;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Lenka (433591)
  * @version 19.11.2016
@@ -14,20 +17,16 @@ public class BookCopyDTO {
 
     private BookState bookState;
 
-    //TODO: budeme potrebovat List<Loan> loans?
-
+    private List<LoanDTO> loans;
 
     public BookCopyDTO() {
+        loans = new ArrayList<>();
     }
 
-    public BookCopyDTO(BookDTO book) {
-        this.book = book;
-        bookState = BookState.NEW;
-    }
-
-    public BookCopyDTO(BookDTO book, BookState bookState) {
+    public BookCopyDTO(BookDTO book, BookState bookState, List<LoanDTO> loans) {
         this.book = book;
         this.bookState = bookState;
+        this.loans = loans;
     }
 
     public Long getId() {
@@ -52,6 +51,14 @@ public class BookCopyDTO {
 
     public void setBookState(BookState bookState) {
         this.bookState = bookState;
+    }
+
+    public List<LoanDTO> getLoans() {
+        return loans;
+    }
+
+    public void setLoans(List<LoanDTO> loans) {
+        this.loans = loans;
     }
 
     @Override

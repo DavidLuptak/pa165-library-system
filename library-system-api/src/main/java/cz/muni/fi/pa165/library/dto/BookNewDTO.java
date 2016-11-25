@@ -20,17 +20,15 @@ public class BookNewDTO {
     private String authorName;
 
     @NotNull
-    private Long isbn;
-    private List<Long> collectionIds = new ArrayList<>();
+    private String isbn;
 
     public BookNewDTO() {
     }
 
-    public BookNewDTO(String name, String authorName, Long isbn, List<Long> collectionIds) {
+    public BookNewDTO(String name, String authorName, String isbn) {
         this.name = name;
         this.authorName = authorName;
         this.isbn = isbn;
-        this.collectionIds = collectionIds;
     }
 
     public String getName() {
@@ -49,25 +47,26 @@ public class BookNewDTO {
         this.authorName = authorName;
     }
 
-    public Long getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Long isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
-    public List<Long> getCollectionIds() {
-        return collectionIds;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BookNewDTO)) return false;
+
+        BookNewDTO book = (BookNewDTO) o;
+
+        return getIsbn() != null ? getIsbn().equals(book.getIsbn()) : book.getIsbn() == null;
     }
 
-    public void setCollectionIds(List<Long> collectionIds) {
-        this.collectionIds = collectionIds;
+    @Override
+    public int hashCode() {
+        return getIsbn() != null ? getIsbn().hashCode() : 0;
     }
-
-    public void addCollectionId(Long id) {
-        collectionIds.add(id);
-    }
-
-    //todo: generate equals and hash code
 }

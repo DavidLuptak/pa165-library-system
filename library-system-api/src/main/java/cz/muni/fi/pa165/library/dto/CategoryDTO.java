@@ -20,9 +20,9 @@ public class CategoryDTO {
         books = new ArrayList<>();
     }
 
-    public CategoryDTO(String name) {
-        this();
+    public CategoryDTO(String name, List<BookDTO> books) {
         this.name = name;
+        this.books = books;
     }
 
     public Long getId() {
@@ -54,21 +54,13 @@ public class CategoryDTO {
         if (this == o) return true;
         if (!(o instanceof CategoryDTO)) return false;
 
-        CategoryDTO that = (CategoryDTO) o;
+        CategoryDTO category = (CategoryDTO) o;
 
-        return getName() != null ? getName().equals(that.getName()) : that.getName() == null;
-
+        return getName() != null ? getName().equals(category.getName()) : category.getName() == null;
     }
 
     @Override
     public int hashCode() {
         return getName() != null ? getName().hashCode() : 0;
-    }
-
-    @Override
-    public String toString() {
-        return "CategoryNewDTO{" +
-                "name='" + name + '\'' +
-                '}';
     }
 }

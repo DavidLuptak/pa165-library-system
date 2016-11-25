@@ -2,6 +2,9 @@ package cz.muni.fi.pa165.library.dto;
 
 import cz.muni.fi.pa165.library.enums.BookState;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Bedrich Said
  */
@@ -10,17 +13,21 @@ public class BookDTO {
     private String name;
     private String authorName;
     private String isbn;
+    private List<CategoryDTO> categories;
+    private List<BookCopyDTO> bookCopies;
 
     public BookDTO() {
+        categories = new ArrayList<>();
+        bookCopies = new ArrayList<>();
     }
 
-    public BookDTO(String name, String authorName, String isbn) {
+    public BookDTO(String name, String authorName, String isbn, List<CategoryDTO> categories, List<BookCopyDTO> bookCopies) {
         this.name = name;
         this.authorName = authorName;
         this.isbn = isbn;
+        this.categories = categories;
+        this.bookCopies = bookCopies;
     }
-
-    //private List<LoanDTO> loans;
 
     public Long getId() {
         return id;
@@ -54,13 +61,34 @@ public class BookDTO {
         this.isbn = isbn;
     }
 
-    /*public List<LoanDTO> getLoans() {
-        return loans;
-    }*/
+    public List<CategoryDTO> getCategories() {
+        return categories;
+    }
 
-    /*public void setLoans(List<LoanDTO> loans) {
-        this.loans = loans;
-    }*/
+    public void setCategories(List<CategoryDTO> categories) {
+        this.categories = categories;
+    }
 
-    //todo: generate equals and hash code
+    public List<BookCopyDTO> getBookCopies() {
+        return bookCopies;
+    }
+
+    public void setBookCopies(List<BookCopyDTO> bookCopies) {
+        this.bookCopies = bookCopies;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BookDTO)) return false;
+
+        BookDTO book = (BookDTO) o;
+
+        return getIsbn() != null ? getIsbn().equals(book.getIsbn()) : book.getIsbn() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return getIsbn() != null ? getIsbn().hashCode() : 0;
+    }
 }
