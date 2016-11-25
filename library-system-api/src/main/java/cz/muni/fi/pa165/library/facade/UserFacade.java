@@ -9,6 +9,8 @@ import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import java.util.List;
 
 /**
+ * Facade layer for the User entity.
+ *
  * @author Martin
  * @version 13.11.2016
  */

@@ -24,8 +24,8 @@ public class BookCopyServiceImpl implements BookCopyService {
     }
 
     @Override
-    public void update(BookCopy bookCopy) {
-        bookCopyDao.update(bookCopy);
+    public BookCopy update(BookCopy bookCopy) {
+        return bookCopyDao.update(bookCopy);
     }
 
     @Override

@@ -26,8 +26,8 @@ public class BookCopyDaoImpl implements BookCopyDao {
     }
 
     @Override
-    public void update(BookCopy bookCopy) {
-        em.merge(bookCopy);
+    public BookCopy update(BookCopy bookCopy) {
+        return em.merge(bookCopy);
     }
 
     @Override

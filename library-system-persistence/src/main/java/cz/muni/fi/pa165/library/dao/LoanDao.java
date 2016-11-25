@@ -23,8 +23,9 @@ public interface LoanDao {
      * Updates the given loan in the database
      *
      * @param loan to be updated
+     * @return merged Loan entity
      */
-    void update(Loan loan);
+    Loan update(Loan loan);
 
     /**
      * Deletes the given loan from the database

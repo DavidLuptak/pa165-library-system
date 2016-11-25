@@ -2,12 +2,11 @@ package cz.muni.fi.pa165.library.facade;
 
 import cz.muni.fi.pa165.library.dto.BookDTO;
 import cz.muni.fi.pa165.library.dto.BookNewDTO;
-import cz.muni.fi.pa165.library.enums.BookState;
 
 import java.util.List;
 
 /**
- * Facade layer for Book entity
+ * Facade layer for the Book entity.
  *
  * @author Bedrich Said
  */

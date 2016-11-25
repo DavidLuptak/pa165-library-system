@@ -27,10 +27,11 @@ public interface LoanService {
      * Updates existing loan.
      *
      * @param loan to be updated
+     * @return updated Loan entity
      * @throws IllegalArgumentException         if loan is null
      * @throws LibrarySystemDataAccessException if  some error during persisting an entity occurs
      */
-    void update(Loan loan);
+    Loan update(Loan loan);
 
     /**
      * Deletes existing loan.

@@ -1,9 +1,9 @@
 package cz.muni.fi.pa165.library.service;
 
-import java.util.List;
-
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.BookCopy;
+
+import java.util.List;
 
 /**
  * @author Lenka (433591)
@@ -22,8 +22,9 @@ public interface BookCopyService {
      * Updates the given bookCopy in the database
      *
      * @param bookCopy to be updated
+     * @return updated BookCopy entity
      */
-    void update(BookCopy bookCopy);
+    BookCopy update(BookCopy bookCopy);
 
     /**
      * Deletes the given bookCopy from the database

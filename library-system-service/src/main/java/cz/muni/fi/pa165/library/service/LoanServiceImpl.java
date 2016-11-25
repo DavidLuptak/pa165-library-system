@@ -7,7 +7,6 @@ import cz.muni.fi.pa165.library.exception.LibrarySystemDataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,13 +34,13 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public void update(Loan loan) {
+    public Loan update(Loan loan) {
         if (loan == null) {
             throw new IllegalArgumentException("Loan cannot be null.");
         }
 
         try {
-            loanDao.update(loan);
+            return loanDao.update(loan);
         } catch (IllegalArgumentException ex) {
             throw new LibrarySystemDataAccessException("Error during loan update.", ex);
         }
@@ -96,7 +95,7 @@ public class LoanServiceImpl implements LoanService {
         try {
             return loanDao.findByUser(user).stream()
                     .filter(loan -> !loan.isReturned())
-                    .sorted((l1,l2) -> l1.getLoanDate().compareTo(l2.getLoanDate()))
+                    .sorted((l1, l2) -> l1.getLoanDate().compareTo(l2.getLoanDate()))
                     .collect(Collectors.toList());
 
         } catch (IllegalArgumentException ex) {
@@ -109,9 +108,9 @@ public class LoanServiceImpl implements LoanService {
         try {
             return loanDao.findByUser(user).stream()
                     .filter(loan -> loan.isReturned())
-                    .sorted((l1,l2) -> l1.getLoanDate().compareTo(l2.getLoanDate()))
+                    .sorted((l1, l2) -> l1.getLoanDate().compareTo(l2.getLoanDate()))
                     .collect(Collectors.toList());
-        }catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             throw new LibrarySystemDataAccessException("Error during loan find all.", ex);
         }
     }

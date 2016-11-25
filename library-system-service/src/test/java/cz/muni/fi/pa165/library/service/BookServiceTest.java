@@ -7,9 +7,7 @@ import cz.muni.fi.pa165.library.entity.BookCopy;
 import cz.muni.fi.pa165.library.entity.Category;
 import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.exception.LibrarySystemDataAccessException;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.test.context.ContextConfiguration;
@@ -36,6 +34,9 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
     @InjectMocks
     private BookService bookService = new BookServiceImpl();
+
+    @Captor
+    private ArgumentCaptor<Book> bookArgumentCaptor;
 
     @BeforeClass
     public void initMockito() {
@@ -106,6 +107,9 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
                 return null;
             }
         }).when(bookDao).create(any(Book.class));
+
+        // update
+        when(bookDao.update(book3)).thenReturn(book3);
     }
 
     @Test
@@ -130,10 +134,16 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
         verify(bookDao).create(book3);
     }
 
-    //TODO: do
     @Test
     public void testUpdate() {
+        Book updated = bookService.update(book3);
 
+        verify(bookDao).update(bookArgumentCaptor.capture());
+        Book captured = bookArgumentCaptor.getValue();
+        assertEquals(captured, book3);
+        assertEquals(captured.getIsbn(), book3.getIsbn());
+        assertEquals(updated, book3);
+        assertEquals(updated.getIsbn(), book3.getIsbn());
     }
 
     @Test
@@ -144,7 +154,7 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
     @Test
     public void testFindById() {
-        assertSame(bookService.findById(book1.getId()),book1);
+        assertSame(bookService.findById(book1.getId()), book1);
         verify(bookDao).findById(book1.getId());
     }
 
@@ -157,13 +167,13 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
     @Test
     public void testFindByAuthor() {
-        assertEquals(bookService.findByAuthor(book1.getAuthor()),Arrays.asList(book1, book2));
+        assertEquals(bookService.findByAuthor(book1.getAuthor()), Arrays.asList(book1, book2));
         verify(bookDao).findByAuthor(book1.getAuthor());
     }
 
     @Test
     public void testFindByNonExistingAuthor() {
-        assertEquals(bookService.findByAuthor("Not existing Author"),Arrays.asList());
+        assertEquals(bookService.findByAuthor("Not existing Author"), Arrays.asList());
         verify(bookDao).findByAuthor("Not existing Author");
     }
 
@@ -175,13 +185,13 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
     @Test
     public void testFindByNonExistingName() {
-        assertEquals(bookService.findByName("Not existing Name"),Arrays.asList());
+        assertEquals(bookService.findByName("Not existing Name"), Arrays.asList());
         verify(bookDao).findByName("Not existing Name");
     }
 
     @Test
     public void testFindAll() {
-        assertEquals(bookService.findAll(),Arrays.asList(book1, book2));
+        assertEquals(bookService.findAll(), Arrays.asList(book1, book2));
         verify(bookDao).findAll();
 
     }

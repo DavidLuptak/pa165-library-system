@@ -24,8 +24,9 @@ public interface BookCopyDao {
      * Updates the given bookCopy in the database
      *
      * @param bookCopy to be updated
+     * @return merged BookCopy entity
      */
-    void update(BookCopy bookCopy);
+    BookCopy update(BookCopy bookCopy);
 
     /**
      * Deletes the given bookCopy from the database

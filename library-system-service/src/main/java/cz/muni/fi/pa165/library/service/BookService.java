@@ -20,8 +20,9 @@ public interface BookService {
      * Updates the given book in the database
      *
      * @param book to be updated
+     * @return updated Book entity
      */
-    void update(Book book);
+    Book update(Book book);
 
     /**
      * Deletes the given book from the database

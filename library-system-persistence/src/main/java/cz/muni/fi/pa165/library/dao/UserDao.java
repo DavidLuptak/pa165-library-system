@@ -22,8 +22,9 @@ public interface UserDao {
      * Updates the given user in the database.
      *
      * @param user to be updated
+     * @return merged User entity
      */
-    void update(User user);
+    User update(User user);
 
     /**
      * Deletes the given user from the database.

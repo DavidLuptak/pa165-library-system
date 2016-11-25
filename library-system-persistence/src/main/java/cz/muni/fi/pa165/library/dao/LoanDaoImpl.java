@@ -30,8 +30,8 @@ public class LoanDaoImpl implements LoanDao {
     }
 
     @Override
-    public void update(Loan loan) {
-        em.merge(loan);
+    public Loan update(Loan loan) {
+        return em.merge(loan);
     }
 
     @Override
