@@ -236,6 +236,11 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
         assertEquals(found.get(2), notReturnedLoan3);
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindNotReturnedUserLoansNullUser(){
+        loanService.findNotReturnedUserLoans(null);
+    }
+
     @Test(expectedExceptions = LibraryDAOException.class)
     public void testFindNotReturnedUserLoansByNonExistingUser() {
         loanService.findByUser(new User());
@@ -249,6 +254,11 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
         assertEquals(found.get(0), returnedLoan2);
         assertEquals(found.get(1), returnedLoan1);
         assertEquals(found.get(2), returnedLoan3);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testtestFindReturnedUserLoansNullUser(){
+        loanService.findReturnedUserLoans(null);
     }
 
     @Test(expectedExceptions = LibraryDAOException.class)
