@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.library.LibraryApplicationContext;
 import cz.muni.fi.pa165.library.entity.*;
 import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.enums.UserRole;
+import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -104,12 +105,12 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         loanDao.create(null);
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test(expectedExceptions = LibraryDAOException.class)
     public void testCreateEmptyLoan() {
         loanDao.create(new Loan());
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test(expectedExceptions = LibraryDAOException.class)
     public void testCreateLoanWithoutBookCopy() {
         Loan aLoan = new Loan();
         aLoan.setUser(joshua);
@@ -117,7 +118,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         loanDao.create(aLoan);
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test(expectedExceptions = LibraryDAOException.class)
     public void testCreateLoanWithoutUser() {
         Loan aLoan = getJoshuaLoan();
         aLoan.setUser(null);
@@ -228,7 +229,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         assertNull(loanDao.findById(aLoan.getId()));
     }
 
-    @Test(expectedExceptions = NullPointerException.class)
+    @Test(expectedExceptions = LibraryDAOException.class)
     public void testDeleteNullLoan() {
         loanDao.delete(null);
     }

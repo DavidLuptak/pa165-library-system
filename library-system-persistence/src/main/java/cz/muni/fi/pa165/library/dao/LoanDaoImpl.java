@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.library.dao;
 
 import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.entity.User;
+import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -21,34 +22,58 @@ public class LoanDaoImpl implements LoanDao {
 
     @Override
     public void create(Loan loan) {
-        em.persist(loan);
+        try {
+            em.persist(loan);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public void delete(Loan loan) {
-        em.remove(findById(loan.getId()));
+        try {
+            em.remove(findById(loan.getId()));
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public Loan update(Loan loan) {
-        return em.merge(loan);
+        try {
+            return em.merge(loan);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public Loan findById(Long id) {
-        return em.find(Loan.class, id);
+        try {
+            return em.find(Loan.class, id);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public List<Loan> findByUser(User user) {
-        if (user == null) {
-            throw new IllegalArgumentException("User is not valid.");
+        try {
+            if (user == null) {
+                throw new IllegalArgumentException("User is not valid.");
+            }
+            return em.createQuery("SELECT loan FROM Loan loan WHERE loan.user = :user", Loan.class).setParameter("user", user).getResultList();
+        } catch (IllegalArgumentException e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
         }
-        return em.createQuery("SELECT loan FROM Loan loan WHERE loan.user = :user", Loan.class).setParameter("user", user).getResultList();
     }
 
     @Override
     public List<Loan> findAll() {
-        return em.createQuery("from Loan", Loan.class).getResultList();
+        try {
+            return em.createQuery("from Loan", Loan.class).getResultList();
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 }

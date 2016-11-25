@@ -2,6 +2,8 @@ package cz.muni.fi.pa165.library.dao;
 
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.BookCopy;
+import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -22,31 +24,53 @@ public class BookCopyDaoImpl implements BookCopyDao {
 
     @Override
     public void create(BookCopy bookCopy) {
-        em.persist(bookCopy);
+
+        try {
+            em.persist(bookCopy);
+        }
+        catch (Exception e){
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public BookCopy update(BookCopy bookCopy) {
-        return em.merge(bookCopy);
+        try {
+            return em.merge(bookCopy);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public void delete(BookCopy bookCopy) {
-        em.remove(findById(bookCopy.getId()));
+        try {
+            em.remove(findById(bookCopy.getId()));
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public BookCopy findById(Long id) {
-        return em.find(BookCopy.class, id);
+        try {
+            return em.find(BookCopy.class, id);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public List<BookCopy> findByBook(Book book) {
-        if (book == null) {
-            throw new IllegalArgumentException("Book is not valid");
+        try {
+            if (book == null) {
+                throw new IllegalArgumentException("Book is not valid");
+            }
+            return em.createQuery("SELECT b FROM BookCopy b where b.book = :book", BookCopy.class)
+                    .setParameter("book", book).getResultList();
+        } catch (IllegalArgumentException e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
         }
-        return em.createQuery("SELECT b FROM BookCopy b where b.book = :book", BookCopy.class)
-                .setParameter("book", book).getResultList();
 
     }
 }

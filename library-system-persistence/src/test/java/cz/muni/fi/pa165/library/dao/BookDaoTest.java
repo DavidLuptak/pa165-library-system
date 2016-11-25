@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.library.dao;
 
 import cz.muni.fi.pa165.library.LibraryApplicationContext;
 import cz.muni.fi.pa165.library.entity.Book;
+import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -68,7 +69,7 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
         assertNotNull(book3.getId());
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test(expectedExceptions = LibraryDAOException.class)
     public void testCreateNullName() {
         Book newBook = new Book();
         bookDao.create(newBook);
