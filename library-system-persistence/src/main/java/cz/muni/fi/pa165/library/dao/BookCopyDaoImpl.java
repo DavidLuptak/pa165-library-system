@@ -68,7 +68,7 @@ public class BookCopyDaoImpl implements BookCopyDao {
             }
             return em.createQuery("SELECT b FROM BookCopy b where b.book = :book", BookCopy.class)
                     .setParameter("book", book).getResultList();
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             throw new LibraryDAOException(e.getMessage(),e.getCause());
         }
 

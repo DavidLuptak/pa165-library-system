@@ -63,7 +63,7 @@ public class LoanDaoImpl implements LoanDao {
                 throw new IllegalArgumentException("User is not valid.");
             }
             return em.createQuery("SELECT loan FROM Loan loan WHERE loan.user = :user", Loan.class).setParameter("user", user).getResultList();
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             throw new LibraryDAOException(e.getMessage(),e.getCause());
         }
     }

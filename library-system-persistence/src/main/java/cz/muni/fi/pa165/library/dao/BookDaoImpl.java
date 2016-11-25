@@ -64,7 +64,7 @@ public class BookDaoImpl implements BookDao {
             }
             return em.createQuery("SELECT b FROM Book b where b.author = :author", Book.class)
                     .setParameter("author", author).getResultList();
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             throw new LibraryDAOException(e.getMessage(),e.getCause());
         }
 
@@ -78,7 +78,7 @@ public class BookDaoImpl implements BookDao {
             }
             return em.createQuery("SELECT b FROM Book b where b.name = :name", Book.class)
                     .setParameter("name", name).getResultList();
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             throw new LibraryDAOException(e.getMessage(),e.getCause());
         }
 

@@ -68,7 +68,7 @@ public class UserDaoImpl implements UserDao {
             } catch (NoResultException e) {
                 return null;
             }
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             throw new LibraryDAOException(e.getMessage(),e.getCause());
         }
     }
