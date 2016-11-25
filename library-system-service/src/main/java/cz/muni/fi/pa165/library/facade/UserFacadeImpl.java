@@ -88,6 +88,7 @@ public class UserFacadeImpl implements UserFacade {
         if (user == null) {
             throw new NoEntityFoundException("User not found during findByEmail.");
         }
+
         return beanMappingService.mapTo(user, UserDTO.class);
     }
 
@@ -105,6 +106,7 @@ public class UserFacadeImpl implements UserFacade {
         if (userService.findById(user.getId()) == null) {
             throw new NoEntityFoundException("User not found during getting user role.");
         }
+
         return userService.userRole(user);
     }
 
@@ -117,6 +119,12 @@ public class UserFacadeImpl implements UserFacade {
         if (user == null) {
             throw new NoEntityFoundException("User not found during authenticate.");
         }
+
         return userService.authenticate(user, userAuthenticateDTO.getPassword());
+    }
+
+    @Override
+    public List<UserDTO> findUsersWithNotReturnedLoans() {
+        return beanMappingService.mapTo(userService.findUsersWithNotReturnedLoans(), UserDTO.class);
     }
 }

@@ -117,6 +117,32 @@ public class LoanFacadeImpl implements LoanFacade {
         return beanMappingService.mapTo(loanService.findAll(), LoanDTO.class);
     }
 
+    @Override
+    public List<LoanDTO> findNotReturnedUserLoans(Long userId) {
+        if (userId == null) {
+            throw new IllegalArgumentException("User id cannot be null.");
+        }
+        User user = userService.findById(userId);
+        if (user == null) {
+            throw new NoEntityFoundException("User not found during findByUser.");
+        }
+
+        return beanMappingService.mapTo(loanService.findNotReturnedUserLoans(user), LoanDTO.class);
+    }
+
+    @Override
+    public List<LoanDTO> findReturnedUserLoans(Long userId) {
+        if (userId == null) {
+            throw new IllegalArgumentException("User id cannot be null.");
+        }
+        User user = userService.findById(userId);
+        if (user == null) {
+            throw new NoEntityFoundException("User not found during findByUser.");
+        }
+
+        return beanMappingService.mapTo(loanService.findReturnedUserLoans(user), LoanDTO.class);
+    }
+
     /**
      * Argument checking for the User entity.
      *
@@ -145,6 +171,5 @@ public class LoanFacadeImpl implements LoanFacade {
             throw new NoEntityFoundException("BookCopy cannot be found.");
         }
         return bookCopy;
-
     }
 }

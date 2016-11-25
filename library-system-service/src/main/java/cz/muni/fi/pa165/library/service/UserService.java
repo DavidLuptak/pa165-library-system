@@ -77,7 +77,7 @@ public interface UserService {
     /**
      * Find users who are loaning something
      *
-     * @return users who have atleas one not returned loan
+     * @return users who have at least one not returned loan
      */
     List<User> findUsersWithNotReturnedLoans();
 

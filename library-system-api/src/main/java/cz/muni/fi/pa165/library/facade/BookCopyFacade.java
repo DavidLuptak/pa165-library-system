@@ -14,21 +14,21 @@ public interface BookCopyFacade {
     /**
      * Saves the given bookCopy into the database
      *
-     * @param bookCopy to be saved
+     * @param bookCopyNewDTO to be saved
      */
     Long create(BookCopyNewDTO bookCopyNewDTO);
 
     /**
      * Updates the given bookCopy in the database
      *
-     * @param bookCopy to be updated
+     * @param bookCopyDTO to be updated
      */
     void update(BookCopyDTO bookCopyDTO);
 
     /**
      * Deletes the given bookCopy from the database
      *
-     * @param bookCopy to be deleted
+     * @param id of bookCopy to be deleted
      */
     void delete(Long id);
 
@@ -43,7 +43,7 @@ public interface BookCopyFacade {
     /**
      * Finds all copies of the given book in the database
      *
-     * @param book searched book
+     * @param bookId of searched book
      * @return found copies
      * @throws IllegalArgumentException if book is null
      */

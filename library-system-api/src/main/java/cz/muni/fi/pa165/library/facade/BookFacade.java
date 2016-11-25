@@ -15,7 +15,7 @@ public interface BookFacade {
     /**
      * Persists book into database
      *
-     * @param book book to be persisted
+     * @param bookNewDTO book to be persisted
      * @return new book id
      */
     Long create(BookNewDTO bookNewDTO);
@@ -23,7 +23,7 @@ public interface BookFacade {
     /**
      * Updates the given book in the database
      *
-     * @param book to be updated
+     * @param bookDTO to be updated
      */
     void update(BookDTO bookDTO);
 

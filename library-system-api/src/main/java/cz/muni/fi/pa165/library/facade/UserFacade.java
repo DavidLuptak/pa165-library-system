@@ -16,7 +16,8 @@ public interface UserFacade {
     /**
      * Registers the given user with given unencrypted password.
      *
-     * @param user                to be created
+     * @param userNewDTO to be created
+     * @param unencryptedPassword of user
      * @throws IllegalArgumentException if user is null
      * @throws IllegalArgumentException if unencryptedPassword is null or empty
      * @throws NoEntityFoundException   if user does not exist
@@ -26,7 +27,7 @@ public interface UserFacade {
     /**
      * Updates the given user.
      *
-     * @param user to be updated
+     * @param userDTO to be updated
      * @throws IllegalArgumentException if user is null
      * @throws NoEntityFoundException   if user does not exist
      */
@@ -71,7 +72,7 @@ public interface UserFacade {
     /**
      * Gets user's userRole
      *
-     * @param user for whom to get the userRole
+     * @param userDTO for whom to get the userRole
      * @return user's UserRole
      * @throws IllegalArgumentException if user is null
      * @throws NoEntityFoundException   if user does not exist
@@ -81,10 +82,17 @@ public interface UserFacade {
     /**
      * Try to authenticate a user. Return true only if the hashed password matches the records.
      *
-     * @param user to be authenticated
+     * @param userDTO to be authenticated
      * @return whether authentication succeeds
      * @throws IllegalArgumentException if user is null
      * @throws NoEntityFoundException   if user does not exist
      */
     boolean authenticate(UserAuthenticateDTO userDTO);
+
+    /**
+     * Find users who are loaning something
+     *
+     * @return users who have at least one not returned loan
+     */
+    List<UserDTO> findUsersWithNotReturnedLoans();
 }

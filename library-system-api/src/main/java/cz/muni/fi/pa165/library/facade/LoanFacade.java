@@ -70,4 +70,21 @@ public interface LoanFacade {
      * @return all loans
      */
     List<LoanDTO> findAll();
+
+    /**
+     * Returns user's loans which are not returned
+     *
+     * @param userId id of user for whom the loans to be found
+     * @return user's loans which are not returned
+     */
+    List<LoanDTO> findNotReturnedUserLoans(Long userId);
+
+    /**
+     * Returns user's loans which are returned
+     *
+     * @param userId id of user for whom the loans to be found
+     * @return user's loans which are returned
+     */
+    List<LoanDTO> findReturnedUserLoans(Long userId);
+
 }
