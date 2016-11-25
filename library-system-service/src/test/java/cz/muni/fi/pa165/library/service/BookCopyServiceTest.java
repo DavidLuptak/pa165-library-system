@@ -8,7 +8,6 @@ import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.enums.UserRole;
-import cz.muni.fi.pa165.library.exception.LibrarySystemDataAccessException;
 import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
 import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
@@ -86,10 +85,10 @@ public class BookCopyServiceTest extends AbstractTransactionalTestNGSpringContex
 
             BookCopy bookCopy = (BookCopy) argument;
             if (bookCopy.getBook() == null) {
-                throw new LibrarySystemDataAccessException("Book is null.");
+                throw new LibraryDAOException("Book is null.");
             }
             if (bookCopy.getBookState() == null) {
-                throw new LibrarySystemDataAccessException("BookState is null.");
+                throw new LibraryDAOException("BookState is null.");
             }
 
             bookCopy.setId(1L);

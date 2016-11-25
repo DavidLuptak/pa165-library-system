@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.library.service;
 import cz.muni.fi.pa165.library.dao.LoanDao;
 import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.entity.User;
-import cz.muni.fi.pa165.library.exception.LibrarySystemDataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;

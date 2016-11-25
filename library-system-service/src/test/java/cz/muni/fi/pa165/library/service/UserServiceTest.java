@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.library.dao.UserDao;
 import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.enums.UserRole;
+import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
 import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
 import org.springframework.test.context.ContextConfiguration;
@@ -136,7 +137,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
             }
 
             if (user.getEmail().equals(alreadyPersistedEmail)) {
-                throw new ConstraintViolationException("Duplicate email attempt.", null);
+                throw new LibraryDAOException("Duplicate email attempt.", null);
             }
 
             user.setId(newlyPersistedId);

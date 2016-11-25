@@ -4,7 +4,7 @@ import cz.muni.fi.pa165.library.config.ServiceConfiguration;
 import cz.muni.fi.pa165.library.dao.CategoryDao;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Category;
-import cz.muni.fi.pa165.library.exception.LibrarySystemDataAccessException;
+import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
 import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
 import org.springframework.test.context.ContextConfiguration;
@@ -81,7 +81,7 @@ public class CategoryServiceTest extends AbstractTransactionalTestNGSpringContex
 
             Category category = (Category) argument;
             if (category.getName() == null) {
-                throw new LibrarySystemDataAccessException("Category is null.");
+                throw new LibraryDAOException("Category is null.");
             }
 
             category.setId(1L);

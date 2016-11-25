@@ -8,7 +8,7 @@ import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.enums.UserRole;
-import cz.muni.fi.pa165.library.exception.LibrarySystemDataAccessException;
+import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
 import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
 import org.springframework.test.context.ContextConfiguration;
@@ -116,10 +116,10 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
             Loan loan = (Loan) argument;
             if (loan.getUser() == null) {
-                throw new LibrarySystemDataAccessException("User is null.");
+                throw new LibraryDAOException("User is null.");
             }
             if (loan.getBookCopy() == null) {
-                throw new LibrarySystemDataAccessException("BookCopy is null.");
+                throw new LibraryDAOException("BookCopy is null.");
             }
 
             loan.setId(1L);
@@ -129,7 +129,7 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
         // update
         when(loanDao.update(loan)).thenReturn(loan);
 
-        Mockito.doThrow(new LibrarySystemDataAccessException("User not found.")).when(loanDao).findByUser(new User());
+        Mockito.doThrow(new LibraryDAOException("User not found.")).when(loanDao).findByUser(new User());
     }
 
     @Test
@@ -138,13 +138,13 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
         verify(loanDao).create(loan);
     }
 
-    @Test(expectedExceptions = LibrarySystemDataAccessException.class)
+    @Test(expectedExceptions = LibraryDAOException.class)
     public void testCreateNoBook() {
         Loan loan = new Loan(user, null, new Date());
         loanService.create(loan);
     }
 
-    @Test(expectedExceptions = LibrarySystemDataAccessException.class)
+    @Test(expectedExceptions = LibraryDAOException.class)
     public void testCreateNoUser() {
         Loan loan = new Loan(null, bookCopy, new Date());
         loanService.create(loan);
@@ -215,7 +215,7 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
         loanService.findByUser(null);
     }
 
-    @Test(expectedExceptions = LibrarySystemDataAccessException.class)
+    @Test(expectedExceptions = LibraryDAOException.class)
     public void testFindByNonExistingUser() {
         loanService.findByUser(new User());
         verify(loanDao).findByUser(new User());
@@ -236,7 +236,7 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
         assertEquals(found.get(2), notReturnedLoan3);
     }
 
-    @Test(expectedExceptions = LibrarySystemDataAccessException.class)
+    @Test(expectedExceptions = LibraryDAOException.class)
     public void testFindNotReturnedUserLoansByNonExistingUser() {
         loanService.findByUser(new User());
         verify(loanDao).findByUser(new User());
@@ -251,7 +251,7 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
         assertEquals(found.get(2), returnedLoan3);
     }
 
-    @Test(expectedExceptions = LibrarySystemDataAccessException.class)
+    @Test(expectedExceptions = LibraryDAOException.class)
     public void testFindReturnedUserLoansByNonExistingUser() {
         loanService.findByUser(new User());
         verify(loanDao).findByUser(new User());

@@ -6,7 +6,6 @@ import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.BookCopy;
 import cz.muni.fi.pa165.library.entity.Category;
 import cz.muni.fi.pa165.library.enums.BookState;
-import cz.muni.fi.pa165.library.exception.LibrarySystemDataAccessException;
 import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
 import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
@@ -92,13 +91,13 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
             Book book = (Book) argument;
             if (book.getName() == null) {
-                throw new LibrarySystemDataAccessException("Name is null.");
+                throw new LibraryDAOException("Name is null.");
             }
             if (book.getAuthor() == null) {
-                throw new LibrarySystemDataAccessException("Author is null.");
+                throw new LibraryDAOException("Author is null.");
             }
             if (book.getIsbn() == null) {
-                throw new LibrarySystemDataAccessException("ISBN is null.");
+                throw new LibraryDAOException("ISBN is null.");
             }
 
             book.setId(1L);

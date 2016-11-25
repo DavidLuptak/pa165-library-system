@@ -2,7 +2,7 @@ package cz.muni.fi.pa165.library.service;
 
 import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.entity.User;
-import cz.muni.fi.pa165.library.exception.LibrarySystemDataAccessException;
+import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public interface LoanService {
      *
      * @param loan to be created
      * @throws IllegalArgumentException         if loan is null
-     * @throws LibrarySystemDataAccessException if  some error during persisting an entity occurs
+     * @throws LibraryDAOException if  some error during persisting an entity occurs
      */
     void create(Loan loan);
 
@@ -29,7 +29,7 @@ public interface LoanService {
      * @param loan to be updated
      * @return updated Loan entity
      * @throws IllegalArgumentException         if loan is null
-     * @throws LibrarySystemDataAccessException if  some error during persisting an entity occurs
+     * @throws LibraryDAOException if  some error during persisting an entity occurs
      */
     Loan update(Loan loan);
 
@@ -38,7 +38,7 @@ public interface LoanService {
      *
      * @param loan
      * @throws IllegalArgumentException         if loan is null
-     * @throws LibrarySystemDataAccessException if some error during persisting an entity occurs
+     * @throws LibraryDAOException if some error during persisting an entity occurs
      */
     void delete(Loan loan);
 
@@ -48,7 +48,7 @@ public interface LoanService {
      * @param id id of loan entity to be found
      * @return loan with the respective id
      * @throws IllegalArgumentException         if id is null
-     * @throws LibrarySystemDataAccessException if some data access error occurs
+     * @throws LibraryDAOException if some data access error occurs
      */
     Loan findById(Long id);
 
@@ -58,7 +58,7 @@ public interface LoanService {
      * @param user user for whom the loans to be found
      * @return loans of the respective user
      * @throws IllegalArgumentException         if user is null
-     * @throws LibrarySystemDataAccessException if some data access error occurs
+     * @throws LibraryDAOException if some data access error occurs
      */
     List<Loan> findByUser(User user);
 
@@ -66,7 +66,7 @@ public interface LoanService {
      * Returns all loans.
      *
      * @return all loans
-     * @throws LibrarySystemDataAccessException if some data access error occurs
+     * @throws LibraryDAOException if some data access error occurs
      */
     List<Loan> findAll();
 
