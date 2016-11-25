@@ -9,9 +9,11 @@ import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.enums.UserRole;
 import cz.muni.fi.pa165.library.exception.LibrarySystemDataAccessException;
+import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
 import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.annotations.BeforeClass;
@@ -87,10 +89,10 @@ public class BookCopyServiceTest extends AbstractTransactionalTestNGSpringContex
 
                 BookCopy bookCopy = (BookCopy) argument;
                 if (bookCopy.getBook() == null) {
-                    throw new LibrarySystemDataAccessException("Book is null.");
+                    throw new LibraryDAOException("Book is null.");
                 }
                 if (bookCopy.getBookState() == null) {
-                    throw new LibrarySystemDataAccessException("BookState is null.");
+                    throw new LibraryDAOException("BookState is null.");
                 }
 
                 bookCopy.setId(1L);
@@ -107,14 +109,19 @@ public class BookCopyServiceTest extends AbstractTransactionalTestNGSpringContex
         verify(bookCopyDao).create(bookCopy1);
     }
 
-    @Test(expectedExceptions = LibrarySystemDataAccessException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCreateNullBookCopy(){
+        bookCopyService.create(null);
+    }
+
+    @Test(expectedExceptions = DataAccessException.class)
     public void testCreateNoBook() {
         bookCopy1.setBook(null);
         bookCopyService.create(bookCopy1);
         verify(bookCopyDao).create(bookCopy1);
     }
 
-    @Test(expectedExceptions = LibrarySystemDataAccessException.class)
+    @Test(expectedExceptions = DataAccessException.class)
     public void testCreateNullBookState() {
         bookCopy1.setBookState(null);
         bookCopyService.create(bookCopy1);
@@ -135,10 +142,20 @@ public class BookCopyServiceTest extends AbstractTransactionalTestNGSpringContex
         assertEquals(updated.getBookState(), bookCopy2.getBookState());
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testUpdateNullBookCopy(){
+        BookCopy updated = bookCopyService.update(null);
+    }
+
     @Test
     public void testDelete() {
         bookCopyService.delete(bookCopy1);
         verify(bookCopyDao).delete(bookCopy1);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testDeleteNullBookCopy(){
+        bookCopyService.delete(null);
     }
 
     @Test
@@ -151,6 +168,11 @@ public class BookCopyServiceTest extends AbstractTransactionalTestNGSpringContex
     public void testFindByNonExistingId() {
         assertNull(bookCopyService.findById(3L));
         verify(bookCopyDao).findById(3L);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindByNullId(){
+        bookCopyService.findById(null);
     }
 
     @Test
