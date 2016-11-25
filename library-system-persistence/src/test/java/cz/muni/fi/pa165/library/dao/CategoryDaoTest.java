@@ -56,16 +56,19 @@ public class CategoryDaoTest extends AbstractTestNGSpringContextTests {
         dbBook1.setName("Book Name 1");
         dbBook1.setIsbn("1L");
         dbBook1.setAuthor("AB");
+        bookDao.create(dbBook1);
 
         dbBook2 = new Book();
         dbBook2.setName("Very Long Long Long Long Long Book Name 2");
         dbBook2.setIsbn("2L");
         dbBook2.setAuthor("CD");
+        bookDao.create(dbBook2);
 
         dbBook3 = new Book();
         dbBook3.setName("Light Damaged Book Name 3");
         dbBook3.setIsbn("3L");
         dbBook3.setAuthor("EF");
+        bookDao.create(dbBook3);
 
         category1 = new Category();
         category1.setName("category1Name");

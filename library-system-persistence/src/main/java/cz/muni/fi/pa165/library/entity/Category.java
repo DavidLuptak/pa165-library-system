@@ -23,7 +23,7 @@ public class Category {
     @Column(unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany
     private List<Book> books;
 
     public Category() {
