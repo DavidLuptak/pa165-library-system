@@ -46,6 +46,13 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
     private Loan loan;
     private BookCopy bookCopy;
 
+    private Loan returnedLoan1;
+    private Loan returnedLoan2;
+    private Loan returnedLoan3;
+    private Loan notReturnedLoan1;
+    private Loan notReturnedLoan2;
+    private Loan notReturnedLoan3;
+
     @BeforeClass
     public void initMockito() {
         MockitoAnnotations.initMocks(this);
@@ -61,6 +68,31 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
         bookCopy.setId(1L);
         loan = new Loan(user, bookCopy, new Date());
         loan.setId(1L);
+
+        //
+        returnedLoan1 = new Loan();
+        returnedLoan1.setLoanDate(new Date(5));
+        returnedLoan1.setReturnDate(new Date( 6));
+        returnedLoan2 = new Loan();
+        returnedLoan2.setLoanDate(new Date(3));
+        returnedLoan2.setReturnDate(new Date( 4));
+        returnedLoan3 = new Loan();
+        returnedLoan3.setLoanDate(new Date(10));
+        returnedLoan3.setReturnDate(new Date( 11));
+
+        notReturnedLoan1 = new Loan();
+        notReturnedLoan1.setLoanDate(new Date(5));
+        notReturnedLoan2 = new Loan();
+        notReturnedLoan2.setLoanDate(new Date(3));
+        notReturnedLoan3 = new Loan();
+        notReturnedLoan3.setLoanDate(new Date(10));
+
+        user.addLoan(returnedLoan1);
+        user.addLoan(notReturnedLoan1);
+        user.addLoan(returnedLoan2);
+        user.addLoan(notReturnedLoan2);
+        user.addLoan(returnedLoan3);
+        user.addLoan(notReturnedLoan3);
     }
 
     @BeforeMethod(dependsOnMethods = "initEntities")
@@ -70,7 +102,9 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
         when(loanDao.findById(2L)).thenReturn(null);
 
         // findByUser
-        when(loanDao.findByUser(user)).thenReturn(Arrays.asList(loan));
+        when(loanDao.findByUser(user)).thenReturn(Arrays.asList(
+                returnedLoan1, notReturnedLoan1,returnedLoan2,
+                notReturnedLoan2,returnedLoan3,notReturnedLoan3));
 
         // findAll
         when(loanDao.findAll()).thenReturn(Arrays.asList(loan));
@@ -157,9 +191,7 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
     @Test
     public void testFindByUser() {
-        List<Loan> loans = new ArrayList<>();
-        loans.add(loan);
-        assertEquals(loanService.findByUser(user).size(), loans.size());
+        assertEquals(loanService.findByUser(user).size(), 6);
         verify(loanDao).findByUser(user);
     }
 
@@ -171,19 +203,37 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
     @Test
     public void testFindAll() {
-        List<Loan> loans = new ArrayList<>();
-        loans.add(loan);
-        assertEquals(loanService.findAll().size(), loans.size());
+        assertEquals(loanService.findAll().size(), 1);
         verify(loanDao).findAll();
     }
 
     @Test
     public void testFindNotReturnedUserLoans(){
+        List<Loan> found = loanService.findNotReturnedUserLoans(user);
+        assertEquals(found.size(), 3);
+        assertEquals(found.get(0),notReturnedLoan2);
+        assertEquals(found.get(1),notReturnedLoan1);
+        assertEquals(found.get(2),notReturnedLoan3);
+    }
 
+    @Test(expectedExceptions = LibrarySystemDataAccessException.class)
+    public void testFindNotReturnedUserLoansByNonExistingUser() {
+        loanService.findByUser(new User());
+        verify(loanDao).findByUser(new User());
     }
     
     @Test
     public void testFindReturnedUserLoans(){
+        List<Loan> found = loanService.findReturnedUserLoans(user);
+        assertEquals(found.size(), 3);
+        assertEquals(found.get(0),returnedLoan2);
+        assertEquals(found.get(1),returnedLoan1);
+        assertEquals(found.get(2),returnedLoan3);
+    }
 
+    @Test(expectedExceptions = LibrarySystemDataAccessException.class)
+    public void testFindReturnedUserLoansByNonExistingUser() {
+        loanService.findByUser(new User());
+        verify(loanDao).findByUser(new User());
     }
 }
