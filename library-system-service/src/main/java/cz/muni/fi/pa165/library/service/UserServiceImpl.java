@@ -25,27 +25,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(User user, String unencryptedPassword) {
+        if(user == null) throw new IllegalArgumentException("user is null");
+        if(unencryptedPassword == null || unencryptedPassword.isEmpty()) throw new IllegalArgumentException("unencryptedPassword is null or empty");
         user.setPasswordHash(createHash(unencryptedPassword));
         userDao.create(user);
     }
 
     @Override
     public User update(User user) {
+        if(user == null) throw new IllegalArgumentException("user is null");
         return userDao.update(user);
     }
 
     @Override
     public void delete(User user) {
+        if(user == null) throw new IllegalArgumentException("user is null");
         userDao.delete(user);
     }
 
     @Override
     public User findById(Long id) {
+        if(id == null) throw new IllegalArgumentException("id is null");
         return userDao.findById(id);
     }
 
     @Override
     public User findByEmail(String email) {
+        if(email == null || email.isEmpty()) throw new IllegalArgumentException("email is null or empty");
         return userDao.findByEmail(email);
     }
 
@@ -56,12 +62,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserRole userRole(User user) {
+        if(user == null) throw new IllegalArgumentException("user is null");
         return user.getUserRole();
     }
 
     @Override
     public boolean authenticate(User user, String unencryptedPassword) {
+        if(user == null) throw new IllegalArgumentException("user is null");
+        if(unencryptedPassword == null || unencryptedPassword.isEmpty()) throw new IllegalArgumentException("unencryptedPassword is null or empty");
         return validatePassword(unencryptedPassword, user.getPasswordHash());
+    }
+
+    @Override
+    public List<User> findUsersWithNotReturnedLoans() {
+        return userDao.findAll().stream()
+                .filter(user -> user.getLoans().stream()
+                        .anyMatch(loan -> !loan.isReturned()))
+                .collect(Collectors.toList());
     }
 
     //see  https://crackstation.net/hashing-security.htm#javasourcecode
@@ -128,13 +145,5 @@ public class UserServiceImpl implements UserService {
         String hex = bi.toString(16);
         int paddingLength = (array.length * 2) - hex.length();
         return paddingLength > 0 ? String.format("%0" + paddingLength + "d", 0) + hex : hex;
-    }
-
-    @Override
-    public List<User> findUsersWithNotReturnedLoans() {
-        return userDao.findAll().stream()
-                .filter(user -> user.getLoans().stream()
-                        .anyMatch(loan -> !loan.isReturned()))
-                .collect(Collectors.toList());
     }
 }

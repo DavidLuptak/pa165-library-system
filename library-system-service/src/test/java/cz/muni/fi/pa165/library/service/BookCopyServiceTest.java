@@ -159,7 +159,7 @@ public class BookCopyServiceTest extends AbstractTransactionalTestNGSpringContex
         verify(bookCopyDao).findByBook(book1);
     }
 
-    @Test
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testFindByNullBook() {
         assertEquals(bookCopyService.findByBook(null), Arrays.asList());
         verify(bookCopyDao).findByBook(null);

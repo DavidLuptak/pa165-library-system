@@ -260,7 +260,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         assertDeepEquals(foundUser, userPersistedA);
     }
 
-    @Test
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void testFindByIdNull() {
         userService.findById(null);
     }

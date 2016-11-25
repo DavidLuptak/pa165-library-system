@@ -20,26 +20,31 @@ public class BookCopyServiceImpl implements BookCopyService {
 
     @Override
     public void create(BookCopy bookCopy) {
+        if(bookCopy == null) throw new IllegalArgumentException("bookCopy is null");
         bookCopyDao.create(bookCopy);
     }
 
     @Override
     public BookCopy update(BookCopy bookCopy) {
+        if(bookCopy == null) throw new IllegalArgumentException("bookCopy is null");
         return bookCopyDao.update(bookCopy);
     }
 
     @Override
     public void delete(BookCopy bookCopy) {
+        if(bookCopy == null) throw new IllegalArgumentException("bookCopy is null");
         bookCopyDao.delete(bookCopy);
     }
 
     @Override
     public BookCopy findById(Long id) {
+        if(id == null) throw new IllegalArgumentException("id is null");
         return bookCopyDao.findById(id);
     }
 
     @Override
     public List<BookCopy> findByBook(Book book) {
+        if(book == null) throw new IllegalArgumentException("book is null");
         return bookCopyDao.findByBook(book);
     }
 }

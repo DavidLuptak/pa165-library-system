@@ -19,26 +19,31 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void create(Category category) {
+        if(category == null) throw new IllegalArgumentException("category is null");
         categoryDao.create(category);
     }
 
     @Override
     public Category update(Category category) {
+        if(category == null) throw new IllegalArgumentException("category is null");
         return categoryDao.update(category);
     }
 
     @Override
     public void delete(Category category) {
+        if(category == null) throw new IllegalArgumentException("category is null");
         categoryDao.delete(category);
     }
 
     @Override
     public Category findById(Long id) {
+        if(id == null) throw new IllegalArgumentException("id is null");
         return categoryDao.findById(id);
     }
 
     @Override
     public Category findByName(String name) {
+        if(name == null || name.isEmpty()) throw new IllegalArgumentException("name is null or empty");
         return categoryDao.findByName(name);
     }
 
