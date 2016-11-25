@@ -11,14 +11,12 @@ import cz.muni.fi.pa165.library.enums.UserRole;
 import cz.muni.fi.pa165.library.exception.LibrarySystemDataAccessException;
 import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -72,13 +70,13 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
         //
         returnedLoan1 = new Loan();
         returnedLoan1.setLoanDate(new Date(5));
-        returnedLoan1.setReturnDate(new Date( 6));
+        returnedLoan1.setReturnDate(new Date(6));
         returnedLoan2 = new Loan();
         returnedLoan2.setLoanDate(new Date(3));
-        returnedLoan2.setReturnDate(new Date( 4));
+        returnedLoan2.setReturnDate(new Date(4));
         returnedLoan3 = new Loan();
         returnedLoan3.setLoanDate(new Date(10));
-        returnedLoan3.setReturnDate(new Date( 11));
+        returnedLoan3.setReturnDate(new Date(11));
 
         notReturnedLoan1 = new Loan();
         notReturnedLoan1.setLoanDate(new Date(5));
@@ -103,32 +101,29 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
         // findByUser
         when(loanDao.findByUser(user)).thenReturn(Arrays.asList(
-                returnedLoan1, notReturnedLoan1,returnedLoan2,
-                notReturnedLoan2,returnedLoan3,notReturnedLoan3));
+                returnedLoan1, notReturnedLoan1, returnedLoan2,
+                notReturnedLoan2, returnedLoan3, notReturnedLoan3));
 
         // findAll
         when(loanDao.findAll()).thenReturn(Arrays.asList(loan));
 
         // create
-        doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                Object argument = invocation.getArguments()[0];
-                if (argument == null) {
-                    throw new IllegalArgumentException("Argument is null.");
-                }
-
-                Loan loan = (Loan) argument;
-                if (loan.getUser() == null) {
-                    throw new LibrarySystemDataAccessException("User is null.");
-                }
-                if (loan.getBookCopy() == null) {
-                    throw new LibrarySystemDataAccessException("BookCopy is null.");
-                }
-
-                loan.setId(1L);
-                return null;
+        doAnswer((InvocationOnMock invocation) -> {
+            Object argument = invocation.getArguments()[0];
+            if (argument == null) {
+                throw new IllegalArgumentException("Argument is null.");
             }
+
+            Loan loan = (Loan) argument;
+            if (loan.getUser() == null) {
+                throw new LibrarySystemDataAccessException("User is null.");
+            }
+            if (loan.getBookCopy() == null) {
+                throw new LibrarySystemDataAccessException("BookCopy is null.");
+            }
+
+            loan.setId(1L);
+            return null;
         }).when(loanDao).create(any(Loan.class));
 
         // update
@@ -208,12 +203,12 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
     }
 
     @Test
-    public void testFindNotReturnedUserLoans(){
+    public void testFindNotReturnedUserLoans() {
         List<Loan> found = loanService.findNotReturnedUserLoans(user);
         assertEquals(found.size(), 3);
-        assertEquals(found.get(0),notReturnedLoan2);
-        assertEquals(found.get(1),notReturnedLoan1);
-        assertEquals(found.get(2),notReturnedLoan3);
+        assertEquals(found.get(0), notReturnedLoan2);
+        assertEquals(found.get(1), notReturnedLoan1);
+        assertEquals(found.get(2), notReturnedLoan3);
     }
 
     @Test(expectedExceptions = LibrarySystemDataAccessException.class)
@@ -221,14 +216,14 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
         loanService.findByUser(new User());
         verify(loanDao).findByUser(new User());
     }
-    
+
     @Test
-    public void testFindReturnedUserLoans(){
+    public void testFindReturnedUserLoans() {
         List<Loan> found = loanService.findReturnedUserLoans(user);
         assertEquals(found.size(), 3);
-        assertEquals(found.get(0),returnedLoan2);
-        assertEquals(found.get(1),returnedLoan1);
-        assertEquals(found.get(2),returnedLoan3);
+        assertEquals(found.get(0), returnedLoan2);
+        assertEquals(found.get(1), returnedLoan1);
+        assertEquals(found.get(2), returnedLoan3);
     }
 
     @Test(expectedExceptions = LibrarySystemDataAccessException.class)

@@ -26,7 +26,7 @@ public interface BookFacade {
      *
      * @param bookDTO to be updated
      * @throws IllegalArgumentException if bookDTO is null
-     * @throws NoEntityFoundException if book cant be retrieved from database
+     * @throws NoEntityFoundException   if book cant be retrieved from database
      */
     void update(BookDTO bookDTO);
 
@@ -35,7 +35,7 @@ public interface BookFacade {
      *
      * @param bookId book id
      * @throws IllegalArgumentException if bookId is null
-     * @throws NoEntityFoundException if book cant be retrieved from database
+     * @throws NoEntityFoundException   if book cant be retrieved from database
      */
     void delete(Long bookId);
 
@@ -45,7 +45,7 @@ public interface BookFacade {
      * @param author searched author
      * @return found books
      * @throws IllegalArgumentException if author is null or empty
-     * @throws NoEntityFoundException if no books found for author
+     * @throws NoEntityFoundException   if no books found for author
      */
     List<BookDTO> findByAuthor(String author);
 
@@ -55,7 +55,7 @@ public interface BookFacade {
      * @param id book id
      * @return book or null
      * @throws IllegalArgumentException if id is null
-     * @throws NoEntityFoundException if book cant be retrieved from database
+     * @throws NoEntityFoundException   if book cant be retrieved from database
      */
     BookDTO findById(Long id);
 
@@ -65,7 +65,7 @@ public interface BookFacade {
      * @param name book name
      * @return list of discovered books
      * @throws IllegalArgumentException if name is null or empty
-     * @throws NoEntityFoundException if no books found for name
+     * @throws NoEntityFoundException   if no books found for name
      */
     List<BookDTO> findByName(String name);
 

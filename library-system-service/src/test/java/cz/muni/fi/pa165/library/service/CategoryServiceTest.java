@@ -7,7 +7,6 @@ import cz.muni.fi.pa165.library.entity.Category;
 import cz.muni.fi.pa165.library.exception.LibrarySystemDataAccessException;
 import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.annotations.BeforeClass;
@@ -74,22 +73,20 @@ public class CategoryServiceTest extends AbstractTransactionalTestNGSpringContex
         when(categoryDao.findAll()).thenReturn(Arrays.asList(category1, category2));
 
         // create
-        doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                Object argument = invocation.getArguments()[0];
-                if (argument == null) {
-                    throw new IllegalArgumentException("Argument is null.");
-                }
-
-                Category category = (Category) argument;
-                if (category.getName() == null) {
-                    throw new LibrarySystemDataAccessException("Category is null.");
-                }
-
-                category.setId(1L);
-                return null;
+        doAnswer((InvocationOnMock invocation) -> {
+            Object argument = invocation.getArguments()[0];
+            if (argument == null) {
+                throw new IllegalArgumentException("Argument is null.");
             }
+
+            Category category = (Category) argument;
+            if (category.getName() == null) {
+                throw new LibrarySystemDataAccessException("Category is null.");
+            }
+
+            category.setId(1L);
+            return null;
+
         }).when(categoryDao).create(any(Category.class));
 
         // update

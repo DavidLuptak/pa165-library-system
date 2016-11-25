@@ -162,7 +162,7 @@ public class LoanFacadeImpl implements LoanFacade {
         return user;
     }
 
-    private BookCopy checkNullAndExistenceOfBookCopy(Long id){
+    private BookCopy checkNullAndExistenceOfBookCopy(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("BookCopy id cannot be null.");
         }

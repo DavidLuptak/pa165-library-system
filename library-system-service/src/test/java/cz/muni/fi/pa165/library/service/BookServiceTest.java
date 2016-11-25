@@ -10,7 +10,6 @@ import cz.muni.fi.pa165.library.exception.LibrarySystemDataAccessException;
 import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
 import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.annotations.BeforeClass;
@@ -85,28 +84,26 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
         when(bookDao.findAll()).thenReturn(Arrays.asList(book1, book2));
 
         // create
-        doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                Object argument = invocation.getArguments()[0];
-                if (argument == null) {
-                    throw new IllegalArgumentException("Argument is null.");
-                }
-
-                Book book = (Book) argument;
-                if (book.getName() == null) {
-                    throw new LibraryDAOException("Name is null.");
-                }
-                if (book.getAuthor() == null) {
-                    throw new LibraryDAOException("Author is null.");
-                }
-                if (book.getIsbn() == null) {
-                    throw new LibraryDAOException("ISBN is null.");
-                }
-
-                book.setId(1L);
-                return null;
+        doAnswer((InvocationOnMock invocation) -> {
+            Object argument = invocation.getArguments()[0];
+            if (argument == null) {
+                throw new IllegalArgumentException("Argument is null.");
             }
+
+            Book book = (Book) argument;
+            if (book.getName() == null) {
+                throw new LibrarySystemDataAccessException("Name is null.");
+            }
+            if (book.getAuthor() == null) {
+                throw new LibrarySystemDataAccessException("Author is null.");
+            }
+            if (book.getIsbn() == null) {
+                throw new LibrarySystemDataAccessException("ISBN is null.");
+            }
+
+            book.setId(1L);
+            return null;
+
         }).when(bookDao).create(any(Book.class));
 
         // update
