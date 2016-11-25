@@ -7,7 +7,9 @@ import cz.muni.fi.pa165.library.exception.LibrarySystemDataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Dávid Lupták
@@ -89,5 +91,28 @@ public class LoanServiceImpl implements LoanService {
         }
     }
 
+    @Override
+    public List<Loan> findNotReturnedUserLoans(User user) {
+        try {
+            return loanDao.findByUser(user).stream()
+                    .filter(loan -> !loan.isReturned())
+                    .sorted((l1,l2) -> l1.getLoanDate().compareTo(l2.getLoanDate()))
+                    .collect(Collectors.toList());
 
+        } catch (IllegalArgumentException ex) {
+            throw new LibrarySystemDataAccessException("Error during loan find all.", ex);
+        }
+    }
+
+    @Override
+    public List<Loan> findReturnedUserLoans(User user) {
+        try {
+            return loanDao.findByUser(user).stream()
+                    .filter(loan -> loan.isReturned())
+                    .sorted((l1,l2) -> l1.getLoanDate().compareTo(l2.getLoanDate()))
+                    .collect(Collectors.toList());
+        }catch (IllegalArgumentException ex) {
+            throw new LibrarySystemDataAccessException("Error during loan find all.", ex);
+        }
+    }
 }

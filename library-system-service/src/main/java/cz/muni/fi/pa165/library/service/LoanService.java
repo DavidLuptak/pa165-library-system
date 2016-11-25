@@ -68,4 +68,10 @@ public interface LoanService {
      * @throws LibrarySystemDataAccessException if some data access error occurs
      */
     List<Loan> findAll();
+
+
+    List<Loan> findNotReturnedUserLoans(User user);
+
+    List<Loan> findReturnedUserLoans(User user);
+
 }
