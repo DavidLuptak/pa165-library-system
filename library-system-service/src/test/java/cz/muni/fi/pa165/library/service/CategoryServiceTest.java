@@ -100,6 +100,11 @@ public class CategoryServiceTest extends AbstractTransactionalTestNGSpringContex
         verify(categoryDao).create(category1);
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCreateNull(){
+        categoryService.create(null);
+    }
+
     @Test
     public void testCreateNoBook() {
         categoryService.create(category2);
@@ -118,16 +123,31 @@ public class CategoryServiceTest extends AbstractTransactionalTestNGSpringContex
         assertEquals(updated.getName(), category1.getName());
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testUpdateNull(){
+        categoryService.update(null);
+    }
+
     @Test
     public void testDelete() {
         categoryService.delete(category1);
         verify(categoryDao).delete(category1);
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testDeleteNull(){
+        categoryService.delete(null);
+    }
+
     @Test
     public void testFindById() {
         assertEquals(categoryService.findById(category1.getId()), category1);
         verify(categoryDao).findById(category1.getId());
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindByIdNull(){
+        categoryService.findById(null);
     }
 
     @Test
@@ -140,6 +160,16 @@ public class CategoryServiceTest extends AbstractTransactionalTestNGSpringContex
     public void testFindByName() {
         assertEquals(categoryService.findByName(category1.getName()), category1);
         verify(categoryDao).findByName(category1.getName());
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindByNameNull(){
+        categoryService.findByName(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindByEmptyName(){
+        categoryService.findByName("");
     }
 
     @Test

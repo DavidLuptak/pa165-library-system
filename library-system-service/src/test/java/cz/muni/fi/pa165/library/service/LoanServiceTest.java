@@ -150,6 +150,11 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
         loanService.create(loan);
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCreateNull(){
+        loanService.create(null);
+    }
+
     @Test
     public void testUpdate() {
         Loan updated = loanService.update(loan);
@@ -166,16 +171,31 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
         assertEquals(updated.getLoanDate(), loan.getLoanDate());
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testUpdateNull(){
+        loanService.update(null);
+    }
+
     @Test
     public void testDelete() {
         loanService.delete(loan);
         verify(loanDao).delete(loan);
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testDeleteNull(){
+        loanService.delete(null);
+    }
+
     @Test
     public void testFindById() {
         assertSame(loanService.findById(loan.getId()), loan);
         verify(loanDao).findById(loan.getId());
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindByIdNull(){
+        loanService.findById(null);
     }
 
     @Test
@@ -188,6 +208,11 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
     public void testFindByUser() {
         assertEquals(loanService.findByUser(user).size(), 6);
         verify(loanDao).findByUser(user);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindByUserNull(){
+        loanService.findByUser(null);
     }
 
     @Test(expectedExceptions = LibrarySystemDataAccessException.class)
