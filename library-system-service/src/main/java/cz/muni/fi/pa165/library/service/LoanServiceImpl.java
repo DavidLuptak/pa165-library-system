@@ -25,12 +25,8 @@ public class LoanServiceImpl implements LoanService {
         if (loan == null) {
             throw new IllegalArgumentException("Loan cannot be null.");
         }
+        loanDao.create(loan);
 
-        try {
-            loanDao.create(loan);
-        } catch (IllegalArgumentException ex) {
-            throw new LibrarySystemDataAccessException("Error during loan create.", ex);
-        }
     }
 
     @Override
@@ -38,12 +34,7 @@ public class LoanServiceImpl implements LoanService {
         if (loan == null) {
             throw new IllegalArgumentException("Loan cannot be null.");
         }
-
-        try {
-            return loanDao.update(loan);
-        } catch (IllegalArgumentException ex) {
-            throw new LibrarySystemDataAccessException("Error during loan update.", ex);
-        }
+        return loanDao.update(loan);
     }
 
     @Override
@@ -52,20 +43,15 @@ public class LoanServiceImpl implements LoanService {
             throw new IllegalArgumentException("Loan cannot be null.");
         }
 
-        try {
-            loanDao.delete(loan);
-        } catch (IllegalArgumentException ex) {
-            throw new LibrarySystemDataAccessException("Error during loan delete.", ex);
-        }
+        loanDao.delete(loan);
     }
 
     @Override
     public Loan findById(Long id) {
-        try {
-            return loanDao.findById(id);
-        } catch (IllegalArgumentException ex) {
-            throw new LibrarySystemDataAccessException("Error during loan find.", ex);
+        if (id == null) {
+            throw new IllegalArgumentException("User cannot be null.");
         }
+        return loanDao.findById(id);
     }
 
     @Override
@@ -73,47 +59,37 @@ public class LoanServiceImpl implements LoanService {
         if (user == null) {
             throw new IllegalArgumentException("User cannot be null.");
         }
-
-        try {
-            return loanDao.findByUser(user);
-        } catch (IllegalArgumentException ex) {
-            throw new LibrarySystemDataAccessException("Error during loan find by user.", ex);
-        }
+        return loanDao.findByUser(user);
     }
 
     @Override
     public List<Loan> findAll() {
-        try {
-            return loanDao.findAll();
-        } catch (IllegalArgumentException ex) {
-            throw new LibrarySystemDataAccessException("Error during loan find all.", ex);
-        }
+        return loanDao.findAll();
+
     }
 
     @Override
     public List<Loan> findNotReturnedUserLoans(User user) {
-        try {
-            return loanDao.findByUser(user).stream()
-                    .filter(loan -> !loan.isReturned())
-                    .sorted((l1, l2) -> l1.getLoanDate().compareTo(l2.getLoanDate()))
-                    .collect(Collectors.toList());
-
-        } catch (IllegalArgumentException ex) {
-            throw new LibrarySystemDataAccessException("Error during loan findNotReturnedUserLoans.", ex);
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null.");
         }
+        return loanDao.findByUser(user).stream()
+                .filter(loan -> !loan.isReturned())
+                .sorted((l1, l2) -> l1.getLoanDate().compareTo(l2.getLoanDate()))
+                .collect(Collectors.toList());
+
+
     }
 
     @Override
     public List<Loan> findReturnedUserLoans(User user) {
-        try {
-            return loanDao.findByUser(user).stream()
-                    .filter(loan -> loan.isReturned())
-                    .sorted((l1, l2) -> l1.getLoanDate().compareTo(l2.getLoanDate()))
-                    .collect(Collectors.toList());
-
-        } catch (IllegalArgumentException ex) {
-            throw new LibrarySystemDataAccessException("Error during loan findNotReturnedUserLoans.", ex);
-
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null.");
         }
+        return loanDao.findByUser(user).stream()
+                .filter(loan -> loan.isReturned())
+                .sorted((l1, l2) -> l1.getLoanDate().compareTo(l2.getLoanDate()))
+                .collect(Collectors.toList());
     }
 }
+
