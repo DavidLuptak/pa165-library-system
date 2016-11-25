@@ -76,6 +76,8 @@ public interface LoanFacade {
      *
      * @param userId id of user for whom the loans to be found
      * @return user's loans which are not returned
+     * @throws IllegalArgumentException if user id is null
+     * @throws NoEntityFoundException   if user does not exist
      */
     List<LoanDTO> findNotReturnedUserLoans(Long userId);
 
@@ -84,6 +86,8 @@ public interface LoanFacade {
      *
      * @param userId id of user for whom the loans to be found
      * @return user's loans which are returned
+     * @throws IllegalArgumentException if user id is null
+     * @throws NoEntityFoundException   if user does not exist
      */
     List<LoanDTO> findReturnedUserLoans(Long userId);
 

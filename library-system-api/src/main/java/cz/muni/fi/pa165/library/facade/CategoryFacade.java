@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.library.facade;
 
 import cz.muni.fi.pa165.library.dto.CategoryDTO;
 import cz.muni.fi.pa165.library.dto.CategoryNewDTO;
+import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ public interface CategoryFacade {
      *
      * @param categoryNewDTO to be created
      * @return id of the added category
+     * @throws IllegalArgumentException if categoryNewDTO is null
      */
     Long create(CategoryNewDTO categoryNewDTO);
 
@@ -25,6 +27,8 @@ public interface CategoryFacade {
      * Updates already existing CategoryDTO
      *
      * @param categoryDTO to be updated
+     * @throws IllegalArgumentException if categoryDTO is null
+     * @throws NoEntityFoundException if category not found in database
      */
     void update(CategoryDTO categoryDTO);
 
@@ -32,6 +36,8 @@ public interface CategoryFacade {
      * Deletes the CategoryDTO
      *
      * @param id of the category to be deleted
+     * @throws IllegalArgumentException if id is null
+     * @throws NoEntityFoundException if category not found in database
      */
     void delete(Long id);
 
@@ -40,6 +46,8 @@ public interface CategoryFacade {
      *
      * @param id of the category
      * @return the categoryDTO with the respective id
+     * @throws IllegalArgumentException if id is null
+     * @throws NoEntityFoundException if category not found in database
      */
     CategoryDTO findById(Long id);
 
@@ -49,6 +57,7 @@ public interface CategoryFacade {
      * @param name of the category
      * @return the category with the respective name or null if such category does not exist
      * @throws IllegalArgumentException if name is null or empty
+     * @throws NoEntityFoundException if category not found in database
      */
     CategoryDTO findByName(String name);
 
