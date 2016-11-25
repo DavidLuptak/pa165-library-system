@@ -3,7 +3,8 @@ package cz.muni.fi.pa165.library.dto;
 import cz.muni.fi.pa165.library.enums.BookState;
 
 /**
- * Created by Martin on 24.11.2016.
+ * @author Martin
+ * @version 24.11.2016
  */
 public class BookCopyNewDTO {
     private Long id;

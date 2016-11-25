@@ -25,7 +25,7 @@ public class UserDaoImpl implements UserDao {
         try {
             em.persist(user);
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -34,7 +34,7 @@ public class UserDaoImpl implements UserDao {
         try {
             return em.merge(user);
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -43,7 +43,7 @@ public class UserDaoImpl implements UserDao {
         try {
             em.remove(findById(user.getId()));
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -52,7 +52,7 @@ public class UserDaoImpl implements UserDao {
         try {
             return em.find(User.class, id);
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -69,7 +69,7 @@ public class UserDaoImpl implements UserDao {
                 return null;
             }
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -78,7 +78,7 @@ public class UserDaoImpl implements UserDao {
         try {
             return em.createQuery("SELECT u FROM User u", User.class).getResultList();
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 

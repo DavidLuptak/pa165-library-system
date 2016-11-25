@@ -106,7 +106,7 @@ public class BookCopyServiceTest extends AbstractTransactionalTestNGSpringContex
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testCreateNullBookCopy(){
+    public void testCreateNullBookCopy() {
         bookCopyService.create(null);
     }
 
@@ -139,8 +139,8 @@ public class BookCopyServiceTest extends AbstractTransactionalTestNGSpringContex
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testUpdateNullBookCopy(){
-        BookCopy updated = bookCopyService.update(null);
+    public void testUpdateNullBookCopy() {
+        bookCopyService.update(null);
     }
 
     @Test
@@ -150,7 +150,7 @@ public class BookCopyServiceTest extends AbstractTransactionalTestNGSpringContex
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testDeleteNullBookCopy(){
+    public void testDeleteNullBookCopy() {
         bookCopyService.delete(null);
     }
 
@@ -167,7 +167,7 @@ public class BookCopyServiceTest extends AbstractTransactionalTestNGSpringContex
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testFindByNullId(){
+    public void testFindByNullId() {
         bookCopyService.findById(null);
     }
 

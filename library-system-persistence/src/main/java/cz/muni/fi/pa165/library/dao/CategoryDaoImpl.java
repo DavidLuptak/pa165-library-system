@@ -26,7 +26,7 @@ public class CategoryDaoImpl implements CategoryDao {
         try {
             em.persist(category);
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -35,7 +35,7 @@ public class CategoryDaoImpl implements CategoryDao {
         try {
             return em.merge(category);
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -44,7 +44,7 @@ public class CategoryDaoImpl implements CategoryDao {
         try {
             em.remove(findById(category.getId()));
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -53,7 +53,7 @@ public class CategoryDaoImpl implements CategoryDao {
         try {
             return em.find(Category.class, id);
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -70,7 +70,7 @@ public class CategoryDaoImpl implements CategoryDao {
                 return null;
             }
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -79,7 +79,7 @@ public class CategoryDaoImpl implements CategoryDao {
         try {
             return em.createQuery("SELECT c FROM Category c", Category.class).getResultList();
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 

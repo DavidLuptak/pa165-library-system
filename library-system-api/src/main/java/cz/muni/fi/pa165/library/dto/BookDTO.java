@@ -1,7 +1,5 @@
 package cz.muni.fi.pa165.library.dto;
 
-import cz.muni.fi.pa165.library.enums.BookState;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

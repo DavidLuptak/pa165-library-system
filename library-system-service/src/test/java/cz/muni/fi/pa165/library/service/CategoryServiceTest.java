@@ -101,7 +101,7 @@ public class CategoryServiceTest extends AbstractTransactionalTestNGSpringContex
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testCreateNull(){
+    public void testCreateNull() {
         categoryService.create(null);
     }
 
@@ -124,7 +124,7 @@ public class CategoryServiceTest extends AbstractTransactionalTestNGSpringContex
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testUpdateNull(){
+    public void testUpdateNull() {
         categoryService.update(null);
     }
 
@@ -135,7 +135,7 @@ public class CategoryServiceTest extends AbstractTransactionalTestNGSpringContex
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testDeleteNull(){
+    public void testDeleteNull() {
         categoryService.delete(null);
     }
 
@@ -146,7 +146,7 @@ public class CategoryServiceTest extends AbstractTransactionalTestNGSpringContex
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testFindByIdNull(){
+    public void testFindByIdNull() {
         categoryService.findById(null);
     }
 
@@ -163,12 +163,12 @@ public class CategoryServiceTest extends AbstractTransactionalTestNGSpringContex
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testFindByNameNull(){
+    public void testFindByNameNull() {
         categoryService.findByName(null);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testFindByEmptyName(){
+    public void testFindByEmptyName() {
         categoryService.findByName("");
     }
 

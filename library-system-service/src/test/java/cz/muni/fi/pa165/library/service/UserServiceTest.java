@@ -15,7 +15,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.persistence.EntityExistsException;
-import javax.validation.ConstraintViolationException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -91,7 +90,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         userToBePersisted = new User.UserBuilder("ab@ab.com")
                 .setFirstName("New name")
                 .setLastName("New surname")
-                .setAddress("Right here righ now")
+                .setAddress("Right here right now")
                 .setPasswordHash("abbaa")
                 .build();
 

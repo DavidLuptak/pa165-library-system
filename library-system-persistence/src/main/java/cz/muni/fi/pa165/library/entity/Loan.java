@@ -40,7 +40,6 @@ public class Loan {
     private BookState bookState;
 
 
-
     public Loan() {
     }
 

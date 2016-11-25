@@ -151,7 +151,7 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testCreateNull(){
+    public void testCreateNull() {
         loanService.create(null);
     }
 
@@ -172,7 +172,7 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testUpdateNull(){
+    public void testUpdateNull() {
         loanService.update(null);
     }
 
@@ -183,7 +183,7 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testDeleteNull(){
+    public void testDeleteNull() {
         loanService.delete(null);
     }
 
@@ -194,7 +194,7 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testFindByIdNull(){
+    public void testFindByIdNull() {
         loanService.findById(null);
     }
 
@@ -211,7 +211,7 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testFindByUserNull(){
+    public void testFindByUserNull() {
         loanService.findByUser(null);
     }
 
@@ -237,7 +237,7 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testFindNotReturnedUserLoansNullUser(){
+    public void testFindNotReturnedUserLoansNullUser() {
         loanService.findNotReturnedUserLoans(null);
     }
 
@@ -257,7 +257,7 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testtestFindReturnedUserLoansNullUser(){
+    public void testFindReturnedUserLoansNullUser() {
         loanService.findReturnedUserLoans(null);
     }
 

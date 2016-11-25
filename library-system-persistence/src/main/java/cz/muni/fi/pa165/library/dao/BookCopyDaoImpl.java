@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.library.dao;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.BookCopy;
 import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -27,9 +26,8 @@ public class BookCopyDaoImpl implements BookCopyDao {
 
         try {
             em.persist(bookCopy);
-        }
-        catch (Exception e){
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -38,7 +36,7 @@ public class BookCopyDaoImpl implements BookCopyDao {
         try {
             return em.merge(bookCopy);
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -47,7 +45,7 @@ public class BookCopyDaoImpl implements BookCopyDao {
         try {
             em.remove(findById(bookCopy.getId()));
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -56,7 +54,7 @@ public class BookCopyDaoImpl implements BookCopyDao {
         try {
             return em.find(BookCopy.class, id);
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -69,7 +67,7 @@ public class BookCopyDaoImpl implements BookCopyDao {
             return em.createQuery("SELECT b FROM BookCopy b where b.book = :book", BookCopy.class)
                     .setParameter("book", book).getResultList();
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
 
     }

@@ -24,9 +24,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertNull;
+import static org.testng.Assert.*;
 
 /**
  * @author Martin
@@ -66,7 +64,7 @@ public class BookCopyFacadeTest extends AbstractTransactionalTestNGSpringContext
     private BookCopyDTO bookCopyDTO;
 
     @BeforeMethod
-    public void initEntities(){
+    public void initEntities() {
         book1 = new Book("bookName1", "bookAuthor1", "1111111111");
         book1.setId(1L);
         book2 = new Book("bookName2", "bookAuthor1", "2222222222");
@@ -93,7 +91,7 @@ public class BookCopyFacadeTest extends AbstractTransactionalTestNGSpringContext
 
     @Test
     public void testCreate() {
-        bookCopyNewDTO = new BookCopyNewDTO( );
+        bookCopyNewDTO = new BookCopyNewDTO();
         bookCopyNewDTO.setBook(bookDTO);
         bookCopyNewDTO.setBookState(BookState.NEW);
         bookCopyFacade.create(bookCopyNewDTO);
@@ -119,9 +117,9 @@ public class BookCopyFacadeTest extends AbstractTransactionalTestNGSpringContext
 
         BookCopy entity = bookCopyArgumentCaptor.getValue();
 
-        assertEquals(entity.getBookState(),BookState.LIGHT_DAMAGE);
-        assertEquals(entity.getBook().getId(),bookDTO.getId());
-        assertEquals(entity.getId(),bookCopy1.getId());
+        assertEquals(entity.getBookState(), BookState.LIGHT_DAMAGE);
+        assertEquals(entity.getBook().getId(), bookDTO.getId());
+        assertEquals(entity.getId(), bookCopy1.getId());
     }
 
     @Test
@@ -138,7 +136,7 @@ public class BookCopyFacadeTest extends AbstractTransactionalTestNGSpringContext
     }
 
     @Test
-    public void testFindByBook(){
+    public void testFindByBook() {
         List<BookCopyDTO> result = bookCopyFacade.findByBook(book1.getId());
         assertNotNull(result);
         assertEquals(result.size(), 2);
@@ -146,13 +144,13 @@ public class BookCopyFacadeTest extends AbstractTransactionalTestNGSpringContext
         assertDeepEquals(bookCopy2, result.get(1));
     }
 
-    private void assertDeepEquals(BookCopy bookCopy1, BookCopyDTO bookCopyDTO){
-        assertEquals(bookCopy1.getBook().getId(),bookCopyDTO.getBook().getId());
-        assertEquals(bookCopy1.getBookState(),bookCopyDTO.getBookState());
+    private void assertDeepEquals(BookCopy bookCopy1, BookCopyDTO bookCopyDTO) {
+        assertEquals(bookCopy1.getBook().getId(), bookCopyDTO.getBook().getId());
+        assertEquals(bookCopy1.getBookState(), bookCopyDTO.getBookState());
     }
 
-    private void assertDeepEquals(BookCopy bookCopy1, BookCopy bookCopy2){
-        assertEquals(bookCopy1.getBook(),bookCopy2.getBook());
-        assertEquals(bookCopy1.getBookState(),bookCopy2.getBookState());
+    private void assertDeepEquals(BookCopy bookCopy1, BookCopy bookCopy2) {
+        assertEquals(bookCopy1.getBook(), bookCopy2.getBook());
+        assertEquals(bookCopy1.getBookState(), bookCopy2.getBookState());
     }
 }

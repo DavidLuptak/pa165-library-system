@@ -25,7 +25,7 @@ public class LoanDaoImpl implements LoanDao {
         try {
             em.persist(loan);
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -34,7 +34,7 @@ public class LoanDaoImpl implements LoanDao {
         try {
             em.remove(findById(loan.getId()));
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -43,7 +43,7 @@ public class LoanDaoImpl implements LoanDao {
         try {
             return em.merge(loan);
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -52,7 +52,7 @@ public class LoanDaoImpl implements LoanDao {
         try {
             return em.find(Loan.class, id);
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -64,7 +64,7 @@ public class LoanDaoImpl implements LoanDao {
             }
             return em.createQuery("SELECT loan FROM Loan loan WHERE loan.user = :user", Loan.class).setParameter("user", user).getResultList();
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -73,7 +73,7 @@ public class LoanDaoImpl implements LoanDao {
         try {
             return em.createQuery("from Loan", Loan.class).getResultList();
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 }

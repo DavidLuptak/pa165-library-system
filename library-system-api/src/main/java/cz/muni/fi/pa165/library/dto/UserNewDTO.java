@@ -5,7 +5,8 @@ import cz.muni.fi.pa165.library.enums.UserRole;
 import java.util.Objects;
 
 /**
- * Created by Martin on 24.11.2016.
+ * @author Martin
+ * @version 24.11.2016
  */
 public class UserNewDTO {
     private Long id;

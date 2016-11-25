@@ -25,7 +25,7 @@ public class BookDaoImpl implements BookDao {
         try {
             em.persist(book);
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -34,7 +34,7 @@ public class BookDaoImpl implements BookDao {
         try {
             return em.merge(book);
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -43,7 +43,7 @@ public class BookDaoImpl implements BookDao {
         try {
             em.remove(findById(book.getId()));
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -52,7 +52,7 @@ public class BookDaoImpl implements BookDao {
         try {
             return em.find(Book.class, id);
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -65,7 +65,7 @@ public class BookDaoImpl implements BookDao {
             return em.createQuery("SELECT b FROM Book b where b.author = :author", Book.class)
                     .setParameter("author", author).getResultList();
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
 
     }
@@ -79,7 +79,7 @@ public class BookDaoImpl implements BookDao {
             return em.createQuery("SELECT b FROM Book b where b.name = :name", Book.class)
                     .setParameter("name", name).getResultList();
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
 
     }
@@ -89,7 +89,7 @@ public class BookDaoImpl implements BookDao {
         try {
             return em.createQuery("SELECT b FROM Book b", Book.class).getResultList();
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 

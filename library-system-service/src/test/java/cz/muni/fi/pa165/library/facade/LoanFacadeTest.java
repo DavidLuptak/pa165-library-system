@@ -149,9 +149,9 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         verify(loanService).update(loanArgumentCaptor.capture());
 
         Loan entity = loanArgumentCaptor.getValue();
-        assertEquals(entity.getId(),loan.getId());
-        assertEquals(entity.getBookState(),BookState.HEAVY_DAMAGE);
-        assertEquals(entity.getLoanDate(),new Date(10));
+        assertEquals(entity.getId(), loan.getId());
+        assertEquals(entity.getBookState(), BookState.HEAVY_DAMAGE);
+        assertEquals(entity.getLoanDate(), new Date(10));
         assertEquals(entity.getReturnDate(), new Date(20));
         assertEquals(entity.getUser().getId(), new Long(1));
         assertEquals(entity.getBookCopy().getId(), new Long(1));

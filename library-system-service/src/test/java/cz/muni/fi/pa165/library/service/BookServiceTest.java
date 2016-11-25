@@ -132,7 +132,7 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testCreateNull(){
+    public void testCreateNull() {
         bookService.create(null);
     }
 
@@ -149,7 +149,7 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testUpdateNull(){
+    public void testUpdateNull() {
         bookService.update(null);
     }
 
@@ -160,7 +160,7 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testDeleteNull(){
+    public void testDeleteNull() {
         bookService.delete(null);
     }
 
@@ -177,7 +177,7 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testFindByNullId(){
+    public void testFindByNullId() {
         bookService.findById(null);
     }
 
@@ -188,12 +188,12 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testFindByNullAuthor(){
+    public void testFindByNullAuthor() {
         bookService.findByAuthor(null);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testFindByEmptyAuthor(){
+    public void testFindByEmptyAuthor() {
         bookService.findByAuthor("");
     }
 
@@ -210,12 +210,12 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testFindByNullName(){
+    public void testFindByNullName() {
         bookService.findByName(null);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testFindByEmptyName(){
+    public void testFindByEmptyName() {
         bookService.findByName("");
     }
 
