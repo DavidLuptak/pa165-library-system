@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.library.service;
 import cz.muni.fi.pa165.library.dao.UserDao;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.enums.UserRole;
+import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKeyFactory;
@@ -29,42 +30,71 @@ public class UserServiceImpl implements UserService {
         if (unencryptedPassword == null || unencryptedPassword.isEmpty())
             throw new IllegalArgumentException("unencryptedPassword is null or empty");
         user.setPasswordHash(createHash(unencryptedPassword));
-        userDao.create(user);
+        try {
+            userDao.create(user);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public User update(User user) {
         if (user == null) throw new IllegalArgumentException("user is null");
-        return userDao.update(user);
+        try {
+            return userDao.update(user);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public void delete(User user) {
         if (user == null) throw new IllegalArgumentException("user is null");
-        userDao.delete(user);
+        try {
+            userDao.delete(user);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public User findById(Long id) {
         if (id == null) throw new IllegalArgumentException("id is null");
-        return userDao.findById(id);
+        try {
+            return userDao.findById(id);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public User findByEmail(String email) {
         if (email == null || email.isEmpty()) throw new IllegalArgumentException("email is null or empty");
-        return userDao.findByEmail(email);
+        try {
+            return userDao.findByEmail(email);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public List<User> findAll() {
-        return userDao.findAll();
+
+        try {
+            return userDao.findAll();
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public UserRole userRole(User user) {
         if (user == null) throw new IllegalArgumentException("user is null");
-        return user.getUserRole();
+        try {
+            return user.getUserRole();
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
@@ -77,10 +107,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findUsersWithNotReturnedLoans() {
-        return userDao.findAll().stream()
-                .filter(user -> user.getLoans().stream()
-                        .anyMatch(loan -> !loan.isReturned()))
-                .collect(Collectors.toList());
+        try {
+            return userDao.findAll().stream()
+                    .filter(user -> user.getLoans().stream()
+                            .anyMatch(loan -> !loan.isReturned()))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     //see  https://crackstation.net/hashing-security.htm#javasourcecode

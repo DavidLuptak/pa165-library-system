@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.library.service;
 import cz.muni.fi.pa165.library.dao.LoanDao;
 import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.entity.User;
+import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -24,7 +25,11 @@ public class LoanServiceImpl implements LoanService {
         if (loan == null) {
             throw new IllegalArgumentException("Loan cannot be null.");
         }
-        loanDao.create(loan);
+        try {
+            loanDao.create(loan);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
 
     }
 
@@ -33,7 +38,11 @@ public class LoanServiceImpl implements LoanService {
         if (loan == null) {
             throw new IllegalArgumentException("Loan cannot be null.");
         }
-        return loanDao.update(loan);
+        try {
+            return loanDao.update(loan);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
@@ -41,8 +50,11 @@ public class LoanServiceImpl implements LoanService {
         if (loan == null) {
             throw new IllegalArgumentException("Loan cannot be null.");
         }
-
-        loanDao.delete(loan);
+        try {
+            loanDao.delete(loan);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
@@ -50,7 +62,11 @@ public class LoanServiceImpl implements LoanService {
         if (id == null) {
             throw new IllegalArgumentException("User cannot be null.");
         }
-        return loanDao.findById(id);
+        try {
+            return loanDao.findById(id);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
@@ -58,13 +74,20 @@ public class LoanServiceImpl implements LoanService {
         if (user == null) {
             throw new IllegalArgumentException("User cannot be null.");
         }
-        return loanDao.findByUser(user);
+        try {
+            return loanDao.findByUser(user);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public List<Loan> findAll() {
-        return loanDao.findAll();
-
+        try {
+            return loanDao.findAll();
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
@@ -72,12 +95,14 @@ public class LoanServiceImpl implements LoanService {
         if (user == null) {
             throw new IllegalArgumentException("User cannot be null.");
         }
-        return loanDao.findByUser(user).stream()
-                .filter(loan -> !loan.isReturned())
-                .sorted((l1, l2) -> l1.getLoanDate().compareTo(l2.getLoanDate()))
-                .collect(Collectors.toList());
-
-
+        try {
+            return loanDao.findByUser(user).stream()
+                    .filter(loan -> !loan.isReturned())
+                    .sorted((l1, l2) -> l1.getLoanDate().compareTo(l2.getLoanDate()))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
@@ -85,10 +110,14 @@ public class LoanServiceImpl implements LoanService {
         if (user == null) {
             throw new IllegalArgumentException("User cannot be null.");
         }
-        return loanDao.findByUser(user).stream()
-                .filter(loan -> loan.isReturned())
-                .sorted((l1, l2) -> l1.getLoanDate().compareTo(l2.getLoanDate()))
-                .collect(Collectors.toList());
+        try {
+            return loanDao.findByUser(user).stream()
+                    .filter(loan -> loan.isReturned())
+                    .sorted((l1, l2) -> l1.getLoanDate().compareTo(l2.getLoanDate()))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 }
 

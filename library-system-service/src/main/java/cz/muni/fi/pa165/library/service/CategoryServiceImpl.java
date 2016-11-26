@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.library.service;
 
 import cz.muni.fi.pa165.library.dao.CategoryDao;
 import cz.muni.fi.pa165.library.entity.Category;
+import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -20,35 +21,59 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void create(Category category) {
         if (category == null) throw new IllegalArgumentException("category is null");
-        categoryDao.create(category);
+        try {
+            categoryDao.create(category);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public Category update(Category category) {
         if (category == null) throw new IllegalArgumentException("category is null");
-        return categoryDao.update(category);
+        try {
+            return categoryDao.update(category);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public void delete(Category category) {
         if (category == null) throw new IllegalArgumentException("category is null");
-        categoryDao.delete(category);
+        try {
+            categoryDao.delete(category);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public Category findById(Long id) {
         if (id == null) throw new IllegalArgumentException("id is null");
-        return categoryDao.findById(id);
+        try {
+            return categoryDao.findById(id);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public Category findByName(String name) {
         if (name == null || name.isEmpty()) throw new IllegalArgumentException("name is null or empty");
-        return categoryDao.findByName(name);
+        try {
+            return categoryDao.findByName(name);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public List<Category> findAll() {
-        return categoryDao.findAll();
+        try {
+            return categoryDao.findAll();
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 }

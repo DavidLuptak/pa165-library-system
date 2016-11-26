@@ -186,7 +186,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         assertEquals((long) userToBePersisted.getId(), newlyPersistedId);
     }
 
-    @Test(expectedExceptions = EntityExistsException.class)
+    @Test(expectedExceptions = LibraryDAOException.class)
     public void testCreateAlreadyPersisted() {
         userService.register(userPersistedA, "bla");
     }
@@ -196,7 +196,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         userService.register(null, "bla");
     }
 
-    @Test(expectedExceptions = EntityExistsException.class)
+    @Test(expectedExceptions = LibraryDAOException.class)
     public void testCreateDuplicateEmail() {
         userToBePersisted.setEmail(alreadyPersistedEmail);
         userService.register(userToBePersisted, "bla");
@@ -235,13 +235,13 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         userService.delete(null);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = LibraryDAOException.class)
     public void testDeleteNonExistingNull() {
         userToBePersisted.setId(null);
         userService.delete(userToBePersisted);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = LibraryDAOException.class)
     public void testDeleteNonExistingId() {
         userToBePersisted.setId(notPersistedId);
         userService.delete(userToBePersisted);

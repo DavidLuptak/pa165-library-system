@@ -23,52 +23,30 @@ public class BookCopyDaoImpl implements BookCopyDao {
 
     @Override
     public void create(BookCopy bookCopy) {
-
-        try {
-            em.persist(bookCopy);
-        } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(), e.getCause());
-        }
+        em.persist(bookCopy);
     }
 
     @Override
     public BookCopy update(BookCopy bookCopy) {
-        try {
-            return em.merge(bookCopy);
-        } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(), e.getCause());
-        }
+        return em.merge(bookCopy);
     }
 
     @Override
     public void delete(BookCopy bookCopy) {
-        try {
-            em.remove(findById(bookCopy.getId()));
-        } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(), e.getCause());
-        }
+        em.remove(findById(bookCopy.getId()));
     }
 
     @Override
     public BookCopy findById(Long id) {
-        try {
-            return em.find(BookCopy.class, id);
-        } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(), e.getCause());
-        }
+        return em.find(BookCopy.class, id);
     }
 
     @Override
     public List<BookCopy> findByBook(Book book) {
-        try {
-            if (book == null) {
-                throw new IllegalArgumentException("Book is not valid");
-            }
-            return em.createQuery("SELECT b FROM BookCopy b where b.book = :book", BookCopy.class)
-                    .setParameter("book", book).getResultList();
-        } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(), e.getCause());
+        if (book == null) {
+            throw new IllegalArgumentException("Book is not valid");
         }
-
+        return em.createQuery("SELECT b FROM BookCopy b where b.book = :book", BookCopy.class)
+                .setParameter("book", book).getResultList();
     }
 }

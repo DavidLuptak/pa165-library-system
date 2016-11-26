@@ -23,65 +23,39 @@ public class CategoryDaoImpl implements CategoryDao {
 
     @Override
     public void create(Category category) {
-        try {
-            em.persist(category);
-        } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(), e.getCause());
-        }
+        em.persist(category);
     }
 
     @Override
     public Category update(Category category) {
-        try {
-            return em.merge(category);
-        } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(), e.getCause());
-        }
+        return em.merge(category);
     }
 
     @Override
     public void delete(Category category) {
-        try {
-            em.remove(findById(category.getId()));
-        } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(), e.getCause());
-        }
+        em.remove(findById(category.getId()));
     }
 
     @Override
     public Category findById(Long id) {
-        try {
-            return em.find(Category.class, id);
-        } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(), e.getCause());
-        }
+        return em.find(Category.class, id);
     }
 
     @Override
     public Category findByName(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Name is not valid");
+        }
         try {
-            if (name == null || name.isEmpty()) {
-                throw new IllegalArgumentException("Name is not valid");
-            }
-            try {
-                return em.createQuery("SELECT c FROM Category c WHERE c.name = :name", Category.class)
-                        .setParameter("name", name).getSingleResult();
-            } catch (NoResultException e) {
-                return null;
-            }
-        } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(), e.getCause());
+            return em.createQuery("SELECT c FROM Category c WHERE c.name = :name", Category.class)
+                    .setParameter("name", name).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
         }
     }
 
     @Override
     public List<Category> findAll() {
-        try {
-            return em.createQuery("SELECT c FROM Category c", Category.class).getResultList();
-        } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(), e.getCause());
-        }
+        return em.createQuery("SELECT c FROM Category c", Category.class).getResultList();
     }
-
-
 }

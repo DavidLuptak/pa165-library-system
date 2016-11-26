@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.library.dao;
 import cz.muni.fi.pa165.library.LibraryApplicationContext;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.enums.UserRole;
-import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -66,31 +65,31 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         userDao.create(user1);
     }
 
-    @Test(expectedExceptions = LibraryDAOException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void testCreateUserWithNullName() throws Exception {
         user1.setFirstName(null);
         userDao.create(user1);
     }
 
-    @Test(expectedExceptions = LibraryDAOException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void testCreateUserWithNullSurName() throws Exception {
         user1.setLastName(null);
         userDao.create(user1);
     }
 
-    @Test(expectedExceptions = LibraryDAOException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void testCreateUserWithNullEmail() throws Exception {
         user1.setEmail(null);
         userDao.create(user1);
     }
 
-    @Test(expectedExceptions = LibraryDAOException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void testCreateUserWithNullAddress() throws Exception {
         user1.setAddress(null);
         userDao.create(user1);
     }
 
-    @Test(expectedExceptions = LibraryDAOException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void testCreateUserWithInvalidEmail() throws Exception {
         user1.setEmail("lalala@");
         userDao.create(user1);
@@ -143,7 +142,7 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         userDao.delete(user1);
     }
 
-    @Test(expectedExceptions = LibraryDAOException.class)
+    @Test(expectedExceptions = NullPointerException.class)
     public void testDeleteNullUser() throws Exception {
         userDao.delete(null);
     }

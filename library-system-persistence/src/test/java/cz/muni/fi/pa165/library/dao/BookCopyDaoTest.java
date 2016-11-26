@@ -7,7 +7,6 @@ import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.enums.UserRole;
-import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -122,7 +121,7 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
         bookCopyDao.create(null);
     }
 
-    @Test(expectedExceptions = LibraryDAOException.class)
+    @Test(expectedExceptions = ConstraintViolationException.class)
     public void testCreateBookCopyWithoutBookSet() {
         bookCopy1.setBook(null);
         bookCopyDao.create(bookCopy1);
@@ -185,7 +184,7 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
         assertEquals(dbBook2, bookCopyDao.findById(dbBookCopy11.getId()).getBook());
     }
 
-    @Test(expectedExceptions = LibraryDAOException.class)
+    @Test(expectedExceptions = NullPointerException.class)
     public void testDeleteNullBookCopy() {
         bookCopyDao.delete(null);
     }

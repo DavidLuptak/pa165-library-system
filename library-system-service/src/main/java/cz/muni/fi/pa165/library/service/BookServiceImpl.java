@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.library.service;
 
 import cz.muni.fi.pa165.library.dao.BookDao;
 import cz.muni.fi.pa165.library.entity.Book;
+import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -19,42 +20,71 @@ public class BookServiceImpl implements BookService {
     @Override
     public void create(Book book) {
         if (book == null) throw new IllegalArgumentException("book is null");
-        bookDao.create(book);
+        try {
+            bookDao.create(book);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public Book update(Book book) {
         if (book == null) throw new IllegalArgumentException("book is null");
-        return bookDao.update(book);
+        try {
+            return bookDao.update(book);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public void delete(Book book) {
         if (book == null) throw new IllegalArgumentException("book is null");
-        bookDao.delete(book);
+        try {
+            bookDao.delete(book);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public Book findById(Long id) {
         if (id == null) throw new IllegalArgumentException("id is null");
-        return bookDao.findById(id);
+        try {
+            return bookDao.findById(id);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public List<Book> findByAuthor(String author) {
         if (author == null || author.isEmpty()) throw new IllegalArgumentException("author is null or empty");
-        return bookDao.findByAuthor(author);
+        try {
+            return bookDao.findByAuthor(author);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public List<Book> findByName(String name) {
 
         if (name == null || name.isEmpty()) throw new IllegalArgumentException("name is null or empty");
-        return bookDao.findByName(name);
+        try {
+            return bookDao.findByName(name);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public List<Book> findAll() {
-        return bookDao.findAll();
+
+        try {
+            return bookDao.findAll();
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 }

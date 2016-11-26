@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.library.service;
 import cz.muni.fi.pa165.library.dao.BookCopyDao;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.BookCopy;
+import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -21,30 +22,50 @@ public class BookCopyServiceImpl implements BookCopyService {
     @Override
     public void create(BookCopy bookCopy) {
         if (bookCopy == null) throw new IllegalArgumentException("bookCopy is null");
-        bookCopyDao.create(bookCopy);
+        try {
+            bookCopyDao.create(bookCopy);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public BookCopy update(BookCopy bookCopy) {
         if (bookCopy == null) throw new IllegalArgumentException("bookCopy is null");
-        return bookCopyDao.update(bookCopy);
+        try {
+            return bookCopyDao.update(bookCopy);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public void delete(BookCopy bookCopy) {
         if (bookCopy == null) throw new IllegalArgumentException("bookCopy is null");
-        bookCopyDao.delete(bookCopy);
+        try {
+            bookCopyDao.delete(bookCopy);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public BookCopy findById(Long id) {
         if (id == null) throw new IllegalArgumentException("id is null");
-        return bookCopyDao.findById(id);
+        try {
+            return bookCopyDao.findById(id);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 
     @Override
     public List<BookCopy> findByBook(Book book) {
         if (book == null) throw new IllegalArgumentException("book is null");
-        return bookCopyDao.findByBook(book);
+        try {
+            return bookCopyDao.findByBook(book);
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
     }
 }
