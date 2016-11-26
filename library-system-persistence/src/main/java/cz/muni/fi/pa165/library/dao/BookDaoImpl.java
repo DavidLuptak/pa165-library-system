@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.library.dao;
 
 import cz.muni.fi.pa165.library.entity.Book;
-import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
