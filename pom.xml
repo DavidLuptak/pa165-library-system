@@ -7,7 +7,7 @@
     <groupId>cz.muni.fi.pa165</groupId>
     <artifactId>library-system</artifactId>
     <packaging>pom</packaging>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.2</version>
 
     <name>Library System Parent</name>
 
