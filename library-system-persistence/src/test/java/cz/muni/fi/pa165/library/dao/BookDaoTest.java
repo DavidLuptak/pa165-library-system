@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.library.dao;
 
 import cz.muni.fi.pa165.library.LibraryApplicationContext;
 import cz.muni.fi.pa165.library.entity.Book;
+import cz.muni.fi.pa165.library.entity.Category;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -12,6 +13,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -30,12 +33,20 @@ import static org.testng.Assert.*;
 @Transactional
 public class BookDaoTest extends AbstractTestNGSpringContextTests {
 
+    @PersistenceContext
+    EntityManager em;
+
     @Inject
     private BookDao bookDao;
+
+    @Inject
+    private CategoryDao categoryDao;
 
     private Book book1;
     private Book book2;
     private Book book3;
+
+    private Category category1;
 
     @BeforeMethod
     public void setUp() {
@@ -57,6 +68,10 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
         bookDao.create(book1);
         bookDao.create(book2);
         bookDao.create(book3);
+
+        category1 = new Category();
+        category1.setName("categoryName1");
+        categoryDao.create(category1);
     }
 
     @Test
@@ -76,8 +91,19 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
     public void testUpdate() {
         book1.setName("changed");
         bookDao.update(book1);
-        assertEquals("changed", bookDao.findById(book1.getId())
-                .getName());
+        em.flush();
+        em.refresh(book1);
+        assertEquals("changed", bookDao.findById(book1.getId()).getName());
+    }
+
+    @Test
+    public void testUpdateAddCategoryShouldNotAddCategory(){
+        em.clear();
+        book1.addCategory(category1); //inverse side doesn't affect database join table
+        book1 = bookDao.update(book1);
+        em.flush();
+        em.clear();
+        assertFalse(bookDao.findById(book1.getId()).getCategories().contains(category1));
     }
 
     @Test(expectedExceptions = DataAccessException.class)

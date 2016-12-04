@@ -14,6 +14,7 @@ import org.testng.annotations.Test;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
 
@@ -154,6 +155,14 @@ public class CategoryDaoTest extends AbstractTestNGSpringContextTests {
         assertEquals(category, dbCategory1);
     }
 
+    @Test(expectedExceptions = PersistenceException.class)
+    public void testUpdateCategoryNameToExistingOne() {
+        em.merge(category1);
+        dbCategory1.setName(dbCategory2.getName());
+        categoryDao.update(dbCategory1);
+        em.flush();
+    }
+
     @Test(expectedExceptions = ConstraintViolationException.class)
     public void testUpdateCategoryNameToNull() {
         dbCategory1.setName(null);
@@ -162,15 +171,20 @@ public class CategoryDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void testUpdateCategoryAddBook() {
-        dbCategory1.addBook(dbBook3);
-        assertTrue(dbCategory1.getBooks().contains(dbBook3));
+    public void testUpdateCategoryAddBookShouldAddBook() {
+        em.clear();
+        dbCategory1.addBook(dbBook3); //owning side should add book
+        dbCategory1 = categoryDao.update(dbCategory1);
+        em.flush();
+        em.clear();
+        assertTrue(categoryDao.findById(dbCategory1.getId()).getBooks().contains(dbBook3));
     }
 
     @Test
     public void testUpdateCategoryRemoveBook() {
         dbCategory2.removeBook(dbBook2);
-        assertFalse(dbCategory1.getBooks().contains(dbBook2));
+        categoryDao.update(dbCategory2);
+        assertFalse(categoryDao.findById(dbCategory2.getId()).getBooks().contains(dbBook2));
     }
 
     @Test

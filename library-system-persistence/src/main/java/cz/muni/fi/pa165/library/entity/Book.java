@@ -31,7 +31,7 @@ public class Book {
     @Column(nullable = false, unique = true)
     private String isbn;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "books")
     private List<Category> categories;
 
     @OneToMany(mappedBy = "book")
