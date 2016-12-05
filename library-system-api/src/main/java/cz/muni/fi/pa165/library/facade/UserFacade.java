@@ -20,6 +20,7 @@ public interface UserFacade {
      *
      * @param userNewDTO          to be created
      * @param unencryptedPassword of user
+     * @return new user id
      * @throws IllegalArgumentException if user is null
      * @throws IllegalArgumentException if unencryptedPassword is null or empty
      * @throws NoEntityFoundException   if user does not exist
