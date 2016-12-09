@@ -19,6 +19,7 @@
         <module>library-system-persistence</module>
         <module>library-system-service</module>
         <module>library-system-api</module>
+        <module>library-system-sample-data</module>
     </modules>
 
     <developers>
