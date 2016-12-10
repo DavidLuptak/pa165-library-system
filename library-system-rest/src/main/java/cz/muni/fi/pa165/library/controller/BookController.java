@@ -89,7 +89,7 @@ public class BookController {
      * Create a new book by POST method.
      * <p>
      * curl -X POST -i -H "Content-Type: application/json" --data
-     * '{"name":"Title","author":"Author","isbn":"978"}'
+     * '{"title":"Title","author":"Author","isbn":"978"}'
      * http://localhost:8080/pa165/books
      *
      * @param book BookNewDTO with the required fields for creation
@@ -164,7 +164,7 @@ public class BookController {
         BookDTO merged = new BookDTO();
 
         merged.setId(existing.getId());
-        merged.setName(updating.getName() == null ? existing.getName() : updating.getName());
+        merged.setTitle(updating.getTitle() == null ? existing.getTitle() : updating.getTitle());
         merged.setAuthor(updating.getAuthor() == null ? existing.getAuthor() : updating.getAuthor());
         merged.setIsbn(updating.getIsbn() == null ? existing.getIsbn() : updating.getIsbn());
 

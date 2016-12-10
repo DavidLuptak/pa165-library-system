@@ -51,11 +51,11 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
     @BeforeMethod
     public void initEntities() {
-        book1 = new Book("bookName1", "bookAuthor1", "1111111111");
+        book1 = new Book("bookTitle1", "bookAuthor1", "1111111111");
         book1.setId(1L);
-        book2 = new Book("bookName2", "bookAuthor1", "2222222222");
+        book2 = new Book("bookTitle2", "bookAuthor1", "2222222222");
         book2.setId(2L);
-        book3 = new Book("bookName3", "bookAuthor2", "3333333333");
+        book3 = new Book("bookTitle3", "bookAuthor2", "3333333333");
         book3.setId(3L);
         category1 = new Category("categoryName11");
         category1.setId(1L);
@@ -75,9 +75,9 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
         when(bookDao.findByAuthor(book1.getAuthor())).thenReturn(Arrays.asList(book1, book2));
         when(bookDao.findByAuthor("Not existing Author")).thenReturn(Arrays.asList());
 
-        // findByName
-        when(bookDao.findByName(book1.getName())).thenReturn(Arrays.asList(book1));
-        when(bookDao.findByName("Not existing Name")).thenReturn(Arrays.asList());
+        // findByTitle
+        when(bookDao.findByTitle(book1.getTitle())).thenReturn(Arrays.asList(book1));
+        when(bookDao.findByTitle("Not existing Title")).thenReturn(Arrays.asList());
 
         // findAll
         when(bookDao.findAll()).thenReturn(Arrays.asList(book1, book2));
@@ -90,8 +90,8 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
             }
 
             Book book = (Book) argument;
-            if (book.getName() == null) {
-                throw new LibraryDAOException("Name is null.");
+            if (book.getTitle() == null) {
+                throw new LibraryDAOException("Title is null.");
             }
             if (book.getAuthor() == null) {
                 throw new LibraryDAOException("Author is null.");
@@ -204,25 +204,25 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
     }
 
     @Test
-    public void testFindByName() {
-        assertEquals(bookService.findByName(book1.getName()), Arrays.asList(book1));
-        verify(bookDao).findByName(book1.getName());
+    public void testFindByTitle() {
+        assertEquals(bookService.findByTitle(book1.getTitle()), Arrays.asList(book1));
+        verify(bookDao).findByTitle(book1.getTitle());
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testFindByNullName() {
-        bookService.findByName(null);
+    public void testFindByNullTitle() {
+        bookService.findByTitle(null);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testFindByEmptyName() {
-        bookService.findByName("");
+    public void testFindByEmptyTitle() {
+        bookService.findByTitle("");
     }
 
     @Test
-    public void testFindByNonExistingName() {
-        assertEquals(bookService.findByName("Not existing Name"), Arrays.asList());
-        verify(bookDao).findByName("Not existing Name");
+    public void testFindByNonExistingTitle() {
+        assertEquals(bookService.findByTitle("Not existing Title"), Arrays.asList());
+        verify(bookDao).findByTitle("Not existing Title");
     }
 
     @Test

@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class BookDTO {
     private Long id;
-    private String name;
+    private String title;
     private String author;
     private String isbn;
     private List<CategoryDTO> categories;
@@ -20,8 +20,8 @@ public class BookDTO {
         bookCopies = new ArrayList<>();
     }
 
-    public BookDTO(String name, String author, String isbn, List<CategoryDTO> categories, List<BookCopyDTO> bookCopies) {
-        this.name = name;
+    public BookDTO(String title, String author, String isbn, List<CategoryDTO> categories, List<BookCopyDTO> bookCopies) {
+        this.title = title;
         this.author = author;
         this.isbn = isbn;
         this.categories = categories;
@@ -36,12 +36,12 @@ public class BookDTO {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getAuthor() {

@@ -60,14 +60,14 @@ public interface BookFacade {
     BookDTO findById(Long id);
 
     /**
-     * Finds books by name
+     * Finds books by title
      *
-     * @param name book name
+     * @param title book title
      * @return list of discovered books
-     * @throws IllegalArgumentException if name is null or empty
-     * @throws NoEntityFoundException   if no books found for name
+     * @throws IllegalArgumentException if title is null or empty
+     * @throws NoEntityFoundException   if no books found for title
      */
-    List<BookDTO> findByName(String name);
+    List<BookDTO> findByTitle(String title);
 
     /**
      * Get all persisted books

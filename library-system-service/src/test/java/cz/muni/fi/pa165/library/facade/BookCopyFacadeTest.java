@@ -65,9 +65,9 @@ public class BookCopyFacadeTest extends AbstractTransactionalTestNGSpringContext
 
     @BeforeMethod
     public void initEntities() {
-        book1 = new Book("bookName1", "bookAuthor1", "1111111111");
+        book1 = new Book("bookTitle1", "bookAuthor1", "1111111111");
         book1.setId(1L);
-        book2 = new Book("bookName2", "bookAuthor1", "2222222222");
+        book2 = new Book("bookTitle2", "bookAuthor1", "2222222222");
         book2.setId(2L);
 
         bookCopy1 = new BookCopy(book1, BookState.NEW);
@@ -76,7 +76,7 @@ public class BookCopyFacadeTest extends AbstractTransactionalTestNGSpringContext
         bookCopy1.setId(2L);
 
         bookDTO = new BookDTO();
-        bookDTO.setName(book1.getName());
+        bookDTO.setTitle(book1.getTitle());
         bookDTO.setAuthor(book1.getAuthor());
         bookDTO.setIsbn(book1.getIsbn());
 

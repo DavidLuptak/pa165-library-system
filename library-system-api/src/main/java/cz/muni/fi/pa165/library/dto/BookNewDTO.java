@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 public class BookNewDTO {
     @NotBlank
     @Size(max = 50)
-    private String name;
+    private String title;
 
     @NotBlank
     @Size(max = 50)
@@ -23,18 +23,18 @@ public class BookNewDTO {
     public BookNewDTO() {
     }
 
-    public BookNewDTO(String name, String author, String isbn) {
-        this.name = name;
+    public BookNewDTO(String title, String author, String isbn) {
+        this.title = title;
         this.author = author;
         this.isbn = isbn;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getAuthor() {

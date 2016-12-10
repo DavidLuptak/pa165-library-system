@@ -78,7 +78,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
 
         effectiveJava = new Book();
         effectiveJava.setAuthor("JB");
-        effectiveJava.setName("EJ");
+        effectiveJava.setTitle("EJ");
         effectiveJava.setIsbn("978-0-321-35668-0");
         effectiveJava.addCategory(programming);
 

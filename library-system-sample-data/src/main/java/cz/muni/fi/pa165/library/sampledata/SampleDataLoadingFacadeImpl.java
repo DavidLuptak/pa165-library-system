@@ -58,7 +58,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
     private Book book(String author, String title, String isbn) {
         Book book = new Book();
         book.setAuthor(author);
-        book.setName(title);
+        book.setTitle(title);
         book.setIsbn(isbn);
 
         bookService.create(book);

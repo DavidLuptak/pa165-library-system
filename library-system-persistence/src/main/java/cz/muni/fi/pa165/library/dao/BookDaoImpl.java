@@ -49,12 +49,12 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public List<Book> findByName(String name) {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Name is not valid");
+    public List<Book> findByTitle(String title) {
+        if (title == null || title.isEmpty()) {
+            throw new IllegalArgumentException("Title is not valid");
         }
-        return em.createQuery("SELECT b FROM Book b where b.name = :name", Book.class)
-                .setParameter("name", name).getResultList();
+        return em.createQuery("SELECT b FROM Book b where b.title = :title", Book.class)
+                .setParameter("title", title).getResultList();
     }
 
     @Override

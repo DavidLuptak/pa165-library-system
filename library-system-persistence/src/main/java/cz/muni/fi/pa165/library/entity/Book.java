@@ -22,7 +22,7 @@ public class Book {
     private Long id;
 
     @NotNull
-    private String name;
+    private String title;
 
     @NotNull
     private String author;
@@ -41,9 +41,9 @@ public class Book {
         this.categories = new ArrayList<>();
     }
 
-    public Book(String name, String author, String isbn) {
+    public Book(String title, String author, String isbn) {
         this.categories = new ArrayList<>();
-        this.name = name;
+        this.title = title;
         this.author = author;
         this.isbn = isbn;
     }
@@ -56,12 +56,12 @@ public class Book {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getAuthor() {

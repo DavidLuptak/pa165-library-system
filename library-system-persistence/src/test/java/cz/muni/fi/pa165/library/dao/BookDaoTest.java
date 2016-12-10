@@ -51,17 +51,17 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
     @BeforeMethod
     public void setUp() {
         book1 = new Book();
-        book1.setName("Book Name 1");
+        book1.setTitle("Book Title 1");
         book1.setIsbn("1L");
         book1.setAuthor("AB");
 
         book2 = new Book();
-        book2.setName("Very Long Long Long Long Long Book Name 2");
+        book2.setTitle("Very Long Long Long Long Long Book Title 2");
         book2.setIsbn("2L");
         book2.setAuthor("CD");
 
         book3 = new Book();
-        book3.setName("Light Damaged Book Name 3");
+        book3.setTitle("Light Damaged Book Title 3");
         book3.setIsbn("3L");
         book3.setAuthor("EF");
 
@@ -82,18 +82,18 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = ConstraintViolationException.class)
-    public void testCreateNullName() {
+    public void testCreateNullTitle() {
         Book newBook = new Book();
         bookDao.create(newBook);
     }
 
     @Test
     public void testUpdate() {
-        book1.setName("changed");
+        book1.setTitle("changed");
         bookDao.update(book1);
         em.flush();
         em.refresh(book1);
-        assertEquals("changed", bookDao.findById(book1.getId()).getName());
+        assertEquals("changed", bookDao.findById(book1.getId()).getTitle());
     }
 
     @Test
@@ -120,15 +120,15 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = DataAccessException.class)
-    public void testFindByNameNull() {
-        bookDao.findByName(null);
+    public void testFindByTitleNull() {
+        bookDao.findByTitle(null);
     }
 
     @Test
-    public void testFindByName() {
+    public void testFindByTitle() {
         Set<Book> expected = new HashSet<>();
         expected.add(book1);
-        Set<Book> actual = new HashSet<>(bookDao.findByName("Book Name 1"));
+        Set<Book> actual = new HashSet<>(bookDao.findByTitle("Book Title 1"));
         assertEquals(expected, actual);
     }
 
@@ -161,7 +161,7 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
         expected.add(book1);
 
         Book anotherBookOfTheSameAuthor = new Book();
-        anotherBookOfTheSameAuthor.setName("Another name");
+        anotherBookOfTheSameAuthor.setTitle("Another title");
         anotherBookOfTheSameAuthor.setIsbn("Another isbn");
         anotherBookOfTheSameAuthor.setAuthor(book1.getAuthor());
         bookDao.create(anotherBookOfTheSameAuthor);
@@ -195,7 +195,7 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
     public void testDeleteNonexistent() {
         Book newBook = new Book();
         newBook.setId(100L);
-        newBook.setName("New Added Book Name 4");
+        newBook.setTitle("New Added Book Title 4");
         newBook.setIsbn("100L");
         bookDao.delete(newBook);
     }
@@ -204,7 +204,7 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
         assertNotNull(actual);
         assertNotNull(expected);
         assertEquals(actual.getId(), expected.getId());
-        assertEquals(actual.getName(), expected.getName());
+        assertEquals(actual.getTitle(), expected.getTitle());
         assertEquals(actual.getAuthor(), expected.getAuthor());
         assertEquals(actual.getIsbn(), expected.getIsbn());
     }

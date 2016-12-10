@@ -87,13 +87,13 @@ public class BookFacadeImpl implements BookFacade {
     }
 
     @Override
-    public List<BookDTO> findByName(String name) {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Name cannot be null.");
+    public List<BookDTO> findByTitle(String title) {
+        if (title == null || title.isEmpty()) {
+            throw new IllegalArgumentException("Title cannot be null.");
         }
-        List<Book> books = bookService.findByName(name);
+        List<Book> books = bookService.findByTitle(title);
         if (books.size() == 0) {
-            throw new NoEntityFoundException("Books not found during findByName.");
+            throw new NoEntityFoundException("Books not found during findByTitle.");
         }
 
         return beanMappingService.mapTo(books, BookDTO.class);

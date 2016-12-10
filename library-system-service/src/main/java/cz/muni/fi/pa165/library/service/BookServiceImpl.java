@@ -68,11 +68,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> findByName(String name) {
+    public List<Book> findByTitle(String title) {
 
-        if (name == null || name.isEmpty()) throw new IllegalArgumentException("name is null or empty");
+        if (title == null || title.isEmpty()) throw new IllegalArgumentException("title is null or empty");
         try {
-            return bookDao.findByName(name);
+            return bookDao.findByTitle(title);
         } catch (Exception e) {
             throw new LibraryDAOException(e.getMessage(),e.getCause());
         }

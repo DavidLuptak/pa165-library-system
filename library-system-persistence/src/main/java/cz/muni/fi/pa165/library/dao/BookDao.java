@@ -52,13 +52,13 @@ public interface BookDao {
     List<Book> findByAuthor(String author);
 
     /**
-     * Finds books with the given name in the database
+     * Finds books with the given title in the database
      *
-     * @param name searched name
+     * @param title searched title
      * @return found books
-     * @throws IllegalArgumentException if name is null or empty
+     * @throws IllegalArgumentException if title is null or empty
      */
-    List<Book> findByName(String name);
+    List<Book> findByTitle(String title);
 
     /**
      * Finds all books in the database

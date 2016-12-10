@@ -52,9 +52,9 @@ public class CategoryServiceTest extends AbstractTransactionalTestNGSpringContex
         category1.setId(1L);
         category2 = new Category("categoryName2");
         category2.setId(2L);
-        book1 = new Book("bookName1", "bookAuthor1", "1111111111");
+        book1 = new Book("bookTitle1", "bookAuthor1", "1111111111");
         book1.setId(1L);
-        book2 = new Book("bookName2", "bookAuthor2", "2222222222");
+        book2 = new Book("bookTitle2", "bookAuthor2", "2222222222");
         book2.setId(2L);
     }
 
