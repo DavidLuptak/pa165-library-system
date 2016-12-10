@@ -15,12 +15,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <parent>
-        <groupId>io.spring.platform</groupId>
-        <artifactId>platform-bom</artifactId>
-        <version>1.1.4.RELEASE</version>
-        <relativePath/>
-    </parent>
+    <!--<parent>-->
+        <!--<groupId>io.spring.platform</groupId>-->
+        <!--<artifactId>platform-bom</artifactId>-->
+        <!--<version>1.1.4.RELEASE</version>-->
+        <!--<relativePath/>-->
+    <!--</parent>-->
 
     <modules>
         <module>library-system-persistence</module>
@@ -80,16 +80,16 @@
                 <version>1.10.19</version>
                 <scope>test</scope>
             </dependency>
-            <dependency>
-                <groupId>org.apache.tomcat</groupId>
-                <artifactId>tomcat-api</artifactId>
-                <version>${tomcat.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-core</artifactId>
-                <version>${logback.version}</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.apache.tomcat</groupId>-->
+                <!--<artifactId>tomcat-api</artifactId>-->
+                <!--<version>${tomcat.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>ch.qos.logback</groupId>-->
+                <!--<artifactId>logback-core</artifactId>-->
+                <!--<version>${logback.version}</version>-->
+            <!--</dependency>-->
         </dependencies>
     </dependencyManagement>
 
