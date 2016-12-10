@@ -4,7 +4,7 @@ import cz.muni.fi.pa165.library.config.ServiceConfiguration;
 import cz.muni.fi.pa165.library.dao.CategoryDao;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Category;
-import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
+import cz.muni.fi.pa165.library.exception.LibraryDAOException;
 import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
 import org.springframework.test.context.ContextConfiguration;

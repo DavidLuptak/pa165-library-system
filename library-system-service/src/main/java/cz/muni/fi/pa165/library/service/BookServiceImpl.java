@@ -2,7 +2,7 @@ package cz.muni.fi.pa165.library.service;
 
 import cz.muni.fi.pa165.library.dao.BookDao;
 import cz.muni.fi.pa165.library.entity.Book;
-import cz.muni.fi.pa165.library.exceptions.LibraryDAOException;
+import cz.muni.fi.pa165.library.exception.LibraryDAOException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
