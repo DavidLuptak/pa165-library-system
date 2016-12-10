@@ -1,9 +1,11 @@
-package cz.muni.fi.pa165.library.exception;
+package cz.muni.fi.pa165.library.rest.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
+ * Exception thrown when the requested resource already exists.
+ *
  * @author Dávid Lupták
  * @version 9.12.2016
  */

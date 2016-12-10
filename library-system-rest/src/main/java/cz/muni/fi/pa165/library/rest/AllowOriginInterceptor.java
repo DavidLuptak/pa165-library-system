@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.library;
+package cz.muni.fi.pa165.library.rest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

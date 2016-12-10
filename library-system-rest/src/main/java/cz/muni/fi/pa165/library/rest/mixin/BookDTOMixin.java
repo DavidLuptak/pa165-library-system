@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.library.mixin;
+package cz.muni.fi.pa165.library.rest.mixin;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

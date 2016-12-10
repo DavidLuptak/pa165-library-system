@@ -1,12 +1,18 @@
-package cz.muni.fi.pa165.library;
+package cz.muni.fi.pa165.library.rest;
 
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.filter.ShallowEtagHeaderFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.Filter;
 
+/**
+ * Initializer for the REST API.
+ *
+ * @author PA165 Team
+ * @author Dávid Lupták
+ * @version 9.12.2016
+ */
 public class Initializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
@@ -27,9 +33,8 @@ public class Initializer extends AbstractAnnotationConfigDispatcherServletInitia
     @Override
     protected Filter[] getServletFilters() {
         CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter("utf-8", true);
-        ShallowEtagHeaderFilter shallowEtagHeaderFilter = new ShallowEtagHeaderFilter();
 
-        return new Filter[]{encodingFilter, shallowEtagHeaderFilter};
+        return new Filter[]{encodingFilter};
     }
 
     @Override

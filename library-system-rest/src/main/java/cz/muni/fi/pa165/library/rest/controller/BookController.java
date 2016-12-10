@@ -1,13 +1,14 @@
-package cz.muni.fi.pa165.library.controller;
+package cz.muni.fi.pa165.library.rest.controller;
 
-import cz.muni.fi.pa165.library.ApiUris;
 import cz.muni.fi.pa165.library.dto.BookDTO;
 import cz.muni.fi.pa165.library.dto.BookNewDTO;
+import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
-import cz.muni.fi.pa165.library.exception.ResourceAlreadyExistingException;
-import cz.muni.fi.pa165.library.exception.ResourceNotFoundException;
-import cz.muni.fi.pa165.library.exception.ResourceNotModifiedException;
 import cz.muni.fi.pa165.library.facade.BookFacade;
+import cz.muni.fi.pa165.library.rest.ApiUris;
+import cz.muni.fi.pa165.library.rest.exception.ResourceAlreadyExistingException;
+import cz.muni.fi.pa165.library.rest.exception.ResourceNotFoundException;
+import cz.muni.fi.pa165.library.rest.exception.ResourceNotModifiedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -17,6 +18,8 @@ import javax.inject.Inject;
 import java.util.List;
 
 /**
+ * REST controller for the {@link Book} entity.
+ *
  * @author Dávid Lupták
  * @version 9.12.2016
  */
@@ -32,7 +35,7 @@ public class BookController {
     /**
      * Get all books.
      * <p>
-     * curl -X GET http://localhost:8080/pa165/books
+     * curl -i -X GET http://localhost:8080/pa165/rest/books
      *
      * @return list of all books available in the system
      */
@@ -45,7 +48,7 @@ public class BookController {
     /**
      * Get the book with the respective id.
      * <p>
-     * curl -i -X GET http://localhost:8080/pa165/books/{id}
+     * curl -i -X GET http://localhost:8080/pa165/rest/books/{id}
      *
      * @param id identifier of the book
      * @return DTO object of the book
@@ -67,7 +70,7 @@ public class BookController {
     /**
      * Delete the book with the respective id.
      * <p>
-     * curl -i -X DELETE http://localhost:8080/pa165/books/{id}
+     * curl -i -X DELETE http://localhost:8080/pa165/rest/books/{id}
      *
      * @param id identifier of the book
      * @throws ResourceNotFoundException if the book is not available in the system
@@ -90,7 +93,7 @@ public class BookController {
      * <p>
      * curl -X POST -i -H "Content-Type: application/json" --data
      * '{"title":"Title","author":"Author","isbn":"978"}'
-     * http://localhost:8080/pa165/books
+     * http://localhost:8080/pa165/rest/books
      *
      * @param book BookNewDTO with the required fields for creation
      * @return the newly created book BookDTO
@@ -116,7 +119,7 @@ public class BookController {
      * Update the book by PUT method.
      * <p>
      * curl -X PUT -i -H "Content-Type: application/json" --data
-     * '{"author":"New Author"}' http://localhost:8080/pa165/books/2
+     * '{"author":"New Author"}' http://localhost:8080/pa165/rest/books/{id}
      *
      * @param id   identifier of the book
      * @param book BookDTO with the required fields to be updated
@@ -140,16 +143,16 @@ public class BookController {
             throw new ResourceNotFoundException(ex);
         }
 
-        BookDTO toBeUpdated = merge(existing, book);
+        BookDTO toBeUpdated;
 
         try {
+            toBeUpdated = merge(existing, book);
             bookFacade.update(toBeUpdated);
+            return toBeUpdated;
         } catch (Exception ex) {
             LOGGER.error("updateBook()", ex);
             throw new ResourceNotModifiedException(ex);
         }
-
-        return toBeUpdated;
     }
 
     /**
