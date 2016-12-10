@@ -9,15 +9,16 @@ import javax.validation.constraints.Size;
  * @author Bedrich Said
  */
 public class BookNewDTO {
-    @NotBlank
-    @Size(max = 50)
+
+    @NotBlank(message = "Can't be empty!")
+    @Size(max = 50, message = "Enter no more than 50 characters.")
     private String title;
 
-    @NotBlank
-    @Size(max = 50)
+    @NotBlank(message = "Can't be empty!")
+    @Size(max = 50, message = "Enter no more than 50 characters.")
     private String author;
 
-    @NotNull
+    @NotBlank(message = "Can't be empty!")
     private String isbn;
 
     public BookNewDTO() {

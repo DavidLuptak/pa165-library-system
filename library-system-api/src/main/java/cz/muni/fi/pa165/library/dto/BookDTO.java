@@ -4,14 +4,27 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * @author Bedrich Said
  */
 public class BookDTO {
     private Long id;
+
+    @NotBlank(message = "Can't be empty!")
+    @Size(max = 50, message = "Enter no more than 50 characters.")
     private String title;
+
+    @NotBlank(message = "Can't be empty!")
+    @Size(max = 50, message = "Enter no more than 50 characters.")
     private String author;
+
+    @NotBlank(message = "Can't be empty!")
     private String isbn;
+
     private List<CategoryDTO> categories;
     private List<BookCopyDTO> bookCopies;
 

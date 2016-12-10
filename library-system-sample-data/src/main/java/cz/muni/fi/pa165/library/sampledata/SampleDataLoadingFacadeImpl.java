@@ -1,7 +1,13 @@
 package cz.muni.fi.pa165.library.sampledata;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import cz.muni.fi.pa165.library.entity.Book;
+import cz.muni.fi.pa165.library.entity.Category;
 import cz.muni.fi.pa165.library.service.BookService;
+import cz.muni.fi.pa165.library.service.CategoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -22,6 +28,9 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
     @Inject
     private BookService bookService;
 
+    @Inject
+    private CategoryService categoryService;
+
     @Override
     public void loadData() {
         createUsers();
@@ -40,7 +49,10 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
     }
 
     private void createBooks() {
-        book("Joshua Bloch", "Effective Java 2nd Edition", "978-0-321-35668-0");
+        Book book = book("Joshua Bloch", "Effective Java 2nd Edition", "978-0-321-35668-0");
+        book("Jane Austen", "Pride and Prejudice", "978-0-345-35768-0");
+        book("J. K. Rowling", "Harry Potter and the Chamber of Secrets", "958-1-321-36153-0");
+        Category category = category("IT", Arrays.asList(book));
 
         // TODO
 
@@ -60,9 +72,17 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         book.setAuthor(author);
         book.setTitle(title);
         book.setIsbn(isbn);
-
         bookService.create(book);
         return book;
+    }
+
+    private Category category(String name, List<Book> books) {
+        Category category = new Category(name);
+        for (Book book : books) {
+            category.addBook(book);
+        }
+        categoryService.create(category);
+        return category;
     }
 
 }
