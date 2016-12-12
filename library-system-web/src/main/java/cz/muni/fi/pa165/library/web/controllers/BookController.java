@@ -36,10 +36,10 @@ public class BookController {
     @Inject
     private CategoryFacade categoryFacade;
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list(Model model) {
+    @RequestMapping(value = {"", "/", "/index"}, method = RequestMethod.GET)
+    public String index(Model model) {
         model.addAttribute("books", bookFacade.findAll());
-        return "book/list";
+        return "book/index";
     }
 
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
@@ -70,7 +70,7 @@ public class BookController {
         }
         bookFacade.create(book);
         redirectAttributes.addFlashAttribute("alert_info", "Book " + book.getTitle() + " was created");
-        return "redirect:" + uriBuilder.path("/book/list").toUriString();
+        return "redirect:" + uriBuilder.path("/book/index").toUriString();
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)

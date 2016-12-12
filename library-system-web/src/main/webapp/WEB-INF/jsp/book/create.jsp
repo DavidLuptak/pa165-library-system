@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="col-lg-offset-1">
-                <a href="${pageContext.request.contextPath}/book/list" class="btn btn-default">Back</a>
+                <a href="${pageContext.request.contextPath}/book/index" class="btn btn-default">Back</a>
                 <button class="btn btn-primary" type="submit">Save</button>
             </div>
         </form:form>

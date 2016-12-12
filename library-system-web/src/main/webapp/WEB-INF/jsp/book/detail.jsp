@@ -5,7 +5,7 @@
 <my:pagetemplate title="Book detail">
     <jsp:attribute name="body">
         <a class="btn btn-default" href="${pageContext.request.contextPath}/book/edit/${book.id}">Edit</a>
-        <a class="btn btn-default" href="${pageContext.request.contextPath}/book/list">Back to list</a>
+        <a class="btn btn-default" href="${pageContext.request.contextPath}/book/index">Back to list</a>
         <table class="table">
             <tr>
                 <td class="col-md-2"><b>Id</b></td>
