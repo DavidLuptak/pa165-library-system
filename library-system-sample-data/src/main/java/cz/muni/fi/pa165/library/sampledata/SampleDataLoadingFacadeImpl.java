@@ -1,9 +1,5 @@
 package cz.muni.fi.pa165.library.sampledata;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Category;
 import cz.muni.fi.pa165.library.service.BookService;
@@ -14,6 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Dávid Lupták

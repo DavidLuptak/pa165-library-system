@@ -1,13 +1,7 @@
 package cz.muni.fi.pa165.library.web.controllers;
 
-import javax.inject.Inject;
-import javax.validation.Valid;
-
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import cz.muni.fi.pa165.library.dto.BookDTO;
 import cz.muni.fi.pa165.library.dto.BookNewDTO;
-import cz.muni.fi.pa165.library.dto.CategoryDTO;
-import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.BookFacade;
 import cz.muni.fi.pa165.library.facade.CategoryFacade;
@@ -16,9 +10,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import javax.inject.Inject;
+import javax.validation.Valid;
 
 /**
  * @author Lenka (433591)
@@ -47,7 +47,7 @@ public class BookController {
                          UriComponentsBuilder uriBuilder) {
         try {
             model.addAttribute("book", bookFacade.findById(id));
-        } catch (NoEntityFoundException e ) {
+        } catch (NoEntityFoundException e) {
             redirectAttributes.addAttribute("alert_danger", "Book " + id + " was not found");
             return "redirect:" + uriBuilder.path("/book").toUriString();
         }
@@ -63,8 +63,8 @@ public class BookController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(@Valid @ModelAttribute("book") BookNewDTO book,
-                       BindingResult br, RedirectAttributes redirectAttributes,
-                       UriComponentsBuilder uriBuilder) {
+                         BindingResult br, RedirectAttributes redirectAttributes,
+                         UriComponentsBuilder uriBuilder) {
         if (br.hasErrors()) {
             return "book/create";
         }
@@ -78,7 +78,7 @@ public class BookController {
                        UriComponentsBuilder uriBuilder) {
         try {
             model.addAttribute("book", bookFacade.findById(id));
-        } catch (NoEntityFoundException e ) {
+        } catch (NoEntityFoundException e) {
             redirectAttributes.addAttribute("alert_danger", "Book " + id + " was not found");
             return "redirect:" + uriBuilder.path("/book/detail/" + id).toUriString();
         }
