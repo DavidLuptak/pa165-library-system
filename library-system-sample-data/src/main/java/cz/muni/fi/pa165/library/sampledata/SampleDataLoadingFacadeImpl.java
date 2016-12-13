@@ -2,8 +2,11 @@ package cz.muni.fi.pa165.library.sampledata;
 
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Category;
+import cz.muni.fi.pa165.library.entity.User;
+import cz.muni.fi.pa165.library.enums.UserRole;
 import cz.muni.fi.pa165.library.service.BookService;
 import cz.muni.fi.pa165.library.service.CategoryService;
+import cz.muni.fi.pa165.library.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -28,6 +31,9 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 
     @Inject
     private CategoryService categoryService;
+    
+    @Inject
+    private UserService userService;
 
     @Override
     public void loadData() {
@@ -39,7 +45,9 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
     }
 
     private void createUsers() {
-        // TODO
+        user("Jan", "Administrator", "admin@library.com", "employee", UserRole.ADMIN, "HiddenSecretPassword");
+        user("Standard", "User", "user@gmail.com", "Address1", UserRole.MEMBER, "Password1");
+        user("Basic", "User", "user2@gmail.com", "Address2", UserRole.MEMBER, "Password2");
     }
 
     private void createCategories() {
@@ -66,6 +74,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
     }
 
     private Book book(String author, String title, String isbn) {
+        //todo: Why we don't do it by Book constructor?
         Book book = new Book();
         book.setAuthor(author);
         book.setTitle(title);
@@ -81,6 +90,17 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         }
         categoryService.create(category);
         return category;
+    }
+    
+    private User user(String name, String surname, String email, String address, UserRole role, String passwd) {
+        User user = new User();
+        user.setFirstName(name);
+        user.setLastName(surname);
+        user.setEmail(email);
+        user.setAddress(address);
+        user.setUserRole(role);
+        userService.register(user, passwd);
+        return user;
     }
 
 }
