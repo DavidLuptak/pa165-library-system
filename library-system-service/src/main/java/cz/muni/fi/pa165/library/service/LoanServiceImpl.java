@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.library.service;
 
+import cz.muni.fi.pa165.library.dao.BookCopyDao;
 import cz.muni.fi.pa165.library.dao.LoanDao;
+import cz.muni.fi.pa165.library.entity.BookCopy;
 import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.exception.LibraryDAOException;
@@ -20,10 +22,19 @@ public class LoanServiceImpl implements LoanService {
     @Inject
     private LoanDao loanDao;
 
+    @Inject
+    private BookCopyDao bookCopyDao;
+
     @Override
     public void create(Loan loan) {
         if (loan == null) {
             throw new IllegalArgumentException("Loan cannot be null.");
+        }
+        if (loan.getReturnBookState() != null){
+            throw new IllegalArgumentException("New loans bookState has to be null");
+        }
+        if (loan.getReturnDate() != null){
+            throw new IllegalArgumentException("New loans returnDate has to be null");
         }
         try {
             loanDao.create(loan);
@@ -118,6 +129,26 @@ public class LoanServiceImpl implements LoanService {
         } catch (Exception e) {
             throw new LibraryDAOException(e.getMessage(),e.getCause());
         }
+    }
+
+    @Override
+    public void ret(Loan loan) {
+        if(loan.getReturnDate() == null){
+            throw new IllegalArgumentException("returnDate of loan has to be set");
+        }
+        if(loan.getReturnBookState() == null){
+            throw new IllegalArgumentException("bookState of loan has to be set");
+        }
+        if(loan.getLoanDate().after(loan.getReturnDate())){
+            throw new IllegalArgumentException("returnDate of loan has to be after loanDate");
+        }
+        if(loan.getReturnBookState().isLighter(loan.getBookCopy().getBookState())){
+            throw new IllegalArgumentException("returningBookState cannot be lighter than loaningBookState");
+        }
+        update(loan);
+        BookCopy bookCopy = loan.getBookCopy();
+        bookCopy.setBookState(loan.getReturnBookState());
+        bookCopyDao.update(bookCopy);
     }
 }
 

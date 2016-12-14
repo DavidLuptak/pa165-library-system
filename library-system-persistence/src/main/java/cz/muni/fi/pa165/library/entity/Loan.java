@@ -37,7 +37,7 @@ public class Loan {
     private Date returnDate;
 
     @Column
-    private BookState bookState;
+    private BookState returnBookState;
 
 
     public Loan() {
@@ -85,12 +85,12 @@ public class Loan {
         return returnDate != null;
     }
 
-    public BookState getBookState() {
-        return this.bookState;
+    public BookState getReturnBookState() {
+        return this.returnBookState;
     }
 
-    public void setBookState(BookState returnBookState) {
-        this.bookState = returnBookState;
+    public void setReturnBookState(BookState returnBookState) {
+        this.returnBookState = returnBookState;
     }
 
     public BookCopy getBookCopy() {
@@ -130,7 +130,7 @@ public class Loan {
                 ", bookCopy=" + bookCopy +
                 ", loanDate=" + loanDate +
                 ", returnDate=" + returnDate +
-                ", returnBookState=" + bookState +
+                ", returnBookState=" + returnBookState +
                 '}';
     }
 }

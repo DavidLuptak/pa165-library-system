@@ -143,6 +143,21 @@ public class LoanFacadeImpl implements LoanFacade {
         return beanMappingService.mapTo(loanService.findReturnedUserLoans(user), LoanDTO.class);
     }
 
+    @Override
+    public void ret(LoanDTO loanDTO) {
+        if (loanDTO == null) {
+            throw new IllegalArgumentException("Loan cannot be null.");
+        }
+
+        Loan loan = beanMappingService.mapTo(loanDTO, Loan.class);
+
+        if (loanService.findById(loan.getId()) == null) {
+            throw new NoEntityFoundException("Loan not found during return.");
+        }
+
+        loanService.ret(loan);
+    }
+
     /**
      * Argument checking for the User entity.
      *

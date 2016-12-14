@@ -85,7 +85,7 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         bookCopy.setId(1L);
         loan = new Loan(user, bookCopy, new Date());
         loan.setId(1L);
-        loan.setBookState(BookState.LIGHT_DAMAGE);
+        loan.setReturnBookState(BookState.LIGHT_DAMAGE);
         loan.setReturnDate(new Date());
 
         user2 = new User("Ondrej", "Velky", "ondrej@abc.com", "Praha", UserRole.ADMIN);
@@ -138,7 +138,7 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
 
         LoanDTO loanDTO = new LoanDTO();
         loanDTO.setId(loan.getId());
-        loanDTO.setBookState(BookState.HEAVY_DAMAGE);
+        loanDTO.setReturnBookState(BookState.HEAVY_DAMAGE);
         loanDTO.setBookCopy(bookCopyDTO);
         loanDTO.setLoanDate(new Date(10));
         loanDTO.setUser(userDTO);
@@ -150,7 +150,7 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
 
         Loan entity = loanArgumentCaptor.getValue();
         assertEquals(entity.getId(), loan.getId());
-        assertEquals(entity.getBookState(), BookState.HEAVY_DAMAGE);
+        assertEquals(entity.getReturnBookState(), BookState.HEAVY_DAMAGE);
         assertEquals(entity.getLoanDate(), new Date(10));
         assertEquals(entity.getReturnDate(), new Date(20));
         assertEquals(entity.getUser().getId(), new Long(1));
@@ -209,7 +209,7 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         assertEquals(loan.getUser().getId(), dto.getUser().getId());
         assertEquals(loan.getBookCopy().getId(), dto.getBookCopy().getId());
         assertEquals(loan.getLoanDate(), dto.getLoanDate());
-        assertEquals(loan.getBookState(), dto.getBookState());
+        assertEquals(loan.getReturnBookState(), dto.getReturnBookState());
         assertEquals(loan.getReturnDate(), dto.getReturnDate());
     }
 
