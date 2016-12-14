@@ -122,7 +122,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         Loan loan = notReturnedLoan(user,bookCopy,loanDate);
         loan.setReturnDate(returnDate);
         loan.setReturnBookState(returnBookState);
-        loanService.returnLoan(loan);
+        loanService.ret(loan);
         return loan;
     }
 

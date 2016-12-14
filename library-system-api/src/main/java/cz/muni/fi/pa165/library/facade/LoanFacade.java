@@ -91,4 +91,11 @@ public interface LoanFacade {
      */
     List<LoanDTO> findReturnedUserLoans(Long userId);
 
+    /**
+     * Return loaned book of user
+     *
+     * @param loanDTO to be returned
+     */
+    void ret(LoanDTO loanDTO);
+
 }

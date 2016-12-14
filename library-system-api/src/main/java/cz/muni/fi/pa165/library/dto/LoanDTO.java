@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.library.dto;
 
 import cz.muni.fi.pa165.library.enums.BookState;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Objects;
 
@@ -13,14 +14,19 @@ public class LoanDTO {
 
     private Long id;
 
+    @NotNull
     private UserDTO user;
 
+    @NotNull
     private Date loanDate;
 
+    @NotNull
     private Date returnDate;
 
+    @NotNull
     private BookState returnBookState;
 
+    @NotNull
     private BookCopyDTO bookCopy;
 
     public Long getId() {
