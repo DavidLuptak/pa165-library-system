@@ -19,7 +19,7 @@ public class LoanDTO {
 
     private Date returnDate;
 
-    private BookState bookState;
+    private BookState returnBookState;
 
     private BookCopyDTO bookCopy;
 
@@ -55,12 +55,12 @@ public class LoanDTO {
         this.returnDate = returnDate;
     }
 
-    public BookState getBookState() {
-        return bookState;
+    public BookState getReturnBookState() {
+        return returnBookState;
     }
 
-    public void setBookState(BookState bookState) {
-        this.bookState = bookState;
+    public void setReturnBookState(BookState returnBookState) {
+        this.returnBookState = returnBookState;
     }
 
     public BookCopyDTO getBookCopy() {
@@ -83,12 +83,12 @@ public class LoanDTO {
                 Objects.equals(getUser(), other.getUser()) &&
                 Objects.equals(getLoanDate(), other.getLoanDate()) &&
                 Objects.equals(getReturnDate(), other.getReturnDate()) &&
-                Objects.equals(getBookState(), other.getBookState());
+                Objects.equals(getReturnBookState(), other.getReturnBookState());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUser(), getLoanDate(), getReturnDate(), getBookState());
+        return Objects.hash(getUser(), getLoanDate(), getReturnDate(), getReturnBookState());
     }
 
     @Override
@@ -98,7 +98,7 @@ public class LoanDTO {
                 ", user=" + user +
                 ", loanDate=" + loanDate +
                 ", returnDate=" + returnDate +
-                ", bookState=" + bookState +
+                ", returnBookState=" + returnBookState +
                 ", bookCopy=" + bookCopy +
                 '}';
     }

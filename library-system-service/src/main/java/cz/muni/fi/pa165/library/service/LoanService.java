@@ -18,6 +18,8 @@ public interface LoanService {
      *
      * @param loan to be created
      * @throws IllegalArgumentException if loan is null
+     * @throws IllegalArgumentException if loan has set returnDate
+     * @throws IllegalArgumentException if loan has set bookState
      */
     void create(Loan loan);
 
@@ -78,5 +80,12 @@ public interface LoanService {
      * @return user's loans which are returned
      */
     List<Loan> findReturnedUserLoans(User user);
+
+    /**
+     * Returns user's loan
+     *
+     * @param loan loan to be returned
+     */
+    void returnLoan(Loan loan);
 
 }

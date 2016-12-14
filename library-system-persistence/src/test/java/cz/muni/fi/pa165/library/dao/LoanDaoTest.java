@@ -174,9 +174,9 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         Loan aLoan = getJoshuaLoan();
         loanDao.create(aLoan);
 
-        aLoan.setBookState(BookState.HEAVY_DAMAGE);
+        aLoan.setReturnBookState(BookState.HEAVY_DAMAGE);
         loanDao.update(aLoan);
-        assertEquals(aLoan.getBookState(), BookState.HEAVY_DAMAGE);
+        assertEquals(aLoan.getReturnBookState(), BookState.HEAVY_DAMAGE);
     }
 
     @Test
@@ -242,7 +242,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     private Loan getBlochLoan() {
         Loan blochLoan = new Loan();
         blochLoan.setLoanDate(new Date());
-        blochLoan.setBookState(BookState.NEW);
+        blochLoan.setReturnBookState(BookState.NEW);
         blochLoan.setBookCopy(effectiveJava42);
         blochLoan.setUser(joshua);
 
@@ -253,7 +253,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         Loan joshuaLoan = new Loan();
         joshuaLoan.setLoanDate(new Date());
         joshuaLoan.setReturnDate(new Date());
-        joshuaLoan.setBookState(BookState.LIGHT_DAMAGE);
+        joshuaLoan.setReturnBookState(BookState.LIGHT_DAMAGE);
         joshuaLoan.setBookCopy(effectiveJava42);
         joshuaLoan.setUser(joshua);
 
@@ -266,7 +266,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
         assertEquals(loan1.getUser(), loan2.getUser());
         assertEquals(loan1.getLoanDate(), loan2.getLoanDate());
         assertEquals(loan1.getReturnDate(), loan2.getReturnDate());
-        assertEquals(loan1.getBookState(), loan2.getBookState());
+        assertEquals(loan1.getReturnBookState(), loan2.getReturnBookState());
         assertEquals(loan1.isReturned(), loan2.isReturned());
         assertEquals(loan1.getBookCopy(), loan2.getBookCopy());
     }

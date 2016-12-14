@@ -6,21 +6,24 @@ package cz.muni.fi.pa165.library.enums;
  * @author Bedrich Said
  */
 public enum BookState {
-    NEW("New"),
-    LIGHT_DAMAGE("Lightly damaged"),
-    MEDIUM_DAMAGE("Moderately damaged"),
-    HEAVY_DAMAGE("Heavily damaged"),
-    REMOVED("Missing");
+    NEW("New",0),
+    LIGHT_DAMAGE("Lightly damaged",1),
+    MEDIUM_DAMAGE("Moderately damaged",2),
+    HEAVY_DAMAGE("Heavily damaged",3);
 
     private final String name;
+    private final int damageValue;
 
-    BookState(String s) {
-        name = s;
+    BookState(String name, int damageValue) {
+        this.name = name;
+        this.damageValue = damageValue;
     }
 
     public boolean equalsName(String otherName) {
         return otherName != null && name.equals(otherName);
     }
+
+    public boolean isLighter(BookState other) {return this.damageValue < other.damageValue;}
 
     @Override
     public String toString() {

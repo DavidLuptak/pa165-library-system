@@ -1,12 +1,9 @@
 package cz.muni.fi.pa165.library.sampledata;
 
-import cz.muni.fi.pa165.library.entity.Book;
-import cz.muni.fi.pa165.library.entity.Category;
-import cz.muni.fi.pa165.library.entity.User;
+import cz.muni.fi.pa165.library.entity.*;
+import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.enums.UserRole;
-import cz.muni.fi.pa165.library.service.BookService;
-import cz.muni.fi.pa165.library.service.CategoryService;
-import cz.muni.fi.pa165.library.service.UserService;
+import cz.muni.fi.pa165.library.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -14,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,46 +33,63 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
     @Inject
     private UserService userService;
 
+    @Inject
+    private LoanService loanService;
+
+    @Inject
+    private BookCopyService bookCopyService;
+
     @Override
     public void loadData() {
-        createUsers();
-        createCategories();
-        createBooks();
-        createBookCopies();
-        createLoans();
-    }
+        //Users
+        User user1 = user("Standard", "User", "user@gmail.com", "Address1", UserRole.MEMBER, "Password1");
+        User user2 = user("Basic", "User", "user2@gmail.com", "Address2", UserRole.MEMBER, "Password2");
+        User user3 = user("Jan", "Administrator", "admin@library.com", "employee", UserRole.ADMIN, "HiddenSecretPassword");
 
-    private void createUsers() {
-        user("Jan", "Administrator", "admin@library.com", "employee", UserRole.ADMIN, "HiddenSecretPassword");
-        user("Standard", "User", "user@gmail.com", "Address1", UserRole.MEMBER, "Password1");
-        user("Basic", "User", "user2@gmail.com", "Address2", UserRole.MEMBER, "Password2");
-    }
+        //Books
+        Book book1 = book("Joshua Bloch", "Effective Java 2nd Edition", "978-0-321-35668-0");
+        Book book2 = book("Rod Johnson", "Expert One-on-One J2EE Design and Development", "978-0764543852");
+        Book book3 = book("Jane Austen", "Pride and Prejudice", "978-0-345-35768-0");
+        Book book4 = book("J. K. Rowling", "Harry Potter and the Chamber of Secrets", "958-1-321-36153-0");
 
-    private void createCategories() {
-        // TODO
-    }
+        //BookCopies (owning Book)
+        BookCopy bookCopy11 = bookCopy(book1, BookState.NEW);
+        BookCopy bookCopy21 = bookCopy(book2, BookState.NEW);
+        BookCopy bookCopy22 = bookCopy(book2, BookState.NEW);
+        BookCopy bookCopy23 = bookCopy(book2, BookState.NEW);
+        BookCopy bookCopy31 = bookCopy(book3, BookState.NEW);
+        BookCopy bookCopy32 = bookCopy(book3, BookState.NEW);
+        BookCopy bookCopy33 = bookCopy(book3, BookState.NEW);
+        BookCopy bookCopy34 = bookCopy(book3, BookState.NEW);
+        BookCopy bookCopy35 = bookCopy(book3, BookState.NEW);
+        BookCopy bookCopy41 = bookCopy(book4, BookState.NEW);
+        BookCopy bookCopy42 = bookCopy(book4, BookState.NEW);
+        BookCopy bookCopy43 = bookCopy(book4, BookState.NEW);
+        BookCopy bookCopy44 = bookCopy(book4, BookState.NEW);
+        BookCopy bookCopy45 = bookCopy(book4, BookState.NEW);
+        BookCopy bookCopy46 = bookCopy(book4, BookState.NEW);
+        BookCopy bookCopy47 = bookCopy(book4, BookState.NEW);
 
-    private void createBooks() {
-        Book book = book("Joshua Bloch", "Effective Java 2nd Edition", "978-0-321-35668-0");
-        book("Jane Austen", "Pride and Prejudice", "978-0-345-35768-0");
-        book("J. K. Rowling", "Harry Potter and the Chamber of Secrets", "958-1-321-36153-0");
-        Category category = category("IT", Arrays.asList(book));
+        //Categories (owning Books)
+        Category category1 = category("Information Technologies", Arrays.asList(book1,book2));
+        Category category2 = category("Recreational Reading", Arrays.asList(book3,book4));
 
-        // TODO
+        //Loans (owning User, BookCopy)
+        Loan loan11 = returnedLoan(user1,bookCopy11,new Date(5),new Date(10),BookState.NEW);
+        Loan loan12 = returnedLoan(user1,bookCopy21,new Date(5),new Date(10),BookState.NEW);
+        Loan loan13 = returnedLoan(user1,bookCopy11,new Date(15),new Date(20),BookState.LIGHT_DAMAGE);
 
-        LOGGER.info("A book loaded.");
-    }
+        Loan loan1x1 = notReturnedLoan(user1,bookCopy32,new Date(30));
+        Loan loan1x2 = notReturnedLoan(user1,bookCopy23,new Date(30));
 
-    private void createBookCopies() {
-        // TODO
-    }
+        Loan loan21 = returnedLoan(user2,bookCopy22,new Date(5),new Date(10),BookState.NEW);
+        Loan loan22 = returnedLoan(user2,bookCopy31,new Date(5),new Date(10),BookState.NEW);
 
-    private void createLoans() {
-        // TODO
+        Loan loan2x1 = notReturnedLoan(user2,bookCopy11,new Date(35));
+        Loan loan2x2 = notReturnedLoan(user2,bookCopy45,new Date(40));
     }
 
     private Book book(String author, String title, String isbn) {
-        //todo: Why we don't do it by Book constructor?
         Book book = new Book();
         book.setAuthor(author);
         book.setTitle(title);
@@ -101,6 +116,31 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         user.setUserRole(role);
         userService.register(user, passwd);
         return user;
+    }
+
+    private Loan returnedLoan(User user, BookCopy bookCopy, Date loanDate, Date returnDate, BookState returnBookState){
+        Loan loan = notReturnedLoan(user,bookCopy,loanDate);
+        loan.setReturnDate(returnDate);
+        loan.setReturnBookState(returnBookState);
+        loanService.returnLoan(loan);
+        return loan;
+    }
+
+    private Loan notReturnedLoan(User user, BookCopy bookCopy, Date loanDate){
+        Loan loan = new Loan();
+        loan.setUser(user);
+        loan.setBookCopy(bookCopy);
+        loan.setLoanDate(loanDate);
+        loanService.create(loan);
+        return loan;
+    }
+
+    private BookCopy bookCopy(Book book, BookState bookState){
+        BookCopy bookCopy = new BookCopy();
+        bookCopy.setBook(book);
+        bookCopy.setBookState(bookState);
+        bookCopyService.create(bookCopy);
+        return bookCopy;
     }
 
 }
