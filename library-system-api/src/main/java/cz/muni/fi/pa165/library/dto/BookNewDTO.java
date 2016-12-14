@@ -11,15 +11,15 @@ public class BookNewDTO {
 
     private Long id;
 
-    @NotBlank(message = "Please enter value.")
+    @NotBlank(message = "Please enter a value.")
     @Size(max = 50, message = "Enter no more than 50 characters.")
     private String title;
 
-    @NotBlank(message = "Please enter value.")
+    @NotBlank(message = "Please enter a value.")
     @Size(max = 50, message = "Enter no more than 50 characters.")
     private String author;
 
-    @NotBlank(message = "Please enter value.")
+    @NotBlank(message = "Please enter a value.")
     private String isbn;
 
     public BookNewDTO() {

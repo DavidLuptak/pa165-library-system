@@ -66,8 +66,12 @@ public class BookController {
     public String delete(@PathVariable long id, RedirectAttributes redirectAttributes,
                          UriComponentsBuilder uriBuilder) {
 
-        bookFacade.delete(id);
-        redirectAttributes.addFlashAttribute("alert_info", "Book was deleted");
+        try {
+            bookFacade.delete(id);
+            redirectAttributes.addFlashAttribute("alert_info", "Book was deleted");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("alert_danger", "Book could not be deleted");
+        }
         return "redirect:" + uriBuilder.path("/book/index").toUriString();
     }
 
