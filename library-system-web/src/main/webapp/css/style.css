@@ -1,12 +1,28 @@
-table {
-    margin-top: 20px;
-}
-.book-table {
-    width: 75%;
-    margin: auto;
-}
-
 .help-block {
     color: red;
 }
+table {
+    margin-top: 20px;
+}
+.table-detail {
+    border: 1px solid gray;
+    box-shadow:  0 0 12px 5px #d5d5d5;
+    padding: 20px;
+}
+.table-detail tbody tr td, .table-detail tbody tr th {
+    border: none;
+}
 
+.table-books th {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.table-books {
+    overflow: auto;
+    height: 200px;
+}
+
+.form-book {
+    margin-top: 20px;
+}

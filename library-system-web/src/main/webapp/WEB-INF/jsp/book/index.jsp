@@ -4,8 +4,9 @@
 
 <my:pagetemplate title="Books">
 <jsp:attribute name="body">
-    <a class="btn btn-default" href="${pageContext.request.contextPath}/book/create">Create new</a>
-    <table class="table table-striped table-hover book-table">
+    <a class="btn btn-primary" href="${pageContext.request.contextPath}/book/create">
+        <span class="glyphicon glyphicon-plus"></span> New book</a>
+    <table class="table table-striped table-hover table-books">
         <thead>
         <tr>
             <th>Title</th>
@@ -19,8 +20,12 @@
                 <td><c:out value="${book.title}"/></td>
                 <td><c:out value="${book.author}"/></td>
                 <td><c:out value="${book.isbn}"/></td>
-                <td><a class="btn btn-default" href="${pageContext.request.contextPath}/book/detail/${book.id}">
-                        Detail
+                <td>
+                    <a class="btn btn-default" href="${pageContext.request.contextPath}/book/detail/${book.id}">
+                        <span class="glyphicon glyphicon-search" title="Detail"></span>
+                    </a>
+                    <a class="btn btn-danger" href="${pageContext.request.contextPath}/book/delete/${book.id}">
+                        <span class="glyphicon glyphicon-remove" title="Delete"></span>
                     </a>
                 </td>
             </tr>

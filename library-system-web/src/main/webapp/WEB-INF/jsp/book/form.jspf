@@ -1,0 +1,32 @@
+<form:form method="post" action="${actionUrl}"
+           modelAttribute="book" cssClass="form-horizontal form-book">
+    <div class="form-group">
+        <form:label path="title" cssClass="col-sm-1 control-label">Title</form:label>
+        <div class="col-sm-5">
+            <form:input path="title" cssClass="form-control"/>
+            <form:errors path="title" cssClass="help-block"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <form:label path="author" cssClass="col-sm-1 control-label">Author</form:label>
+        <div class="col-sm-5">
+            <form:input path="author" cssClass="form-control"/>
+            <form:errors path="author" cssClass="help-block"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <form:label path="isbn" cssClass="col-sm-1 control-label">Isbn</form:label>
+        <div class="col-sm-5">
+            <form:input path="isbn" cssClass="form-control"/>
+            <form:errors path="isbn" cssClass="help-block"/>
+            <c:if test="${isbn_error}">
+                <span class="help-block">Book with this ISBN already exists.</span>
+            </c:if>
+        </div>
+    </div>
+    <form:hidden path="id"/>
+    <div class="col-sm-offset-1 col-sm-5">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a href="${backUrl}" class="btn btn-default">Back</a>
+    </div>
+</form:form>

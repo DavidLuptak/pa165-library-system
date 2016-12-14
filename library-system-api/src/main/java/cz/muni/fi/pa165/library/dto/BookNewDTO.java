@@ -9,15 +9,17 @@ import javax.validation.constraints.Size;
  */
 public class BookNewDTO {
 
-    @NotBlank(message = "Can't be empty!")
+    private Long id;
+
+    @NotBlank(message = "Please enter value.")
     @Size(max = 50, message = "Enter no more than 50 characters.")
     private String title;
 
-    @NotBlank(message = "Can't be empty!")
+    @NotBlank(message = "Please enter value.")
     @Size(max = 50, message = "Enter no more than 50 characters.")
     private String author;
 
-    @NotBlank(message = "Can't be empty!")
+    @NotBlank(message = "Please enter value.")
     private String isbn;
 
     public BookNewDTO() {
@@ -27,6 +29,14 @@ public class BookNewDTO {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {

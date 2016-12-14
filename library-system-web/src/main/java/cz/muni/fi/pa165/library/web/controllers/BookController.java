@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.library.web.controllers;
 
 import cz.muni.fi.pa165.library.dto.BookDTO;
 import cz.muni.fi.pa165.library.dto.BookNewDTO;
+import cz.muni.fi.pa165.library.exception.LibraryDAOException;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.BookFacade;
 import cz.muni.fi.pa165.library.facade.CategoryFacade;
@@ -61,14 +62,28 @@ public class BookController {
         return "book/create";
     }
 
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable long id, RedirectAttributes redirectAttributes,
+                         UriComponentsBuilder uriBuilder) {
+
+        bookFacade.delete(id);
+        redirectAttributes.addFlashAttribute("alert_info", "Book was deleted");
+        return "redirect:" + uriBuilder.path("/book/index").toUriString();
+    }
+
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(@Valid @ModelAttribute("book") BookNewDTO book,
                          BindingResult br, RedirectAttributes redirectAttributes,
-                         UriComponentsBuilder uriBuilder) {
+                         UriComponentsBuilder uriBuilder, Model model) {
         if (br.hasErrors()) {
             return "book/create";
         }
-        bookFacade.create(book);
+        try {
+            bookFacade.create(book);
+        } catch (LibraryDAOException e) {
+            model.addAttribute("isbn_error", true);
+            return "book/create";
+        }
         redirectAttributes.addFlashAttribute("alert_info", "Book " + book.getTitle() + " was created");
         return "redirect:" + uriBuilder.path("/book/index").toUriString();
     }

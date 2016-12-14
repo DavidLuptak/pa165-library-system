@@ -26,8 +26,6 @@ public class UserController {
     @Inject
     private UserFacade facade;
 
-    @Inject
-    private Validator validator;
 
     @RequestMapping("/{id}")
     public String showUser(

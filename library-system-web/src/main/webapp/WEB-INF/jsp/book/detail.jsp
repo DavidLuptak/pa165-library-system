@@ -4,29 +4,46 @@
 
 <my:pagetemplate title="Book detail">
     <jsp:attribute name="body">
-        <a class="btn btn-default" href="${pageContext.request.contextPath}/book/edit/${book.id}">Edit</a>
-        <a class="btn btn-default" href="${pageContext.request.contextPath}/book/index">Back to list</a>
-        <table class="table">
-            <tr>
-                <td class="col-md-2"><b>Id</b></td>
-                <td>${book.id}</td>
-            </tr>
-            <tr>
-                <td class="col-md-2"><b>Author</b></td>
-                <td><c:out value="${book.author}"/></td>
-            </tr>
-            <tr>
-                <td class="col-md-2"><b>Title</b></td>
-                <td><c:out value="${book.title}"/></td>
-            </tr>
-            <tr>
-                <td class="col-md-2"><b>Isbn</b></td>
-                <td><c:out value="${book.isbn}"/></td>
-            </tr>
-            <tr>
-                <th scope="row">Copies</th>
-                <td><c:out value="${book.bookCopies.size()}"/></td>
-            </tr>
-        </table>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <table class="table table-detail">
+                    <tbody>
+                    <tr>
+                        <th scope="row" class="col-sm-2">Title</th>
+                        <td><c:out value="${book.title}"/></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="col-sm-2">Author</th>
+                        <td><c:out value="${book.author}"/></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="col-sm-2">Isbn</th>
+                        <td><c:out value="${book.isbn}"/></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="col-sm-2">Copies</th>
+                        <td><c:out value="${book.bookCopies.size()}"/></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/book/edit/${book.id}">Edit</a>
+                            <a class="btn btn-default" href="${pageContext.request.contextPath}/book/index">Back</a>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+
+         <div class="row">
+             <div class="col-sm-6 col-sm-offset-1">
+
+             </div>
+         </div>
+
     </jsp:attribute>
 </my:pagetemplate>
