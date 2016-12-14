@@ -1,11 +1,16 @@
 package cz.muni.fi.pa165.library.facade;
 
+import cz.muni.fi.pa165.library.dto.BookCopyDTO;
 import cz.muni.fi.pa165.library.dto.BookDTO;
 import cz.muni.fi.pa165.library.dto.BookNewDTO;
+import cz.muni.fi.pa165.library.dto.CategoryDTO;
 import cz.muni.fi.pa165.library.entity.Book;
+import cz.muni.fi.pa165.library.entity.BookCopy;
+import cz.muni.fi.pa165.library.entity.Category;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.mapping.BeanMappingService;
 import cz.muni.fi.pa165.library.service.BookService;
+import cz.muni.fi.pa165.library.service.CategoryService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -70,7 +75,19 @@ public class BookFacadeImpl implements BookFacade {
             throw new NoEntityFoundException("Book not found during findById.");
         }
 
-        return beanMappingService.mapTo(book, BookDTO.class);
+        BookDTO bookDTO = beanMappingService.mapTo(book, BookDTO.class);
+
+        List<Category> categories = book.getCategories();
+        List<CategoryDTO> categoryDTOS = beanMappingService.mapTo(categories, CategoryDTO.class);
+
+        categoryDTOS.forEach(bookDTO::addCategory);
+
+        List<BookCopy> bookCopies = book.getBookCopies();
+        List<BookCopyDTO> bookCopyDTOS = beanMappingService.mapTo(bookCopies, BookCopyDTO.class);
+
+        bookCopyDTOS.forEach(bookDTO::addBookCopy);
+
+        return bookDTO;
     }
 
     @Override
