@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.library.facade;
 
+import cz.muni.fi.pa165.library.dto.LoanDTO;
 import cz.muni.fi.pa165.library.dto.UserAuthenticateDTO;
 import cz.muni.fi.pa165.library.dto.UserDTO;
 import cz.muni.fi.pa165.library.dto.UserNewDTO;
@@ -126,5 +127,11 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     public List<UserDTO> findUsersWithNotReturnedLoans() {
         return beanMappingService.mapTo(userService.findUsersWithNotReturnedLoans(), UserDTO.class);
+    }
+
+    @Override
+    public List<LoanDTO> getAllUserLoans(Long id) {
+        //todo
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

@@ -105,6 +105,10 @@ public class UserDTO {
     public UserRole getUserRole() {
         return userRole;
     }
+    
+    public boolean isAdmin() {
+        return getUserRole() == UserRole.ADMIN;
+    }
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;

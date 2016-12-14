@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.library.facade;
 
+import cz.muni.fi.pa165.library.dto.LoanDTO;
 import cz.muni.fi.pa165.library.dto.UserAuthenticateDTO;
 import cz.muni.fi.pa165.library.dto.UserDTO;
 import cz.muni.fi.pa165.library.dto.UserNewDTO;
@@ -98,4 +99,11 @@ public interface UserFacade {
      * @return users who have at least one not returned loan
      */
     List<UserDTO> findUsersWithNotReturnedLoans();
+
+    /**
+     * Get a list of all unreturned loans owned by the user.
+     * @param id
+     * @return 
+     */
+    List<LoanDTO> getAllUserLoans(Long id);
 }
