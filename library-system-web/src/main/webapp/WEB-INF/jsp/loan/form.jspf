@@ -1,0 +1,29 @@
+<form:form method="post" action="${actionUrl}"
+           modelAttribute="loan" cssClass="form-horizontal form-loan">
+    <div class="form-group">
+        <form:label path="userId" cssClass="col-sm-1 control-label">User</form:label>
+        <div class="col-sm-5">
+            <form:input path="userId" cssClass="form-control"/>
+            <form:errors path="userId" cssClass="help-block"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <form:label path="bookCopyIds" cssClass="col-sm-1 control-label">Books</form:label>
+        <div class="col-sm-5">
+            <form:input path="bookCopyIds" cssClass="form-control"/>
+            <form:errors path="bookCopyIds" cssClass="help-block"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <form:label path="loanDate" cssClass="col-sm-1 control-label">LoanDate</form:label>
+        <div class="col-sm-5">
+            <form:input path="loanDate" cssClass="form-control"/>
+            <form:errors path="loanDate" cssClass="help-block"/>
+        </div>
+    </div>
+    <form:hidden path="id"/>
+    <div class="col-sm-offset-1 col-sm-5">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a href="${backUrl}" class="btn btn-default">Back</a>
+    </div>
+</form:form>

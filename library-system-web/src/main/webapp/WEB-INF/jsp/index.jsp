@@ -13,6 +13,8 @@
         <p class="lead">The right place to borrow wonderful books.</p>
         <p><a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/book/index"
               role="button">Go to books</a></p>
+        <p><a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/loan/index"
+              role="button">Go to loans</a></p>
     </div>
 
 </jsp:attribute>

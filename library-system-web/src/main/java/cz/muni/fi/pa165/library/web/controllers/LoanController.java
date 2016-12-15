@@ -40,7 +40,7 @@ public class LoanController {
 
     @RequestMapping(value = {"", "/", "/index"}, method = RequestMethod.GET)
     public String index(Model model) {
-        model.addAttribute("loan", loanFacade.findAll());
+        model.addAttribute("loans", loanFacade.findAll());
         return "loan/index";
     }
 
