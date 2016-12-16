@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @author Bedrich Said
  */
 public class UserDetailsAdapter implements UserDetails {
-    //private static final long serialVersionUID = 1L;
     private UserDTO dto;
     
     public UserDetailsAdapter(UserDTO dto) {
