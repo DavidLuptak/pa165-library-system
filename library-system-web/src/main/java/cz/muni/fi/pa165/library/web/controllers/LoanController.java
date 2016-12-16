@@ -75,30 +75,6 @@ public class LoanController {
         return "redirect:" + uriBuilder.path("/loan/index").toUriString();
     }
 
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String edit(@PathVariable long id, Model model, RedirectAttributes redirectAttributes,
-                       UriComponentsBuilder uriBuilder) {
-        try {
-            model.addAttribute("loan", loanFacade.findById(id));
-        } catch (NoEntityFoundException e) {
-            redirectAttributes.addAttribute("alert_danger", "Loan was not found");
-            return "redirect:" + uriBuilder.path("/loan/detail/" + id).toUriString();
-        }
-        return "loan/edit";
-    }
-
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String edit(@Valid @ModelAttribute("loan") LoanDTO loan,
-                       BindingResult br, RedirectAttributes redirectAttributes,
-                       UriComponentsBuilder uriBuilder) {
-        if (br.hasErrors()) {
-            return "loan/edit"; //TODO not sure if wont cycle
-        }
-        loanFacade.update(loan);
-        redirectAttributes.addFlashAttribute("alert_info", "Loan was updated");
-        return "redirect:" + uriBuilder.path("/loan/detail/" + loan.getId()).toUriString();
-    }
-
     @RequestMapping(value = "/return/{id}", method = RequestMethod.GET)
     public String ret(@PathVariable long id, Model model, RedirectAttributes redirectAttributes,
                        UriComponentsBuilder uriBuilder) {

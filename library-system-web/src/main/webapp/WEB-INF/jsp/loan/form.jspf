@@ -1,31 +1,52 @@
 <form:form method="post" action="${actionUrl}"
            modelAttribute="loan" cssClass="form-horizontal form-loan">
     <div class="form-group">
-        <form:label path="user" cssClass="col-sm-1 control-label">User</form:label>
+        <form:label path="user" cssClass="col-sm-2 control-label">First Name</form:label>
         <div class="col-sm-5">
-            <form:input path="user" cssClass="form-control"/>
-            <form:errors path="user" cssClass="help-block"/>
+            <form:input path="user.firstName" cssClass="form-control"/>
+            <form:errors path="user.firstName" cssClass="help-block"/>
         </div>
     </div>
     <div class="form-group">
-        <form:label path="bookCopy" cssClass="col-sm-1 control-label">Books</form:label>
+        <form:label path="user" cssClass="col-sm-2 control-label">Last Name</form:label>
         <div class="col-sm-5">
-            <form:input path="bookCopy" cssClass="form-control"/>
-            <form:errors path="bookCopy" cssClass="help-block"/>
+            <form:input path="user.lastName" cssClass="form-control"/>
+            <form:errors path="user.lastName" cssClass="help-block"/>
         </div>
     </div>
     <div class="form-group">
-        <form:label path="loanDate" cssClass="col-sm-1 control-label">LoanDate</form:label>
+        <form:label path="bookCopy" cssClass="col-sm-2 control-label">Book</form:label>
+        <div class="col-sm-5">
+            <form:input path="bookCopy.book.title" type="text" cssClass="form-control"/>
+            <form:errors path="bookCopy.book.title" cssClass="help-block"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <form:label path="loanDate" cssClass="col-sm-2 control-label">Loan Date</form:label>
         <div class="col-sm-5">
             <form:input path="loanDate" cssClass="form-control"/>
             <form:errors path="loanDate" cssClass="help-block"/>
         </div>
     </div>
     <div class="form-group">
-        <form:label path="returnDate" cssClass="col-sm-1 control-label">ReturnDate</form:label>
+        <form:label path="loanDate" cssClass="col-sm-2 control-label">Loan Book State</form:label>
+        <div class="col-sm-5">
+            <form:input path="bookCopy.bookState" cssClass="form-control"/>
+            <form:errors path="bookCopy.bookState" cssClass="help-block"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <form:label path="returnDate" cssClass="col-sm-2 control-label">Return Date</form:label>
         <div class="col-sm-5">
             <form:input path="returnDate" cssClass="form-control"/>
             <form:errors path="returnDate" cssClass="help-block"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <form:label path="returnBookState" cssClass="col-sm-2 control-label">Return BookState</form:label>
+        <div class="col-sm-5">
+            <form:input path="returnBookState" cssClass="form-control"/>
+            <form:errors path="returnBookState" cssClass="help-block"/>
         </div>
     </div>
     <form:hidden path="id"/>

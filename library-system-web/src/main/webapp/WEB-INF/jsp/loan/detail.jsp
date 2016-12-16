@@ -10,25 +10,36 @@
                 <table class="table table-detail">
                     <tbody>
                     <tr>
-                        <th scope="row" class="col-sm-2">FirstName</th>
+                        <th scope="row" class="col-sm-3">FirstName</th>
                         <td><c:out value="${loan.user.firstName}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="col-sm-2">LastName</th>
+                        <th scope="row" class="col-sm-3">LastName</th>
                         <td><c:out value="${loan.user.lastName}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="col-sm-2">Book Title</th>
+                        <th scope="row" class="col-sm-3">Book Title</th>
                         <td><c:out value="${loan.bookCopy.book.title}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="col-sm-2">Loan Date</th>
+                        <th scope="row" class="col-sm-3">Loan Date</th>
                         <td><c:out value="${loan.loanDate}"/></td>
                     </tr>
                     <tr>
+                        <th scope="row" class="col-sm-3">Loan BookState</th>
+                        <td><c:out value="${loan.bookCopy.bookState}"/></td>
+                    </tr>
+
+                    <c:if test="${loan.returnDate != null}">
+                    <tr>
+                        <th scope="row" class="col-sm-3">Return Date</th>
+                        <td><c:out value="${loan.returnDate}"/></td>
+                    </tr>
+
+                    </c:if>
+                    <tr>
                         <td></td>
                         <td>
-                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/loan/edit/${loan.id}">Edit</a>
                             <a class="btn btn-default" href="${pageContext.request.contextPath}/loan/index">Back</a>
                         </td>
                     </tr>
@@ -36,14 +47,7 @@
 
                 </table>
             </div>
-
         </div>
-
-         <div class="row">
-             <div class="col-sm-6 col-sm-offset-1">
-
-             </div>
-         </div>
 
     </jsp:attribute>
 </my:pagetemplate>
