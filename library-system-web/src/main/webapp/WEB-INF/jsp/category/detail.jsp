@@ -2,7 +2,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="my" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<my:pagetemplate title="Book detail">
+<my:pagetemplate title="${category.name} [Category]">
     <jsp:attribute name="body">
 
         <div class="row">
@@ -10,30 +10,28 @@
                 <table class="table table-detail">
                     <tbody>
                     <tr>
-                        <th scope="row" class="col-sm-2">Title</th>
-                        <td><c:out value="${book.title}"/></td>
+                        <th scope="row" class="col-sm-2">Name</th>
+                        <td><c:out value="${category.name}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="col-sm-2">Author</th>
-                        <td><c:out value="${book.author}"/></td>
+                        <th scope="row" class="col-sm-2">Number of books</th>
+                        <td><c:out value="${category.books.size()}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="col-sm-2">Isbn</th>
-                        <td><c:out value="${book.isbn}"/></td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="col-sm-2">Copies</th>
-                        <td><c:out value="${book.bookCopies.size()}"/></td>
+                        <th scope="row" class="col-sm-2">Books</th>
+                        <c:forEach var="book" items="${category.books}">
+                            <td><c:out value="${book.title}"/></td>
+                        </c:forEach>
                     </tr>
                     <tr>
                         <td></td>
                         <td>
-                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/book/edit/${book.id}">Edit</a>
-                            <a class="btn btn-default" href="${pageContext.request.contextPath}/book/index">Back</a>
+                            <a class="btn btn-warning"
+                               href="${pageContext.request.contextPath}/category/edit/${category.id}">Edit</a>
+                            <a class="btn btn-default" href="${pageContext.request.contextPath}/category/index">Back</a>
                         </td>
                     </tr>
                     </tbody>
-
                 </table>
             </div>
 

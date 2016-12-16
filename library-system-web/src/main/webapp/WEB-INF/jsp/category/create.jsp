@@ -3,12 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<c:set var="actionUrl" value="${pageContext.request.contextPath}/book/edit"/>
-<c:set var="backUrl" value="${pageContext.request.contextPath}/book/detail/${book.id}"/>
+<c:set var="actionUrl" value="${pageContext.request.contextPath}/category/create"/>
+<c:set var="backUrl" value="${pageContext.request.contextPath}/category/index"/>
 
-<my:pagetemplate title="Edit book">
+<my:pagetemplate title="New category">
     <jsp:attribute name="body">
-        <h3>Edit book</h3>
+        <h3>New category</h3>
         <%@include file="form.jspf"%>
     </jsp:attribute>
 </my:pagetemplate>

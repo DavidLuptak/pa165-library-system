@@ -1,7 +1,9 @@
 package cz.muni.fi.pa165.library.facade;
 
+import cz.muni.fi.pa165.library.dto.BookDTO;
 import cz.muni.fi.pa165.library.dto.CategoryDTO;
 import cz.muni.fi.pa165.library.dto.CategoryNewDTO;
+import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Category;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.mapping.BeanMappingService;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -79,7 +82,7 @@ public class CategoryFacadeImpl implements CategoryFacade {
             throw new NoEntityFoundException("Category not found during findById.");
         }
 
-        return beanMappingService.mapTo(category, CategoryDTO.class);
+        return mapBooksToDTO(category);
     }
 
     @Override
@@ -94,11 +97,28 @@ public class CategoryFacadeImpl implements CategoryFacade {
             throw new NoEntityFoundException("Category not found during findByName.");
         }
 
-        return beanMappingService.mapTo(category, CategoryDTO.class);
+        return mapBooksToDTO(category);
     }
 
     @Override
     public List<CategoryDTO> findAll() {
-        return beanMappingService.mapTo(categoryService.findAll(), CategoryDTO.class);
+        List<Category> categories = categoryService.findAll();
+        List<CategoryDTO> categoryDTOS = new ArrayList<>();
+
+        categories.forEach(c -> categoryDTOS.add(mapBooksToDTO(c)));
+
+        return categoryDTOS;
+
+    }
+
+    private CategoryDTO mapBooksToDTO(Category category) {
+        CategoryDTO categoryDTO = beanMappingService.mapTo(category, CategoryDTO.class);
+
+        List<Book> books = category.getBooks();
+        List<BookDTO> bookDTOS = beanMappingService.mapTo(books, BookDTO.class);
+
+        bookDTOS.forEach(categoryDTO::addBook);
+
+        return categoryDTO;
     }
 }
