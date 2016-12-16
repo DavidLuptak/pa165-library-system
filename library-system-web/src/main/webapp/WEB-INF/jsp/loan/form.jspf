@@ -1,17 +1,17 @@
 <form:form method="post" action="${actionUrl}"
            modelAttribute="loan" cssClass="form-horizontal form-loan">
     <div class="form-group">
-        <form:label path="userId" cssClass="col-sm-1 control-label">User</form:label>
+        <form:label path="user" cssClass="col-sm-1 control-label">User</form:label>
         <div class="col-sm-5">
-            <form:input path="userId" cssClass="form-control"/>
-            <form:errors path="userId" cssClass="help-block"/>
+            <form:input path="user" cssClass="form-control"/>
+            <form:errors path="user" cssClass="help-block"/>
         </div>
     </div>
     <div class="form-group">
-        <form:label path="bookCopyIds" cssClass="col-sm-1 control-label">Books</form:label>
+        <form:label path="bookCopy" cssClass="col-sm-1 control-label">Books</form:label>
         <div class="col-sm-5">
-            <form:input path="bookCopyIds" cssClass="form-control"/>
-            <form:errors path="bookCopyIds" cssClass="help-block"/>
+            <form:input path="bookCopy" cssClass="form-control"/>
+            <form:errors path="bookCopy" cssClass="help-block"/>
         </div>
     </div>
     <div class="form-group">
@@ -19,6 +19,13 @@
         <div class="col-sm-5">
             <form:input path="loanDate" cssClass="form-control"/>
             <form:errors path="loanDate" cssClass="help-block"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <form:label path="returnDate" cssClass="col-sm-1 control-label">ReturnDate</form:label>
+        <div class="col-sm-5">
+            <form:input path="returnDate" cssClass="form-control"/>
+            <form:errors path="returnDate" cssClass="help-block"/>
         </div>
     </div>
     <form:hidden path="id"/>

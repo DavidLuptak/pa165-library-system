@@ -10,15 +10,19 @@
                 <table class="table table-detail">
                     <tbody>
                     <tr>
-                        <th scope="row" class="col-sm-2">Title</th>
+                        <th scope="row" class="col-sm-2">FirstName</th>
+                        <td><c:out value="${loan.user.firstName}"/></td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="col-sm-2">LastName</th>
                         <td><c:out value="${loan.user.lastName}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="col-sm-2">Author</th>
+                        <th scope="row" class="col-sm-2">Book Title</th>
                         <td><c:out value="${loan.bookCopy.book.title}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="col-sm-2">Isbn</th>
+                        <th scope="row" class="col-sm-2">Loan Date</th>
                         <td><c:out value="${loan.loanDate}"/></td>
                     </tr>
                     <tr>
