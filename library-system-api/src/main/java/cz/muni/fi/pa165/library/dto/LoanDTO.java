@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.library.dto;
 
 import cz.muni.fi.pa165.library.enums.BookState;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -18,9 +19,11 @@ public class LoanDTO {
     private UserDTO user;
 
     @NotNull
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
     private Date loanDate;
 
     @NotNull
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
     private Date returnDate;
 
     @NotNull

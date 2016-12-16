@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="utf-8" trimDirectiveWhitespaces="false" session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="my" %>
 
 <my:pagetemplate title="Loans">
@@ -21,7 +22,7 @@
                 <td><c:out value="${loan.user.firstName}"/></td>
                 <td><c:out value="${loan.user.lastName}"/></td>
                 <td><c:out value="${loan.bookCopy.book.title}"/></td>
-                <td><c:out value="${loan.loanDate}"/></td>
+                <td><fmt:formatDate value="${loan.loanDate}" pattern="dd.MM.yyyy HH:mm"/></td>
                 <td>
                     <a class="btn btn-default" href="${pageContext.request.contextPath}/loan/detail/${loan.id}">
                         <span class="glyphicon glyphicon-search" title="Detail"></span>

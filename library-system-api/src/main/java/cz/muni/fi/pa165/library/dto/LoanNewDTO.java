@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.library.dto;
 
 import javax.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +19,7 @@ public class LoanNewDTO {
     private List<Long> bookCopyIds = new ArrayList<>();
 
     @NotNull
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
     private Date loanDate;
 
     public LoanNewDTO() {
