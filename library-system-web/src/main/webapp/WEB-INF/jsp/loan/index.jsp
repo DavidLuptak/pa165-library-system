@@ -9,7 +9,8 @@
     <table class="table table-striped table-hover table-loans">
         <thead>
         <tr>
-            <th>User</th>
+            <th>First Name</th>
+            <th>Last Name</th>
             <th>Book</th>
             <th>LoanDate</th>
         </tr>
@@ -17,6 +18,7 @@
         <tbody>
         <c:forEach var="loan" items="${loans}">
             <tr>
+                <td><c:out value="${loan.user.firstName}"/></td>
                 <td><c:out value="${loan.user.lastName}"/></td>
                 <td><c:out value="${loan.bookCopy.book.title}"/></td>
                 <td><c:out value="${loan.loanDate}"/></td>
@@ -24,9 +26,11 @@
                     <a class="btn btn-default" href="${pageContext.request.contextPath}/loan/detail/${loan.id}">
                         <span class="glyphicon glyphicon-search" title="Detail"></span>
                     </a>
+                    <c:if test="${loan.returnDate == null}">
                     <a class="btn btn-danger" href="${pageContext.request.contextPath}/loan/return/${loan.id}">
                         <span class="glyphicon glyphicon-ok-sign" title="Return"></span>
                     </a>
+                    </c:if>
                 </td>
             </tr>
         </c:forEach>
