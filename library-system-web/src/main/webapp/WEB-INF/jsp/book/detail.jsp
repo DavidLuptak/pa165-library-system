@@ -26,6 +26,12 @@
                         <td><c:out value="${book.bookCopies.size()}"/></td>
                     </tr>
                     <tr>
+                        <th scope="row" class="col-sm-2">Categories</th>
+                        <c:forEach var="category" items="${book.categories}">
+                            <td><c:out value="${category.name}"/></td>
+                        </c:forEach>
+                    </tr>
+                    <tr>
                         <td></td>
                         <td>
                             <a class="btn btn-warning" href="${pageContext.request.contextPath}/book/edit/${book.id}">Edit</a>

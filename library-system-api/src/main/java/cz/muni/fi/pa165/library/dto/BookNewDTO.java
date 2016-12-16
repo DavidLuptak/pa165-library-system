@@ -3,6 +3,8 @@ package cz.muni.fi.pa165.library.dto;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Bedrich Said
@@ -21,6 +23,8 @@ public class BookNewDTO {
 
     @NotBlank(message = "Please enter a value.")
     private String isbn;
+
+    private List<Long> categoryIds = new ArrayList<>();
 
     public BookNewDTO() {
     }
@@ -61,6 +65,14 @@ public class BookNewDTO {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public List<Long> getCategoryIds() {
+        return categoryIds;
+    }
+
+    public void setCategoryIds(List<Long> categoryIds) {
+        this.categoryIds = categoryIds;
     }
 
     @Override

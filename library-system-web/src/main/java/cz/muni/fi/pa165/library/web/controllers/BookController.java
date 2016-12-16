@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.library.web.controllers;
 
 import cz.muni.fi.pa165.library.dto.BookDTO;
 import cz.muni.fi.pa165.library.dto.BookNewDTO;
+import cz.muni.fi.pa165.library.dto.CategoryDTO;
 import cz.muni.fi.pa165.library.exception.LibraryDAOException;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.BookFacade;
@@ -20,6 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author Lenka (433591)
@@ -116,4 +118,9 @@ public class BookController {
         return "redirect:" + uriBuilder.path("/book/detail/" + book.getId()).toUriString();
     }
 
+    @ModelAttribute("categories")
+    public List<CategoryDTO> categories() {
+        log.debug("categories()");
+        return categoryFacade.findAll();
+    }
 }

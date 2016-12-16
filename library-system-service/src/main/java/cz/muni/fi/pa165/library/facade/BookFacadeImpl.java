@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +30,9 @@ public class BookFacadeImpl implements BookFacade {
     private BookService bookService;
 
     @Inject
+    private CategoryService categoryService;
+
+    @Inject
     private BeanMappingService beanMappingService;
 
     @Override
@@ -37,6 +41,13 @@ public class BookFacadeImpl implements BookFacade {
             throw new IllegalArgumentException("Book cannot be null.");
         }
         Book book = beanMappingService.mapTo(bookNewDTO, Book.class);
+
+        List<Long> categoryIds = bookNewDTO.getCategoryIds();
+        List<Category> categories = new ArrayList<>();
+
+        categoryIds.forEach(id -> categories.add(categoryService.findById(id)));
+        categories.forEach(category -> category.addBook(book));
+
         bookService.create(book);
         return book.getId();
     }
@@ -75,19 +86,7 @@ public class BookFacadeImpl implements BookFacade {
             throw new NoEntityFoundException("Book not found during findById.");
         }
 
-        BookDTO bookDTO = beanMappingService.mapTo(book, BookDTO.class);
-
-        List<Category> categories = book.getCategories();
-        List<CategoryDTO> categoryDTOS = beanMappingService.mapTo(categories, CategoryDTO.class);
-
-        categoryDTOS.forEach(bookDTO::addCategory);
-
-        List<BookCopy> bookCopies = book.getBookCopies();
-        List<BookCopyDTO> bookCopyDTOS = beanMappingService.mapTo(bookCopies, BookCopyDTO.class);
-
-        bookCopyDTOS.forEach(bookDTO::addBookCopy);
-
-        return bookDTO;
+        return mapOwningSidesToDTO(book);
     }
 
     @Override
@@ -100,7 +99,10 @@ public class BookFacadeImpl implements BookFacade {
             throw new NoEntityFoundException("Books not found during findByAuthor.");
         }
 
-        return beanMappingService.mapTo(books, BookDTO.class);
+        List<BookDTO> bookDTOS = new ArrayList<>();
+        books.forEach(book -> bookDTOS.add(mapOwningSidesToDTO(book)));
+
+        return bookDTOS;
     }
 
     @Override
@@ -113,11 +115,34 @@ public class BookFacadeImpl implements BookFacade {
             throw new NoEntityFoundException("Books not found during findByTitle.");
         }
 
-        return beanMappingService.mapTo(books, BookDTO.class);
+        List<BookDTO> bookDTOS = new ArrayList<>();
+        books.forEach(book -> bookDTOS.add(mapOwningSidesToDTO(book)));
+
+        return bookDTOS;
     }
 
     @Override
     public List<BookDTO> findAll() {
-        return beanMappingService.mapTo(bookService.findAll(), BookDTO.class);
+        List<Book> books = bookService.findAll();
+        List<BookDTO> bookDTOS = new ArrayList<>();
+
+        books.forEach(book -> bookDTOS.add(mapOwningSidesToDTO(book)));
+
+        return bookDTOS;
+    }
+
+    private BookDTO mapOwningSidesToDTO(Book book) {
+        BookDTO bookDTO = beanMappingService.mapTo(book, BookDTO.class);
+
+        List<Category> categories = book.getCategories();
+        List<CategoryDTO> categoryDTOS = beanMappingService.mapTo(categories, CategoryDTO.class);
+
+        categoryDTOS.forEach(bookDTO::addCategory);
+
+        List<BookCopy> bookCopies = book.getBookCopies();
+        List<BookCopyDTO> bookCopyDTOS = beanMappingService.mapTo(bookCopies, BookCopyDTO.class);
+
+        bookCopyDTOS.forEach(bookDTO::addBookCopy);
+        return bookDTO;
     }
 }

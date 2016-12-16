@@ -24,6 +24,17 @@
             </c:if>
         </div>
     </div>
+    <div class="form-group">
+        <form:label path="categoryIds" cssClass="col-sm-1 control-label">Category</form:label>
+        <div class="col-sm-5">
+            <form:select path="categoryIds" cssClass="form-control" multiple="true">
+                <c:forEach items="${categories}" var="c">
+                    <form:option value="${c.id}">${c.name}</form:option>
+                </c:forEach>
+            </form:select>
+            <p class="help-block"><form:errors path="categoryIds" cssClass="error"/></p>
+        </div>
+    </div>
     <form:hidden path="id"/>
     <div class="col-sm-offset-1 col-sm-5">
         <button class="btn btn-primary" type="submit">Save</button>
