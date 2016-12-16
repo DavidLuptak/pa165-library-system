@@ -1,5 +1,8 @@
 package cz.muni.fi.pa165.library.enums;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Status of the book condition.
  *
@@ -24,6 +27,10 @@ public enum BookState {
     }
 
     public boolean isLighter(BookState other) {return this.damageValue < other.damageValue;}
+
+    public static List<BookState> all(){
+        return Arrays.asList(NEW,LIGHT_DAMAGE,MEDIUM_DAMAGE,HEAVY_DAMAGE);
+    }
 
     @Override
     public String toString() {

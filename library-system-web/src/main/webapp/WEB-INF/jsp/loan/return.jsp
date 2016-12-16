@@ -8,7 +8,7 @@
 <c:set var="actionUrl" value="${pageContext.request.contextPath}/loan/return"/>
 <c:set var="backUrl" value="${pageContext.request.contextPath}/loan/index"/>
 
-<my:pagetemplate title="Return loan">
+<my:pagetemplate title="Return Loan">
     <jsp:attribute name="scripts">
         <script>
             $(function () {
@@ -65,7 +65,11 @@
             <div class="form-group">
                 <form:label path="returnBookState" cssClass="col-sm-2 control-label">Return BookState</form:label>
                 <div class="col-sm-5">
-                    <form:input path="returnBookState" cssClass="form-control"/>
+                    <form:select path="returnBookState" cssClass="form-control" >
+                        <c:forEach items="${bookStates}" var="bookState">
+                            <form:option value="${bookState}">${bookState}</form:option>
+                        </c:forEach>
+                    </form:select>
                     <form:errors path="returnBookState" cssClass="help-block"/>
                 </div>
             </div>

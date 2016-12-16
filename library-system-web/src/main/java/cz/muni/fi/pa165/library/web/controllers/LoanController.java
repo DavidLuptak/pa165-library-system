@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.library.web.controllers;
 import cz.muni.fi.pa165.library.dto.LoanDTO;
 import cz.muni.fi.pa165.library.dto.LoanNewDTO;
 import cz.muni.fi.pa165.library.entity.Loan;
+import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.LoanFacade;
 import cz.muni.fi.pa165.library.facade.UserFacade;
@@ -80,6 +81,8 @@ public class LoanController {
                        UriComponentsBuilder uriBuilder) {
         try {
             model.addAttribute("loan", loanFacade.findById(id));
+            model.addAttribute("bookStates", BookState.all());
+            System.out.println(BookState.all());
         } catch (NoEntityFoundException e) {
             redirectAttributes.addAttribute("alert_danger", "Loan was not found");
             return "redirect:" + uriBuilder.path("/loan/detail/" + id).toUriString();
