@@ -182,4 +182,14 @@ public class UserServiceImpl implements UserService {
         int paddingLength = (array.length * 2) - hex.length();
         return paddingLength > 0 ? String.format("%0" + paddingLength + "d", 0) + hex : hex;
     }
+
+    @Override
+    public boolean isAdmin(User u) {
+        return findUserById(u.getId()).isAdmin();
+    }
+    
+    @Override
+    public User findUserById(Long userId) {
+        return userDao.findById(userId);
+    }
 }

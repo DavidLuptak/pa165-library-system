@@ -134,4 +134,9 @@ public class UserFacadeImpl implements UserFacade {
         //todo
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public boolean isAdmin(UserDTO u) {
+        return userService.isAdmin(beanMappingService.mapTo(u, User.class));
+    }
 }

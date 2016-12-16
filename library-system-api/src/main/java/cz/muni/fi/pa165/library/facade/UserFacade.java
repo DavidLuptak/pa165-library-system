@@ -106,4 +106,11 @@ public interface UserFacade {
      * @return 
      */
     List<LoanDTO> getAllUserLoans(Long id);
+    
+    /**
+     * Check if the given user is admin.
+     * @param u given user
+     * @return true if the user is admin
+     */
+    boolean isAdmin(UserDTO u);
 }
