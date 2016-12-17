@@ -80,13 +80,6 @@
 
 </div>
 
-<script>
-    $(function () {
-       var url = document.location.pathname;
-        $('.navbar li a[href="' + url + '"]').parent().addClass("active");
-    });
-    console.log();
-</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>

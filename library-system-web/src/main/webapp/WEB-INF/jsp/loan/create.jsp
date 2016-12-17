@@ -19,23 +19,22 @@
         <form:form method="post" action="${actionUrl}"
                    modelAttribute="loan" cssClass="form-horizontal form-loan">
             <div class="form-group">
-                <form:label path="bookCopyIds" cssClass="col-sm-2 control-label">Book</form:label>
+                <form:label path="bookIds" cssClass="col-sm-2 control-label">Choose books</form:label>
                 <div class="col-sm-5">
-                    <form:select path="bookCopyIds" cssClass="form-control" multiple="true">
-                        <c:forEach items="${bookCopies}" var="bookCopy">
-                            <form:option value="${bookCopy.id}">${bookCopy.book.name}</form:option>
+                    <form:select path="bookIds" cssClass="form-control" multiple="true" size="${books.size() > 15 ? 15 : books.size()}">
+                        <c:forEach items="${books}" var="book">
+                            <form:option value="${book.id}">${book.title}</form:option>
                         </c:forEach>
                     </form:select>
-                    <p class="help-block"><form:errors path="bookCopyIds" cssClass="error"/></p>
+                    <p class="help-block"><form:errors path="bookIds" cssClass="error"/></p>
                 </div>
             </div>
-            <div class="form-group">
-                <form:label path="loanDate" cssClass="col-sm-2 control-label">Return Date</form:label>
-                <div class="col-sm-5">
-                    <form:input path="loanDate" cssClass="form-control datepicker"/>
-                    <form:errors path="loanDate" cssClass="help-block"/>
-                </div>
-            </div>
+             <div class="col-sm-offset-1 col-sm-5">
+                 <button class="btn btn-primary" type="submit">Save</button>
+                 <a href="${backUrl}" class="btn btn-default">Back</a>
+             </div>
+            <form:hidden path="userId"/>
+            <form:hidden path="loanDate"/>
         </form:form>
     </jsp:attribute>
 </my:pagetemplate>

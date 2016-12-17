@@ -4,6 +4,8 @@ import cz.muni.fi.pa165.library.dto.LoanDTO;
 import cz.muni.fi.pa165.library.dto.LoanNewDTO;
 import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
+import cz.muni.fi.pa165.library.facade.BookCopyFacade;
+import cz.muni.fi.pa165.library.facade.BookFacade;
 import cz.muni.fi.pa165.library.facade.LoanFacade;
 import cz.muni.fi.pa165.library.facade.UserFacade;
 import org.slf4j.Logger;
@@ -20,6 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,6 +41,39 @@ public class LoanController {
 
     @Inject
     private UserFacade userFacade;
+
+    @Inject
+    private BookFacade bookFacade;
+
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public String create(Model model) {
+        LoanNewDTO loan = new LoanNewDTO(1L, null, new Date());
+        model.addAttribute("loan", loan);
+        model.addAttribute("books", bookFacade.findAll());
+        return "loan/create";
+    }
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public String create(@Valid @ModelAttribute LoanNewDTO loan, BindingResult br,
+                         RedirectAttributes redirectAttributes,
+                         UriComponentsBuilder uriBuilder) {
+        if (br.hasErrors()) {
+
+            return "loan/create";
+        }
+        else {
+            try {
+                loanFacade.create(loan);
+                redirectAttributes.addAttribute("alert_info", "Loan was successfully created.");
+            }
+            catch (NoEntityFoundException | IllegalArgumentException e) {
+                redirectAttributes.addAttribute("alert_danger", "Loan could not be created.");
+            }
+
+            return "redirect:" + uriBuilder.path("/loan").toUriString();
+
+        }
+    }
 
     @RequestMapping(value = {"", "/", "/index"}, method = RequestMethod.GET)
     public String index(Model model) {

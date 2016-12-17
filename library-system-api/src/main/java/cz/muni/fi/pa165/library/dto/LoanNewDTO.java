@@ -16,7 +16,7 @@ public class LoanNewDTO {
     private Long userId;
 
     @NotNull
-    private List<Long> bookCopyIds = new ArrayList<>();
+    private List<Long> bookIds = new ArrayList<>();
 
     @NotNull
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
@@ -25,9 +25,9 @@ public class LoanNewDTO {
     public LoanNewDTO() {
     }
 
-    public LoanNewDTO(Long userId, List<Long> bookCopyIds, Date loanDate) {
+    public LoanNewDTO(Long userId, List<Long> bookIds, Date loanDate) {
         this.userId = userId;
-        this.bookCopyIds = bookCopyIds;
+        this.bookIds = bookIds;
         this.loanDate = loanDate;
     }
 
@@ -47,12 +47,12 @@ public class LoanNewDTO {
         this.userId = userId;
     }
 
-    public List<Long> getBookCopyIds() {
-        return bookCopyIds;
+    public List<Long> getBookIds() {
+        return bookIds;
     }
 
-    public void setBookCopyIds(List<Long> bookCopyIds) {
-        this.bookCopyIds = bookCopyIds;
+    public void setBookIds(List<Long> bookIds) {
+        this.bookIds = bookIds;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class LoanNewDTO {
 
         if (!getLoanDate().equals(that.getLoanDate())) return false;
         if (getUserId() != null ? !getUserId().equals(that.getUserId()) : that.getUserId() != null) return false;
-        return getBookCopyIds().equals(that.getBookCopyIds());
+        return getBookIds().equals(that.getBookIds());
 
     }
 
@@ -73,7 +73,7 @@ public class LoanNewDTO {
     public int hashCode() {
         int result = getLoanDate().hashCode();
         result = 31 * result + (getUserId() != null ? getUserId().hashCode() : 0);
-        result = 31 * result + getBookCopyIds().hashCode();
+        result = 31 * result + getBookIds().hashCode();
         return result;
     }
 }

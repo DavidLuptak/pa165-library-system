@@ -2,12 +2,14 @@ package cz.muni.fi.pa165.library.facade;
 
 import cz.muni.fi.pa165.library.dto.LoanDTO;
 import cz.muni.fi.pa165.library.dto.LoanNewDTO;
+import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.BookCopy;
 import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.mapping.BeanMappingService;
 import cz.muni.fi.pa165.library.service.BookCopyService;
+import cz.muni.fi.pa165.library.service.BookService;
 import cz.muni.fi.pa165.library.service.LoanService;
 import cz.muni.fi.pa165.library.service.UserService;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,9 @@ public class LoanFacadeImpl implements LoanFacade {
     private BookCopyService bookCopyService;
 
     @Inject
+    private BookService bookService;
+
+    @Inject
     private BeanMappingService beanMappingService;
 
     @Override
@@ -46,7 +51,7 @@ public class LoanFacadeImpl implements LoanFacade {
         List<Long> loans = new ArrayList<>();
         User user = checkNullAndExistenceOfUser(loanNewDTO.getUserId());
 
-        for (Long id : loanNewDTO.getBookCopyIds()) {
+        for (Long id : loanNewDTO.getBookIds()) {
             Loan loan = beanMappingService.mapTo(loanNewDTO, Loan.class);
             loan.setUser(user);
             loan.setBookCopy(checkNullAndExistenceOfBookCopy(id));
@@ -179,12 +184,13 @@ public class LoanFacadeImpl implements LoanFacade {
 
     private BookCopy checkNullAndExistenceOfBookCopy(Long id) {
         if (id == null) {
-            throw new IllegalArgumentException("BookCopy id cannot be null.");
+            throw new IllegalArgumentException("Book id cannot be null.");
         }
-        BookCopy bookCopy = bookCopyService.findById(id);
-        if (bookCopy == null) {
+        Book book = bookService.findById(id);
+        List<BookCopy> bookCopies = bookCopyService.findByBook(book);
+        if (bookCopies == null || bookCopies.size() == 0) {
             throw new NoEntityFoundException("BookCopy cannot be found.");
         }
-        return bookCopy;
+        return bookCopies.get(0);
     }
 }
