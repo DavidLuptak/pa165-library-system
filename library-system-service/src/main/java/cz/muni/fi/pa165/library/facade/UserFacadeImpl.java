@@ -81,7 +81,7 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public UserDTO findByEmail(String email) {
+    public UserDTO findByEmail(String email) throws NoEntityFoundException, IllegalArgumentException {
         if (email == null || email.isEmpty()) {
             throw new IllegalArgumentException("Email cannot be null.");
         }
