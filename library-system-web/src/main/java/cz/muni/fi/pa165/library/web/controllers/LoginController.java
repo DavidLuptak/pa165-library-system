@@ -17,7 +17,7 @@ public class LoginController {
     @Inject
     UserFacade userFacade;
 
-    @RequestMapping(value = {"", "/login", "/login/login"})
+    @RequestMapping(value = {"", "/", "/login"})
     public String init(Model model) {
         return "login/login";
     }

@@ -45,11 +45,34 @@
 
         </div>
 
-         <div class="row">
-             <div class="col-sm-6 col-sm-offset-1">
-
-             </div>
-         </div>
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-1">
+                
+            </div>
+        </div>
+                        
+        <h3>List of <c:out value="${book.title}"/> Copies</h3>
+        <table class="table table-striped table-hover table-books">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Book State</th>
+                <th>Available</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="copy" items="${copies}">
+                <tr>
+                    <td><c:out value="${copy.id}"/></td>
+                    <td><c:out value="${copy.bookState}"/></td>
+                    <td>
+                        <c:if test="${empty copy.loans}">Yes</c:if>
+                        <c:if test="${not empty copy.loans}">No</c:if>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
 
     </jsp:attribute>
 </my:pagetemplate>

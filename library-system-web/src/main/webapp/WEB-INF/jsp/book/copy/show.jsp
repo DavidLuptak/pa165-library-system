@@ -25,14 +25,6 @@
                         <c:if test="${empty book.loans}">Yes</c:if>
                         <c:if test="${not empty book.loans}">No</c:if>
                     </td>
-                    <td>
-                        <a class="btn btn-default" href="${pageContext.request.contextPath}/book/detail/${book.id}">
-                            <span class="glyphicon glyphicon-search" title="Detail"></span>
-                        </a>
-                        <a class="btn btn-danger" href="${pageContext.request.contextPath}/book/delete/${book.id}">
-                            <span class="glyphicon glyphicon-remove" title="Delete"></span>
-                        </a>
-                    </td>
                 </tr>
             </c:forEach>
             </tbody>

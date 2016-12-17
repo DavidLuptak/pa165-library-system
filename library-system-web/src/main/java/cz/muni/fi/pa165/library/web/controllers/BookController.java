@@ -55,6 +55,7 @@ public class BookController {
                          UriComponentsBuilder uriBuilder) {
         try {
             model.addAttribute("book", bookFacade.findById(id));
+            model.addAttribute("copies", bookFacade.findById(id).getBookCopies());
         } catch (NoEntityFoundException e) {
             redirectAttributes.addFlashAttribute("alert_danger", "Book " + id + " was not found");
             return "redirect:" + uriBuilder.path("/book").toUriString();
