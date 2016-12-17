@@ -21,7 +21,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  *
  * @author Bedrich Said
  */
-@WebFilter(urlPatterns = {"/login/testPage", "/login"})
+@WebFilter(urlPatterns = {"/login/validate"})
 public class ProtectFilter implements Filter {
 
     @Override
@@ -37,14 +37,8 @@ public class ProtectFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-        //String auth = request.getHeader("Authorization");
-        //if (auth == null) {
-        //    response401(response);
-        //    return;
-        //}
-        //String[] creds = parseAuthHeader(auth);
-        String logname = "admin@library.com";
-        String password = "admin";
+        String logname = req.getParameter("username");
+        String password = req.getParameter("password");
 
         UserFacade userFacade = WebApplicationContextUtils.getWebApplicationContext(req.getServletContext()).getBean(UserFacade.class);
         UserDTO matchingUser;
@@ -67,17 +61,11 @@ public class ProtectFilter implements Filter {
         }
         request.setAttribute("authenticatedUser", matchingUser);
         chain.doFilter(request, response);
-        throw new NullPointerException("401 resposne");
     }
     
     private void response401(HttpServletResponse response) throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.setHeader("WWW-Authenticate", "Basic realm=\"type email and password\"");
         response.getWriter().println("<html><body><h1>401 Unauthorized</h1> Go away ...</body></html>");
-    }
-    
-    private String[] parseAuthHeader(String auth) {
-        return new String(DatatypeConverter.parseBase64Binary(auth.split(" ")[1])).split(":", 2);
     }
     
 }

@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
@@ -17,8 +18,13 @@ public class LoginController {
     @Inject
     UserFacade userFacade;
 
-    @RequestMapping(value = {"", "/", "/login"})
+    @RequestMapping(value = {"", "/"})
     public String init(Model model) {
-        return "login/login";
+        return "/login/login";
+    }
+    
+    @RequestMapping(value = {"/validate"}, method = RequestMethod.POST)
+    public String validate(Model model) {
+        return "/login/validate";
     }
 }

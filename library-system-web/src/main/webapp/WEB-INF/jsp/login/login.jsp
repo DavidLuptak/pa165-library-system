@@ -12,7 +12,7 @@
         <c:if test="${param.error != null}">
             <div>Invalid credentials.</div>
         </c:if>
-        <form:form method="POST">
+        <form:form action="${pageContext.request.contextPath}/login/validate" method="POST">
             <div class="form-group">
                 <label for="username">E-mail:</label>
                 <input name="username" type="text" />
