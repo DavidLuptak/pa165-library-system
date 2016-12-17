@@ -139,7 +139,7 @@ public class LoanServiceImpl implements LoanService {
         if(loan.getReturnBookState() == null){
             throw new IllegalArgumentException("bookState of loan has to be set");
         }
-        if(loan.getLoanDate().after(loan.getReturnDate())){
+        if(loan.getLoanDate().isAfter(loan.getReturnDate())){
             throw new IllegalArgumentException("returnDate of loan has to be after loanDate");
         }
         if(loan.getReturnBookState().isLighter(loan.getBookCopy().getBookState())){

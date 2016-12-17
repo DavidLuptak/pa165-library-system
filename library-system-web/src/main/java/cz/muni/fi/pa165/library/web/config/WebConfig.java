@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.library.web.config;
 import javax.validation.Validator;
 
 import cz.muni.fi.pa165.library.sampledata.SampleDataConfiguration;
+import cz.muni.fi.pa165.library.web.converter.DateConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -82,5 +84,13 @@ public class WebConfig extends WebMvcConfigurerAdapter{
     public Validator validator() {
         log.debug("registering JSR-303 validator");
         return new LocalValidatorFactoryBean();
+    }
+
+    /**
+     * Add converter for Date
+     */
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(new DateConverter());
     }
 }

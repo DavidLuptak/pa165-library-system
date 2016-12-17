@@ -2,6 +2,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="my" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://sargue.net/jsptags/time" prefix="javatime" %>
 
 <my:pagetemplate title="Loan detail">
     <jsp:attribute name="body">
@@ -24,7 +25,7 @@
                     </tr>
                     <tr>
                         <th scope="row" class="col-sm-3">Loan Date</th>
-                        <td><fmt:formatDate value="${loan.loanDate}" pattern="dd.MM.yyyy HH:mm"/></td>
+                        <td><javatime:format value="${loan.loanDate}" pattern="dd.MM.yyyy HH:mm"/></td>
                     </tr>
                     <tr>
                         <th scope="row" class="col-sm-3">Loan BookState</th>
@@ -34,7 +35,7 @@
                     <c:if test="${loan.returnDate != null}">
                     <tr>
                         <th scope="row" class="col-sm-3">Return Date</th>
-                        <td><fmt:formatDate value="${loan.returnDate}" pattern="dd.MM.yyyy HH:mm"/></td>
+                        <td><javatime:format value="${loan.returnDate}" pattern="dd.MM.yyyy HH:mm"/></td>
                     </tr>
 
                     </c:if>

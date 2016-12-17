@@ -4,6 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://sargue.net/jsptags/time" prefix="javatime" %>
 
 <c:set var="actionUrl" value="${pageContext.request.contextPath}/loan/return"/>
 <c:set var="backUrl" value="${pageContext.request.contextPath}/loan/index"/>

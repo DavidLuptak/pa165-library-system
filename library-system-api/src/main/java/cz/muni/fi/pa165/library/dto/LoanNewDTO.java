@@ -2,6 +2,8 @@ package cz.muni.fi.pa165.library.dto;
 
 import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,22 +22,22 @@ public class LoanNewDTO {
 
     @NotNull
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
-    private Date loanDate;
+    private LocalDateTime loanDate;
 
     public LoanNewDTO() {
     }
 
-    public LoanNewDTO(Long userId, List<Long> bookIds, Date loanDate) {
+    public LoanNewDTO(Long userId, List<Long> bookIds, LocalDateTime loanDate) {
         this.userId = userId;
         this.bookIds = bookIds;
         this.loanDate = loanDate;
     }
 
-    public Date getLoanDate() {
+    public LocalDateTime getLoanDate() {
         return loanDate;
     }
 
-    public void setLoanDate(Date loanDate) {
+    public void setLoanDate(LocalDateTime loanDate) {
         this.loanDate = loanDate;
     }
 

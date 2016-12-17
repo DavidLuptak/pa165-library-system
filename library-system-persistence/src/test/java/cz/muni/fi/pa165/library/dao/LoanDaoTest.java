@@ -17,6 +17,8 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.ConstraintViolationException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -113,7 +115,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     public void testCreateLoanWithoutBookCopy() {
         Loan aLoan = new Loan();
         aLoan.setUser(joshua);
-        aLoan.setLoanDate(new Date());
+        aLoan.setLoanDate(LocalDateTime.of(2010,10,10,10,10));
         loanDao.create(aLoan);
     }
 
@@ -241,7 +243,7 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
 
     private Loan getBlochLoan() {
         Loan blochLoan = new Loan();
-        blochLoan.setLoanDate(new Date());
+        blochLoan.setLoanDate(LocalDateTime.of(2010,10,10,10,10));
         blochLoan.setReturnBookState(BookState.NEW);
         blochLoan.setBookCopy(effectiveJava42);
         blochLoan.setUser(joshua);
@@ -251,8 +253,8 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
 
     private Loan getJoshuaLoan() {
         Loan joshuaLoan = new Loan();
-        joshuaLoan.setLoanDate(new Date());
-        joshuaLoan.setReturnDate(new Date());
+        joshuaLoan.setLoanDate(LocalDateTime.of(2010,10,10,10,10));
+        joshuaLoan.setReturnDate(LocalDateTime.of(2010,10,10,10,10));
         joshuaLoan.setReturnBookState(BookState.LIGHT_DAMAGE);
         joshuaLoan.setBookCopy(effectiveJava42);
         joshuaLoan.setUser(joshua);

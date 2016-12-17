@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.library.enums.BookState;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -20,11 +21,11 @@ public class LoanDTO {
 
     @NotNull
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
-    private Date loanDate;
+    private LocalDateTime loanDate;
 
     @NotNull
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
-    private Date returnDate;
+    private LocalDateTime returnDate;
 
     @NotNull
     private BookState returnBookState;
@@ -48,19 +49,19 @@ public class LoanDTO {
         this.user = user;
     }
 
-    public Date getLoanDate() {
+    public LocalDateTime getLoanDate() {
         return loanDate;
     }
 
-    public void setLoanDate(Date loanDate) {
+    public void setLoanDate(LocalDateTime loanDate) {
         this.loanDate = loanDate;
     }
 
-    public Date getReturnDate() {
+    public LocalDateTime getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(Date returnDate) {
+    public void setReturnDate(LocalDateTime returnDate) {
         this.returnDate = returnDate;
     }
 

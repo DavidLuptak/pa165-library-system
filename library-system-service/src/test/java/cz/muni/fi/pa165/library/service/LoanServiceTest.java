@@ -17,6 +17,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -64,26 +65,26 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
         book.setId(1L);
         bookCopy = new BookCopy(book, BookState.NEW);
         bookCopy.setId(1L);
-        loan = new Loan(user, bookCopy, new Date());
+        loan = new Loan(user, bookCopy, LocalDateTime.of(2016,10,10,10,10));
         loan.setId(1L);
 
         //
         returnedLoan1 = new Loan();
-        returnedLoan1.setLoanDate(new Date(5));
-        returnedLoan1.setReturnDate(new Date(6));
+        returnedLoan1.setLoanDate(LocalDateTime.of(2016,10,10,10,10));
+        returnedLoan1.setReturnDate(LocalDateTime.of(2016,10,10,10,10));
         returnedLoan2 = new Loan();
-        returnedLoan2.setLoanDate(new Date(3));
-        returnedLoan2.setReturnDate(new Date(4));
+        returnedLoan2.setLoanDate(LocalDateTime.of(2016,10,10,10,10));
+        returnedLoan2.setReturnDate(LocalDateTime.of(2016,10,10,10,10));
         returnedLoan3 = new Loan();
-        returnedLoan3.setLoanDate(new Date(10));
-        returnedLoan3.setReturnDate(new Date(11));
+        returnedLoan3.setLoanDate(LocalDateTime.of(2016,10,10,10,10));
+        returnedLoan3.setReturnDate(LocalDateTime.of(2016,10,10,10,10));
 
         notReturnedLoan1 = new Loan();
-        notReturnedLoan1.setLoanDate(new Date(5));
+        notReturnedLoan1.setLoanDate(LocalDateTime.of(2016,10,10,10,10));
         notReturnedLoan2 = new Loan();
-        notReturnedLoan2.setLoanDate(new Date(3));
+        notReturnedLoan2.setLoanDate(LocalDateTime.of(2016,10,10,10,10));
         notReturnedLoan3 = new Loan();
-        notReturnedLoan3.setLoanDate(new Date(10));
+        notReturnedLoan3.setLoanDate(LocalDateTime.of(2016,10,10,10,10));
 
         user.addLoan(returnedLoan1);
         user.addLoan(notReturnedLoan1);
@@ -140,13 +141,13 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
     @Test(expectedExceptions = LibraryDAOException.class)
     public void testCreateNoBook() {
-        Loan loan = new Loan(user, null, new Date());
+        Loan loan = new Loan(user, null, LocalDateTime.of(2016,10,10,10,10));
         loanService.create(loan);
     }
 
     @Test(expectedExceptions = LibraryDAOException.class)
     public void testCreateNoUser() {
-        Loan loan = new Loan(null, bookCopy, new Date());
+        Loan loan = new Loan(null, bookCopy, LocalDateTime.of(2016,10,10,10,10));
         loanService.create(loan);
     }
 

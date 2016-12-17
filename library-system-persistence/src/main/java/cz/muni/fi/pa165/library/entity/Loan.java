@@ -4,7 +4,7 @@ import cz.muni.fi.pa165.library.enums.BookState;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Entity class representing Loan in the library system.
@@ -29,12 +29,11 @@ public class Loan {
     private BookCopy bookCopy;
 
     @NotNull
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date loanDate;
+    @Column
+    private LocalDateTime loanDate;
 
     @Column
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date returnDate;
+    private LocalDateTime returnDate;
 
     @Column
     private BookState returnBookState;
@@ -43,7 +42,7 @@ public class Loan {
     public Loan() {
     }
 
-    public Loan(User user, BookCopy bookCopy, Date loanDate) {
+    public Loan(User user, BookCopy bookCopy, LocalDateTime loanDate) {
         this.user = user;
         this.bookCopy = bookCopy;
         this.loanDate = loanDate;
@@ -65,19 +64,19 @@ public class Loan {
         this.user = user;
     }
 
-    public Date getLoanDate() {
+    public LocalDateTime getLoanDate() {
         return loanDate;
     }
 
-    public void setLoanDate(Date loanDate) {
+    public void setLoanDate(LocalDateTime loanDate) {
         this.loanDate = loanDate;
     }
 
-    public Date getReturnDate() {
+    public LocalDateTime getReturnDate() {
         return this.returnDate;
     }
 
-    public void setReturnDate(Date returnDate) {
+    public void setReturnDate(LocalDateTime returnDate) {
         this.returnDate = returnDate;
     }
 

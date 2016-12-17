@@ -2,6 +2,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="my" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://sargue.net/jsptags/time" prefix="javatime" %>
 
 <c:set var="actionUrl" value="${pageContext.request.contextPath}/loan/create"/>
 <c:set var="backUrl" value="${pageContext.request.contextPath}/loan/index"/>

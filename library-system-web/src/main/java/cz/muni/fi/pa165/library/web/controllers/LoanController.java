@@ -22,6 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class LoanController {
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String create(Model model) {
-        LoanNewDTO loan = new LoanNewDTO(1L, null, new Date());
+        LoanNewDTO loan = new LoanNewDTO(1L, null, LocalDateTime.now());
         model.addAttribute("loan", loan);
         model.addAttribute("books", bookFacade.findLoanableBooks());
         return "loan/create";

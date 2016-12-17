@@ -6,10 +6,10 @@ import cz.muni.fi.pa165.library.mapping.BeanMappingService;
 import cz.muni.fi.pa165.library.service.CategoryService;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Lenka (433591)
@@ -22,8 +22,12 @@ public class ServiceConfiguration {
 
     @Bean
     public Mapper dozer() {
+        // this is needed to support Java 8 time api with Dozer
+        List<String> mappingFiles = new ArrayList<>();
+        mappingFiles.add("dozerJdk8Converters.xml");
+
         DozerBeanMapper dozer = new DozerBeanMapper();
-        //dozer.addMapping(new DozerCustomConfig());
+        dozer.setMappingFiles(mappingFiles);
         return dozer;
     }
 

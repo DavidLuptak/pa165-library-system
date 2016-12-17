@@ -25,6 +25,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -88,16 +89,16 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         book.setId(1L);
         bookCopy = new BookCopy(book, BookState.NEW);
         bookCopy.setId(1L);
-        loan = new Loan(user, bookCopy, new Date());
+        loan = new Loan(user, bookCopy, LocalDateTime.of(2016,10,10,10,10));
         loan.setId(1L);
         loan.setReturnBookState(BookState.LIGHT_DAMAGE);
-        loan.setReturnDate(new Date());
+        loan.setReturnDate(LocalDateTime.of(2016,10,10,10,10));
 
         user2 = new User("Ondrej", "Velky", "ondrej@abc.com", "Praha", UserRole.ADMIN);
         user2.setId(2L);
         bookCopy2 = new BookCopy(book, BookState.MEDIUM_DAMAGE);
         bookCopy2.setId(2L);
-        loan2 = new Loan(user2, bookCopy2, new Date());
+        loan2 = new Loan(user2, bookCopy2, LocalDateTime.of(2016,10,10,10,10));
     }
 
     @BeforeMethod(dependsOnMethods = "initEntities")
@@ -124,7 +125,7 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
 
     @Test
     public void testCreate() {
-        loanNewDTO = new LoanNewDTO(user.getId(), Arrays.asList(book.getId()), new Date());
+        loanNewDTO = new LoanNewDTO(user.getId(), Arrays.asList(book.getId()), LocalDateTime.of(2016,10,10,10,10));
         loanFacade.create(loanNewDTO);
 
         verify(loanService).create(loanArgumentCaptor.capture());
@@ -147,9 +148,9 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         loanDTO.setId(loan.getId());
         loanDTO.setReturnBookState(BookState.HEAVY_DAMAGE);
         loanDTO.setBookCopy(bookCopyDTO);
-        loanDTO.setLoanDate(new Date(10));
+        loanDTO.setLoanDate(LocalDateTime.of(2016,10,10,10,10));
         loanDTO.setUser(userDTO);
-        loanDTO.setReturnDate(new Date(20));
+        loanDTO.setReturnDate(LocalDateTime.of(2016,10,10,10,10));
 
         loanFacade.update(loanDTO);
 
@@ -158,8 +159,8 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         Loan entity = loanArgumentCaptor.getValue();
         assertEquals(entity.getId(), loan.getId());
         assertEquals(entity.getReturnBookState(), BookState.HEAVY_DAMAGE);
-        assertEquals(entity.getLoanDate(), new Date(10));
-        assertEquals(entity.getReturnDate(), new Date(20));
+        assertEquals(entity.getLoanDate(), LocalDateTime.of(2016,10,10,10,10));
+        assertEquals(entity.getReturnDate(), LocalDateTime.of(2016,10,10,10,10));
         assertEquals(entity.getUser().getId(), new Long(1));
         assertEquals(entity.getBookCopy().getId(), new Long(1));
     }

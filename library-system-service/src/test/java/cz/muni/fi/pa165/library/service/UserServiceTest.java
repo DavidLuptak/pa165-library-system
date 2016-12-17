@@ -15,6 +15,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.persistence.EntityExistsException;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -96,12 +97,12 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
         //for harder function
         returnedLoan = new Loan();
-        returnedLoan.setLoanDate(new Date(5));
-        returnedLoan.setReturnDate(new Date(10));
+        returnedLoan.setLoanDate(LocalDateTime.of(2016,10,10,10,10));
+        returnedLoan.setReturnDate(LocalDateTime.of(2016,10,10,10,10));
         notReturnedLoan = new Loan();
         returnedLoan2 = new Loan();
-        returnedLoan2.setLoanDate(new Date(5));
-        returnedLoan2.setReturnDate(new Date(10));
+        returnedLoan2.setLoanDate(LocalDateTime.of(2016,10,10,10,10));
+        returnedLoan2.setReturnDate(LocalDateTime.of(2016,10,10,10,10));
         notReturnedLoan2 = new Loan();
 
         userPersistedA.addLoan(notReturnedLoan);

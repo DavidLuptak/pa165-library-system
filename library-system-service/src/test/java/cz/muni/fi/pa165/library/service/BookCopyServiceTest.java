@@ -18,6 +18,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -60,7 +61,7 @@ public class BookCopyServiceTest extends AbstractTransactionalTestNGSpringContex
         book1.setId(1L);
         bookCopy1 = new BookCopy(book1, BookState.NEW);
         bookCopy1.setId(1L);
-        loan = new Loan(user, bookCopy1, new Date());
+        loan = new Loan(user, bookCopy1, LocalDateTime.of(2016,10,10,10,10));
         loan.setId(1L);
         bookCopy2 = new BookCopy(book1, BookState.LIGHT_DAMAGE);
         bookCopy2.setId(2L);

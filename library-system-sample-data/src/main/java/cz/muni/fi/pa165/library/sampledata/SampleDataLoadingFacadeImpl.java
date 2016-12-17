@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -90,18 +90,18 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         LOGGER.info("Categories loaded.");
 
         //Loans (owning User, BookCopy)
-        Loan loan11 = returnedLoan(user1, bookCopy11, new Date(5), new Date(10), BookState.NEW);
-        Loan loan12 = returnedLoan(user1, bookCopy21, new Date(5), new Date(10), BookState.NEW);
-        Loan loan13 = returnedLoan(user1, bookCopy11, new Date(15), new Date(20), BookState.LIGHT_DAMAGE);
+        Loan loan11 = returnedLoan(user1, bookCopy11, LocalDateTime.of(2016,12,5,10,10), LocalDateTime.of(2016,12,9,12,30), BookState.NEW);
+        Loan loan12 = returnedLoan(user1, bookCopy21,LocalDateTime.of(2016,12,5,10,10), LocalDateTime.of(2016,12,11,13,50), BookState.NEW);
+        Loan loan13 = returnedLoan(user1, bookCopy11, LocalDateTime.of(2016,12,5,10,10), LocalDateTime.of(2016,12,15,16,5), BookState.LIGHT_DAMAGE);
 
-        Loan loan1x1 = notReturnedLoan(user1, bookCopy32, new Date(30));
-        Loan loan1x2 = notReturnedLoan(user1, bookCopy23, new Date(30));
+        Loan loan1x1 = notReturnedLoan(user1, bookCopy32, LocalDateTime.of(2016,12,10,9,25));
+        Loan loan1x2 = notReturnedLoan(user1, bookCopy23, LocalDateTime.of(2016,12,10,8,15));
 
-        Loan loan21 = returnedLoan(user2, bookCopy22, new Date(5), new Date(10), BookState.NEW);
-        Loan loan22 = returnedLoan(user2, bookCopy31, new Date(5), new Date(10), BookState.NEW);
+        Loan loan21 = returnedLoan(user2, bookCopy22, LocalDateTime.of(2016,12,6,16,20), LocalDateTime.of(2016,12,10,14,6), BookState.NEW);
+        Loan loan22 = returnedLoan(user2, bookCopy31, LocalDateTime.of(2016,12,6,16,20), LocalDateTime.of(2016,12,16,12,0), BookState.NEW);
 
-        Loan loan2x1 = notReturnedLoan(user2, bookCopy11, new Date(35));
-        Loan loan2x2 = notReturnedLoan(user2, bookCopy45, new Date(40));
+        Loan loan2x1 = notReturnedLoan(user2, bookCopy11, LocalDateTime.of(2016,12,10,13,15));
+        Loan loan2x2 = notReturnedLoan(user2, bookCopy45, LocalDateTime.of(2016,12,10,13,15));
 
         LOGGER.info("Loans loaded.");
     }
@@ -135,7 +135,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         return user;
     }
 
-    private Loan returnedLoan(User user, BookCopy bookCopy, Date loanDate, Date returnDate, BookState returnBookState) {
+    private Loan returnedLoan(User user, BookCopy bookCopy, LocalDateTime loanDate, LocalDateTime returnDate, BookState returnBookState) {
         Loan loan = notReturnedLoan(user, bookCopy, loanDate);
         loan.setReturnDate(returnDate);
         loan.setReturnBookState(returnBookState);
@@ -143,7 +143,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         return loan;
     }
 
-    private Loan notReturnedLoan(User user, BookCopy bookCopy, Date loanDate) {
+    private Loan notReturnedLoan(User user, BookCopy bookCopy, LocalDateTime loanDate) {
         Loan loan = new Loan();
         loan.setUser(user);
         loan.setBookCopy(bookCopy);

@@ -20,6 +20,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -106,11 +108,11 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
 
         dbLoan1 = new Loan();
         dbLoan1.setBookCopy(dbBookCopy11);
-        dbLoan1.setLoanDate(new Date());
+        dbLoan1.setLoanDate(LocalDateTime.of(2010,10,10,10,10));
         dbLoan1.setUser(dbUser);
         dbLoan2 = new Loan();
         dbLoan2.setBookCopy(dbBookCopy12);
-        dbLoan2.setLoanDate(new Date());
+        dbLoan2.setLoanDate(LocalDateTime.of(2010,10,10,10,10));
         dbLoan2.setUser(dbUser);
         loanDao.create(dbLoan1);
         loanDao.create(dbLoan2);
