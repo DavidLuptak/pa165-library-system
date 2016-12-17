@@ -2,7 +2,6 @@ package cz.muni.fi.pa165.library.web.controllers;
 
 import cz.muni.fi.pa165.library.dto.LoanDTO;
 import cz.muni.fi.pa165.library.dto.LoanNewDTO;
-import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.LoanFacade;
@@ -21,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author Martin
@@ -78,12 +78,10 @@ public class LoanController {
 
     @RequestMapping(value = "/return/{id}", method = RequestMethod.GET)
     public String ret(@PathVariable long id, Model model, RedirectAttributes redirectAttributes,
-                       UriComponentsBuilder uriBuilder) {
+                      UriComponentsBuilder uriBuilder) {
         try {
             model.addAttribute("loan", loanFacade.findById(id));
-            model.addAttribute("bookStates", BookState.all());
-            System.out.println(BookState.all());
-        } catch (NoEntityFoundException e) {
+        } catch (NoEntityFoundException | IllegalArgumentException e) {
             redirectAttributes.addAttribute("alert_danger", "Loan was not found");
             return "redirect:" + uriBuilder.path("/loan/detail/" + id).toUriString();
         }
@@ -92,13 +90,19 @@ public class LoanController {
 
     @RequestMapping(value = "/return", method = RequestMethod.POST)
     public String ret(@Valid @ModelAttribute("loan") LoanDTO loan,
-                       BindingResult br, RedirectAttributes redirectAttributes,
-                       UriComponentsBuilder uriBuilder) {
+                      BindingResult br, RedirectAttributes redirectAttributes,
+                      UriComponentsBuilder uriBuilder) {
         if (br.hasErrors()) {
             return "loan/return"; //TODO not sure if wont cycle
         }
         loanFacade.ret(loan);
         redirectAttributes.addFlashAttribute("alert_info", "Loan was updated");
         return "redirect:" + uriBuilder.path("/loan/detail/" + loan.getId()).toUriString();
+    }
+
+    @ModelAttribute("bookStates")
+    public List<BookState> bookStates() {
+        log.debug("all book states");
+        return BookState.all();
     }
 }
