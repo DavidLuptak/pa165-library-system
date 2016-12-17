@@ -53,7 +53,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                    <a href="${pageContext.request.contextPath}/login/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
                 </li>
             </ul>
         </div>

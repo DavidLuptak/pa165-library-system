@@ -21,7 +21,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  *
  * @author Bedrich Said
  */
-@WebFilter(urlPatterns = {"/login/login", "/login"})
+@WebFilter(urlPatterns = {"/login/testPage", "/login"})
 public class ProtectFilter implements Filter {
 
     @Override
@@ -37,14 +37,14 @@ public class ProtectFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-        String auth = request.getHeader("Authorization");
-        if (auth == null) {
-            response401(response);
-            return;
-        }
-        String[] creds = parseAuthHeader(auth);
-        String logname = creds[0];
-        String password = creds[1];
+        //String auth = request.getHeader("Authorization");
+        //if (auth == null) {
+        //    response401(response);
+        //    return;
+        //}
+        //String[] creds = parseAuthHeader(auth);
+        String logname = "admin@library.com";
+        String password = "admin";
 
         UserFacade userFacade = WebApplicationContextUtils.getWebApplicationContext(req.getServletContext()).getBean(UserFacade.class);
         UserDTO matchingUser;

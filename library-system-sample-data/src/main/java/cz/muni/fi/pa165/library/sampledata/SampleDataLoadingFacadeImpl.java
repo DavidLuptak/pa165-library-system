@@ -45,7 +45,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         //Users
         User user1 = user("Standard", "User", "user@gmail.com", "Address1", UserRole.MEMBER, "Password1");
         User user2 = user("Basic", "User", "user2@gmail.com", "Address2", UserRole.MEMBER, "Password2");
-        User user3 = user("Jan", "Administrator", "admin@library.com", "employee", UserRole.ADMIN, "HiddenSecretPassword");
+        User user3 = user("Jan", "Administrator", "admin@library.com", "employee", UserRole.ADMIN, "admin");
 
         LOGGER.info("Users loaded.");
 
