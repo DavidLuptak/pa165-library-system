@@ -49,7 +49,7 @@ public class LoanController {
     public String create(Model model) {
         LoanNewDTO loan = new LoanNewDTO(1L, null, new Date());
         model.addAttribute("loan", loan);
-        model.addAttribute("books", bookFacade.findAll());
+        model.addAttribute("books", bookFacade.findLoanableBooks());
         return "loan/create";
     }
 
