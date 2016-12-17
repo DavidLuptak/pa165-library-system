@@ -187,10 +187,10 @@ public class LoanFacadeImpl implements LoanFacade {
             throw new IllegalArgumentException("Book id cannot be null.");
         }
         Book book = bookService.findById(id);
-        List<BookCopy> bookCopies = bookCopyService.findByBook(book);
-        if (bookCopies == null || bookCopies.size() == 0) {
+        BookCopy bookCopy = bookCopyService.findLoanableByBook(book);
+        if (bookCopy == null) {
             throw new NoEntityFoundException("BookCopy cannot be found.");
         }
-        return bookCopies.get(0);
+        return bookCopy;
     }
 }
