@@ -57,24 +57,6 @@ public class LoanController {
         return "loan/detail";
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String edit(Model model) {
-
-        model.addAttribute("loan", new LoanNewDTO());
-        return "loan/create";
-    }
-
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String create(@Valid @ModelAttribute("loan") LoanNewDTO loan,
-                         BindingResult br, RedirectAttributes redirectAttributes,
-                         UriComponentsBuilder uriBuilder) {
-        if (br.hasErrors()) {
-            return "loan/create";
-        }
-        loanFacade.create(loan);
-        redirectAttributes.addFlashAttribute("alert_info", "Loan was created");
-        return "redirect:" + uriBuilder.path("/loan/index").toUriString();
-    }
 
     @RequestMapping(value = "/return/{id}", method = RequestMethod.GET)
     public String ret(@PathVariable long id, Model model, RedirectAttributes redirectAttributes,

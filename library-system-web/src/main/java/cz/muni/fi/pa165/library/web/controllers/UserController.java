@@ -1,19 +1,27 @@
 package cz.muni.fi.pa165.library.web.controllers;
 
 import cz.muni.fi.pa165.library.dto.LoanDTO;
+import cz.muni.fi.pa165.library.dto.LoanNewDTO;
 import cz.muni.fi.pa165.library.dto.UserDTO;
+import cz.muni.fi.pa165.library.facade.LoanFacade;
 import cz.muni.fi.pa165.library.facade.UserFacade;
 import cz.muni.fi.pa165.library.web.exceptions.WebSecurityException;
 import cz.muni.fi.pa165.library.web.security.UserDetailsAdapter;
 import java.util.List;
 import javassist.NotFoundException;
 import javax.inject.Inject;
+import javax.validation.Valid;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  *
@@ -23,7 +31,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/user")
 public class UserController {
     @Inject
-    private UserFacade facade;
+    private UserFacade userFacade;
+
+    @Inject
+    private LoanFacade loanFacade;
 
     @RequestMapping("/{id}")
     public String showUser(
@@ -32,11 +43,11 @@ public class UserController {
             Model model
     ) throws NotFoundException {
         checkCanManageProfile(currentUser, id);
-        UserDTO dto = facade.findById(id);
+        UserDTO dto = userFacade.findById(id);
         if (dto == null) {
             throw new NotFoundException("User with the given ID not found.");
         }
-        List<LoanDTO> allLoans = facade.getAllUserLoans(dto.getId());
+        List<LoanDTO> allLoans = userFacade.getAllUserLoans(dto.getId());
         model.addAttribute("user", dto);
         model.addAttribute("loans", allLoans);
         return "user/show";
@@ -61,7 +72,7 @@ public class UserController {
         checkCanManageProfile(currentUser, id);
         model.addAttribute("action", "Update");
         if (!model.containsAttribute("user")) {
-            UserDTO userDTO = facade.findById(id);
+            UserDTO userDTO = userFacade.findById(id);
             model.addAttribute("user", userDTO);
         }
         return "user/update";
@@ -70,7 +81,7 @@ public class UserController {
     @RequestMapping(path = "/list", method = RequestMethod.GET)
     public String listView(@AuthenticationPrincipal UserDetailsAdapter currentUser, Model model) {
         checkIsAdmin(currentUser);
-        List<UserDTO> users = facade.findAll();
+        List<UserDTO> users = userFacade.findAll();
         model.addAttribute("users", users);
         return "user/list";
     }
@@ -82,10 +93,41 @@ public class UserController {
             Model model
     ) {
         checkCanManageProfile(currentUser, id);
-        facade.delete(id);
+        userFacade.delete(id);
         return "redirect:/";
     }
-    
+
+    @RequestMapping(value = {"", "/", "/index"}, method = RequestMethod.GET)
+    public String index(Model model) {
+        model.addAttribute("users", userFacade.findAll());
+        return "user/index";
+    }
+
+    @RequestMapping(value = {"/{id}/allLoans", }, method = RequestMethod.GET)
+    public String allLoans(@PathVariable long id, Model model) {
+        model.addAttribute("loans", loanFacade.findByUser(id));
+        return "user/loans";
+    }
+
+    @RequestMapping(value = {"/{id}/returnedLoans", }, method = RequestMethod.GET)
+    public String returnedLoans(@PathVariable long id, Model model) {
+        model.addAttribute("loans", loanFacade.findReturnedUserLoans(id));
+        return "user/loans";
+    }
+
+    @RequestMapping(value = {"/{id}/notReturnedLoans", }, method = RequestMethod.GET)
+    public String notReturnedLoans(@PathVariable long id, Model model) {
+        model.addAttribute("loans", loanFacade.findNotReturnedUserLoans(id));
+        return "user/loans";
+    }
+
+    @RequestMapping(value = "/{id}/createLoan", method = RequestMethod.GET)
+    public String createLoanGet(@PathVariable long id, Model model) {
+        model.addAttribute("user", userFacade.findById(id));
+        model.addAttribute("loan", new LoanNewDTO());
+        return "/loan/create";
+    }
+
     /**
      * User can view only his own profile, only administrator can see all profiles
      * @param currentUser currently logged user

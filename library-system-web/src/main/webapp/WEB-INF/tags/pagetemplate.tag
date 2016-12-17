@@ -42,18 +42,21 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="${pageContext.request.contextPath}/book/index">Books</a>
+                    <a href="${pageContext.request.contextPath}/book">Books</a>
                 </li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/category/index">Categories</a>
+                    <a href="${pageContext.request.contextPath}/category">Categories</a>
                 </li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/loan/index">Loans</a>
+                    <a href="${pageContext.request.contextPath}/loan">Loans</a>
+                </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/user">Users</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                    <a href="${pageContext.request.contextPath}/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
                 </li>
             </ul>
         </div>

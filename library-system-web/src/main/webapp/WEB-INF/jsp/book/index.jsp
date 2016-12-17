@@ -21,11 +21,11 @@
                 <td><c:out value="${book.author}"/></td>
                 <td><c:out value="${book.isbn}"/></td>
                 <td>
-                    <a class="btn btn-default" href="${pageContext.request.contextPath}/book/detail/${book.id}">
-                        <span class="glyphicon glyphicon-search" title="Detail"></span>
+                    <a class="btn btn-default" title="Detail" href="${pageContext.request.contextPath}/book/detail/${book.id}">
+                        <span class="glyphicon glyphicon-search"></span>
                     </a>
-                    <a class="btn btn-danger" href="${pageContext.request.contextPath}/book/delete/${book.id}">
-                        <span class="glyphicon glyphicon-remove" title="Delete"></span>
+                    <a class="btn btn-danger" title="Delete" href="${pageContext.request.contextPath}/book/delete/${book.id}">
+                        <span class="glyphicon glyphicon-remove"></span>
                     </a>
                 </td>
             </tr>

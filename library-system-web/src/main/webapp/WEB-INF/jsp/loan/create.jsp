@@ -7,19 +7,19 @@
 <c:set var="backUrl" value="${pageContext.request.contextPath}/loan/index"/>
 
 <my:pagetemplate title="New Loan">
+    <jsp:attribute name="scripts">
+        <script>
+            $(function () {
+                $(".datepicker").datetimepicker({ format: 'DD.MM.YYYY HH:mm'});
+            });
+        </script>
+    </jsp:attribute>
     <jsp:attribute name="body">
         <h3>New Loan</h3>
         <form:form method="post" action="${actionUrl}"
                    modelAttribute="loan" cssClass="form-horizontal form-loan">
             <div class="form-group">
-                <form:label path="userId" cssClass="col-sm-1 control-label">User</form:label>
-                <div class="col-sm-5">
-                    <form:input path="userId" cssClass="form-control"/>
-                    <form:errors path="userId" cssClass="help-block"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <form:label path="bookCopyIds" cssClass="col-sm-1 control-label">Book</form:label>
+                <form:label path="bookCopyIds" cssClass="col-sm-2 control-label">Book</form:label>
                 <div class="col-sm-5">
                     <form:select path="bookCopyIds" cssClass="form-control" multiple="true">
                         <c:forEach items="${bookCopies}" var="bookCopy">
@@ -30,9 +30,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <form:label path="loanDate" cssClass="col-sm-1 control-label">LoanDate</form:label>
+                <form:label path="loanDate" cssClass="col-sm-2 control-label">Return Date</form:label>
                 <div class="col-sm-5">
-                    <form:input path="loanDate" cssClass="form-control"/>
+                    <form:input path="loanDate" cssClass="form-control datepicker"/>
                     <form:errors path="loanDate" cssClass="help-block"/>
                 </div>
             </div>
