@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.library.web.security;
 
 import cz.muni.fi.pa165.library.dto.UserAuthenticateDTO;
 import cz.muni.fi.pa165.library.dto.UserDTO;
+import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.UserFacade;
 import java.io.IOException;
 import javax.servlet.Filter;
@@ -20,7 +21,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  *
  * @author Bedrich Said
  */
-@WebFilter(urlPatterns = {"/category", "/login"})
+@WebFilter(urlPatterns = {"/login/login", "/login"})
 public class ProtectFilter implements Filter {
 
     @Override
@@ -46,8 +47,10 @@ public class ProtectFilter implements Filter {
         String password = creds[1];
 
         UserFacade userFacade = WebApplicationContextUtils.getWebApplicationContext(req.getServletContext()).getBean(UserFacade.class);
-        UserDTO matchingUser = userFacade.findByEmail(logname);
-        if(matchingUser==null) {
+        UserDTO matchingUser;
+        try {
+            matchingUser = userFacade.findByEmail(logname);
+        } catch(NoEntityFoundException | IllegalArgumentException e) {
             response401(response);
             return;
         }
@@ -64,6 +67,7 @@ public class ProtectFilter implements Filter {
         }
         request.setAttribute("authenticatedUser", matchingUser);
         chain.doFilter(request, response);
+        throw new NullPointerException("401 resposne");
     }
     
     private void response401(HttpServletResponse response) throws IOException {
