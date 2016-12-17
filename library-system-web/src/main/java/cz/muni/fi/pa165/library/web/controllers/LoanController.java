@@ -93,7 +93,7 @@ public class LoanController {
                       BindingResult br, RedirectAttributes redirectAttributes,
                       UriComponentsBuilder uriBuilder) {
         if (br.hasErrors()) {
-            return "loan/return"; //TODO not sure if wont cycle
+            return "loan/return";
         }
         loanFacade.ret(loan);
         redirectAttributes.addFlashAttribute("alert_info", "Loan was updated");

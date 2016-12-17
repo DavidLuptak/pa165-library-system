@@ -7,7 +7,7 @@
     <a class="btn btn-default" href="${pageContext.request.contextPath}/category/create">
         <span class="glyphicon glyphicon-plus"></span> New Category</a>
     </a>
-    <table class="table table-striped table-hover book-table">
+    <table class="table table-striped table-hover table-books">
         <thead>
         <tr>
             <th>Name</th>

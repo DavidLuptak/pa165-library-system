@@ -4,7 +4,7 @@
 
 <my:pagetemplate title="Books">
 <jsp:attribute name="body">
-    <a class="btn btn-primary" href="${pageContext.request.contextPath}/book/create">
+    <a class="btn btn-default" href="${pageContext.request.contextPath}/book/create">
         <span class="glyphicon glyphicon-plus"></span> New book</a>
     <table class="table table-striped table-hover table-books">
         <thead>
