@@ -64,10 +64,10 @@ public class LoanController {
         else {
             try {
                 loanFacade.create(loan);
-                redirectAttributes.addAttribute("alert_info", "Loan was successfully created.");
+                redirectAttributes.addFlashAttribute("alert_info", "Loan was successfully created.");
             }
             catch (NoEntityFoundException | IllegalArgumentException e) {
-                redirectAttributes.addAttribute("alert_danger", "Loan could not be created.");
+                redirectAttributes.addFlashAttribute("alert_danger", "Loan could not be created.");
             }
 
             return "redirect:" + uriBuilder.path("/loan").toUriString();
@@ -87,7 +87,7 @@ public class LoanController {
         try {
             model.addAttribute("loan", loanFacade.findById(id));
         } catch (NoEntityFoundException e) {
-            redirectAttributes.addAttribute("alert_danger", "Loan " + id + " was not found");
+            redirectAttributes.addFlashAttribute("alert_danger", "Loan " + id + " was not found");
             return "redirect:" + uriBuilder.path("/loan").toUriString();
         }
         return "loan/detail";
@@ -100,7 +100,7 @@ public class LoanController {
         try {
             model.addAttribute("loan", loanFacade.findById(id));
         } catch (NoEntityFoundException | IllegalArgumentException e) {
-            redirectAttributes.addAttribute("alert_danger", "Loan was not found");
+            redirectAttributes.addFlashAttribute("alert_danger", "Loan was not found");
             return "redirect:" + uriBuilder.path("/loan/detail/" + id).toUriString();
         }
         return "loan/return";
