@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.library.exception.LibraryDAOException;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.BookFacade;
 import cz.muni.fi.pa165.library.facade.CategoryFacade;
+import cz.muni.fi.pa165.library.mapping.BeanMappingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,6 +41,9 @@ public class BookController {
     @Inject
     private CategoryFacade categoryFacade;
 
+    @Inject
+    private BeanMappingService beanMappingService;
+
     @RequestMapping(value = {"", "/", "/index"}, method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("books", bookFacade.findAll());
@@ -51,7 +56,7 @@ public class BookController {
         try {
             model.addAttribute("book", bookFacade.findById(id));
         } catch (NoEntityFoundException e) {
-            redirectAttributes.addAttribute("alert_danger", "Book " + id + " was not found");
+            redirectAttributes.addFlashAttribute("alert_danger", "Book " + id + " was not found");
             return "redirect:" + uriBuilder.path("/book").toUriString();
         }
         return "book/detail";
@@ -98,7 +103,8 @@ public class BookController {
     public String edit(@PathVariable long id, Model model, RedirectAttributes redirectAttributes,
                        UriComponentsBuilder uriBuilder) {
         try {
-            model.addAttribute("book", bookFacade.findById(id));
+            BookNewDTO bookNewDTO = mapBookDTOtoBookNewDTO(bookFacade.findById(id));
+            model.addAttribute("book", bookNewDTO);
         } catch (NoEntityFoundException e) {
             redirectAttributes.addAttribute("alert_danger", "Book " + id + " was not found");
             return "redirect:" + uriBuilder.path("/book/detail/" + id).toUriString();
@@ -107,14 +113,21 @@ public class BookController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String edit(@Valid @ModelAttribute("book") BookDTO book,
+    public String edit(@Valid @ModelAttribute("book") BookNewDTO book,
                        BindingResult br, RedirectAttributes redirectAttributes,
                        UriComponentsBuilder uriBuilder) {
         if (br.hasErrors()) {
             return "book/edit";
         }
-        bookFacade.update(book);
-        redirectAttributes.addFlashAttribute("alert_info", "Book " + book.getTitle() + " was updated");
+
+        try {
+            BookDTO bookDTO = mapNewBookDTOtoBookDTO(book);
+            bookFacade.update(bookDTO);
+            redirectAttributes.addFlashAttribute("alert_info", "Book " + book.getTitle() + " was updated");
+        } catch (NoEntityFoundException e) {
+            redirectAttributes.addFlashAttribute("alert_danger", "Book " + book.getTitle() + " cannot be updated.");
+        }
+
         return "redirect:" + uriBuilder.path("/book/detail/" + book.getId()).toUriString();
     }
 
@@ -122,5 +135,35 @@ public class BookController {
     public List<CategoryDTO> categories() {
         log.debug("categories()");
         return categoryFacade.findAll();
+    }
+
+    private BookNewDTO mapBookDTOtoBookNewDTO(BookDTO bookDTO) {
+        BookNewDTO bookNewDTO = beanMappingService.mapTo(bookDTO, BookNewDTO.class);
+
+        List<String> categoryNames = bookDTO.getCategoryNames();
+
+        List<CategoryDTO> categories = new ArrayList<>();
+        categoryNames.forEach(c -> categories.add(categoryFacade.findByName(c)));
+
+        List<Long> categoryIds = new ArrayList<>();
+        categories.forEach(c -> categoryIds.add(c.getId()));
+
+        bookNewDTO.setCategoryIds(categoryIds);
+
+        return bookNewDTO;
+    }
+
+    private BookDTO mapNewBookDTOtoBookDTO(BookNewDTO bookNewDTO) {
+        BookDTO bookDTO = beanMappingService.mapTo(bookNewDTO, BookDTO.class);
+
+        List<Long> categoryIds = bookNewDTO.getCategoryIds();
+
+        List<CategoryDTO> categories = new ArrayList<>();
+        categoryIds.forEach(id -> categories.add(categoryFacade.findById(id)));
+
+        List<String> categoryNames = bookDTO.getCategoryNames();
+        categories.forEach(c -> categoryNames.add(c.getName()));
+
+        return bookDTO;
     }
 }

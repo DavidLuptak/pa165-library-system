@@ -27,11 +27,11 @@
     <div class="form-group">
         <form:label path="categoryIds" cssClass="col-sm-1 control-label">Category</form:label>
         <div class="col-sm-5">
-            <form:select path="categoryIds" cssClass="form-control" multiple="true">
-                <c:forEach items="${categories}" var="c">
-                    <form:option value="${c.id}">${c.name}</form:option>
-                </c:forEach>
-            </form:select>
+            <form:select path="categoryIds" cssClass="form-control"
+                         multiple="true"
+                         items="${categories}"
+                         itemLabel="name"
+                         itemValue="id"/>
             <p class="help-block"><form:errors path="categoryIds" cssClass="error"/></p>
         </div>
     </div>

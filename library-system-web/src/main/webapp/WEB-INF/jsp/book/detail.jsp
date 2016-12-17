@@ -27,8 +27,8 @@
                     </tr>
                     <tr>
                         <th scope="row" class="col-sm-2">Categories</th>
-                        <c:forEach var="category" items="${book.categories}">
-                            <td><c:out value="${category.name}"/></td>
+                        <c:forEach var="categoryName" items="${book.categoryNames}">
+                            <td><c:out value="${categoryName}"/></td>
                         </c:forEach>
                     </tr>
                     <tr>

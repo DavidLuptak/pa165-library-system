@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.library.facade;
 import cz.muni.fi.pa165.library.dto.BookCopyDTO;
 import cz.muni.fi.pa165.library.dto.BookDTO;
 import cz.muni.fi.pa165.library.dto.BookNewDTO;
-import cz.muni.fi.pa165.library.dto.CategoryDTO;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.BookCopy;
 import cz.muni.fi.pa165.library.entity.Category;
@@ -57,10 +56,31 @@ public class BookFacadeImpl implements BookFacade {
         if (bookDTO == null) {
             throw new IllegalArgumentException("Book cannot be null.");
         }
-        Book book = beanMappingService.mapTo(bookDTO, Book.class);
-        if (bookService.findById(book.getId()) == null) {
+
+        Book formerBook = bookService.findById(bookDTO.getId());
+
+        if (formerBook == null) {
             throw new NoEntityFoundException("Book not found during update.");
         }
+
+        List<Category> formerCategories = formerBook.getCategories();
+
+        Book book = beanMappingService.mapTo(bookDTO, Book.class);
+
+        List<String> categoryNames = bookDTO.getCategoryNames();
+        List<Category> categories = new ArrayList<>();
+        categoryNames.forEach(c -> categories.add(categoryService.findByName(c)));
+
+        categories.forEach(category -> {
+            category.addBook(book);
+            categoryService.update(category);
+        });
+
+        formerCategories.forEach(category -> {
+            category.removeBook(book);
+            categoryService.update(category);
+        });
+
         bookService.update(book);
     }
 
@@ -135,9 +155,8 @@ public class BookFacadeImpl implements BookFacade {
         BookDTO bookDTO = beanMappingService.mapTo(book, BookDTO.class);
 
         List<Category> categories = book.getCategories();
-        List<CategoryDTO> categoryDTOS = beanMappingService.mapTo(categories, CategoryDTO.class);
 
-        categoryDTOS.forEach(bookDTO::addCategory);
+        categories.forEach(c -> bookDTO.addCategory(c.getName()));
 
         List<BookCopy> bookCopies = book.getBookCopies();
         List<BookCopyDTO> bookCopyDTOS = beanMappingService.mapTo(bookCopies, BookCopyDTO.class);

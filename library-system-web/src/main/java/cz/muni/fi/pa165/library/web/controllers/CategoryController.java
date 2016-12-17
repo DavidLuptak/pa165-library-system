@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.library.web.controllers;
 
+import cz.muni.fi.pa165.library.dto.BookDTO;
 import cz.muni.fi.pa165.library.dto.CategoryDTO;
 import cz.muni.fi.pa165.library.dto.CategoryNewDTO;
 import cz.muni.fi.pa165.library.entity.Category;
@@ -153,12 +154,15 @@ public class CategoryController {
      */
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
     public String edit(@Valid @ModelAttribute("category") CategoryDTO categoryDTO,
-                       @PathVariable long id,
                        BindingResult bindingResult,
+                       @PathVariable long id,
                        Model model,
                        RedirectAttributes redirectAttributes,
                        UriComponentsBuilder uriComponentsBuilder) {
-        LOGGER.debug("category {} edit POST", id);
+        LOGGER.debug("category edit POST of {}", categoryDTO);
+
+        List<BookDTO> bookDTOS = categoryFacade.findById(id).getBooks();
+        bookDTOS.forEach(categoryDTO::addBook);
 
         if (bindingResult.hasErrors()) {
             return "category/edit";

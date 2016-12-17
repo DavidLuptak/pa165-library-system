@@ -1,5 +1,7 @@
 package cz.muni.fi.pa165.library.dto;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +14,7 @@ public class CategoryDTO {
 
     private Long id;
 
+    @NotBlank
     private String name;
 
     private List<BookDTO> books;
@@ -44,7 +47,6 @@ public class CategoryDTO {
     public List<BookDTO> getBooks() {
         return Collections.unmodifiableList(books);
     }
-
 
     public void addBook(BookDTO book) {
         this.books.add(book);

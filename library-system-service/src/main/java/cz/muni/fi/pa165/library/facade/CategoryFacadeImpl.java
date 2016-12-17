@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Category;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.mapping.BeanMappingService;
+import cz.muni.fi.pa165.library.service.BookService;
 import cz.muni.fi.pa165.library.service.CategoryService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,9 @@ public class CategoryFacadeImpl implements CategoryFacade {
 
     @Inject
     private CategoryService categoryService;
+
+    @Inject
+    private BookService bookService;
 
     @Inject
     private BeanMappingService beanMappingService;
@@ -46,12 +50,11 @@ public class CategoryFacadeImpl implements CategoryFacade {
             throw new IllegalArgumentException("Category cannot be null.");
         }
 
-        Category category = beanMappingService.mapTo(categoryDTO, Category.class);
-
-        if (categoryService.findById(category.getId()) == null) {
+        if (categoryService.findById(categoryDTO.getId()) == null) {
             throw new NoEntityFoundException("Category not found during update.");
         }
 
+        Category category = mapBooksToEntity(categoryDTO);
         categoryService.update(category);
     }
 
@@ -111,6 +114,12 @@ public class CategoryFacadeImpl implements CategoryFacade {
 
     }
 
+    /**
+     * Mapping of Category entity to Category DTO.
+     *
+     * @param category to be mapped to the Category DTO entity
+     * @return CategoryDTO entity
+     */
     private CategoryDTO mapBooksToDTO(Category category) {
         CategoryDTO categoryDTO = beanMappingService.mapTo(category, CategoryDTO.class);
 
@@ -120,5 +129,25 @@ public class CategoryFacadeImpl implements CategoryFacade {
         bookDTOS.forEach(categoryDTO::addBook);
 
         return categoryDTO;
+    }
+
+    /**
+     * Mapping of Category DTO to Category entity.
+     *
+     * @param categoryDTO to be mapped to the Category entity
+     * @return Category entity
+     */
+    private Category mapBooksToEntity(CategoryDTO categoryDTO) {
+        Category category = beanMappingService.mapTo(categoryDTO, Category.class);
+
+        List<BookDTO> bookDTOS = categoryDTO.getBooks();
+        List<Book> books = beanMappingService.mapTo(bookDTOS, Book.class);
+
+        books.forEach(book -> {
+            category.addBook(book);
+            bookService.update(book);
+        });
+
+        return category;
     }
 }

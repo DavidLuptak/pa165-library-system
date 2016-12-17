@@ -1,12 +1,11 @@
 package cz.muni.fi.pa165.library.dto;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * @author Bedrich Said
@@ -25,19 +24,19 @@ public class BookDTO {
     @NotBlank(message = "Can't be empty!")
     private String isbn;
 
-    private List<CategoryDTO> categories;
+    private List<String> categoryNames;
     private List<BookCopyDTO> bookCopies;
 
     public BookDTO() {
-        categories = new ArrayList<>();
+        categoryNames = new ArrayList<>();
         bookCopies = new ArrayList<>();
     }
 
-    public BookDTO(String title, String author, String isbn, List<CategoryDTO> categories, List<BookCopyDTO> bookCopies) {
+    public BookDTO(String title, String author, String isbn, List<String> categoryNames, List<BookCopyDTO> bookCopies) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
-        this.categories = categories;
+        this.categoryNames = categoryNames;
         this.bookCopies = bookCopies;
     }
 
@@ -73,16 +72,16 @@ public class BookDTO {
         this.isbn = isbn;
     }
 
-    public List<CategoryDTO> getCategories() {
-        return Collections.unmodifiableList(categories);
+    public List<String> getCategoryNames() {
+        return categoryNames;
     }
 
-    public void addCategory(CategoryDTO category) {
-        this.categories.add(category);
+    public void addCategory(String categoryName) {
+        this.categoryNames.add(categoryName);
     }
 
-    public void removeCategory(CategoryDTO category) {
-        this.categories.remove(category);
+    public void removeCategory(String categoryName) {
+        this.categoryNames.remove(categoryName);
     }
 
     public List<BookCopyDTO> getBookCopies() {
