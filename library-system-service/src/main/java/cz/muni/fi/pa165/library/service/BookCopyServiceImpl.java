@@ -68,4 +68,14 @@ public class BookCopyServiceImpl implements BookCopyService {
             throw new LibraryDAOException(e.getMessage(),e.getCause());
         }
     }
+
+    @Override
+    public BookCopy findLoanableByBook(Book book) {
+        if (book == null) throw new IllegalArgumentException("book is null");
+        try {
+            return bookCopyDao.findByBook(book).stream().filter(x -> x.isLoanable()).findFirst().get();
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
+    }
 }

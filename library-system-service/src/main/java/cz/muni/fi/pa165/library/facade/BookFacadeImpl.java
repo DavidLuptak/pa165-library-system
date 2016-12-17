@@ -151,6 +151,16 @@ public class BookFacadeImpl implements BookFacade {
         return bookDTOS;
     }
 
+    @Override
+    public List<BookDTO> findLoanableBooks() {
+        List<Book> books = bookService.findLoanableBooks();
+        List<BookDTO> bookDTOS = new ArrayList<>();
+
+        books.forEach(book -> bookDTOS.add(mapOwningSidesToDTO(book)));
+
+        return bookDTOS;
+    }
+
     private BookDTO mapOwningSidesToDTO(Book book) {
         BookDTO bookDTO = beanMappingService.mapTo(book, BookDTO.class);
 

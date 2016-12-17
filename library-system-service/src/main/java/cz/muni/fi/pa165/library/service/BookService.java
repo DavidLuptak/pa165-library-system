@@ -63,4 +63,18 @@ public interface BookService {
      * @return list of all books
      */
     List<Book> findAll();
+
+    /**
+     * Finds loanable books in the database
+     *
+     * @return list of loanable books
+     */
+    List<Book> findLoanableBooks();
+
+    /**
+     * Finds out if book has any loanable bookCopy
+     *
+     * @return if book has any loanable bookCopy
+     */
+    boolean isLoanable(Book book);
 }

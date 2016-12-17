@@ -7,7 +7,7 @@
     <a class="btn btn-default" href="${pageContext.request.contextPath}/category/create">
         <span class="glyphicon glyphicon-plus"></span> New Category</a>
     </a>
-    <table class="table table-striped table-hover book-table">
+    <table class="table table-striped table-hover table-books">
         <thead>
         <tr>
             <th>Name</th>
@@ -20,8 +20,8 @@
                 <td><c:out value="${category.name}"/></td>
                 <td><c:out value="${category.books.size()}"/></td>
                 <td>
-                    <a class="btn btn-default" href="${pageContext.request.contextPath}/category/detail/${category.id}">
-                        <span class="glyphicon glyphicon-search" title="Detail"></span>
+                    <a class="btn btn-default" title="Detail" href="${pageContext.request.contextPath}/category/detail/${category.id}">
+                        <span class="glyphicon glyphicon-search"></span>
                     </a>
                     <form method="post" action="${pageContext.request.contextPath}/category/delete/${category.id}">
                         <button type="submit" class="btn btn-danger" title="Delete">

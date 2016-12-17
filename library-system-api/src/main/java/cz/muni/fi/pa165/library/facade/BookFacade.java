@@ -75,4 +75,11 @@ public interface BookFacade {
      * @return list of all books
      */
     List<BookDTO> findAll();
+
+    /**
+     * Get all loanable persisted books
+     *
+      * @return list of persisted loanable books
+     */
+    List<BookDTO> findLoanableBooks();
 }

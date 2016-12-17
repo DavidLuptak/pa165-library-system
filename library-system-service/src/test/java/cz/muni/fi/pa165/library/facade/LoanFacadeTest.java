@@ -14,6 +14,7 @@ import cz.muni.fi.pa165.library.enums.UserRole;
 import cz.muni.fi.pa165.library.mapping.BeanMappingService;
 import cz.muni.fi.pa165.library.mapping.BeanMappingServiceImpl;
 import cz.muni.fi.pa165.library.service.BookCopyService;
+import cz.muni.fi.pa165.library.service.BookService;
 import cz.muni.fi.pa165.library.service.LoanService;
 import cz.muni.fi.pa165.library.service.UserService;
 import org.mockito.*;
@@ -25,6 +26,7 @@ import org.testng.annotations.Test;
 
 import javax.inject.Inject;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -48,6 +50,9 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
 
     @Mock
     private BookCopyService bookCopyService;
+
+    @Mock
+    private BookService bookService;
 
     @Spy
     @Inject
@@ -100,7 +105,9 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         // findById
         when(loanService.findById(1L)).thenReturn(loan);
         when(bookCopyService.findById(1L)).thenReturn(bookCopy);
+        when(bookCopyService.findByBook(book)).thenReturn(Collections.singletonList(bookCopy));
         when(userService.findById(1L)).thenReturn(user);
+        when(bookService.findById(1L)).thenReturn(book);
 
         // findByUser
         when(loanService.findByUser(user)).thenReturn(Arrays.asList(loan));
@@ -117,7 +124,7 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
 
     @Test
     public void testCreate() {
-        loanNewDTO = new LoanNewDTO(user.getId(), Arrays.asList(bookCopy.getId()), new Date());
+        loanNewDTO = new LoanNewDTO(user.getId(), Arrays.asList(book.getId()), new Date());
         loanFacade.create(loanNewDTO);
 
         verify(loanService).create(loanArgumentCaptor.capture());

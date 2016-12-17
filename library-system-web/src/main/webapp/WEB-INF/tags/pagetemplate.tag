@@ -42,18 +42,21 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="${pageContext.request.contextPath}/book/index">Books</a>
+                    <a href="${pageContext.request.contextPath}/book">Books</a>
                 </li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/category/index">Categories</a>
+                    <a href="${pageContext.request.contextPath}/category">Categories</a>
                 </li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/loan/index">Loans</a>
+                    <a href="${pageContext.request.contextPath}/loan">Loans</a>
+                </li>
+                <li>
+                    <a href="${pageContext.request.contextPath}/user">Users</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="${pageContext.request.contextPath}/login/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                    <a href="${pageContext.request.contextPath}/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
                 </li>
             </ul>
         </div>
@@ -77,13 +80,6 @@
 
 </div>
 
-<script>
-    $(function () {
-       var url = document.location.pathname;
-        $('.navbar li a[href="' + url + '"]').parent().addClass("active");
-    });
-    console.log();
-</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>

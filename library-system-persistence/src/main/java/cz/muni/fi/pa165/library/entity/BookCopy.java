@@ -76,6 +76,10 @@ public class BookCopy {
         loans.add(loan);
     }
 
+    public boolean isLoanable(){
+        return !loans.stream().filter(x -> !x.isReturned()).findFirst().isPresent();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -87,7 +91,6 @@ public class BookCopy {
             return false;
 
         return getBook() == null ? bookCopy.getBook() == null : getBook().equals(bookCopy.getBook());
-
     }
 
     @Override

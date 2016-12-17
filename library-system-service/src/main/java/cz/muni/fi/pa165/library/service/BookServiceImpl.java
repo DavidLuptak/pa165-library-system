@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.library.service;
 
+import cz.muni.fi.pa165.library.dao.BookCopyDao;
 import cz.muni.fi.pa165.library.dao.BookDao;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.exception.LibraryDAOException;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Martin
@@ -16,6 +18,9 @@ import java.util.List;
 public class BookServiceImpl implements BookService {
     @Inject
     private BookDao bookDao;
+
+    @Inject
+    private BookCopyDao bookCopyDao;
 
     @Override
     public void create(Book book) {
@@ -84,6 +89,28 @@ public class BookServiceImpl implements BookService {
         try {
             return bookDao.findAll();
         } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
+    }
+
+    @Override
+    public List<Book> findLoanableBooks() {
+        try{
+            return bookDao.findAll().stream().filter(x -> isLoanable(x)).collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
+    }
+
+    @Override
+    public boolean isLoanable(Book book) {
+        try{
+            return bookCopyDao.findByBook(book).
+                    stream().
+                    filter(x -> x.isLoanable()).
+                    findFirst().
+                    isPresent();
+        }catch (Exception e) {
             throw new LibraryDAOException(e.getMessage(),e.getCause());
         }
     }

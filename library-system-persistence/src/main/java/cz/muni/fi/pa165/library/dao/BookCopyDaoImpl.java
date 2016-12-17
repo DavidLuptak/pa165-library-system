@@ -45,7 +45,7 @@ public class BookCopyDaoImpl implements BookCopyDao {
         if (book == null) {
             throw new IllegalArgumentException("Book is not valid");
         }
-        return em.createQuery("SELECT b FROM BookCopy b where b.book = :book", BookCopy.class)
+        return em.createQuery("SELECT b FROM BookCopy b where b.book = :book ORDER BY bookState", BookCopy.class)
                 .setParameter("book", book).getResultList();
     }
 }

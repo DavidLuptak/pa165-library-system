@@ -58,4 +58,17 @@ public interface BookCopyFacade {
      * @throws NoEntityFoundException   if book cant be retrieved from database
      */
     List<BookCopyDTO> findByBook(Long bookId);
+
+
+    /**
+     * Finds laonable bookCopy for given bookId
+     *
+     * @param bookId of searched book
+     * @return found bookCopy
+     * @throws IllegalArgumentException if book is null
+     * @throws NoEntityFoundException   if book cant be retrieved from database
+     * @throws NoEntityFoundException   if no bookCopy cant be retrieved from database
+     */
+    BookCopyDTO findLoanableByBook(Long bookId);
+
 }

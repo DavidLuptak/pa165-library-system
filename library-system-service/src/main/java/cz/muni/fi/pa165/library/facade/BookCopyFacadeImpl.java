@@ -90,4 +90,20 @@ public class BookCopyFacadeImpl implements BookCopyFacade {
 
         return beanMappingService.mapTo(bookCopyService.findByBook(book), BookCopyDTO.class);
     }
+
+    @Override
+    public BookCopyDTO findLoanableByBook(Long bookId) {
+        if (bookId == null) {
+            throw new IllegalArgumentException("Book id cannot be null.");
+        }
+        Book book = bookService.findById(bookId);
+        if (book == null) {
+            throw new NoEntityFoundException("Book not found during findByBook.");
+        }
+        BookCopy bookCopy = bookCopyService.findLoanableByBook(book);
+        if (bookCopy == null) {
+            throw new NoEntityFoundException("Loanable bookCopy not found during findLoanableByBook.");
+        }
+        return beanMappingService.mapTo(bookCopy, BookCopyDTO.class);
+    }
 }

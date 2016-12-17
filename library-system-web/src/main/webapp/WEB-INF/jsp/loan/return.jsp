@@ -21,21 +21,21 @@
         <form:form method="post" action="${actionUrl}"
                    modelAttribute="loan" cssClass="form-horizontal form-loan">
             <div class="form-group">
-                <form:label path="user" cssClass="col-sm-2 control-label">First Name</form:label>
+                <form:label path="user.firstName" cssClass="col-sm-2 control-label">First Name</form:label>
                 <div class="col-sm-5">
                     <form:input readonly="true" path="user.firstName" cssClass="form-control"/>
                     <form:errors path="user.firstName" cssClass="help-block"/>
                 </div>
             </div>
             <div class="form-group">
-                <form:label path="user" cssClass="col-sm-2 control-label">Last Name</form:label>
+                <form:label path="user.lastName" cssClass="col-sm-2 control-label">Last Name</form:label>
                 <div class="col-sm-5">
                     <form:input readonly="true" path="user.lastName" cssClass="form-control"/>
                     <form:errors path="user.lastName" cssClass="help-block"/>
                 </div>
             </div>
             <div class="form-group">
-                <form:label path="bookCopy" cssClass="col-sm-2 control-label">Book</form:label>
+                <form:label path="bookCopy.book.title" cssClass="col-sm-2 control-label">Book</form:label>
                 <div class="col-sm-5">
                     <form:input readonly="true" path="bookCopy.book.title" cssClass="form-control"/>
                     <form:errors path="bookCopy.book.title" cssClass="help-block"/>
@@ -73,6 +73,9 @@
                     <form:errors path="returnBookState" cssClass="help-block"/>
                 </div>
             </div>
+            <form:hidden path="user.id"/>
+            <form:hidden path="bookCopy.id"/>
+            <form:hidden path="bookCopy.book.id"/>
             <form:hidden path="id"/>
             <div class="col-sm-offset-1 col-sm-5">
                 <button class="btn btn-primary" type="submit">Return</button>
