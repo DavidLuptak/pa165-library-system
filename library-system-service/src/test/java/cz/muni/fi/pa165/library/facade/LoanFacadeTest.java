@@ -105,7 +105,7 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         // findById
         when(loanService.findById(1L)).thenReturn(loan);
         when(bookCopyService.findById(1L)).thenReturn(bookCopy);
-        when(bookCopyService.findByBook(book)).thenReturn(Collections.singletonList(bookCopy));
+        when(bookCopyService.findLoanableByBook(book)).thenReturn(bookCopy);
         when(userService.findById(1L)).thenReturn(user);
         when(bookService.findById(1L)).thenReturn(book);
 
