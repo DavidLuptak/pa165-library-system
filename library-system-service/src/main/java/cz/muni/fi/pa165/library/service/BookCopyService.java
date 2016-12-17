@@ -49,4 +49,12 @@ public interface BookCopyService {
      * @throws IllegalArgumentException if book is null
      */
     List<BookCopy> findByBook(Book book);
+
+    /**
+     * Finds loanable copy for given book
+     *
+     * @param book for which we find bookCopy
+     * @return found copy or null
+     */
+    BookCopy findLoanableByBook(Book book);
 }

@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.library.web.controllers;
 import cz.muni.fi.pa165.library.dto.LoanDTO;
 import cz.muni.fi.pa165.library.dto.LoanNewDTO;
 import cz.muni.fi.pa165.library.dto.UserDTO;
+import cz.muni.fi.pa165.library.facade.BookFacade;
 import cz.muni.fi.pa165.library.facade.LoanFacade;
 import cz.muni.fi.pa165.library.facade.UserFacade;
 import cz.muni.fi.pa165.library.web.exceptions.WebSecurityException;
@@ -35,6 +36,9 @@ public class UserController {
 
     @Inject
     private LoanFacade loanFacade;
+
+    @Inject
+    private BookFacade bookFacade;
 
     @RequestMapping("/{id}")
     public String showUser(
@@ -123,6 +127,7 @@ public class UserController {
 
     @RequestMapping(value = "/{id}/createLoan", method = RequestMethod.GET)
     public String createLoanGet(@PathVariable long id, Model model) {
+        model.addAttribute("loanableBooks", bookFacade.findLoanableBooks());
         model.addAttribute("user", userFacade.findById(id));
         model.addAttribute("loan", new LoanNewDTO());
         return "/loan/create";
