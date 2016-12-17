@@ -14,14 +14,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.DatatypeConverter;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
  *
  * @author Bedrich Said
  */
-@WebFilter(urlPatterns = {"/login/validate"})
+@WebFilter(urlPatterns = {"/login/validate", "/book", "/user"})
 public class ProtectFilter implements Filter {
 
     @Override
