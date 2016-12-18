@@ -18,11 +18,6 @@ table {
     letter-spacing: 0.1em;
 }
 
-.table-books {
-    overflow: auto;
-    height: 200px;
-}
-
 .form-book {
     margin-top: 20px;
 }
@@ -33,4 +28,16 @@ table {
 
 #loans {
     margin-top: 20px;
+}
+
+.detail-list {
+    padding-left: 10px;
+}
+
+.table-buttons {
+    text-align: center;
+}
+
+.detail-buttons a, .detail-buttons button{
+    float: right;
 }

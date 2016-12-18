@@ -14,6 +14,7 @@
             <th>Title</th>
             <th>Author</th>
             <th>ISBN</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>

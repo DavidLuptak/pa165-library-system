@@ -20,22 +20,27 @@
                     </tr>
                     <tr>
                         <th scope="row" class="col-sm-2"><fmt:message key="category.books"/></th>
-                        <c:forEach var="book" items="${category.books}">
-                            <td><c:out value="${book.title}"/></td>
-                        </c:forEach>
+                        <td>
+                            <ul class="detail-list">
+                                <c:forEach var="book" items="${category.books}">
+                                    <li><c:out value="${book.title}"/></li>
+                                </c:forEach>
+                            </ul>
+                        </td>
+
                     </tr>
                     <tr>
                         <td></td>
-                        <td>
-                            <c:if test="${loggedUser.isAdmin()}">
-                            <a class="btn btn-warning"
-                               href="${pageContext.request.contextPath}/category/edit/${category.id}">
-                                <fmt:message key="edit"/>
-                            </a>
-                            </c:if>
+                        <td class="detail-buttons">
                             <a class="btn btn-default" href="${pageContext.request.contextPath}/category/index">
                                 <fmt:message key="back"/>
                             </a>
+                            <c:if test="${loggedUser.isAdmin()}">
+                                <a class="btn btn-warning"
+                                   href="${pageContext.request.contextPath}/category/edit/${category.id}">
+                                    <fmt:message key="edit"/>
+                                </a>
+                            </c:if>
                         </td>
                     </tr>
                     </tbody>

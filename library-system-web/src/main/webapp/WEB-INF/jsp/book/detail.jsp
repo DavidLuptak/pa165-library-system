@@ -27,17 +27,22 @@
                     </tr>
                     <tr>
                         <th scope="row" class="col-sm-2">Categories</th>
-                        <c:forEach var="categoryName" items="${book.categoryNames}">
-                            <td><c:out value="${categoryName}"/></td>
-                        </c:forEach>
+                        <td>
+                            <ul class="detail-list">
+                                <c:forEach var="categoryName" items="${book.categoryNames}">
+                                    <li><c:out value="${categoryName}"/></li>
+                                </c:forEach>
+                            </ul>
+                        </td>
+
                     </tr>
                     <tr>
                         <td></td>
-                        <td>
-                            <c:if test="${loggedUser.isAdmin()}">
-                            <a class="btn btn-warning" href="${pageContext.request.contextPath}/book/edit/${book.id}">Edit</a>
-                            </c:if>
+                        <td class="detail-buttons">
                             <a class="btn btn-default" href="${pageContext.request.contextPath}/book/index">Back</a>
+                            <c:if test="${loggedUser.isAdmin()}">
+                                <a class="btn btn-warning" href="${pageContext.request.contextPath}/book/edit/${book.id}">Edit</a>
+                            </c:if>
                         </td>
                     </tr>
                     </tbody>
@@ -49,11 +54,11 @@
 
         <div class="row">
             <div class="col-sm-6 col-sm-offset-1">
-                
+
             </div>
         </div>
                         
-        <h3>List of <c:out value="${book.title}"/> Copies</h3>
+        <h3>List of copies</h3>
         <table class="table table-striped table-hover table-books">
             <thead>
             <tr>

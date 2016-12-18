@@ -12,11 +12,11 @@
                 <table class="table table-detail">
                     <tbody>
                     <tr>
-                        <th scope="row" class="col-sm-4">FirstName</th>
+                        <th scope="row" class="col-sm-4">First Name</th>
                         <td><c:out value="${loan.user.firstName}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="col-sm-4">LastName</th>
+                        <th scope="row" class="col-sm-4">Last Name</th>
                         <td><c:out value="${loan.user.lastName}"/></td>
                     </tr>
                     <tr>
@@ -28,7 +28,7 @@
                         <td><javatime:format value="${loan.loanDate}" pattern="dd.MM.yyyy HH:mm"/></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="col-sm-4">Loan Return BookState</th>
+                        <th scope="row" class="col-sm-4">Return State</th>
                         <td><c:out value="${loan.returnBookState}"/></td>
                     </tr>
                     <c:if test="${loan.returnDate != null}">
@@ -39,7 +39,7 @@
                     </c:if>
                     <tr>
                         <td></td>
-                        <td>
+                        <td class="detail-buttons">
                             <button class="btn btn-default" onclick="history.go(-1)">Back</button>
                         </td>
                     </tr>

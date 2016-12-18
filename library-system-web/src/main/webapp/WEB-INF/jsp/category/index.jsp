@@ -16,6 +16,7 @@
         <tr>
             <th><fmt:message key="category.name"/></th>
             <th><fmt:message key="category.books_number"/></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -23,19 +24,17 @@
             <tr>
                 <td><c:out value="${category.name}"/></td>
                 <td><c:out value="${category.books.size()}"/></td>
-                <td>
+                <td class="table-buttons">
                     <a class="btn btn-default"
                        href="${pageContext.request.contextPath}/category/detail/${category.id}">
                         <span class="sr-only"><fmt:message key="detail"/></span> <!-- it's not visible on hover -->
                         <span class="glyphicon glyphicon-search"></span>
                     </a>
                     <c:if test="${loggedUser.isAdmin()}">
-                    <form method="post" action="${pageContext.request.contextPath}/category/delete/${category.id}">
-                        <button type="submit" class="btn btn-danger">
-                            <span class="sr-only"><fmt:message key="delete"/> </span>
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </button>
-                    </form>
+                    <a class="btn btn-danger" title="Delete"
+                       href="${pageContext.request.contextPath}/category/delete/${category.id}">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
                     </c:if>
                 </td>
             </tr>

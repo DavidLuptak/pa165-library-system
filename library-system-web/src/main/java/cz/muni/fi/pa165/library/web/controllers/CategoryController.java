@@ -192,19 +192,19 @@ public class CategoryController extends LibraryParentController {
      * @param id category identifier
      * @return JSP page category/index
      */
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String delete(@PathVariable long id,
                          RedirectAttributes redirectAttributes,
                          UriComponentsBuilder uriComponentsBuilder) {
-        LOGGER.debug("category {} delete POST", id);
+        LOGGER.debug("category {} delete GET", id);
 
         try {
             categoryFacade.delete(id);
-            redirectAttributes.addFlashAttribute("alert_success", "Category of id " + id + " deleted.");
+            redirectAttributes.addFlashAttribute("alert_success", "Category deleted.");
         } catch (NoEntityFoundException | IllegalArgumentException ex) {
             LOGGER.debug("Category of id {} not found.", id);
 
-            redirectAttributes.addFlashAttribute("alert_danger", "Category of id " + id + " cannot be deleted.");
+            redirectAttributes.addFlashAttribute("alert_danger", "Category cannot be deleted.");
         }
 
         return "redirect:" + uriComponentsBuilder.path("/category/index").toUriString();
