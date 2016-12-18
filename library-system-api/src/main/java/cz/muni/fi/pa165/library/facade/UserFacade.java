@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.library.facade;
 
-import cz.muni.fi.pa165.library.dto.LoanDTO;
 import cz.muni.fi.pa165.library.dto.UserAuthenticateDTO;
 import cz.muni.fi.pa165.library.dto.UserDTO;
 import cz.muni.fi.pa165.library.dto.UserNewDTO;

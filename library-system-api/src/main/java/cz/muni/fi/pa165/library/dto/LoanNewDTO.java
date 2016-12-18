@@ -1,11 +1,10 @@
 package cz.muni.fi.pa165.library.dto;
 
-import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

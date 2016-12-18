@@ -1,9 +1,9 @@
 package cz.muni.fi.pa165.library.web.config;
 
-import javax.servlet.Filter;
-
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import javax.servlet.Filter;
 
 /**
  * @author Lenka (433591)

@@ -4,7 +4,6 @@ import cz.muni.fi.pa165.library.dto.BookCopyDTO;
 import cz.muni.fi.pa165.library.dto.BookCopyNewDTO;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.BookCopy;
-import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.mapping.BeanMappingService;
 import cz.muni.fi.pa165.library.service.BookCopyService;

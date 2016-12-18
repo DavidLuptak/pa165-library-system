@@ -8,13 +8,13 @@
 <jsp:attribute name="body">
     <c:if test="${!loggedUser.isAdmin()}">
     <a class="btn btn-default" href="${pageContext.request.contextPath}/loan/create">
-        <span class="glyphicon glyphicon-plus"></span> New loan
+        <span class="glyphicon glyphicon-plus"></span> <fmt:message key="loan.new"/>
     </a>
     </c:if>
  <div id="loans">
      <ul>
-         <li><a href="#loaned">Loaned</a></li>
-         <li><a href="#returned">Returned</a></li>
+         <li><a href="#loaned"><fmt:message key="loan.loaned"/></a></li>
+         <li><a href="#returned"><fmt:message key="loan.returned"/></a></li>
      </ul>
      <div id="loaned">
          <my:loanTable loans="${loaned}" user="${loggedUser}" showReturn="false"/>

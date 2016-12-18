@@ -12,7 +12,9 @@
     </div>
     <c:if test="${editBooks}">
         <div class="form-group">
-            <form:label path="bookIds" cssClass="col-sm-1 control-label">Books</form:label>
+            <form:label path="bookIds" cssClass="col-sm-1 control-label">
+                <fmt:message key="book.title"/>
+            </form:label>
             <div class="col-sm-5">
                 <form:select path="bookIds" cssClass="form-control"
                              multiple="true"

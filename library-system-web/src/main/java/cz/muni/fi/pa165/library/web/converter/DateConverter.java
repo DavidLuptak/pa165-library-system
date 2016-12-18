@@ -2,12 +2,9 @@ package cz.muni.fi.pa165.library.web.converter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cglib.core.Local;
 import org.springframework.core.convert.converter.Converter;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.Date;
 
 /**
  * @author Martin Mlynarik

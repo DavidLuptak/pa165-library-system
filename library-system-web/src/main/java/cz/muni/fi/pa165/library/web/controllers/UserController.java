@@ -5,16 +5,16 @@ import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.LoanFacade;
 import cz.muni.fi.pa165.library.facade.UserFacade;
 import cz.muni.fi.pa165.library.web.exceptions.WebSecurityException;
-import java.util.List;
-import javax.inject.Inject;
 import org.springframework.security.core.Authentication;
-
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.inject.Inject;
+import java.util.List;
 
 /**
  *
@@ -138,7 +138,6 @@ public class UserController extends LibraryParentController{
 
     /**
      * User can view only his own profile, only administrator can see all profiles
-     * @param currentUser currently logged user
      * @param id of the profile that will be managed
      * @throws WebSecurityException when the current user has no rights to manage the profile
      */

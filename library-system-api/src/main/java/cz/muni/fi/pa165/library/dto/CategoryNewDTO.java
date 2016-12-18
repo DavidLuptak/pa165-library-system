@@ -1,9 +1,9 @@
 package cz.muni.fi.pa165.library.dto;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * @author Lenka (433591)

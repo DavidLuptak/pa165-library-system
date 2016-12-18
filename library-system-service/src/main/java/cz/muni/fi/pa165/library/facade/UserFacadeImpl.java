@@ -1,17 +1,14 @@
 package cz.muni.fi.pa165.library.facade;
 
-import cz.muni.fi.pa165.library.dto.LoanDTO;
 import cz.muni.fi.pa165.library.dto.UserAuthenticateDTO;
 import cz.muni.fi.pa165.library.dto.UserDTO;
 import cz.muni.fi.pa165.library.dto.UserNewDTO;
-import cz.muni.fi.pa165.library.entity.Loan;
 import cz.muni.fi.pa165.library.entity.User;
 import cz.muni.fi.pa165.library.enums.UserRole;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.mapping.BeanMappingService;
 import cz.muni.fi.pa165.library.service.LoanService;
 import cz.muni.fi.pa165.library.service.UserService;
-import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

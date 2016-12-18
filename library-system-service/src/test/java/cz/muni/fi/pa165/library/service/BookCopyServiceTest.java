@@ -20,7 +20,6 @@ import org.testng.annotations.Test;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Date;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;

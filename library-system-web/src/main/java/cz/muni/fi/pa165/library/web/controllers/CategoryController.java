@@ -3,7 +3,7 @@ package cz.muni.fi.pa165.library.web.controllers;
 import cz.muni.fi.pa165.library.dto.BookDTO;
 import cz.muni.fi.pa165.library.dto.CategoryDTO;
 import cz.muni.fi.pa165.library.dto.CategoryNewDTO;
-import cz.muni.fi.pa165.library.entity.Book;
+import cz.muni.fi.pa165.library.dto.CategoryUpdateDTO;
 import cz.muni.fi.pa165.library.entity.Category;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.BookFacade;
@@ -116,7 +116,6 @@ public class CategoryController extends LibraryParentController {
         LOGGER.debug("category create GET");
 
         model.addAttribute("category", new CategoryNewDTO());
-        model.addAttribute("books", bookFacade.findAll());
         return "category/create";
     }
 
@@ -229,13 +228,20 @@ public class CategoryController extends LibraryParentController {
     @InitBinder
     protected void initUniqueConstraintBinder(WebDataBinder binder) {
 
-        if (binder.getTarget() instanceof CategoryNewDTO) {
+        if (binder.getTarget() instanceof CategoryNewDTO
+                && !(binder.getTarget() instanceof CategoryUpdateDTO)) {
             binder.addValidators(categoryCreateValidator);
         }
 
         if (binder.getTarget() instanceof CategoryDTO) {
             binder.addValidators(categoryUpdateValidator);
         }
+    }
+
+    @ModelAttribute("books")
+    public List<BookDTO> books() {
+        LOGGER.debug("Getting all available books.");
+        return bookFacade.findAll();
     }
 
 }

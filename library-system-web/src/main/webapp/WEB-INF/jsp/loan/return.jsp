@@ -18,53 +18,53 @@
         </script>
     </jsp:attribute>
     <jsp:attribute name="body">
-        <h3>Return book</h3>
+        <h3><fmt:message key="loan.return"/></h3>
         <form:form method="post" action="${actionUrl}"
                    modelAttribute="loan" cssClass="form-horizontal form-loan">
             <div class="form-group">
-                <form:label path="user.firstName" cssClass="col-sm-2 control-label">First Name</form:label>
+                <form:label path="user.firstName" cssClass="col-sm-2 control-label"><fmt:message key="user.name"/></form:label>
                 <div class="col-sm-5">
                     <form:input readonly="true" path="user.firstName" cssClass="form-control"/>
                     <form:errors path="user.firstName" cssClass="help-block"/>
                 </div>
             </div>
             <div class="form-group">
-                <form:label path="user.lastName" cssClass="col-sm-2 control-label">Last Name</form:label>
+                <form:label path="user.lastName" cssClass="col-sm-2 control-label"><fmt:message key="user.surname"/></form:label>
                 <div class="col-sm-5">
                     <form:input readonly="true" path="user.lastName" cssClass="form-control"/>
                     <form:errors path="user.lastName" cssClass="help-block"/>
                 </div>
             </div>
             <div class="form-group">
-                <form:label path="bookCopy.book.title" cssClass="col-sm-2 control-label">Book</form:label>
+                <form:label path="bookCopy.book.title" cssClass="col-sm-2 control-label"><fmt:message key="loan.book"/></form:label>
                 <div class="col-sm-5">
                     <form:input readonly="true" path="bookCopy.book.title" cssClass="form-control"/>
                     <form:errors path="bookCopy.book.title" cssClass="help-block"/>
                 </div>
             </div>
             <div class="form-group">
-                <form:label path="loanDate" cssClass="col-sm-2 control-label">Loan Date</form:label>
+                <form:label path="loanDate" cssClass="col-sm-2 control-label"><fmt:message key="loan.date_loan"/></form:label>
                 <div class="col-sm-5">
                     <form:input readonly="true" path="loanDate" cssClass="form-control"/>
                     <form:errors path="loanDate" cssClass="help-block"/>
                 </div>
             </div>
             <div class="form-group">
-                <form:label path="loanDate" cssClass="col-sm-2 control-label">Loan Book State</form:label>
+                <form:label path="loanDate" cssClass="col-sm-2 control-label"><fmt:message key="loan.book_state_loan"/></form:label>
                 <div class="col-sm-5">
                     <form:input readonly="true" path="bookCopy.bookState" cssClass="form-control"/>
                     <form:errors path="bookCopy.bookState" cssClass="help-block"/>
                 </div>
             </div>
             <div class="form-group">
-                <form:label path="returnDate" cssClass="col-sm-2 control-label">Return Date</form:label>
+                <form:label path="returnDate" cssClass="col-sm-2 control-label"><fmt:message key="loan.date_return"/></form:label>
                 <div class="col-sm-5">
                     <form:input readonly="true" path="returnDate" cssClass="form-control datepicker"/>
                     <form:errors path="returnDate" cssClass="help-block"/>
                 </div>
             </div>
             <div class="form-group">
-                <form:label path="returnBookState" cssClass="col-sm-2 control-label">Return Book State</form:label>
+                <form:label path="returnBookState" cssClass="col-sm-2 control-label"><fmt:message key="loan.book_state_return"/></form:label>
                 <div class="col-sm-5">
                     <form:select path="returnBookState" cssClass="form-control" >
                         <c:forEach items="${bookStates}" var="bookState">
@@ -79,8 +79,8 @@
             <form:hidden path="bookCopy.book.id"/>
             <form:hidden path="id"/>
             <div class="col-sm-offset-2 col-sm-5">
-                <button class="btn btn-primary" type="submit">Return</button>
-                <a href="${backUrl}" class="btn btn-default">Back</a>
+                <button class="btn btn-primary" type="submit"><fmt:message key="loan.return"/></button>
+                <a href="${backUrl}" class="btn btn-default"><fmt:message key="back"/></a>
             </div>
         </form:form>
     </jsp:attribute>

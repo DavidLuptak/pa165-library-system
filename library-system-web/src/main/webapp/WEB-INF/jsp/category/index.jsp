@@ -8,7 +8,7 @@
     <jsp:attribute name="body">
     <c:if test="${loggedUser.isAdmin()}">
     <a class="btn btn-default" href="${pageContext.request.contextPath}/category/create">
-        <span class="glyphicon glyphicon-plus"></span> <fmt:message key="category.create"/> </a>
+        <span class="glyphicon glyphicon-plus"></span> <fmt:message key="category.create"/>
     </a>
     </c:if>
     <table class="table table-striped table-hover table-books">

@@ -1,21 +1,22 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <form:form method="post" action="${actionUrl}"
            modelAttribute="book" cssClass="form-horizontal form-book">
     <div class="form-group ${title_error?'has-error':''}">
-        <form:label path="title" cssClass="col-sm-2 control-label">Title</form:label>
+        <form:label path="title" cssClass="col-sm-2 control-label"><fmt:message key="book.book_title"/></form:label>
         <div class="col-sm-5">
             <form:input path="title" cssClass="form-control"/>
             <form:errors path="title" cssClass="help-block"/>
         </div>
     </div>
     <div class="form-group ${author_error?'has-error':''}">
-        <form:label path="author" cssClass="col-sm-2 control-label">Author</form:label>
+        <form:label path="author" cssClass="col-sm-2 control-label"><fmt:message key="book.author"/></form:label>
         <div class="col-sm-5">
             <form:input path="author" cssClass="form-control"/>
             <form:errors path="author" cssClass="help-block"/>
         </div>
     </div>
     <div class="form-group ${isbn_error?'has-error':''}">
-        <form:label path="isbn" cssClass="col-sm-2 control-label">Isbn</form:label>
+        <form:label path="isbn" cssClass="col-sm-2 control-label"><fmt:message key="book.isbn"/></form:label>
         <div class="col-sm-5">
             <form:input path="isbn" cssClass="form-control"/>
             <form:errors path="isbn" cssClass="help-block"/>
@@ -23,7 +24,7 @@
     </div>
     <c:if test="${editCopies}">
         <div class="form-group ${copies_error?'has-error':''}">
-            <form:label path="copies" cssClass="col-sm-2 control-label">Number of copies</form:label>
+            <form:label path="copies" cssClass="col-sm-2 control-label"><fmt:message key="book.copies_number"/></form:label>
             <div class="col-sm-5">
                 <form:input type="number" path="copies" cssClass="form-control"/>
                 <form:errors path="copies" cssClass="help-block"/>
@@ -32,7 +33,7 @@
     </c:if>
 
     <div class="form-group">
-        <form:label path="categoryIds" cssClass="col-sm-2 control-label">Category</form:label>
+        <form:label path="categoryIds" cssClass="col-sm-2 control-label"><fmt:message key="category.title"/></form:label>
         <div class="col-sm-5">
             <form:select path="categoryIds" cssClass="form-control"
                          multiple="true"
@@ -43,7 +44,7 @@
         </div>
     </div>
     <div class="col-sm-offset-2 col-sm-5">
-        <button class="btn btn-primary" type="submit">Save</button>
-        <a href="${backUrl}" class="btn btn-default">Back</a>
+        <button class="btn btn-primary" type="submit"><fmt:message key="save"/></button>
+        <a href="${backUrl}" class="btn btn-default"><fmt:message key="back"/></a>
     </div>
 </form:form>

@@ -1,7 +1,5 @@
 package cz.muni.fi.pa165.library.web.config;
 
-import javax.validation.Validator;
-
 import cz.muni.fi.pa165.library.sampledata.SampleDataConfiguration;
 import cz.muni.fi.pa165.library.web.converter.DateConverter;
 import org.slf4j.Logger;
@@ -20,6 +18,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import javax.validation.Validator;
 
 /**
  * @author Lenka (433591)

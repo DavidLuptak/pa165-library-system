@@ -1,8 +1,9 @@
 package cz.muni.fi.pa165.library.rest;
 
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
  * We need to rewrite headers to allow for cross-origin access for some

@@ -1,7 +1,5 @@
 package cz.muni.fi.pa165.library.dto;
 
-import javax.validation.constraints.NotNull;
-
 /**
  * @author Dávid Lupták
  * @version 18.12.2016

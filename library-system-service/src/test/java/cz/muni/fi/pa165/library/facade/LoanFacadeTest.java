@@ -27,8 +27,6 @@ import org.testng.annotations.Test;
 import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import static org.mockito.Mockito.verify;
