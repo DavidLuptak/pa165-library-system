@@ -7,7 +7,21 @@
     <jsp:attribute name="body">
 
         <h2>${category.name}</h2>
-        <a href="${pageContext.request.contextPath}/category/index" class="btn btn-default">Back</a>
+        <a href="${pageContext.request.contextPath}/category/index" class="btn btn-default">
+            <fmt:message key="back"/>
+        </a>
+
+        <c:if test="${loggedUser.isAdmin()}">
+        <a class="btn btn-warning"
+           href="${pageContext.request.contextPath}/category/edit/${category.id}">
+            <fmt:message key="edit"/>
+        </a>
+        <a class="btn btn-danger"
+           href="${pageContext.request.contextPath}/category/delete/${category.id}">
+            <fmt:message key="delete"/>
+        </a>
+        </c:if>
+
         <my:bookTable books="${category.books}"/>
 
     </jsp:attribute>
