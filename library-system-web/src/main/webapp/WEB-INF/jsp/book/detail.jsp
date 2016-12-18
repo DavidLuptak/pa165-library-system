@@ -70,12 +70,9 @@
             <tbody>
             <c:forEach var="copy" items="${copies}">
                 <tr>
-                    <td><c:out value="${copy.id}"/></td>
-                    <td><c:out value="${copy.bookState}"/></td>
-                    <td>
-                        <c:if test="${empty copy.loans}">Yes</c:if>
-                        <c:if test="${not empty copy.loans}">No</c:if>
-                    </td>
+                    <td><c:out value="${copy.key.id}"/></td>
+                    <td><c:out value="${copy.key.bookState}"/></td>
+                    <td><c:out value="${copy.value}"/></td>
                 </tr>
             </c:forEach>
             </tbody>

@@ -67,7 +67,7 @@ public class CategoryController extends LibraryParentController {
             } catch (NoEntityFoundException | IllegalArgumentException ex) {
                 LOGGER.debug("Category of name {} not found.", name);
 
-                redirectAttributes.addFlashAttribute("message", "Category of name " + name + " not found.");
+                redirectAttributes.addFlashAttribute("alert_warning", "Category of name " + name + " not found.");
                 return "redirect:" + uriComponentsBuilder.path("/category").toUriString();
             }
         }
@@ -94,7 +94,7 @@ public class CategoryController extends LibraryParentController {
         } catch (NoEntityFoundException | IllegalArgumentException ex) {
             LOGGER.debug("Category of id {} not found.", id);
 
-            redirectAttributes.addFlashAttribute("message", "Category not found.");
+            redirectAttributes.addFlashAttribute("alert_warning", "Category not found.");
             return "redirect:" + uriComponentsBuilder.path("/category").toUriString();
         }
 
@@ -137,7 +137,7 @@ public class CategoryController extends LibraryParentController {
 
         redirectAttributes.addFlashAttribute("alert_success", "Category " + categoryNewDTO.getName() + " created.");
 
-        return "redirect:" + uriComponentsBuilder.path("/category/detail/{id}").buildAndExpand(id).toUriString();
+        return "redirect:" + uriComponentsBuilder.path("/category").buildAndExpand(id).toUriString();
     }
 
     /**
@@ -148,11 +148,20 @@ public class CategoryController extends LibraryParentController {
      */
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable long id,
-                       Model model) {
+                       Model model,
+                       RedirectAttributes redirectAttributes,
+                       UriComponentsBuilder uriComponentsBuilder) {
         LOGGER.debug("category {} edit GET", id);
 
-        model.addAttribute("category", categoryFacade.findById(id));
-        return "category/edit";
+        try {
+            model.addAttribute("category", categoryFacade.findById(id));
+            return "category/edit";
+        } catch (NoEntityFoundException | IllegalArgumentException e) {
+            LOGGER.debug("Category of id {} not found.", id);
+
+            redirectAttributes.addFlashAttribute("alert_warning", "Category not found.");
+            return "redirect:" + uriComponentsBuilder.path("/category").toUriString();
+        }
     }
 
     /**

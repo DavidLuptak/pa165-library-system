@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.library.dto.*;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.BookFacade;
 import cz.muni.fi.pa165.library.facade.CategoryFacade;
+import cz.muni.fi.pa165.library.facade.LoanFacade;
 import cz.muni.fi.pa165.library.mapping.BeanMappingService;
 import cz.muni.fi.pa165.library.web.validator.BookCreateValidator;
 import cz.muni.fi.pa165.library.web.validator.BookUpdateValidator;
@@ -20,7 +21,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import javafx.util.Pair;
 
 /**
  * @author Lenka (433591)
@@ -37,6 +40,9 @@ public class BookController extends LibraryParentController {
 
     @Inject
     private CategoryFacade categoryFacade;
+    
+    @Inject
+    private LoanFacade loanFacade;
 
     @Inject
     private BookCreateValidator bookCreateValidator;
@@ -58,9 +64,21 @@ public class BookController extends LibraryParentController {
                          UriComponentsBuilder uriBuilder) {
         try {
             model.addAttribute("book", bookFacade.findById(id));
-            model.addAttribute("copies", bookFacade.findById(id).getBookCopies());
+            
+            List< Pair<BookCopyDTO, String> > bookCopies = new LinkedList<>();
+            for(BookCopyDTO copy : bookFacade.findById(id).getBookCopies()) {
+                String available = "Yes";
+                for(LoanDTO loan : loanFacade.findAllNotReturned()) {
+                    if(copy.equals(loan.getBookCopy())) {
+                        available = "No";
+                    }
+                }
+                bookCopies.add(new Pair<>(copy, available));
+            }
+            model.addAttribute("copies", bookCopies);
+            
         } catch (NoEntityFoundException e) {
-            redirectAttributes.addFlashAttribute("alert_danger", "Book " + id + " was not found");
+            redirectAttributes.addFlashAttribute("alert_warning", "Book " + id + " was not found");
             return "redirect:" + uriBuilder.path("/book").toUriString();
         }
         return "book/detail";
@@ -108,8 +126,8 @@ public class BookController extends LibraryParentController {
             BookUpdateDTO bookUpdateDTO = mapBookDTOtoBookNewOrUpdateDTO(bookFacade.findById(id), BookUpdateDTO.class);
             model.addAttribute("book", bookUpdateDTO);
         } catch (NoEntityFoundException e) {
-            redirectAttributes.addAttribute("alert_danger", "Book " + id + " was not found");
-            return "redirect:" + uriBuilder.path("/book/detail/" + id).toUriString();
+            redirectAttributes.addFlashAttribute("alert_warning", "Book " + id + " was not found");
+            return "redirect:" + uriBuilder.path("/book/index").toUriString();
         }
         return "book/edit";
     }
@@ -131,7 +149,7 @@ public class BookController extends LibraryParentController {
             bookFacade.update(bookDTO);
             redirectAttributes.addFlashAttribute("alert_info", "Book " + book.getTitle() + " was updated");
         } catch (NoEntityFoundException e) {
-            redirectAttributes.addFlashAttribute("alert_danger", "Book " + book.getTitle() + " cannot be updated.");
+            redirectAttributes.addFlashAttribute("alert_danger", "Book " + book.getTitle() + " cannot be updated");
         }
 
         return "redirect:" + uriBuilder.path("/book/detail/" + book.getId()).toUriString();
