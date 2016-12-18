@@ -67,7 +67,7 @@
                         <li><a href="${pageContext.request.contextPath}/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="${pageContext.request.contextPath}/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        <li><a href="${pageContext.request.contextPath}/index"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     </c:otherwise>
                 </c:choose>
             </ul>

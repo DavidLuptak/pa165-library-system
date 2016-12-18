@@ -18,6 +18,7 @@ public class HomepageController extends LibraryParentController{
     
     @RequestMapping(value = {"", "/", "/index"})
     public String start(Model model) {
+        model.addAttribute("books", bookFacade.findAll().size());
         return "index";
     }
 }
