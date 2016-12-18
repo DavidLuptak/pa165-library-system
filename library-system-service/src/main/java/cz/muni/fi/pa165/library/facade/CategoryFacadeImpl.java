@@ -40,6 +40,10 @@ public class CategoryFacadeImpl implements CategoryFacade {
         }
 
         Category category = beanMappingService.mapTo(categoryNewDTO, Category.class);
+        for (Long id : categoryNewDTO.getBookIds()) {
+            Book book = bookService.findById(id);
+            category.addBook(book);
+        }
         categoryService.create(category);
         return category.getId();
     }

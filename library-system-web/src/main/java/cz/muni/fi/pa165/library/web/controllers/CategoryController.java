@@ -3,8 +3,10 @@ package cz.muni.fi.pa165.library.web.controllers;
 import cz.muni.fi.pa165.library.dto.BookDTO;
 import cz.muni.fi.pa165.library.dto.CategoryDTO;
 import cz.muni.fi.pa165.library.dto.CategoryNewDTO;
+import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.Category;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
+import cz.muni.fi.pa165.library.facade.BookFacade;
 import cz.muni.fi.pa165.library.facade.CategoryFacade;
 import cz.muni.fi.pa165.library.web.validator.CategoryCreateValidator;
 import cz.muni.fi.pa165.library.web.validator.CategoryUpdateValidator;
@@ -37,6 +39,9 @@ public class CategoryController extends LibraryParentController {
 
     @Inject
     private CategoryFacade categoryFacade;
+
+    @Inject
+    private BookFacade bookFacade;
 
     @Inject
     private CategoryCreateValidator categoryCreateValidator;
@@ -111,6 +116,7 @@ public class CategoryController extends LibraryParentController {
         LOGGER.debug("category create GET");
 
         model.addAttribute("category", new CategoryNewDTO());
+        model.addAttribute("books", bookFacade.findAll());
         return "category/create";
     }
 

@@ -25,13 +25,11 @@
                 <td><c:out value="${category.name}"/></td>
                 <td><c:out value="${category.books.size()}"/></td>
                 <td class="table-buttons">
-                    <c:if test="${not empty category.books}">
-                        <a class="btn btn-default"
-                           href="${pageContext.request.contextPath}/category/detail/${category.id}">
-                            <span class="sr-only"><fmt:message key="detail"/></span> <!-- it's not visible on hover -->
-                            <span class="glyphicon glyphicon-search"></span>
-                        </a>
-                    </c:if>
+                    <a class="btn btn-default"
+                       href="${pageContext.request.contextPath}/category/detail/${category.id}">
+                        <span class="sr-only"><fmt:message key="detail"/></span> <!-- it's not visible on hover -->
+                        <span class="glyphicon glyphicon-search"></span>
+                    </a>
                     <c:if test="${loggedUser.isAdmin()}">
                     <a class="btn btn-danger" title="Delete"
                        href="${pageContext.request.contextPath}/category/delete/${category.id}">

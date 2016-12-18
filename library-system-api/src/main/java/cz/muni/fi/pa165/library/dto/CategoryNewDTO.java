@@ -1,5 +1,7 @@
 package cz.muni.fi.pa165.library.dto;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -10,6 +12,8 @@ public class CategoryNewDTO {
 
     @NotBlank
     private String name;
+
+    private List<Long> bookIds;
 
     public CategoryNewDTO() {
     }
@@ -24,6 +28,14 @@ public class CategoryNewDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Long> getBookIds() {
+        return bookIds;
+    }
+
+    public void setBookIds(List<Long> bookIds) {
+        this.bookIds = bookIds;
     }
 
     @Override

@@ -6,6 +6,7 @@
 
 <c:set var="actionUrl" value="${pageContext.request.contextPath}/category/create"/>
 <c:set var="backUrl" value="${pageContext.request.contextPath}/category/index"/>
+<c:set var="editBooks" value="true"/>
 
 <my:pagetemplate>
     <jsp:attribute name="title"><fmt:message key="category.create"/></jsp:attribute>

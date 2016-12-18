@@ -10,6 +10,21 @@
             <form:errors path="name" cssClass="help-block"/>
         </div>
     </div>
+    <c:if test="${editBooks}">
+        <div class="form-group">
+            <form:label path="bookIds" cssClass="col-sm-1 control-label">Books</form:label>
+            <div class="col-sm-5">
+                <form:select path="bookIds" cssClass="form-control"
+                             multiple="true"
+                             items="${books}"
+                             itemLabel="title"
+                             itemValue="id"
+                             size="${books.size() > 10 ? 10 : books.size()}"/>
+                <p class="help-block"><form:errors path="bookIds" cssClass="error"/></p>
+            </div>
+        </div>
+    </c:if>
+
     <div class="col-sm-offset-1 col-sm-5">
         <button class="btn btn-primary" type="submit"><fmt:message key="save"/></button>
         <a href="${backUrl}" class="btn btn-default"><fmt:message key="back"/></a>
