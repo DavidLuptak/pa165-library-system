@@ -67,15 +67,11 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         BookCopy bookCopy31 = bookCopy(book3, BookState.NEW);
         BookCopy bookCopy32 = bookCopy(book3, BookState.NEW);
         BookCopy bookCopy33 = bookCopy(book3, BookState.NEW);
-        BookCopy bookCopy34 = bookCopy(book3, BookState.NEW);
-        BookCopy bookCopy35 = bookCopy(book3, BookState.NEW);
         BookCopy bookCopy41 = bookCopy(book4, BookState.NEW);
         BookCopy bookCopy42 = bookCopy(book4, BookState.NEW);
         BookCopy bookCopy43 = bookCopy(book4, BookState.NEW);
         BookCopy bookCopy44 = bookCopy(book4, BookState.NEW);
         BookCopy bookCopy45 = bookCopy(book4, BookState.NEW);
-        BookCopy bookCopy46 = bookCopy(book4, BookState.NEW);
-        BookCopy bookCopy47 = bookCopy(book4, BookState.NEW);
 
         LOGGER.info("Book copies loaded.");
 

@@ -2,7 +2,9 @@ package cz.muni.fi.pa165.library.web.controllers;
 
 import cz.muni.fi.pa165.library.dto.LoanDTO;
 import cz.muni.fi.pa165.library.dto.LoanNewDTO;
+import cz.muni.fi.pa165.library.dto.UserDTO;
 import cz.muni.fi.pa165.library.enums.BookState;
+import cz.muni.fi.pa165.library.enums.UserRole;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.BookCopyFacade;
 import cz.muni.fi.pa165.library.facade.BookFacade;
@@ -33,7 +35,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/loan")
-public class LoanController {
+public class LoanController extends LibraryParentController{
 
     final static Logger log = LoggerFactory.getLogger(LoanController.class);
 
@@ -48,7 +50,8 @@ public class LoanController {
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String create(Model model) {
-        LoanNewDTO loan = new LoanNewDTO(1L, null, LocalDateTime.now());
+        UserDTO loggedUser = getLoggedUser();
+        LoanNewDTO loan = new LoanNewDTO(loggedUser.getId(), null, LocalDateTime.now());
         model.addAttribute("loan", loan);
         model.addAttribute("books", bookFacade.findLoanableBooks());
         return "loan/create";
@@ -72,13 +75,19 @@ public class LoanController {
             }
 
             return "redirect:" + uriBuilder.path("/loan").toUriString();
-
         }
     }
 
     @RequestMapping(value = {"", "/", "/index"}, method = RequestMethod.GET)
     public String index(Model model) {
-        model.addAttribute("loans", loanFacade.findAll());
+        UserDTO loggedUser = getLoggedUser();
+        model.addAttribute("user", loggedUser);
+        if (loggedUser.getUserRole() == UserRole.ADMIN) {
+            model.addAttribute("loans", loanFacade.findAll());
+        }
+        else{
+            model.addAttribute("loans", loanFacade.findByUser(loggedUser.getId()));
+        }
         return "loan/index";
     }
 

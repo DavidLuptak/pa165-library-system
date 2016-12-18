@@ -5,8 +5,6 @@
 
 <my:pagetemplate title="Users">
 <jsp:attribute name="body">
-    <a class="btn btn-default" href="${pageContext.request.contextPath}/user/create">
-        <span class="glyphicon glyphicon-plus"></span> New user</a>
     <table class="table table-striped table-hover table-books">
         <thead>
         <tr>
@@ -34,9 +32,6 @@
                     </a>
                     <a class="btn btn-default" title="List not returned loans" href="${pageContext.request.contextPath}/user/${user.id}/notReturnedLoans">
                         <span class="glyphicon glyphicon-list-alt" ></span>
-                    </a>
-                    <a class="btn btn-default" title="New loan" href="${pageContext.request.contextPath}/user/${user.id}/createLoan">
-                        <span class="glyphicon glyphicon-plus" ></span>
                     </a>
                 </td>
             </tr>

@@ -31,7 +31,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/book")
-public class BookController {
+public class BookController extends LibraryParentController{
 
     final static Logger log = LoggerFactory.getLogger(BookController.class);
 

@@ -28,7 +28,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/category")
-public class CategoryController {
+public class CategoryController extends LibraryParentController{
 
     final static Logger LOGGER = LoggerFactory.getLogger(CategoryController.class);
 

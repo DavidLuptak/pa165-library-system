@@ -12,24 +12,24 @@
                 <table class="table table-detail">
                     <tbody>
                     <tr>
-                        <th scope="row" class="col-sm-3">FirstName</th>
+                        <th scope="row" class="col-sm-4">FirstName</th>
                         <td><c:out value="${loan.user.firstName}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="col-sm-3">LastName</th>
+                        <th scope="row" class="col-sm-4">LastName</th>
                         <td><c:out value="${loan.user.lastName}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="col-sm-3">Book Title</th>
+                        <th scope="row" class="col-sm-4">Book Title</th>
                         <td><c:out value="${loan.bookCopy.book.title}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="col-sm-3">Loan Date</th>
+                        <th scope="row" class="col-sm-4">Loan Date</th>
                         <td><javatime:format value="${loan.loanDate}" pattern="dd.MM.yyyy HH:mm"/></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="col-sm-3">Loan BookState</th>
-                        <td><c:out value="${loan.bookCopy.bookState}"/></td>
+                        <th scope="row" class="col-sm-4">Loan Return BookState</th>
+                        <td><c:out value="${loan.returnBookState}"/></td>
                     </tr>
 
                     <c:if test="${loan.returnDate != null}">

@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends LibraryParentController{
     @Inject
     private UserFacade userFacade;
 

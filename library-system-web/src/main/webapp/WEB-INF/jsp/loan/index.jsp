@@ -11,24 +11,30 @@
     <table class="table table-striped table-hover table-books">
         <thead>
         <tr>
+            <c:if test="${user.isAdmin()}">
             <th>First Name</th>
             <th>Last Name</th>
+            </c:if>
             <th>Book</th>
             <th>LoanDate</th>
+            <th>ReturnDate</th>
         </tr>
         </thead>
         <tbody>
         <c:forEach var="loan" items="${loans}">
             <tr>
+                <c:if test="${user.isAdmin()}">
                 <td><c:out value="${loan.user.firstName}"/></td>
                 <td><c:out value="${loan.user.lastName}"/></td>
+                </c:if>
                 <td><c:out value="${loan.bookCopy.book.title}"/></td>
                 <td><javatime:format value="${loan.loanDate}" pattern="dd.MM.yyyy HH:mm"/></td>
+                <td><javatime:format value="${loan.returnDate}" pattern="dd.MM.yyyy HH:mm"/></td>
                 <td>
                     <a class="btn btn-default" title="Detail" href="${pageContext.request.contextPath}/loan/detail/${loan.id}">
                         <span class="glyphicon glyphicon-search"></span>
                     </a>
-                    <c:if test="${loan.returnDate == null}">
+                    <c:if test="${loan.returnDate == null && user.isAdmin()}">
                     <a class="btn btn-danger" title="Return" href="${pageContext.request.contextPath}/loan/return/${loan.id}">
                         <span class="glyphicon glyphicon-ok-sign"></span>
                     </a>

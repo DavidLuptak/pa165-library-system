@@ -17,8 +17,10 @@
         <c:choose>
             <c:when test="${not empty pageContext.request.remoteUser}">
                 <center><p>
+                    <a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/category/index"
+                      role="button">Go to categories</a>
                     <a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/book/index"
-                       role="button">Go to books</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                       role="button">Go to books</a>
                     <a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/loan/index"
                       role="button">Go to loans</a>
                 </p></center>
