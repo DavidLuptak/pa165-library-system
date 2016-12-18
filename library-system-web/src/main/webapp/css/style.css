@@ -41,3 +41,7 @@ table {
 .detail-buttons a, .detail-buttons button{
     float: right;
 }
+
+.content-center {
+    text-align: center;
+}
