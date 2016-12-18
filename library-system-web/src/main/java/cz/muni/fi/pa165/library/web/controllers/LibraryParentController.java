@@ -10,7 +10,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Parent controller for all application controllers

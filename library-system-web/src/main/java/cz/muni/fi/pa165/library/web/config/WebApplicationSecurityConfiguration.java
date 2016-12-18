@@ -62,6 +62,8 @@ public class WebApplicationSecurityConfiguration extends WebSecurityConfigurerAd
                 .logout().logoutSuccessUrl("/")
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .and()
+		.exceptionHandling().accessDeniedPage("/unauthorized")
+                .and()
                 .csrf().disable();
 
     }
