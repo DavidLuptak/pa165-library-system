@@ -16,9 +16,9 @@
             <th>Last Name</th>
         </c:if>
         <th>Book</th>
-        <th>LoanDate</th>
+        <th>Loaned</th>
         <c:if test="${showReturn}">
-            <th>ReturnDate</th>
+            <th>Returned</th>
         </c:if>
     </tr>
     </thead>

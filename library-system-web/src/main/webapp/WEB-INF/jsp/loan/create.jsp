@@ -17,11 +17,12 @@
     </jsp:attribute>
     <jsp:attribute name="body">
         <h3>New Loan</h3>
+        <br>
         <form:form method="post" action="${actionUrl}"
-                   modelAttribute="loan" cssClass="form-horizontal form-loan">
+                   modelAttribute="loan">
             <div class="form-group">
-                <form:label path="bookIds" cssClass="col-sm-2 control-label">Choose books</form:label>
-                <div class="col-sm-5">
+                <form:label path="bookIds" cssClass="control-label">Choose books:</form:label>
+                <div style="width: 50%">
                     <form:select path="bookIds" cssClass="form-control" multiple="true" size="${books.size() > 15 ? 15 : books.size()}">
                         <c:forEach items="${books}" var="book">
                             <form:option value="${book.id}">${book.title}</form:option>
@@ -30,7 +31,7 @@
                     <p class="help-block"><form:errors path="bookIds" cssClass="error"/></p>
                 </div>
             </div>
-             <div class="col-sm-offset-1 col-sm-5">
+             <div class="col-sm-5">
                  <button class="btn btn-primary" type="submit">Save</button>
                  <a href="${backUrl}" class="btn btn-default">Back</a>
              </div>
