@@ -6,7 +6,6 @@ import cz.muni.fi.pa165.library.dto.UserDTO;
 import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.enums.UserRole;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
-import cz.muni.fi.pa165.library.facade.BookCopyFacade;
 import cz.muni.fi.pa165.library.facade.BookFacade;
 import cz.muni.fi.pa165.library.facade.LoanFacade;
 import cz.muni.fi.pa165.library.facade.UserFacade;
@@ -25,7 +24,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -124,7 +122,7 @@ public class LoanController extends LibraryParentController{
         if (br.hasErrors()) {
             return "loan/return";
         }
-        loanFacade.ret(loan);
+        loanFacade.returnLoan(loan);
         redirectAttributes.addFlashAttribute("alert_info", "Loan was updated");
         return "redirect:" + uriBuilder.path("/loan/detail/" + loan.getId()).toUriString();
     }

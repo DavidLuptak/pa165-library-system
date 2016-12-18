@@ -106,7 +106,7 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
                 notReturnedLoan2, returnedLoan3, notReturnedLoan3));
 
         // findAll
-        when(loanDao.findAll()).thenReturn(Arrays.asList(loan));
+        when(loanDao.findAll()).thenReturn(Arrays.asList(returnedLoan1,notReturnedLoan1));
 
         // create
         doAnswer((InvocationOnMock invocation) -> {
@@ -224,7 +224,7 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
 
     @Test
     public void testFindAll() {
-        assertEquals(loanService.findAll().size(), 1);
+        assertEquals(loanService.findAll().size(), 2);
         verify(loanDao).findAll();
     }
 
@@ -267,4 +267,24 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
         loanService.findReturnedUserLoans(new User());
         verify(loanDao).findByUser(new User());
     }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testReturnLoan(){
+        loanService.returnLoan(null);
+    }
+
+    @Test
+    public void testFindAllReturned(){
+        List<Loan> loans = loanService.findAllReturned();
+        assertEquals(loans.size(),1);
+        assertEquals(loans.get(0), returnedLoan1);
+    }
+
+    @Test
+    public void testFindAllNotReturned(){
+        List<Loan> loans = loanService.findAllNotReturned();
+        assertEquals(loans.size(),1);
+        assertEquals(loans.get(0), notReturnedLoan1);
+    }
+
 }

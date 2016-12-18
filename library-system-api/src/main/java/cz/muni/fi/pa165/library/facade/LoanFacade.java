@@ -100,6 +100,6 @@ public interface LoanFacade {
      *
      * @param loanDTO to be returned
      */
-    void ret(LoanDTO loanDTO);
+    void returnLoan(LoanDTO loanDTO);
 
 }

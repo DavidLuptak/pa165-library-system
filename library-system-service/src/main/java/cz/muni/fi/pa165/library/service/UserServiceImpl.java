@@ -185,11 +185,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isAdmin(User u) {
-        return findUserById(u.getId()).isAdmin();
-    }
-    
-    @Override
-    public User findUserById(Long userId) {
-        return userDao.findById(userId);
+        if(u == null) throw new IllegalArgumentException("user is null");
+        return findById(u.getId()).isAdmin();
     }
 }

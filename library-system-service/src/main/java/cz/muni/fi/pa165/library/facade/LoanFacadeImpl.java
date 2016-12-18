@@ -159,7 +159,7 @@ public class LoanFacadeImpl implements LoanFacade {
     }
 
     @Override
-    public void ret(LoanDTO loanDTO) {
+    public void returnLoan(LoanDTO loanDTO) {
         if (loanDTO == null) {
             throw new IllegalArgumentException("Loan cannot be null.");
         }
@@ -170,7 +170,7 @@ public class LoanFacadeImpl implements LoanFacade {
             throw new NoEntityFoundException("Loan not found during return.");
         }
 
-        loanService.ret(loan);
+        loanService.returnLoan(loan);
     }
 
     /**
