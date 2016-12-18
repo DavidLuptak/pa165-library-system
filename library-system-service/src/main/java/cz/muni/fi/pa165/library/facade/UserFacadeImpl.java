@@ -134,9 +134,4 @@ public class UserFacadeImpl implements UserFacade {
     public List<UserDTO> findUsersWithNotReturnedLoans() {
         return beanMappingService.mapTo(userService.findUsersWithNotReturnedLoans(), UserDTO.class);
     }
-
-    @Override
-    public boolean isAdmin(UserDTO u) {
-        return userService.isAdmin(beanMappingService.mapTo(u, User.class));
-    }
 }
