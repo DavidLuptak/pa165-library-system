@@ -125,7 +125,7 @@ public class UserController extends LibraryParentController{
             model.addAttribute("returned", loanFacade.findReturnedUserLoans(id));
             model.addAttribute("loaned", loanFacade.findNotReturnedUserLoans(id));
             model.addAttribute("user", getLoggedUser());
-        } catch (IllegalArgumentException | NoEntityFoundException e) {
+        } catch (NoEntityFoundException | IllegalArgumentException e) {
             return "user/noUser";
         }
         return "loan/index";
