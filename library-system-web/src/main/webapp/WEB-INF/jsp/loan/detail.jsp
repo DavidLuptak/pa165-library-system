@@ -42,7 +42,7 @@
                     <tr>
                         <td></td>
                         <td>
-                            <a class="btn btn-default" href="${pageContext.request.contextPath}/loan/index">Back</a>
+                            <button class="btn btn-default" onclick="history.go(-1)">Back</button>
                         </td>
                     </tr>
                     </tbody>

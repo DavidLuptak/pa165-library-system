@@ -83,10 +83,12 @@ public class LoanController extends LibraryParentController{
         UserDTO loggedUser = getLoggedUser();
         model.addAttribute("user", loggedUser);
         if (loggedUser.getUserRole() == UserRole.ADMIN) {
-            model.addAttribute("loans", loanFacade.findAll());
+            model.addAttribute("returned", loanFacade.findAll());
+            model.addAttribute("loaned", loanFacade.findAll());
         }
         else{
-            model.addAttribute("loans", loanFacade.findByUser(loggedUser.getId()));
+            model.addAttribute("returned", loanFacade.findReturnedUserLoans(loggedUser.getId()));
+            model.addAttribute("loaned", loanFacade.findNotReturnedUserLoans(loggedUser.getId()));
         }
         return "loan/index";
     }

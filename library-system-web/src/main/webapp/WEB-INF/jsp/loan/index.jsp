@@ -7,42 +7,27 @@
 <my:pagetemplate title="Loans">
 <jsp:attribute name="body">
     <a class="btn btn-default" href="${pageContext.request.contextPath}/loan/create">
-        <span class="glyphicon glyphicon-plus"></span> New loan</a>
-    <table class="table table-striped table-hover table-books">
-        <thead>
-        <tr>
-            <c:if test="${user.isAdmin()}">
-            <th>First Name</th>
-            <th>Last Name</th>
-            </c:if>
-            <th>Book</th>
-            <th>LoanDate</th>
-            <th>ReturnDate</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach var="loan" items="${loans}">
-            <tr>
-                <c:if test="${user.isAdmin()}">
-                <td><c:out value="${loan.user.firstName}"/></td>
-                <td><c:out value="${loan.user.lastName}"/></td>
-                </c:if>
-                <td><c:out value="${loan.bookCopy.book.title}"/></td>
-                <td><javatime:format value="${loan.loanDate}" pattern="dd.MM.yyyy HH:mm"/></td>
-                <td><javatime:format value="${loan.returnDate}" pattern="dd.MM.yyyy HH:mm"/></td>
-                <td>
-                    <a class="btn btn-default" title="Detail" href="${pageContext.request.contextPath}/loan/detail/${loan.id}">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </a>
-                    <c:if test="${loan.returnDate == null && user.isAdmin()}">
-                    <a class="btn btn-danger" title="Return" href="${pageContext.request.contextPath}/loan/return/${loan.id}">
-                        <span class="glyphicon glyphicon-ok-sign"></span>
-                    </a>
-                    </c:if>
-                </td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+        <span class="glyphicon glyphicon-plus"></span> New loan
+    </a>
+
+ <div id="loans">
+     <ul>
+         <li><a href="#loaned">Loaned</a></li>
+         <li><a href="#returned">Returned</a></li>
+     </ul>
+     <div id="loaned">
+         <my:loanTable loans="${loaned}" user="${user}" showReturn="false"/>
+     </div>
+     <div id="returned">
+         <my:loanTable loans="${returned}" user="${user}" showReturn="true"/>
+     </div>
+ </div>
+
+</jsp:attribute>
+    <jsp:attribute name="scripts">
+    <script>
+        $("#loans").tabs();
+    </script>
 </jsp:attribute>
 </my:pagetemplate>
+

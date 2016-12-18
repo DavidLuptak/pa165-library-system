@@ -102,22 +102,12 @@ public class UserController extends LibraryParentController{
         return "user/index";
     }
 
-    @RequestMapping(value = {"/{id}/allLoans", }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/{id}/loans", }, method = RequestMethod.GET)
     public String allLoans(@PathVariable long id, Model model) {
-        model.addAttribute("loans", loanFacade.findByUser(id));
-        return "user/loans";
-    }
-
-    @RequestMapping(value = {"/{id}/returnedLoans", }, method = RequestMethod.GET)
-    public String returnedLoans(@PathVariable long id, Model model) {
-        model.addAttribute("loans", loanFacade.findReturnedUserLoans(id));
-        return "user/loans";
-    }
-
-    @RequestMapping(value = {"/{id}/notReturnedLoans", }, method = RequestMethod.GET)
-    public String notReturnedLoans(@PathVariable long id, Model model) {
-        model.addAttribute("loans", loanFacade.findNotReturnedUserLoans(id));
-        return "user/loans";
+        model.addAttribute("returned", loanFacade.findReturnedUserLoans(id));
+        model.addAttribute("loaned", loanFacade.findNotReturnedUserLoans(id));
+        model.addAttribute("user", getLoggedUser());
+        return "loan/index";
     }
 
     @RequestMapping(value = "/{id}/createLoan", method = RequestMethod.GET)

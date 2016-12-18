@@ -24,13 +24,7 @@
                 <td><c:out value="${user.address}"/></td>
                 <td><c:out value="${user.userRole}"/></td>
                 <td>
-                    <a class="btn btn-default" title="List all loans" href="${pageContext.request.contextPath}/user/${user.id}/allLoans">
-                        <span class="glyphicon glyphicon-list-alt" ></span>
-                    </a>
-                    <a class="btn btn-default" title="List returned loans" href="${pageContext.request.contextPath}/user/${user.id}/returnedLoans">
-                        <span class="glyphicon glyphicon-list-alt" ></span>
-                    </a>
-                    <a class="btn btn-default" title="List not returned loans" href="${pageContext.request.contextPath}/user/${user.id}/notReturnedLoans">
+                    <a class="btn btn-default" title="Loans" href="${pageContext.request.contextPath}/user/${user.id}/loans">
                         <span class="glyphicon glyphicon-list-alt" ></span>
                     </a>
                 </td>
