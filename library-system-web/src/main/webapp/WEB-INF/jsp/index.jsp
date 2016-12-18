@@ -10,28 +10,28 @@
 
     <div class="jumbotron content-center">
         <h1>Welcome to the Library System!</h1>
-        <p class="lead">The right place to borrow wonderful books. Our library actually contains <c:out value="${books}"/> books.</p>
-        
+        <p class="lead">The right place to borrow wonderful books. Our library actually contains <c:out
+                value="${books}"/> books.</p>
+
         <br/><br/>
-        
+
         <c:choose>
             <c:when test="${not empty pageContext.request.remoteUser}">
                 <p>
                     <a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/category/index"
-                      role="button">Go to categories</a>
+                       role="button">Go to categories</a>
                     <a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/book/index"
                        role="button">Go to books</a>
                     <a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/loan/index"
-                      role="button">Go to loans</a>
+                       role="button">Go to loans</a>
                 </p>
             </c:when>
             <c:otherwise>
-                
                     <h4 style="margin: auto">You have to login in order to continue to our library:</h4>
                     <br>
-                    <div><%@include file="loginForm.jspf"%></div>
-                
-
+                    <div>
+                        <%@include file="loginForm.jspf" %>
+                    </div>
             </c:otherwise>
         </c:choose>
     </div>
