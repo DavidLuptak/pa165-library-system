@@ -23,6 +23,7 @@
     <link rel="stylesheet"
           href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/build/css/bootstrap-datetimepicker.css"
           crossorigin="anonymous">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" type="text/css">
 
     <!-- custom css style -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
