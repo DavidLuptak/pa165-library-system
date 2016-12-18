@@ -31,8 +31,6 @@ public class SampleDataLoadingFacadeTest extends AbstractTestNGSpringContextTest
     @Inject
     public UserDao userDao;
     @Inject
-    public BookCopyDao bookCopyDao;
-    @Inject
     public CategoryDao categoryDao;
 
     @Test
@@ -43,9 +41,6 @@ public class SampleDataLoadingFacadeTest extends AbstractTestNGSpringContextTest
         Assert.assertTrue(loanDao.findAll().size() > 0, "No loans.");
         Assert.assertTrue(categoryDao.findAll().size() > 0, "No categories.");
         Assert.assertTrue(userDao.findAll().size() > 0, "No users.");
-        // TODO Assert.assertTrue(bookCopyDao.findAll().size() > 0, "No bookCopies.");
-
-        // TODO
 
         LOGGER.debug("Tests finished.");
     }
