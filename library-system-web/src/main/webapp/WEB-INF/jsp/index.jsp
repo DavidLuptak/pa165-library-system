@@ -10,7 +10,7 @@
 
     <div class="jumbotron content-center">
         <h1>Welcome to the Library System!</h1>
-        <p class="lead">The right place to borrow wonderful books. Our library actually contains <c:out
+        <p class="lead">The right place to borrow wonderful books. The library actually contains <c:out
                 value="${books}"/> books.</p>
 
         <br/><br/>
