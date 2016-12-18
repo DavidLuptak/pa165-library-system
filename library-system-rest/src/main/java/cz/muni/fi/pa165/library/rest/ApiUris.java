@@ -10,5 +10,6 @@ package cz.muni.fi.pa165.library.rest;
 public class ApiUris {
 
     public static final String ROOT_URI_BOOKS = "/books";
+    public static final String ROOT_URI_USERS = "/user";
 
 }
