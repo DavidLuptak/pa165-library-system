@@ -23,9 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * @author Martin
@@ -34,15 +32,12 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/loan")
-public class LoanController extends LibraryParentController{
+public class LoanController extends LibraryParentController {
 
     final static Logger log = LoggerFactory.getLogger(LoanController.class);
 
     @Inject
     private LoanFacade loanFacade;
-
-    @Inject
-    private UserFacade userFacade;
 
     @Inject
     private BookFacade bookFacade;
@@ -66,13 +61,11 @@ public class LoanController extends LibraryParentController{
         if (br.hasErrors()) {
 
             return "loan/create";
-        }
-        else {
+        } else {
             try {
                 loanFacade.create(loan);
                 redirectAttributes.addFlashAttribute("alert_info", "Loan was successfully created.");
-            }
-            catch (NoEntityFoundException | IllegalArgumentException e) {
+            } catch (NoEntityFoundException | IllegalArgumentException e) {
                 redirectAttributes.addFlashAttribute("alert_danger", "Loan could not be created.");
             }
 
@@ -86,8 +79,7 @@ public class LoanController extends LibraryParentController{
         if (loggedUser.getUserRole() == UserRole.ADMIN) {
             model.addAttribute("returned", loanFacade.findAllReturned());
             model.addAttribute("loaned", loanFacade.findAllNotReturned());
-        }
-        else{
+        } else {
             model.addAttribute("returned", loanFacade.findReturnedUserLoans(loggedUser.getId()));
             model.addAttribute("loaned", loanFacade.findNotReturnedUserLoans(loggedUser.getId()));
         }
@@ -100,7 +92,7 @@ public class LoanController extends LibraryParentController{
         try {
             model.addAttribute("loan", loanFacade.findById(id));
         } catch (NoEntityFoundException e) {
-            redirectAttributes.addFlashAttribute("alert_danger", "Loan " + id + " was not found");
+            redirectAttributes.addFlashAttribute("alert_warning", "Loan " + id + " was not found");
             return "redirect:" + uriBuilder.path("/loan").toUriString();
         }
         return "loan/detail";
@@ -122,7 +114,7 @@ public class LoanController extends LibraryParentController{
             states.removeIf(b -> b.isLighter(loan.getBookCopy().getBookState()));
             model.addAttribute("bookStates", states);
         } catch (NoEntityFoundException | IllegalArgumentException e) {
-            redirectAttributes.addFlashAttribute("alert_danger", "Loan was not found");
+            redirectAttributes.addFlashAttribute("alert_warning", "Loan was not found");
             return "redirect:" + uriBuilder.path("/loan/detail/" + id).toUriString();
         }
         return "loan/return";
