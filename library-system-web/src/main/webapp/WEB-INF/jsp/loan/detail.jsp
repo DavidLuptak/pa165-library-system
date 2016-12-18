@@ -8,7 +8,7 @@
     <jsp:attribute name="body">
 
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <table class="table table-detail">
                     <tbody>
                     <tr>
@@ -29,7 +29,7 @@
                     </tr>
                     <c:if test="${loan.returnDate != null}">
                         <tr>
-                            <th scope="row" class="col-sm-3">Return Date</th>
+                            <th scope="row" class="col-sm-4">Return Date</th>
                             <td><javatime:format value="${loan.returnDate}" pattern="dd.MM.yyyy HH:mm"/></td>
                         </tr>
                     </c:if>

@@ -13,6 +13,15 @@ table {
     border: none;
 }
 
+.table-detail th {
+    text-align: right;
+}
+
+.table-detail {
+    border-spacing: 20px 2px;
+    border-collapse: separate;
+}
+
 .table-books th {
     text-transform: uppercase;
     letter-spacing: 0.1em;
