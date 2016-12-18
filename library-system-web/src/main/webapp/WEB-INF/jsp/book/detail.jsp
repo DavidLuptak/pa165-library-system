@@ -62,7 +62,6 @@
         <table class="table table-striped table-hover table-books">
             <thead>
             <tr>
-                <th>ID</th>
                 <th>Book State</th>
                 <th>Available</th>
             </tr>
@@ -70,7 +69,6 @@
             <tbody>
             <c:forEach var="copy" items="${copies}">
                 <tr>
-                    <td><c:out value="${copy.key.id}"/></td>
                     <td><c:out value="${copy.key.bookState}"/></td>
                     <td><c:out value="${copy.value}"/></td>
                 </tr>
