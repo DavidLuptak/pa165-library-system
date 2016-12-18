@@ -121,6 +121,13 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
 
         // findReturnedUserLoans
         when(loanService.findReturnedUserLoans(user)).thenReturn(Arrays.asList(loan, loan2));
+
+        // findAllReturned
+        when(loanService.findAllReturned()).thenReturn(Arrays.asList(loan));
+
+        // findAllNotReturned
+        when(loanService.findAllNotReturned()).thenReturn(Arrays.asList(loan2));
+
     }
 
     @Test
@@ -195,6 +202,23 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         assertEqualsLoanAndLoanDTO(loan2, loanDTOs.get(1));
     }
 
+
+    @Test
+    public void testFindAllNotReturned() {
+        List<LoanDTO> loanDTOs = loanFacade.findAllNotReturned();
+        assertNotNull(loanDTOs);
+        assertEquals(loanDTOs.size(), 1);
+        assertEqualsLoanAndLoanDTO(loan2, loanDTOs.get(0));
+    }
+
+    @Test
+    public void testFindAllReturned() {
+        List<LoanDTO> loanDTOs = loanFacade.findAllReturned();
+        assertNotNull(loanDTOs);
+        assertEquals(loanDTOs.size(), 1);
+        assertEqualsLoanAndLoanDTO(loan, loanDTOs.get(0));
+    }
+
     @Test
     public void testFindNotReturnedUserLoans() {
         List<LoanDTO> result = loanFacade.findNotReturnedUserLoans(user.getId());
@@ -217,6 +241,8 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
     public void testReturnLoan(){
         loanFacade.returnLoan(null);
     }
+
+
 
     private void assertEqualsLoanAndLoanDTO(Loan loan, LoanDTO dto) {
         assertEquals(loan.getUser().getId(), dto.getUser().getId());
