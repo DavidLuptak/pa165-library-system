@@ -94,7 +94,7 @@ public class CategoryController extends LibraryParentController {
         } catch (NoEntityFoundException | IllegalArgumentException ex) {
             LOGGER.debug("Category of id {} not found.", id);
 
-            redirectAttributes.addFlashAttribute("message", "Category of id " + id + " not found.");
+            redirectAttributes.addFlashAttribute("message", "Category not found.");
             return "redirect:" + uriComponentsBuilder.path("/category").toUriString();
         }
 
