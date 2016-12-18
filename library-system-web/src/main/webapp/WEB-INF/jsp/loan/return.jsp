@@ -64,7 +64,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <form:label path="returnBookState" cssClass="col-sm-2 control-label">Return BookState</form:label>
+                <form:label path="returnBookState" cssClass="col-sm-2 control-label">Return Book State</form:label>
                 <div class="col-sm-5">
                     <form:select path="returnBookState" cssClass="form-control" >
                         <c:forEach items="${bookStates}" var="bookState">

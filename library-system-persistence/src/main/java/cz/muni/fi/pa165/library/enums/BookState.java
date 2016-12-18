@@ -26,7 +26,9 @@ public enum BookState {
         return otherName != null && name.equals(otherName);
     }
 
-    public boolean isLighter(BookState other) {return this.damageValue < other.damageValue;}
+    public boolean isLighter(BookState other) {
+        return this.damageValue < other.damageValue;
+    }
 
 
     public static List<BookState> all(){

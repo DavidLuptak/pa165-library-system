@@ -24,6 +24,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -107,7 +109,11 @@ public class LoanController extends LibraryParentController{
     public String ret(@PathVariable long id, Model model, RedirectAttributes redirectAttributes,
                       UriComponentsBuilder uriBuilder) {
         try {
-            model.addAttribute("loan", loanFacade.findById(id));
+            LoanDTO loan = loanFacade.findById(id);
+            model.addAttribute("loan", loan);
+            LinkedList<BookState> states = new LinkedList<>(BookState.all());
+            states.removeIf(b -> b.isLighter(loan.getBookCopy().getBookState()));
+            model.addAttribute("bookStates", states);
         } catch (NoEntityFoundException | IllegalArgumentException e) {
             redirectAttributes.addFlashAttribute("alert_danger", "Loan was not found");
             return "redirect:" + uriBuilder.path("/loan/detail/" + id).toUriString();
@@ -127,9 +133,4 @@ public class LoanController extends LibraryParentController{
         return "redirect:" + uriBuilder.path("/loan/detail/" + loan.getId()).toUriString();
     }
 
-    @ModelAttribute("bookStates")
-    public List<BookState> bookStates() {
-        log.debug("all book states");
-        return BookState.all();
-    }
 }
