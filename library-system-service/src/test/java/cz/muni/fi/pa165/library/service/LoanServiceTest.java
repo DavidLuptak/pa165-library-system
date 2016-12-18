@@ -267,4 +267,9 @@ public class LoanServiceTest extends AbstractTransactionalTestNGSpringContextTes
         loanService.findReturnedUserLoans(new User());
         verify(loanDao).findByUser(new User());
     }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testReturnLoan(){
+        loanService.returnLoan(null);
+    }
 }

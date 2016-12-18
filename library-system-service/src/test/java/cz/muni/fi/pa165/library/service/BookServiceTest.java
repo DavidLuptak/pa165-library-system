@@ -229,6 +229,16 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
     public void testFindAll() {
         assertEquals(bookService.findAll(), Arrays.asList(book1, book2));
         verify(bookDao).findAll();
+    }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testIsLoanable(){
+        bookService.isLoanable(null);
+    }
+
+    @Test(expectedExceptions = LibraryDAOException.class)
+    public void testFindLoanableBooks(){
+        assertNull(bookService.findLoanableBooks());
+        verify(bookDao).findAll();
     }
 }

@@ -297,6 +297,11 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         assertEquals(userRole, userPersistedB.getUserRole());
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testIsAdmin(){
+        userService.isAdmin(null);
+    }
+
     @Test
     public void testAuthenticate() {
         User pureNewUser = new User.UserBuilder("pure@new.user").build();

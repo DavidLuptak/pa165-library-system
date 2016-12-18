@@ -88,11 +88,4 @@ public interface UserService {
      * @return true if the user is admin
      */
     public boolean isAdmin(User mapTo);
-
-    /**
-     * Find a user by given ID.
-     * @param userId id
-     * @return found user
-     */
-    User findUserById(Long userId);
 }

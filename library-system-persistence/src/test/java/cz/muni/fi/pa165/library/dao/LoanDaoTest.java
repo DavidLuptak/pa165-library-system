@@ -142,6 +142,11 @@ public class LoanDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = DataAccessException.class)
+    public void testFindByUser(){
+        loanDao.findByUser(null);
+    }
+
+    @Test(expectedExceptions = DataAccessException.class)
     public void testFindLoanByNullId() {
         loanDao.findById(null);
     }

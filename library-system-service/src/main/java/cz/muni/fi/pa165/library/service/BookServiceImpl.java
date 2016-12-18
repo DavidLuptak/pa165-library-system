@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.library.service;
 import cz.muni.fi.pa165.library.dao.BookCopyDao;
 import cz.muni.fi.pa165.library.dao.BookDao;
 import cz.muni.fi.pa165.library.entity.Book;
+import cz.muni.fi.pa165.library.entity.BookCopy;
 import cz.muni.fi.pa165.library.exception.LibraryDAOException;
 import org.springframework.stereotype.Service;
 
@@ -96,7 +97,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<Book> findLoanableBooks() {
         try{
-            return bookDao.findAll().stream().filter(x -> isLoanable(x)).collect(Collectors.toList());
+            return bookDao.findAll().stream().filter(this::isLoanable).collect(Collectors.toList());
         } catch (Exception e) {
             throw new LibraryDAOException(e.getMessage(),e.getCause());
         }
@@ -104,10 +105,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public boolean isLoanable(Book book) {
+        if(book == null) throw new IllegalArgumentException("book is null");
         try{
             return bookCopyDao.findByBook(book).
                     stream().
-                    filter(x -> x.isLoanable()).
+                    filter(BookCopy::isLoanable).
                     findFirst().
                     isPresent();
         }catch (Exception e) {

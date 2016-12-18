@@ -144,6 +144,11 @@ public class BookCopyFacadeTest extends AbstractTransactionalTestNGSpringContext
         assertDeepEquals(bookCopy2, result.get(1));
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindLoanableByBook(){
+        bookCopyFacade.findLoanableByBook(null);
+    }
+
     private void assertDeepEquals(BookCopy bookCopy1, BookCopyDTO bookCopyDTO) {
         assertEquals(bookCopy1.getBook().getId(), bookCopyDTO.getBook().getId());
         assertEquals(bookCopy1.getBookState(), bookCopyDTO.getBookState());

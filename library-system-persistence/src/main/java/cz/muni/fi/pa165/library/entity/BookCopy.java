@@ -77,7 +77,10 @@ public class BookCopy {
     }
 
     public boolean isLoanable(){
-        return !loans.stream().filter(x -> !x.isReturned()).findFirst().isPresent();
+        return !loans.stream().
+                filter(x -> !x.isReturned()).
+                findFirst().
+                isPresent();
     }
 
     @Override

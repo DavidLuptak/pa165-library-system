@@ -156,7 +156,10 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public void ret(Loan loan) {
+    public void returnLoan(Loan loan) {
+        if(loan == null){
+            throw new IllegalArgumentException("loan is null");
+        }
         if(loan.getReturnDate() == null){
             throw new IllegalArgumentException("returnDate of loan has to be set");
         }

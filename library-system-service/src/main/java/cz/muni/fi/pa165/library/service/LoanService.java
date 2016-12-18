@@ -91,6 +91,6 @@ public interface LoanService {
      *
      * @param loan loan to be returned
      */
-    void ret(Loan loan);
+    void returnLoan(Loan loan);
 
 }

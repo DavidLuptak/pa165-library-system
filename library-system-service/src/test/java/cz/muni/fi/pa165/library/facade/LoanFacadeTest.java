@@ -213,6 +213,11 @@ public class LoanFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         assertEqualsLoanAndLoanDTO(loan2, result.get(1));
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testReturnLoan(){
+        loanFacade.returnLoan(null);
+    }
+
     private void assertEqualsLoanAndLoanDTO(Loan loan, LoanDTO dto) {
         assertEquals(loan.getUser().getId(), dto.getUser().getId());
         assertEquals(loan.getBookCopy().getId(), dto.getBookCopy().getId());
