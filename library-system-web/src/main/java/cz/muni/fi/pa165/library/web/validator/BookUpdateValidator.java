@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.library.web.validator;
 import cz.muni.fi.pa165.library.dto.BookUpdateDTO;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.BookFacade;
+import org.apache.commons.validator.routines.ISBNValidator;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -10,7 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
- * Validate the ISBN is unique on update.
+ * Validate the ISBN is unique and valid on update.
  *
  * @author Dávid Lupták
  * @version 18.12.2016
@@ -37,12 +38,18 @@ public class BookUpdateValidator implements Validator {
             return;
         }
 
+        ISBNValidator isbnValidator = new ISBNValidator();
+
         try {
-            bookFacade.findByIsbn(bookUpdateDTO.getIsbn());
+            bookFacade.findByIsbn(newIsbn);
             errors.rejectValue("isbn", "book.isbn_unique");
             // new isbn is not unique
         } catch (NoEntityFoundException | IllegalArgumentException e) {
             // new isbn is unique
+            // check isbn for validity
+            if (!isbnValidator.isValid(newIsbn)) {
+                errors.rejectValue("isbn", "book.isbn_invalid");
+            }
         }
     }
 }
