@@ -81,11 +81,4 @@ public interface UserService {
      * @return users who have at least one not returned loan
      */
     List<User> findUsersWithNotReturnedLoans();
-    
-    /**
-     * Check if the user is admin.
-     * @param mapTo given user
-     * @return true if the user is admin
-     */
-    public boolean isAdmin(User mapTo);
 }

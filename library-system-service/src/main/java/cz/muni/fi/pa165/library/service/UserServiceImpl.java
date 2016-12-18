@@ -182,10 +182,4 @@ public class UserServiceImpl implements UserService {
         int paddingLength = (array.length * 2) - hex.length();
         return paddingLength > 0 ? String.format("%0" + paddingLength + "d", 0) + hex : hex;
     }
-
-    @Override
-    public boolean isAdmin(User u) {
-        if(u == null) throw new IllegalArgumentException("user is null");
-        return findById(u.getId()).isAdmin();
-    }
 }

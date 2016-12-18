@@ -17,7 +17,6 @@ import org.testng.annotations.Test;
 import javax.persistence.EntityExistsException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import static org.mockito.Matchers.any;
@@ -295,11 +294,6 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
     public void testUserRole() {
         UserRole userRole = userService.userRole(userPersistedB);
         assertEquals(userRole, userPersistedB.getUserRole());
-    }
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testIsAdmin(){
-        userService.isAdmin(null);
     }
 
     @Test
