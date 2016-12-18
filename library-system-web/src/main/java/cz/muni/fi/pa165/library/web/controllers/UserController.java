@@ -1,18 +1,19 @@
 package cz.muni.fi.pa165.library.web.controllers;
 
 import cz.muni.fi.pa165.library.dto.LoanDTO;
-import cz.muni.fi.pa165.library.dto.LoanNewDTO;
 import cz.muni.fi.pa165.library.dto.UserDTO;
-import cz.muni.fi.pa165.library.facade.BookFacade;
+import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.LoanFacade;
 import cz.muni.fi.pa165.library.facade.UserFacade;
 import cz.muni.fi.pa165.library.web.adapters.UserDetailsAdapter;
 import cz.muni.fi.pa165.library.web.exceptions.WebSecurityException;
+import java.util.ArrayList;
 import java.util.List;
-import javassist.NotFoundException;
 import javax.inject.Inject;
+import org.springframework.security.core.Authentication;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,21 +33,25 @@ public class UserController extends LibraryParentController{
     @Inject
     private LoanFacade loanFacade;
 
-    @Inject
-    private BookFacade bookFacade;
-
     @RequestMapping("/{id}")
     public String showUser(
             @AuthenticationPrincipal UserDetailsAdapter currentUser,
             @PathVariable long id,
             Model model
-    ) throws NotFoundException {
-        checkCanManageProfile(currentUser, id);
-        UserDTO dto = userFacade.findById(id);
-        if (dto == null) {
-            throw new NotFoundException("User with the given ID not found.");
+    ) {
+        UserDTO dto;
+        try {
+            dto = userFacade.findById(id);
+        } catch (IllegalArgumentException | NoEntityFoundException e) {
+            return "user/noUser";
         }
-        List<LoanDTO> allLoans = userFacade.getAllUserLoans(dto.getId());
+        try {
+            checkCanManageProfile(id);
+        } catch (WebSecurityException e) {
+            return "user/noUser";
+        }
+        //todo
+        List<LoanDTO> allLoans = new ArrayList<>();
         model.addAttribute("user", dto);
         model.addAttribute("loans", allLoans);
         return "user/show";
@@ -61,14 +66,12 @@ public class UserController extends LibraryParentController{
         return "user/create";
     }
 
-    //todo: Do we need to support a password update?
     @RequestMapping(path = "/{id}/update", method = RequestMethod.GET)
     public String updateUserView(
-            @AuthenticationPrincipal UserDetailsAdapter currentUser,
             @PathVariable long id,
             Model model
     ) {
-        checkCanManageProfile(currentUser, id);
+        checkCanManageProfile(id);
         model.addAttribute("action", "Update");
         if (!model.containsAttribute("user")) {
             UserDTO userDTO = userFacade.findById(id);
@@ -91,7 +94,7 @@ public class UserController extends LibraryParentController{
             @PathVariable long id,
             Model model
     ) {
-        checkCanManageProfile(currentUser, id);
+        checkCanManageProfile(id);
         userFacade.delete(id);
         return "redirect:/";
     }
@@ -121,8 +124,10 @@ public class UserController extends LibraryParentController{
      * @param id of the profile that will be managed
      * @throws WebSecurityException when the current user has no rights to manage the profile
      */
-    private void checkCanManageProfile(UserDetailsAdapter currentUser, long id) throws WebSecurityException{
-        if (!(currentUser.getDto().getId() == id || currentUser.getDto().isAdmin())) {
+    private void checkCanManageProfile(long id) throws WebSecurityException{
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        long currentUserId = userFacade.findByEmail(auth.getName()).getId();
+        if (currentUserId != id && !userFacade.findByEmail(auth.getName()).isAdmin()) {
             throw new WebSecurityException("Non-admin cannot see other acounts.");
         }
     }
