@@ -103,7 +103,7 @@ public class BookController extends LibraryParentController {
             bookFacade.delete(id);
             redirectAttributes.addFlashAttribute("alert_info", "Book was deleted");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("alert_danger", "Book could not be deleted");
+            redirectAttributes.addFlashAttribute("alert_danger", "Book could not be deleted because it has some book copies or belongs to some category.");
         }
         return "redirect:" + uriBuilder.path("/book/index").toUriString();
     }
