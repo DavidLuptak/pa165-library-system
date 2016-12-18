@@ -6,8 +6,10 @@
 
 <my:pagetemplate title="Loans">
 <jsp:attribute name="body">
+    <c:if test="${!loggedUser.isAdmin()}">
     <a class="btn btn-default" href="${pageContext.request.contextPath}/loan/create">
         <span class="glyphicon glyphicon-plus"></span> New loan</a>
+    </c:if>
     <table class="table table-striped table-hover table-books">
         <thead>
         <tr>
@@ -23,7 +25,7 @@
         <tbody>
         <c:forEach var="loan" items="${loans}">
             <tr>
-                <c:if test="${user.isAdmin()}">
+                <c:if test="${loggedUser.isAdmin()}">
                 <td><c:out value="${loan.user.firstName}"/></td>
                 <td><c:out value="${loan.user.lastName}"/></td>
                 </c:if>
@@ -34,7 +36,7 @@
                     <a class="btn btn-default" title="Detail" href="${pageContext.request.contextPath}/loan/detail/${loan.id}">
                         <span class="glyphicon glyphicon-search"></span>
                     </a>
-                    <c:if test="${loan.returnDate == null && user.isAdmin()}">
+                    <c:if test="${loan.returnDate == null && loggedUser.isAdmin()}">
                     <a class="btn btn-danger" title="Return" href="${pageContext.request.contextPath}/loan/return/${loan.id}">
                         <span class="glyphicon glyphicon-ok-sign"></span>
                     </a>

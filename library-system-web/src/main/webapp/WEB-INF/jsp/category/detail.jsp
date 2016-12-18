@@ -27,10 +27,12 @@
                     <tr>
                         <td></td>
                         <td>
+                            <c:if test="${loggedUser.isAdmin()}">
                             <a class="btn btn-warning"
                                href="${pageContext.request.contextPath}/category/edit/${category.id}">
                                 <fmt:message key="edit"/>
                             </a>
+                            </c:if>
                             <a class="btn btn-default" href="${pageContext.request.contextPath}/category/index">
                                 <fmt:message key="back"/>
                             </a>
