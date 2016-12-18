@@ -16,7 +16,7 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
         model.addAttribute("user", new UserAuthenticateDTO());
-        return "login";
+        return "index";
     }
 
     @RequestMapping(value = "/error", method = RequestMethod.GET)

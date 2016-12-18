@@ -26,8 +26,12 @@
                 </p></center>
             </c:when>
             <c:otherwise>
-                <h4>You have to login in order to continue to our library:</h4>
-                <center><div><%@include file="loginForm.jspf"%></div></center>
+                <center>
+                    <h4 style="margin: auto">You have to login in order to continue to our library:</h4>
+                    <br>
+                    <div><%@include file="loginForm.jspf"%></div>
+                </center>
+
             </c:otherwise>
         </c:choose>
     </div>

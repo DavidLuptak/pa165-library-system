@@ -1,4 +1,4 @@
-<form:form method="POST" action="j_spring_security_check">
+<form:form method="POST" action="j_spring_security_check" cssClass="form-horizontal">
     <c:if test="${not empty param.error}">
         <div class="alert alert-danger" role="alert">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -6,11 +6,23 @@
         </div>
     </c:if>
 
-    <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" name="user" id="inputEmail" class="form-control" placeholder="Email address" required="true" autofocus="true">
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" name="pass" id="inputPassword" class="form-control" placeholder="Password" required="true">
+    <div class="form-group">
+        <label for="inputEmail" class="control-label col-sm-1 sr-only">Email address</label>
+        <div class="col-sm-6 col-sm-offset-3">
+            <input type="email" name="user" id="inputEmail" class="form-control" placeholder="Email address" required="true" autofocus="true">
+        </div>
+    </div>
 
-    <button class="btn btn-primary" type="submit">Login</button>
-    <a href="${backUrl}" class="btn btn-default">Back</a>
+    <div class="form-group">
+        <label for="inputPassword" class="control-label col-sm-1 sr-only">Password</label>
+        <div class="col-sm-6 col-sm-offset-3">
+            <input type="password" name="pass" id="inputPassword" class="form-control" placeholder="Password" required="true">
+        </div>
+    </div>
+
+    <div class="col-sm-offset-3 col-sm-6">
+        <button class="btn btn-primary" type="submit">Login</button>
+    </div>
+
+
 </form:form>
