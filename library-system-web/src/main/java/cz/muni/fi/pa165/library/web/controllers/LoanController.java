@@ -8,8 +8,6 @@ import cz.muni.fi.pa165.library.enums.UserRole;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.BookFacade;
 import cz.muni.fi.pa165.library.facade.LoanFacade;
-import cz.muni.fi.pa165.library.facade.UserFacade;
-import cz.muni.fi.pa165.library.web.validator.LoanReturnDateValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -41,9 +39,6 @@ public class LoanController extends LibraryParentController {
 
     @Inject
     private BookFacade bookFacade;
-
-    @Inject
-    private LoanReturnDateValidator loanReturnDateValidator;
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String create(Model model) {
@@ -132,13 +127,4 @@ public class LoanController extends LibraryParentController {
         redirectAttributes.addFlashAttribute("alert_info", "Loan was updated");
         return "redirect:" + uriBuilder.path("/loan/detail/" + loan.getId()).toUriString();
     }
-
-
-    @InitBinder
-    protected void initUniqueConstraintBinder(WebDataBinder binder) {
-
-        if (binder.getTarget() instanceof LoanDTO)
-            binder.addValidators(loanReturnDateValidator);
-    }
-
 }
