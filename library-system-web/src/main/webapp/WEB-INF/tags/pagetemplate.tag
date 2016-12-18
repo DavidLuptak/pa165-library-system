@@ -56,7 +56,15 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="${pageContext.request.contextPath}/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                    <c:if test="${empty authenticatedUser}">
+                        <a href="${pageContext.request.contextPath}/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                    </c:if>
+                    <c:if test="${not empty authenticatedUser}">
+                        <a href="${pageContext.request.contextPath}/login/logout?logout=true">
+                            <c:out value="${authenticatedUser.firstName}"/>&nbsp;<c:out value="${authenticatedUser.lastName}"/>&nbsp;
+                            <span class="glyphicon glyphicon-log-out"></span> Logout
+                        </a>
+                    </c:if>
                 </li>
             </ul>
         </div>

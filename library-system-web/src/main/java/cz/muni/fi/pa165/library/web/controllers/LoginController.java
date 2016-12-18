@@ -31,4 +31,9 @@ public class LoginController {
     public String validate(Model model) {
         return "/login/validate";
     }
+    
+    @RequestMapping(value = {"/logout"})
+    public String logout(Model model) {
+        return "/login/logout";
+    }
 }

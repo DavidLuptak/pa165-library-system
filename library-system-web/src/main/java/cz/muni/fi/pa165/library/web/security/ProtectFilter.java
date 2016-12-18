@@ -20,15 +20,17 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  *
  * @author Bedrich Said
  */
-@WebFilter(urlPatterns = {"/login/validate", "/book", "/user"})
+@WebFilter(urlPatterns = {"/login/validate", "/login/logout", "/user"})
 public class ProtectFilter implements Filter {
-
+    private UserDTO loggedUser;
+    
     @Override
     public void destroy() {
     }
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        loggedUser = null;
     }
 
     @Override
@@ -36,29 +38,37 @@ public class ProtectFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-        String logname = req.getParameter("username");
-        String password = req.getParameter("password");
+        if(req.getParameter("logout") != null) {
+            loggedUser = null;
+            chain.doFilter(request, response);
+            return;
+        }
+        if(loggedUser == null) {
+            String logname = req.getParameter("username");
+            String password = req.getParameter("password");
 
-        UserFacade userFacade = WebApplicationContextUtils.getWebApplicationContext(req.getServletContext()).getBean(UserFacade.class);
-        UserDTO matchingUser;
-        try {
-            matchingUser = userFacade.findByEmail(logname);
-        } catch(NoEntityFoundException | IllegalArgumentException e) {
-            response401(response);
-            return;
+            UserFacade userFacade = WebApplicationContextUtils.getWebApplicationContext(req.getServletContext()).getBean(UserFacade.class);
+            UserDTO matchingUser;
+            try {
+                matchingUser = userFacade.findByEmail(logname);
+            } catch(NoEntityFoundException | IllegalArgumentException e) {
+                response401(response);
+                return;
+            }
+            UserAuthenticateDTO userAuthenticateDTO = new UserAuthenticateDTO();
+            userAuthenticateDTO.setUserId(matchingUser.getId());
+            userAuthenticateDTO.setPassword(password);
+            if (!userFacade.isAdmin(matchingUser)) {
+                response401(response);
+                return;
+            }
+            if (!userFacade.authenticate(userAuthenticateDTO)) {
+                response401(response);
+                return;
+            }
+            loggedUser = matchingUser;
         }
-        UserAuthenticateDTO userAuthenticateDTO = new UserAuthenticateDTO();
-        userAuthenticateDTO.setUserId(matchingUser.getId());
-        userAuthenticateDTO.setPassword(password);
-        if (!userFacade.isAdmin(matchingUser)) {
-            response401(response);
-            return;
-        }
-        if (!userFacade.authenticate(userAuthenticateDTO)) {
-            response401(response);
-            return;
-        }
-        request.setAttribute("authenticatedUser", matchingUser);
+        request.setAttribute("authenticatedUser", loggedUser);
         chain.doFilter(request, response);
     }
     
@@ -66,5 +76,7 @@ public class ProtectFilter implements Filter {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.getWriter().println("<html><body><h1>401 Unauthorized</h1> Go away ...</body></html>");
     }
+    
+    
     
 }
