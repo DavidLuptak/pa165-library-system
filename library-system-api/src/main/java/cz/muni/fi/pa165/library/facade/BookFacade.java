@@ -60,6 +60,16 @@ public interface BookFacade {
     BookDTO findById(Long id);
 
     /**
+     * Returns book with given isbn or null
+     *
+     * @param isbn book isbn
+     * @return book or null
+     * @throws IllegalArgumentException if isbn is null or empty
+     * @throws NoEntityFoundException   if book cant be retrieved from database
+     */
+    BookDTO findByIsbn(String isbn);
+
+    /**
      * Finds books by title
      *
      * @param title book title
@@ -79,7 +89,7 @@ public interface BookFacade {
     /**
      * Get all loanable persisted books
      *
-      * @return list of persisted loanable books
+     * @return list of persisted loanable books
      */
     List<BookDTO> findLoanableBooks();
 }

@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.library.entity.Book;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
@@ -37,6 +38,19 @@ public class BookDaoImpl implements BookDao {
     @Override
     public Book findById(Long id) {
         return em.find(Book.class, id);
+    }
+
+    @Override
+    public Book findByIsbn(String isbn) {
+        if (isbn == null || isbn.isEmpty()) {
+            throw new IllegalArgumentException("ISBN is not valid.");
+        }
+        try {
+            return em.createQuery("SELECT b FROM Book b WHERE b.isbn = :isbn", Book.class)
+                    .setParameter("isbn", isbn).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override

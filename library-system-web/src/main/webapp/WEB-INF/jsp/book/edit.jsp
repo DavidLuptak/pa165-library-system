@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<c:set var="actionUrl" value="${pageContext.request.contextPath}/book/edit"/>
+<c:set var="actionUrl" value="${pageContext.request.contextPath}/book/edit/${book.id}"/>
 <c:set var="backUrl" value="${pageContext.request.contextPath}/book/detail/${book.id}"/>
 
 <my:pagetemplate title="Edit book">

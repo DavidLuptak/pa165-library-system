@@ -40,6 +40,15 @@ public interface BookService {
     Book findById(Long id);
 
     /**
+     * Finds books with the given isbn in the database
+     *
+     * @param isbn searched isbn
+     * @return found books
+     * @throws IllegalArgumentException if isbn is null or empty
+     */
+    Book findByIsbn(String isbn);
+
+    /**
      * Finds books that are written by the given author in the database
      *
      * @param author searched author

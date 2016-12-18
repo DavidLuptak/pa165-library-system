@@ -2,6 +2,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="my" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="actionUrl" value="${pageContext.request.contextPath}/category/edit/${category.id}"/>
 <c:set var="backUrl" value="${pageContext.request.contextPath}/category/detail/${category.id}"/>

@@ -85,6 +85,15 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Book findByIsbn(String isbn) {
+        if (isbn == null || isbn.isEmpty()) {
+            throw new IllegalArgumentException("isbn is null or empty");
+        }
+
+        return bookDao.findByIsbn(isbn);
+    }
+
+    @Override
     public List<Book> findAll() {
 
         try {

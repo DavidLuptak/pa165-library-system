@@ -110,6 +110,19 @@ public class BookFacadeImpl implements BookFacade {
     }
 
     @Override
+    public BookDTO findByIsbn(String isbn) {
+        if (isbn == null) {
+            throw new IllegalArgumentException("Book isbn cannot be null nor empty.");
+        }
+        Book book = bookService.findByIsbn(isbn);
+        if (book == null) {
+            throw new NoEntityFoundException("Book not found during findByIsbn.");
+        }
+
+        return mapOwningSidesToDTO(book);
+    }
+
+    @Override
     public List<BookDTO> findByAuthor(String author) {
         if (author == null || author.isEmpty()) {
             throw new IllegalArgumentException("Author name cannot be null.");

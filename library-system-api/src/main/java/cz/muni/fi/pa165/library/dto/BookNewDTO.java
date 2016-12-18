@@ -11,8 +11,6 @@ import java.util.List;
  */
 public class BookNewDTO {
 
-    private Long id;
-
     @NotBlank(message = "Please enter a value.")
     @Size(max = 50, message = "Enter no more than 50 characters.")
     private String title;
@@ -33,14 +31,6 @@ public class BookNewDTO {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getTitle() {

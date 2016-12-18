@@ -1,22 +1,19 @@
 package cz.muni.fi.pa165.library.web.controllers;
 
-import cz.muni.fi.pa165.library.dto.BookDTO;
-import cz.muni.fi.pa165.library.dto.BookNewDTO;
-import cz.muni.fi.pa165.library.dto.CategoryDTO;
-import cz.muni.fi.pa165.library.exception.LibraryDAOException;
+import cz.muni.fi.pa165.library.dto.*;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.BookFacade;
 import cz.muni.fi.pa165.library.facade.CategoryFacade;
 import cz.muni.fi.pa165.library.mapping.BeanMappingService;
+import cz.muni.fi.pa165.library.web.validator.BookCreateValidator;
+import cz.muni.fi.pa165.library.web.validator.BookUpdateValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -31,7 +28,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/book")
-public class BookController extends LibraryParentController{
+public class BookController extends LibraryParentController {
 
     final static Logger log = LoggerFactory.getLogger(BookController.class);
 
@@ -40,6 +37,12 @@ public class BookController extends LibraryParentController{
 
     @Inject
     private CategoryFacade categoryFacade;
+
+    @Inject
+    private BookCreateValidator bookCreateValidator;
+
+    @Inject
+    private BookUpdateValidator bookUpdateValidator;
 
     @Inject
     private BeanMappingService beanMappingService;
@@ -88,14 +91,12 @@ public class BookController extends LibraryParentController{
                          BindingResult br, RedirectAttributes redirectAttributes,
                          UriComponentsBuilder uriBuilder, Model model) {
         if (br.hasErrors()) {
+            addValidationErrors(br, model);
             return "book/create";
         }
-        try {
-            bookFacade.create(book);
-        } catch (LibraryDAOException e) {
-            model.addAttribute("isbn_error", true);
-            return "book/create";
-        }
+
+        bookFacade.create(book);
+
         redirectAttributes.addFlashAttribute("alert_info", "Book " + book.getTitle() + " was created");
         return "redirect:" + uriBuilder.path("/book/index").toUriString();
     }
@@ -104,8 +105,8 @@ public class BookController extends LibraryParentController{
     public String edit(@PathVariable long id, Model model, RedirectAttributes redirectAttributes,
                        UriComponentsBuilder uriBuilder) {
         try {
-            BookNewDTO bookNewDTO = mapBookDTOtoBookNewDTO(bookFacade.findById(id));
-            model.addAttribute("book", bookNewDTO);
+            BookUpdateDTO bookUpdateDTO = mapBookDTOtoBookNewOrUpdateDTO(bookFacade.findById(id), BookUpdateDTO.class);
+            model.addAttribute("book", bookUpdateDTO);
         } catch (NoEntityFoundException e) {
             redirectAttributes.addAttribute("alert_danger", "Book " + id + " was not found");
             return "redirect:" + uriBuilder.path("/book/detail/" + id).toUriString();
@@ -113,16 +114,20 @@ public class BookController extends LibraryParentController{
         return "book/edit";
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String edit(@Valid @ModelAttribute("book") BookNewDTO book,
-                       BindingResult br, RedirectAttributes redirectAttributes,
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+    public String edit(@Valid @ModelAttribute("book") BookUpdateDTO book,
+                       BindingResult br,
+                       @PathVariable long id,
+                       Model model,
+                       RedirectAttributes redirectAttributes,
                        UriComponentsBuilder uriBuilder) {
         if (br.hasErrors()) {
+            addValidationErrors(br, model);
             return "book/edit";
         }
 
         try {
-            BookDTO bookDTO = mapNewBookDTOtoBookDTO(book);
+            BookDTO bookDTO = mapNewOrUpdateBookDTOtoBookDTO(book);
             bookFacade.update(bookDTO);
             redirectAttributes.addFlashAttribute("alert_info", "Book " + book.getTitle() + " was updated");
         } catch (NoEntityFoundException e) {
@@ -138,8 +143,8 @@ public class BookController extends LibraryParentController{
         return categoryFacade.findAll();
     }
 
-    private BookNewDTO mapBookDTOtoBookNewDTO(BookDTO bookDTO) {
-        BookNewDTO bookNewDTO = beanMappingService.mapTo(bookDTO, BookNewDTO.class);
+    private <T extends BookNewDTO> T mapBookDTOtoBookNewOrUpdateDTO(BookDTO bookDTO, Class<T> type) {
+        T dto = beanMappingService.mapTo(bookDTO, type);
 
         List<String> categoryNames = bookDTO.getCategoryNames();
 
@@ -149,14 +154,15 @@ public class BookController extends LibraryParentController{
         List<Long> categoryIds = new ArrayList<>();
         categories.forEach(c -> categoryIds.add(c.getId()));
 
-        bookNewDTO.setCategoryIds(categoryIds);
+        dto.setCategoryIds(categoryIds);
 
-        return bookNewDTO;
+        return dto;
     }
 
-    private BookDTO mapNewBookDTOtoBookDTO(BookNewDTO bookNewDTO) {
-        BookDTO bookDTO = beanMappingService.mapTo(bookNewDTO, BookDTO.class);
+    private <T> BookDTO mapNewOrUpdateBookDTOtoBookDTO(T dto) {
+        BookDTO bookDTO = beanMappingService.mapTo(dto, BookDTO.class);
 
+        BookNewDTO bookNewDTO = (BookNewDTO) dto;
         List<Long> categoryIds = bookNewDTO.getCategoryIds();
 
         List<CategoryDTO> categories = new ArrayList<>();
@@ -166,5 +172,18 @@ public class BookController extends LibraryParentController{
         categories.forEach(c -> categoryNames.add(c.getName()));
 
         return bookDTO;
+    }
+
+    @InitBinder
+    protected void initUniqueConstraintBinder(WebDataBinder binder) {
+
+        if (binder.getTarget() instanceof BookNewDTO
+                && !(binder.getTarget() instanceof BookUpdateDTO)) {
+            binder.addValidators(bookCreateValidator);
+        }
+
+        if (binder.getTarget() instanceof BookUpdateDTO) {
+            binder.addValidators(bookUpdateValidator);
+        }
     }
 }

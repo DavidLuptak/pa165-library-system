@@ -30,9 +30,9 @@ public class CategoryUpdateValidator implements Validator {
     public void validate(Object target, Errors errors) {
         CategoryDTO categoryDTO = CategoryDTO.class.cast(target);
         String newName = categoryDTO.getName();
-        String formerName = categoryFacade.findById(categoryDTO.getId()).getName();
+        String previousName = categoryFacade.findById(categoryDTO.getId()).getName();
 
-        if (formerName.equals(newName)) {
+        if (previousName.equals(newName)) {
             // name is not changed
             return;
         }

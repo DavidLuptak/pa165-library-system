@@ -43,6 +43,15 @@ public interface BookDao {
     Book findById(Long id);
 
     /**
+     * Finds a book with the given isbn in the database
+     *
+     * @param isbn of searched book
+     * @return found book
+     * @throws IllegalArgumentException if isbn is null or empty
+     */
+    Book findByIsbn(String isbn);
+
+    /**
      * Finds books that are written by the given author in the database
      *
      * @param author searched author
@@ -66,5 +75,4 @@ public interface BookDao {
      * @return list of all books
      */
     List<Book> findAll();
-
 }

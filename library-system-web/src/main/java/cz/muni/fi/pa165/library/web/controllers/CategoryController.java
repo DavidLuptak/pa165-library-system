@@ -212,10 +212,9 @@ public class CategoryController extends LibraryParentController {
     }
 
     @InitBinder
-    protected void initUniqueConstrainBinder(WebDataBinder binder) {
+    protected void initUniqueConstraintBinder(WebDataBinder binder) {
 
-        if (binder.getTarget() instanceof CategoryNewDTO
-                && !(binder.getTarget() instanceof CategoryDTO)) {
+        if (binder.getTarget() instanceof CategoryNewDTO) {
             binder.addValidators(categoryCreateValidator);
         }
 
