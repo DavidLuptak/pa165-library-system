@@ -99,18 +99,4 @@ public interface UserFacade {
      * @return users who have at least one not returned loan
      */
     List<UserDTO> findUsersWithNotReturnedLoans();
-
-    /**
-     * Get a list of all unreturned loans owned by the user.
-     * @param id
-     * @return 
-     */
-    List<LoanDTO> getAllUserLoans(Long id);
-    
-    /**
-     * Check if the given user is admin.
-     * @param u given user
-     * @return true if the user is admin
-     */
-    boolean isAdmin(UserDTO u);
 }

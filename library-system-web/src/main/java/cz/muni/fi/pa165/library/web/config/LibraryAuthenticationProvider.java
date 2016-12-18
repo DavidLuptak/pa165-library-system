@@ -44,7 +44,7 @@ public class LibraryAuthenticationProvider implements AuthenticationProvider {
         if (userFacade.authenticate(authData)) {
             List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
-            if (userFacade.isAdmin(user)) {
+            if (user.isAdmin()) {
                 grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
             } else {
                 grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));

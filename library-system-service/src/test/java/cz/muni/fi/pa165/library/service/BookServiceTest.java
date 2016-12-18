@@ -82,6 +82,9 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
         // findAll
         when(bookDao.findAll()).thenReturn(Arrays.asList(book1, book2));
 
+        // findByISBN
+        when(bookDao.findByIsbn(book1.getIsbn())).thenReturn(book1);
+
         // create
         doAnswer((InvocationOnMock invocation) -> {
             Object argument = invocation.getArguments()[0];
@@ -185,6 +188,12 @@ public class BookServiceTest extends AbstractTransactionalTestNGSpringContextTes
     public void testFindByAuthor() {
         assertEquals(bookService.findByAuthor(book1.getAuthor()), Arrays.asList(book1, book2));
         verify(bookDao).findByAuthor(book1.getAuthor());
+    }
+
+    @Test
+    public void testFindByISBN() {
+        assertEquals(bookService.findByIsbn(book1.getIsbn()), book1);
+        verify(bookDao).findByIsbn(book1.getIsbn());
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)

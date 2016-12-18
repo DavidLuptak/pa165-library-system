@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import cz.muni.fi.pa165.library.config.ServiceConfiguration;
 import cz.muni.fi.pa165.library.dto.BookDTO;
+import cz.muni.fi.pa165.library.dto.UserDTO;
 import cz.muni.fi.pa165.library.rest.controller.BookController;
 import cz.muni.fi.pa165.library.rest.mixin.BookDTOMixin;
+import cz.muni.fi.pa165.library.rest.mixin.UserDTOMixin;
 import cz.muni.fi.pa165.library.sampledata.SampleDataConfiguration;
 import org.springframework.context.annotation.*;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -53,6 +55,7 @@ public class RootConfigWebContext extends WebMvcConfigurerAdapter {
         objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH));
 
         objectMapper.addMixIn(BookDTO.class, BookDTOMixin.class);
+        objectMapper.addMixIn(UserDTO.class, UserDTOMixin.class);
 
         jsonConverter.setObjectMapper(objectMapper);
         return jsonConverter;

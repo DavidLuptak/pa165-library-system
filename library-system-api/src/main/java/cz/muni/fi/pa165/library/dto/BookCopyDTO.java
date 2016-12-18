@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.library.dto;
 
 import cz.muni.fi.pa165.library.enums.BookState;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,8 +15,10 @@ public class BookCopyDTO {
 
     private Long id;
 
+    @NotNull
     private BookDTO book;
 
+    @NotNull
     private BookState bookState;
 
     private final List<LoanDTO> loans;

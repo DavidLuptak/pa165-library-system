@@ -7,14 +7,17 @@ import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.BookFacade;
 import cz.muni.fi.pa165.library.rest.ApiUris;
 import cz.muni.fi.pa165.library.rest.exception.ResourceAlreadyExistingException;
+import cz.muni.fi.pa165.library.rest.exception.ResourceNotDeletableException;
 import cz.muni.fi.pa165.library.rest.exception.ResourceNotFoundException;
 import cz.muni.fi.pa165.library.rest.exception.ResourceNotModifiedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,16 +36,30 @@ public class BookController {
     private BookFacade bookFacade;
 
     /**
-     * Get all books.
+     * Get all books or one specified by ISBN.
      * <p>
      * curl -i -X GET http://localhost:8080/pa165/rest/books
+     * curl -i -X GET http://localhost:8080/pa165/rest/books?isbn={value}
      *
+     * @param isbn optional parameter for the query
      * @return list of all books available in the system
      */
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final List<BookDTO> getBooks() {
-        LOGGER.debug("getBooks()");
-        return bookFacade.findAll();
+    public final List<BookDTO> getBooks(@RequestParam(value = "isbn", required = false) String isbn) {
+        if (isbn == null) {
+            LOGGER.debug("getBooks()");
+            return bookFacade.findAll();
+        } else {
+            try {
+                List<BookDTO> bookDTOList = new ArrayList<>();
+                bookDTOList.add(bookFacade.findByIsbn(isbn));
+                LOGGER.debug("getBook()?isbn found {}", bookDTOList.get(0));
+                return bookDTOList;
+            } catch (NoEntityFoundException | IllegalArgumentException ex) {
+                LOGGER.debug("getBook()?isbn", ex);
+                throw new ResourceNotFoundException(ex);
+            }
+        }
     }
 
     /**
@@ -73,7 +90,8 @@ public class BookController {
      * curl -i -X DELETE http://localhost:8080/pa165/rest/books/{id}
      *
      * @param id identifier of the book
-     * @throws ResourceNotFoundException if the book is not available in the system
+     * @throws ResourceNotFoundException     if the book is not available in the system
+     * @throws ResourceNotDeletableException if the book cannot be deleted
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public final void deleteBook(@PathVariable("id") long id) {
@@ -84,6 +102,9 @@ public class BookController {
         } catch (NoEntityFoundException | IllegalArgumentException ex) {
             LOGGER.error("deleteBook()", ex);
             throw new ResourceNotFoundException(ex);
+        } catch (DataAccessException ex) {
+            LOGGER.error("deleteBook() constraint violation", ex);
+            throw new ResourceNotDeletableException(ex);
         }
 
     }
@@ -92,7 +113,7 @@ public class BookController {
      * Create a new book by POST method.
      * <p>
      * curl -X POST -i -H "Content-Type: application/json" --data
-     * '{"title":"Title","author":"Author","isbn":"978"}'
+     * '{"title":"Title","author":"Author","isbn":"978-0-321-35668-0"}'
      * http://localhost:8080/pa165/rest/books
      *
      * @param book BookNewDTO with the required fields for creation
@@ -170,6 +191,14 @@ public class BookController {
         merged.setTitle(updating.getTitle() == null ? existing.getTitle() : updating.getTitle());
         merged.setAuthor(updating.getAuthor() == null ? existing.getAuthor() : updating.getAuthor());
         merged.setIsbn(updating.getIsbn() == null ? existing.getIsbn() : updating.getIsbn());
+
+        List<String> categories;
+        if (updating.getCategoryNames().size() == 0) {
+            categories = existing.getCategoryNames();
+        } else {
+            categories = updating.getCategoryNames();
+        }
+        categories.forEach(merged::addCategory);
 
         return merged;
 

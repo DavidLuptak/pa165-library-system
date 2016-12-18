@@ -78,6 +78,7 @@ public class BookFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         when(bookService.findById(book1.getId())).thenReturn(book1);
         when(bookService.findByTitle(book1.getTitle())).thenReturn(Arrays.asList(book1, book2));
         when(bookService.findByAuthor(book1.getAuthor())).thenReturn(Arrays.asList(book1, book2));
+        when(bookService.findByIsbn(book1.getIsbn())).thenReturn(book1);
         when(bookService.findAll()).thenReturn(Arrays.asList(book1, book2));
         when(bookService.findLoanableBooks()).thenReturn(Arrays.asList(book1, book2));
     }
@@ -140,6 +141,13 @@ public class BookFacadeTest extends AbstractTransactionalTestNGSpringContextTest
         assertNotNull(bookDTO);
         assertDeepEquals(book1, bookDTOs.get(0));
         assertDeepEquals(book2, bookDTOs.get(1));
+    }
+
+    @Test
+    public void testFindByIsbn() {
+        BookDTO bookDTO = bookFacade.findByIsbn(book1.getIsbn());
+        assertNotNull(bookDTO);
+        assertDeepEquals(book1, bookDTO);
     }
 
     @Test

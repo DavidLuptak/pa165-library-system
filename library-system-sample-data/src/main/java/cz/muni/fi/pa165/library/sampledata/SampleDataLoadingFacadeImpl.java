@@ -56,6 +56,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
         Book book4 = book("J. K. Rowling", "Harry Potter and the Chamber of Secrets", "958-1-321-36153-0");
         Book book5 = book("Robert C. Martin", "Clean Code: A Handbook of Agile Software Craftsmanship", "978-0132350884");
         Book book6 = book("Erich Gamma et al.", "Design Patterns: Elements of Reusable Object-Oriented Software", "978-0201633610");
+        Book book7 = book("Martin Fowler", "UML Distilled", "0321193687");
 
         LOGGER.info("Books loaded.");
 

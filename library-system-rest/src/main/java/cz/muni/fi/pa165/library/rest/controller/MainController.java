@@ -36,6 +36,7 @@ public class MainController {
         Map<String, String> resourcesMap = new HashMap<>();
 
         resourcesMap.put("books_uri", ApiUris.ROOT_URI_BOOKS);
+        resourcesMap.put("users_uri", ApiUris.ROOT_URI_USERS);
 
         return Collections.unmodifiableMap(resourcesMap);
     }

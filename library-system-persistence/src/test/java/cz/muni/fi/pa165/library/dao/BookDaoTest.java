@@ -124,6 +124,11 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
         bookDao.findByTitle(null);
     }
 
+    @Test(expectedExceptions = DataAccessException.class)
+    public void testFindByIsbn(){
+        bookDao.findByIsbn(null);
+    }
+
     @Test
     public void testFindByTitle() {
         Set<Book> expected = new HashSet<>();
