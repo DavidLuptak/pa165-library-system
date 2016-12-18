@@ -4,8 +4,10 @@
 
 <my:pagetemplate title="Books">
 <jsp:attribute name="body">
+    <c:if test="${loggedUser.isAdmin()}">
     <a class="btn btn-default" href="${pageContext.request.contextPath}/book/create">
         <span class="glyphicon glyphicon-plus"></span> New book</a>
+    </c:if>
     <table class="table table-striped table-hover table-books">
         <thead>
         <tr>
@@ -24,9 +26,11 @@
                     <a class="btn btn-default" title="Detail" href="${pageContext.request.contextPath}/book/detail/${book.id}">
                         <span class="glyphicon glyphicon-search"></span>
                     </a>
+                    <c:if test="${loggedUser.isAdmin()}">
                     <a class="btn btn-danger" title="Delete" href="${pageContext.request.contextPath}/book/delete/${book.id}">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
+                    </c:if>
                 </td>
             </tr>
         </c:forEach>

@@ -6,10 +6,11 @@
 
 <my:pagetemplate title="Loans">
 <jsp:attribute name="body">
+    <c:if test="${!user.isAdmin()}">
     <a class="btn btn-default" href="${pageContext.request.contextPath}/loan/create">
         <span class="glyphicon glyphicon-plus"></span> New loan
     </a>
-
+    </c:if>
  <div id="loans">
      <ul>
          <li><a href="#loaned">Loaned</a></li>
@@ -30,4 +31,3 @@
     </script>
 </jsp:attribute>
 </my:pagetemplate>
-

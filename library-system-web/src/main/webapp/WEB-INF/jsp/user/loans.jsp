@@ -6,8 +6,6 @@
 
 <my:pagetemplate title="Users Loans">
 <jsp:attribute name="body">
-    <a class="btn btn-default" href="${pageContext.request.contextPath}/loan/create">
-        <span class="glyphicon glyphicon-plus"></span> New loan</a>
     <table class="table table-striped table-hover table-books">
         <thead>
         <tr>
@@ -15,6 +13,7 @@
             <th>Last Name</th>
             <th>Book</th>
             <th>LoanDate</th>
+            <th>ReturnDate</th>
         </tr>
         </thead>
         <tbody>
@@ -24,6 +23,7 @@
                 <td><c:out value="${loan.user.lastName}"/></td>
                 <td><c:out value="${loan.bookCopy.book.title}"/></td>
                 <td><javatime:format value="${loan.loanDate}" pattern="dd.MM.yyyy HH:mm"/></td>
+                <td><javatime:format value="${loan.returnDate}" pattern="dd.MM.yyyy HH:mm"/></td>
                 <td>
                     <a class="btn btn-default" href="${pageContext.request.contextPath}/loan/detail/${loan.id}">
                         <span class="glyphicon glyphicon-search" title="Detail"></span>

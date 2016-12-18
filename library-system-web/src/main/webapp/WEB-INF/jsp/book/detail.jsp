@@ -34,7 +34,9 @@
                     <tr>
                         <td></td>
                         <td>
+                            <c:if test="${loggedUser.isAdmin()}">
                             <a class="btn btn-warning" href="${pageContext.request.contextPath}/book/edit/${book.id}">Edit</a>
+                            </c:if>
                             <a class="btn btn-default" href="${pageContext.request.contextPath}/book/index">Back</a>
                         </td>
                     </tr>

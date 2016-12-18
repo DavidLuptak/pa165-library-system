@@ -6,9 +6,11 @@
 <my:pagetemplate>
     <jsp:attribute name="title"><fmt:message key="category.title"/></jsp:attribute>
     <jsp:attribute name="body">
+    <c:if test="${loggedUser.isAdmin()}">
     <a class="btn btn-default" href="${pageContext.request.contextPath}/category/create">
         <span class="glyphicon glyphicon-plus"></span> <fmt:message key="category.create"/> </a>
     </a>
+    </c:if>
     <table class="table table-striped table-hover table-books">
         <thead>
         <tr>
@@ -27,12 +29,14 @@
                         <span class="sr-only"><fmt:message key="detail"/></span> <!-- it's not visible on hover -->
                         <span class="glyphicon glyphicon-search"></span>
                     </a>
+                    <c:if test="${loggedUser.isAdmin()}">
                     <form method="post" action="${pageContext.request.contextPath}/category/delete/${category.id}">
                         <button type="submit" class="btn btn-danger">
                             <span class="sr-only"><fmt:message key="delete"/> </span>
                             <span class="glyphicon glyphicon-remove"></span>
                         </button>
                     </form>
+                    </c:if>
                 </td>
             </tr>
         </c:forEach>

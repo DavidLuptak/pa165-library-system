@@ -14,19 +14,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><c:out value="${title}"/></title>
-    <!-- bootstrap loaded from content delivery network -->
-    <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" type="text/css">--%>
-    <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"--%>
-    <%--type="text/css">--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap-theme.min.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
-    <link rel="stylesheet" href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/build/css/bootstrap-datetimepicker.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <jsp:invoke fragment="head"/>
 
+    <!-- bootstrap loaded from content delivery network -->
+    <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">--%>
+
+    <!-- use bootstrap in this way to has ability of autocompletion in IDE -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet"
+          href="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/build/css/bootstrap-datetimepicker.css"
+          crossorigin="anonymous">
+
+    <!-- custom css style -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
+
+    <jsp:invoke fragment="head"/>
 </head>
 <body>
 
@@ -52,18 +53,20 @@
                 <li>
                     <a href="${pageContext.request.contextPath}/loan">Loans</a>
                 </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/user">Users</a>
-                </li>
+                <c:if test="${loggedUser.isAdmin()}">
+                    <li>
+                        <a href="${pageContext.request.contextPath}/user">Users</a>
+                    </li>
+                </c:if>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <c:choose>
                     <c:when test="${not empty pageContext.request.remoteUser}">
-                        <li><a href="${pageContext.request.contextPath}/user"><c:out value="${pageContext.request.remoteUser}"/></a></li>
+                        <li><a href="${pageContext.request.contextPath}/user/detail"><c:out value="${pageContext.request.remoteUser}"/></a></li>
                         <li><a href="${pageContext.request.contextPath}/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
                     </c:when>
                     <c:otherwise>
-                      <li><a href="${pageContext.request.contextPath}/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        <li><a href="${pageContext.request.contextPath}/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     </c:otherwise>
                 </c:choose>
             </ul>
@@ -88,12 +91,18 @@
 
 </div>
 
+<!-- Placing scripts at the bottom of the <body> element improves the display speed, because script compilation slows down the display. -->
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
 <script src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/a549aa8780dbda16f6cff545aeabc3d71073911e/src/js/bootstrap-datetimepicker.js"></script>
+
 <jsp:invoke fragment="scripts"/>
 </body>
 </html>

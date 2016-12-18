@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -32,7 +31,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/category")
-public class CategoryController extends LibraryParentController{
+public class CategoryController extends LibraryParentController {
 
     final static Logger LOGGER = LoggerFactory.getLogger(CategoryController.class);
 
@@ -225,9 +224,4 @@ public class CategoryController extends LibraryParentController{
         }
     }
 
-    protected void addValidationErrors(BindingResult bindingResult, Model model) {
-        for (FieldError fe : bindingResult.getFieldErrors()) {
-            model.addAttribute(fe.getField() + "_error", true);
-        }
-    }
 }
