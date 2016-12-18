@@ -50,11 +50,8 @@ public class UserController extends LibraryParentController{
         } catch (WebSecurityException e) {
             return "user/noUser";
         }
-        //todo
-        List<LoanDTO> allLoans = new ArrayList<>();
         model.addAttribute("user", dto);
-        model.addAttribute("loans", allLoans);
-        return "user/show";
+        return "user/detail";
     }
 
     @RequestMapping(path = "/create", method = RequestMethod.GET)
