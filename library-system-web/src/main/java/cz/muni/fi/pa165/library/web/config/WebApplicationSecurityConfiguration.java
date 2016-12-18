@@ -53,7 +53,6 @@ public class WebApplicationSecurityConfiguration extends WebSecurityConfigurerAd
                 .antMatchers("/category/create/**").access("hasAnyRole('ROLE_ADMIN')")
                 .antMatchers("/category/edit/**").access("hasAnyRole('ROLE_ADMIN')")
                 .antMatchers("/category/delete/**").access("hasAnyRole('ROLE_ADMIN')")
-                .antMatchers("/book/addCopy").access("hasAnyRole('ROLE_ADMIN")
                 .antMatchers("/book/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
                 .antMatchers("/category/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
                 .antMatchers("/loan/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
