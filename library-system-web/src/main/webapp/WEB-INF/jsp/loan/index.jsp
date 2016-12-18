@@ -6,7 +6,7 @@
 
 <my:pagetemplate title="Loans">
 <jsp:attribute name="body">
-    <c:if test="${!user.isAdmin()}">
+    <c:if test="${!loggedUser.isAdmin()}">
     <a class="btn btn-default" href="${pageContext.request.contextPath}/loan/create">
         <span class="glyphicon glyphicon-plus"></span> New loan
     </a>
@@ -17,10 +17,10 @@
          <li><a href="#returned">Returned</a></li>
      </ul>
      <div id="loaned">
-         <my:loanTable loans="${loaned}" user="${user}" showReturn="false"/>
+         <my:loanTable loans="${loaned}" user="${loggedUser}" showReturn="false"/>
      </div>
      <div id="returned">
-         <my:loanTable loans="${returned}" user="${user}" showReturn="true"/>
+         <my:loanTable loans="${returned}" user="${loggedUser}" showReturn="true"/>
      </div>
  </div>
 

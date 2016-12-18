@@ -81,7 +81,6 @@ public class LoanController extends LibraryParentController{
     @RequestMapping(value = {"", "/", "/index"}, method = RequestMethod.GET)
     public String index(Model model) {
         UserDTO loggedUser = getLoggedUser();
-        model.addAttribute("user", loggedUser);
         if (loggedUser.getUserRole() == UserRole.ADMIN) {
             model.addAttribute("returned", loanFacade.findAllReturned());
             model.addAttribute("loaned", loanFacade.findAllNotReturned());

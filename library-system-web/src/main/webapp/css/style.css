@@ -30,3 +30,7 @@ table {
 .form-horizontal .control-label{
     text-align:left;
 }
+
+#loans {
+    margin-top: 20px;
+}
