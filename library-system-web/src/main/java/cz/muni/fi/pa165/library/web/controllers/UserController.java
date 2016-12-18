@@ -1,18 +1,14 @@
 package cz.muni.fi.pa165.library.web.controllers;
 
-import cz.muni.fi.pa165.library.dto.LoanDTO;
 import cz.muni.fi.pa165.library.dto.UserDTO;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.LoanFacade;
 import cz.muni.fi.pa165.library.facade.UserFacade;
-import cz.muni.fi.pa165.library.web.adapters.UserDetailsAdapter;
 import cz.muni.fi.pa165.library.web.exceptions.WebSecurityException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import org.springframework.security.core.Authentication;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,7 +31,6 @@ public class UserController extends LibraryParentController{
 
     @RequestMapping("/{id}")
     public String showUser(
-            @AuthenticationPrincipal UserDetailsAdapter currentUser,
             @PathVariable long id,
             Model model
     ) {
@@ -68,18 +63,31 @@ public class UserController extends LibraryParentController{
             @PathVariable long id,
             Model model
     ) {
-        checkCanManageProfile(id);
+        try {
+            checkCanManageProfile(id);
+        } catch(WebSecurityException e) {
+            return "user/noUser";
+        }
         model.addAttribute("action", "Update");
         if (!model.containsAttribute("user")) {
-            UserDTO userDTO = userFacade.findById(id);
+            UserDTO userDTO;
+            try {
+                userDTO = userFacade.findById(id);
+            } catch(NoEntityFoundException | IllegalArgumentException e) {
+                return "user/noUser";
+            }
             model.addAttribute("user", userDTO);
         }
         return "user/update";
     }
 
     @RequestMapping(path = "/list", method = RequestMethod.GET)
-    public String listView(@AuthenticationPrincipal UserDetailsAdapter currentUser, Model model) {
-        checkIsAdmin(currentUser);
+    public String listView(Model model) {
+        try {
+            checkIsAdmin();
+        } catch(WebSecurityException e) {
+            return "unauthorized";
+        }
         List<UserDTO> users = userFacade.findAll();
         model.addAttribute("users", users);
         return "user/list";
@@ -87,13 +95,20 @@ public class UserController extends LibraryParentController{
 
     @RequestMapping(path = "/{id}/delete")
     public String deleteUser(
-            @AuthenticationPrincipal UserDetailsAdapter currentUser,
             @PathVariable long id,
             Model model
     ) {
-        checkCanManageProfile(id);
-        userFacade.delete(id);
-        return "redirect:/";
+        try {
+            checkIsAdmin();
+        } catch(WebSecurityException e) {
+            return "unauthorized";
+        }
+        try {
+            userFacade.delete(id);
+        } catch (NoEntityFoundException | IllegalArgumentException e) {
+            return "user/noUser";
+        }
+        return "user/index";
     }
 
     @RequestMapping(value = {"", "/", "/index"}, method = RequestMethod.GET)
@@ -129,8 +144,9 @@ public class UserController extends LibraryParentController{
         }
     }
     
-    private void checkIsAdmin(UserDetailsAdapter currentUser) {
-        if (!currentUser.getDto().isAdmin()) {
+    private void checkIsAdmin() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!userFacade.findByEmail(auth.getName()).isAdmin()) {
             throw new WebSecurityException("Only admin can perform this operation.");
         }
     }
