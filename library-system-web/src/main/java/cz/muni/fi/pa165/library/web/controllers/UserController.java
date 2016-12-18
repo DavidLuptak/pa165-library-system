@@ -102,6 +102,12 @@ public class UserController extends LibraryParentController{
         return "user/index";
     }
 
+    @RequestMapping(value = {"/detail"}, method = RequestMethod.GET)
+    public String detail(Model model) {
+        model.addAttribute("user", getLoggedUser());
+        return "user/detail";
+    }
+
     @RequestMapping(value = {"/{id}/allLoans", }, method = RequestMethod.GET)
     public String allLoans(@PathVariable long id, Model model) {
         model.addAttribute("loans", loanFacade.findByUser(id));
@@ -118,14 +124,6 @@ public class UserController extends LibraryParentController{
     public String notReturnedLoans(@PathVariable long id, Model model) {
         model.addAttribute("loans", loanFacade.findNotReturnedUserLoans(id));
         return "user/loans";
-    }
-
-    @RequestMapping(value = "/{id}/createLoan", method = RequestMethod.GET)
-    public String createLoanGet(@PathVariable long id, Model model) {
-        model.addAttribute("loanableBooks", bookFacade.findLoanableBooks());
-        model.addAttribute("user", userFacade.findById(id));
-        model.addAttribute("loan", new LoanNewDTO());
-        return "/loan/create";
     }
 
     /**

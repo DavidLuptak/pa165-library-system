@@ -6,8 +6,6 @@
 
 <my:pagetemplate title="Users Loans">
 <jsp:attribute name="body">
-    <a class="btn btn-default" href="${pageContext.request.contextPath}/loan/create">
-        <span class="glyphicon glyphicon-plus"></span> New loan</a>
     <table class="table table-striped table-hover table-books">
         <thead>
         <tr>

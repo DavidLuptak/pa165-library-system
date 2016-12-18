@@ -125,7 +125,7 @@ public class LoanController extends LibraryParentController{
         }
         loanFacade.ret(loan);
         redirectAttributes.addFlashAttribute("alert_info", "Loan was updated");
-        return "redirect:" + uriBuilder.path("/loan/detail/" + loan.getId()).toUriString();
+        return "redirect:" + uriBuilder.path("/user" + loan.getId()).toUriString();
     }
 
     @ModelAttribute("bookStates")

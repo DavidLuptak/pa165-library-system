@@ -52,14 +52,16 @@
                 <li>
                     <a href="${pageContext.request.contextPath}/loan">Loans</a>
                 </li>
+                <c:if test="${loggedUser.isAdmin()}">
                 <li>
                     <a href="${pageContext.request.contextPath}/user">Users</a>
                 </li>
+                </c:if>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <c:choose>
                     <c:when test="${not empty pageContext.request.remoteUser}">
-                        <li><a href="${pageContext.request.contextPath}/user"><c:out value="${pageContext.request.remoteUser}"/></a></li>
+                        <li><a href="${pageContext.request.contextPath}/user/detail"><c:out value="${pageContext.request.remoteUser}"/></a></li>
                         <li><a href="${pageContext.request.contextPath}/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
                     </c:when>
                     <c:otherwise>
