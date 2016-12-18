@@ -1,7 +1,9 @@
 package cz.muni.fi.pa165.library.dto;
 
 import cz.muni.fi.pa165.library.enums.UserRole;
+import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -12,18 +14,25 @@ import java.util.Set;
  * @version 13.11.2016
  */
 public class UserDTO {
+
     private Long id;
 
+    @NotBlank
     private String passwordHash;
 
+    @NotBlank
     private String email;
 
+    @NotBlank
     private String firstName;
 
+    @NotBlank
     private String lastName;
 
+    @NotBlank
     private String address;
 
+    @NotNull
     private UserRole userRole;
 
     private final Set<LoanDTO> loans;

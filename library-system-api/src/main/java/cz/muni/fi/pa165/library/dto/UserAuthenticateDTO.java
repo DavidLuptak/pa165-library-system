@@ -1,11 +1,15 @@
 package cz.muni.fi.pa165.library.dto;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author Martin
  * @version 13.11.2016
  */
 public class UserAuthenticateDTO {
+    @NotNull
     private Long userId;
+    @NotNull
     private String password;
 
     public UserAuthenticateDTO() {

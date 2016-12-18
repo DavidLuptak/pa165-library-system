@@ -1,7 +1,9 @@
 package cz.muni.fi.pa165.library.dto;
 
 import cz.muni.fi.pa165.library.enums.UserRole;
+import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 /**
@@ -9,16 +11,22 @@ import java.util.Objects;
  * @version 24.11.2016
  */
 public class UserNewDTO {
+
     private Long id;
 
+    @NotBlank
     private String email;
 
+    @NotBlank
     private String firstName;
 
+    @NotBlank
     private String lastName;
 
+    @NotBlank
     private String address;
 
+    @NotNull
     private UserRole userRole;
 
     public UserNewDTO() {
