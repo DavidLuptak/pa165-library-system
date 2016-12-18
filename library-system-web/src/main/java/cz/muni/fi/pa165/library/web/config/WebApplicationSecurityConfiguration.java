@@ -26,6 +26,8 @@ public class WebApplicationSecurityConfiguration extends WebSecurityConfigurerAd
 
     /**
      * Initialize authentication in our application - use custom authentication provider
+     * @param auth AuthenticationManagerBuilder
+     * @throws java.lang.Exception
      */
     @Inject
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -37,6 +39,7 @@ public class WebApplicationSecurityConfiguration extends WebSecurityConfigurerAd
 
     /**
      * Configure secured URLs inside out application
+     * @param http which HTTP security to be configured
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -50,6 +53,7 @@ public class WebApplicationSecurityConfiguration extends WebSecurityConfigurerAd
                 .antMatchers("/category/create/**").access("hasAnyRole('ROLE_ADMIN')")
                 .antMatchers("/category/edit/**").access("hasAnyRole('ROLE_ADMIN')")
                 .antMatchers("/category/delete/**").access("hasAnyRole('ROLE_ADMIN')")
+                .antMatchers("/book/addCopy").access("hasAnyRole('ROLE_ADMIN")
                 .antMatchers("/book/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
                 .antMatchers("/category/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
                 .antMatchers("/loan/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
