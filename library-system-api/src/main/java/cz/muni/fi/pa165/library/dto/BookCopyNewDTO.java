@@ -1,16 +1,22 @@
 package cz.muni.fi.pa165.library.dto;
 
 import cz.muni.fi.pa165.library.enums.BookState;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Martin
  * @version 24.11.2016
  */
 public class BookCopyNewDTO {
+
     private Long id;
 
+    @NotNull
     private BookDTO book;
 
+    @NotNull
     private BookState bookState;
 
     public BookCopyNewDTO() {

@@ -6,27 +6,26 @@
     <jsp:attribute name="body">
 
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-l2">
                 <table class="table table-detail">
-                    <tbody>
                     <tr>
-                        <th scope="row" class="col-sm-2">Title</th>
+                        <th scope="row" class="col-sm-4">Title</th>
                         <td><c:out value="${book.title}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="col-sm-2">Author</th>
+                        <th scope="row" class="col-sm-4">Author</th>
                         <td><c:out value="${book.author}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="col-sm-2">Isbn</th>
+                        <th scope="row" class="col-sm-4">Isbn</th>
                         <td><c:out value="${book.isbn}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="col-sm-2">Copies</th>
+                        <th scope="row" class="col-sm-4">Copies</th>
                         <td><c:out value="${book.bookCopies.size()}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="col-sm-2">Categories</th>
+                        <th scope="row" class="col-sm-4">Categories</th>
                         <td>
                             <ul class="detail-list">
                                 <c:forEach var="categoryName" items="${book.categoryNames}">
@@ -45,24 +44,16 @@
                             </c:if>
                         </td>
                     </tr>
-                    </tbody>
-
                 </table>
             </div>
 
         </div>
 
-        <div class="row">
-            <div class="col-sm-6 col-sm-offset-1">
-
-            </div>
-        </div>
-                        
-        <h3>List of copies</h3>
+        <c:if test="${not empty book.bookCopies}">
+             <h3>List of copies</h3>
         <table class="table table-striped table-hover table-books">
             <thead>
             <tr>
-                <th>ID</th>
                 <th>Book State</th>
                 <th>Available</th>
             </tr>
@@ -70,13 +61,12 @@
             <tbody>
             <c:forEach var="copy" items="${copies}">
                 <tr>
-                    <td><c:out value="${copy.key.id}"/></td>
                     <td><c:out value="${copy.key.bookState}"/></td>
                     <td><c:out value="${copy.value}"/></td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
-
+        </c:if>
     </jsp:attribute>
 </my:pagetemplate>

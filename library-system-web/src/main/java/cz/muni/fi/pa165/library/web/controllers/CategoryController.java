@@ -94,7 +94,7 @@ public class CategoryController extends LibraryParentController {
         } catch (NoEntityFoundException | IllegalArgumentException ex) {
             LOGGER.debug("Category of id {} not found.", id);
 
-            redirectAttributes.addFlashAttribute("alert_warning", "Category of id " + id + " not found.");
+            redirectAttributes.addFlashAttribute("alert_warning", "Category not found.");
             return "redirect:" + uriComponentsBuilder.path("/category").toUriString();
         }
 
@@ -159,7 +159,7 @@ public class CategoryController extends LibraryParentController {
         } catch (NoEntityFoundException | IllegalArgumentException e) {
             LOGGER.debug("Category of id {} not found.", id);
 
-            redirectAttributes.addFlashAttribute("alert_warning", "Category of id " + id + " not found.");
+            redirectAttributes.addFlashAttribute("alert_warning", "Category not found.");
             return "redirect:" + uriComponentsBuilder.path("/category").toUriString();
         }
     }
@@ -213,7 +213,7 @@ public class CategoryController extends LibraryParentController {
         } catch (NoEntityFoundException | IllegalArgumentException ex) {
             LOGGER.debug("Category of id {} not found.", id);
 
-            redirectAttributes.addFlashAttribute("alert_danger", "Category of id " + id + " cannot be deleted.");
+            redirectAttributes.addFlashAttribute("alert_danger", "Category cannot be deleted.");
         }
 
         return "redirect:" + uriComponentsBuilder.path("/category/index").toUriString();
