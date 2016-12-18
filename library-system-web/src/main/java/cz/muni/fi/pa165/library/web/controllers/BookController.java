@@ -1,7 +1,9 @@
 package cz.muni.fi.pa165.library.web.controllers;
 
 import cz.muni.fi.pa165.library.dto.*;
+import cz.muni.fi.pa165.library.entity.BookCopy;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
+import cz.muni.fi.pa165.library.facade.BookCopyFacade;
 import cz.muni.fi.pa165.library.facade.BookFacade;
 import cz.muni.fi.pa165.library.facade.CategoryFacade;
 import cz.muni.fi.pa165.library.facade.LoanFacade;
@@ -37,6 +39,9 @@ public class BookController extends LibraryParentController {
 
     @Inject
     private BookFacade bookFacade;
+
+    @Inject
+    private BookCopyFacade bookCopyFacade;
 
     @Inject
     private CategoryFacade categoryFacade;
@@ -153,6 +158,19 @@ public class BookController extends LibraryParentController {
         }
 
         return "redirect:" + uriBuilder.path("/book/detail/" + book.getId()).toUriString();
+    }
+
+    @RequestMapping(value = "/addCopy/{id}", method = RequestMethod.GET)
+    public String addCopy(@PathVariable long id, RedirectAttributes redirectAttributes,
+                          UriComponentsBuilder uriBuilder) {
+        try {
+            BookDTO book = bookFacade.findById(id);
+            bookCopyFacade.create(new BookCopyNewDTO(book));
+            redirectAttributes.addFlashAttribute("alert_info", "Copy added.");
+        } catch (NoEntityFoundException e) {
+            redirectAttributes.addFlashAttribute("alert_danger", "Book not found.");
+        }
+        return "redirect:" + uriBuilder.path("/book/detail/" + id).toUriString();
     }
 
     @ModelAttribute("categories")

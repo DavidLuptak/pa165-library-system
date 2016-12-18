@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.library.dto;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,9 @@ public class BookNewDTO {
     @NotBlank(message = "Please enter a value.")
     private String isbn;
 
+    @Min(value = 0, message = "Number of copies must be more than 0.")
+    private int copies;
+
     private List<Long> categoryIds = new ArrayList<>();
 
     public BookNewDTO() {
@@ -31,6 +35,14 @@ public class BookNewDTO {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
+    }
+
+    public int getCopies() {
+        return copies;
+    }
+
+    public void setCopies(int copies) {
+        this.copies = copies;
     }
 
     public String getTitle() {

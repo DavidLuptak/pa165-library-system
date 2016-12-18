@@ -5,6 +5,7 @@
 
 <c:set var="actionUrl" value="${pageContext.request.contextPath}/book/edit/${book.id}"/>
 <c:set var="backUrl" value="${pageContext.request.contextPath}/book/detail/${book.id}"/>
+<c:set var="editCopies" value="false"/>
 
 <my:pagetemplate title="Edit book">
     <jsp:attribute name="body">

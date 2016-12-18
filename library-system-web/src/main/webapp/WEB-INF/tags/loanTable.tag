@@ -20,6 +20,7 @@
         <c:if test="${showReturn}">
             <th>Returned</th>
         </c:if>
+        <th></th>
     </tr>
     </thead>
     <tbody>

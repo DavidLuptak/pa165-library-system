@@ -6,8 +6,10 @@ import cz.muni.fi.pa165.library.dto.BookNewDTO;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.BookCopy;
 import cz.muni.fi.pa165.library.entity.Category;
+import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.mapping.BeanMappingService;
+import cz.muni.fi.pa165.library.service.BookCopyService;
 import cz.muni.fi.pa165.library.service.BookService;
 import cz.muni.fi.pa165.library.service.CategoryService;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,9 @@ public class BookFacadeImpl implements BookFacade {
     private CategoryService categoryService;
 
     @Inject
+    private BookCopyService bookCopyService;
+
+    @Inject
     private BeanMappingService beanMappingService;
 
     @Override
@@ -46,8 +51,12 @@ public class BookFacadeImpl implements BookFacade {
 
         categoryIds.forEach(id -> categories.add(categoryService.findById(id)));
         categories.forEach(category -> category.addBook(book));
-
         bookService.create(book);
+
+        for (int i = 0; i < bookNewDTO.getCopies(); i++) {
+            BookCopy copy = new BookCopy(book, BookState.NEW);
+            bookCopyService.create(copy);
+        }
         return book.getId();
     }
 

@@ -39,7 +39,13 @@ public class BookCopy {
         bookState = BookState.NEW;
     }
 
+    public BookCopy(Book book) {
+        this();
+        this.book = book;
+    }
+
     public BookCopy(Book book, BookState bookState) {
+        this();
         this.book = book;
         this.bookState = bookState;
     }

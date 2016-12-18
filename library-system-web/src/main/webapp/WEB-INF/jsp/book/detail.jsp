@@ -24,21 +24,26 @@
                         <th scope="row" class="col-sm-4">Copies</th>
                         <td><c:out value="${book.bookCopies.size()}"/></td>
                     </tr>
-                    <tr>
-                        <th scope="row" class="col-sm-4">Categories</th>
-                        <td>
-                            <ul class="detail-list">
+                    <c:if test="${not empty book.categoryNames}">
+                         <tr>
+                             <th scope="row" class="col-sm-4">Categories</th>
+                             <td>
+                                 <ul class="detail-list">
                                 <c:forEach var="categoryName" items="${book.categoryNames}">
                                     <li><c:out value="${categoryName}"/></li>
                                 </c:forEach>
-                            </ul>
-                        </td>
+                                 </ul>
+                             </td>
 
-                    </tr>
+                         </tr>
+                    </c:if>
                     <tr>
                         <td></td>
                         <td class="detail-buttons">
                             <a class="btn btn-default" href="${pageContext.request.contextPath}/book/index">Back</a>
+                            <c:if test="${loggedUser.isAdmin()}">
+                                <a class="btn btn-default" href="${pageContext.request.contextPath}/book/addCopy/${book.id}">Add copy</a>
+                            </c:if>
                             <c:if test="${loggedUser.isAdmin()}">
                                 <a class="btn btn-warning" href="${pageContext.request.contextPath}/book/edit/${book.id}">Edit</a>
                             </c:if>

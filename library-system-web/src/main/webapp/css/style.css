@@ -44,11 +44,12 @@ table {
 }
 
 .table-buttons {
-    text-align: center;
+    text-align: right;
 }
 
 .detail-buttons a, .detail-buttons button{
     float: right;
+    margin-right: 10px;
 }
 
 .float-right {

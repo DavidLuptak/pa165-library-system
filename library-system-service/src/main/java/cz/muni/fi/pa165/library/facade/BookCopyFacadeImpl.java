@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.library.dto.BookCopyDTO;
 import cz.muni.fi.pa165.library.dto.BookCopyNewDTO;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.BookCopy;
+import cz.muni.fi.pa165.library.enums.BookState;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.mapping.BeanMappingService;
 import cz.muni.fi.pa165.library.service.BookCopyService;
@@ -36,7 +37,9 @@ public class BookCopyFacadeImpl implements BookCopyFacade {
         if (bookCopyNewDTO == null) {
             throw new IllegalArgumentException("Book cannot be null.");
         }
-        BookCopy bookCopy = beanMappingService.mapTo(bookCopyNewDTO, BookCopy.class);
+        Book book = new Book();
+        book.setId(bookCopyNewDTO.getBook().getId());
+        BookCopy bookCopy = new BookCopy(book);
         bookCopyService.create(bookCopy);
         return bookCopy.getId();
     }
