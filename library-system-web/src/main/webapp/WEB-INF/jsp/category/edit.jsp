@@ -6,9 +6,10 @@
 <c:set var="actionUrl" value="${pageContext.request.contextPath}/category/edit/${category.id}"/>
 <c:set var="backUrl" value="${pageContext.request.contextPath}/category/detail/${category.id}"/>
 
-<my:pagetemplate title="Edit category">
+<my:pagetemplate>
+    <jsp:attribute name="title"><fmt:message key="category.edit"/> </jsp:attribute>
     <jsp:attribute name="body">
-        <h3>Edit category</h3>
-        <%@include file="form.jspf"%>
+        <h3><fmt:message key="category.edit"/></h3>
+        <%@include file="form.jspf" %>
     </jsp:attribute>
 </my:pagetemplate>

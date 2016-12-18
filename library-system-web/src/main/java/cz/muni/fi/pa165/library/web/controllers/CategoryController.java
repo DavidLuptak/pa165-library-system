@@ -6,11 +6,15 @@ import cz.muni.fi.pa165.library.dto.CategoryNewDTO;
 import cz.muni.fi.pa165.library.entity.Category;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.CategoryFacade;
+import cz.muni.fi.pa165.library.web.validator.CategoryCreateValidator;
+import cz.muni.fi.pa165.library.web.validator.CategoryUpdateValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -34,6 +38,12 @@ public class CategoryController extends LibraryParentController{
 
     @Inject
     private CategoryFacade categoryFacade;
+
+    @Inject
+    private CategoryCreateValidator categoryCreateValidator;
+
+    @Inject
+    private CategoryUpdateValidator categoryUpdateValidator;
 
     /**
      * Show a list of categories or just one category specified by name.
@@ -120,6 +130,7 @@ public class CategoryController extends LibraryParentController{
         LOGGER.debug("category {} create POST", categoryNewDTO);
 
         if (bindingResult.hasErrors()) {
+            addValidationErrors(bindingResult, model);
             return "category/create";
         }
 
@@ -165,6 +176,7 @@ public class CategoryController extends LibraryParentController{
         bookDTOS.forEach(categoryDTO::addBook);
 
         if (bindingResult.hasErrors()) {
+            addValidationErrors(bindingResult, model);
             return "category/edit";
         }
 
@@ -198,5 +210,24 @@ public class CategoryController extends LibraryParentController{
 
         return "redirect:" + uriComponentsBuilder.path("/category/index").toUriString();
 
+    }
+
+    @InitBinder
+    protected void initUniqueConstrainBinder(WebDataBinder binder) {
+
+        if (binder.getTarget() instanceof CategoryNewDTO
+                && !(binder.getTarget() instanceof CategoryDTO)) {
+            binder.addValidators(categoryCreateValidator);
+        }
+
+        if (binder.getTarget() instanceof CategoryDTO) {
+            binder.addValidators(categoryUpdateValidator);
+        }
+    }
+
+    protected void addValidationErrors(BindingResult bindingResult, Model model) {
+        for (FieldError fe : bindingResult.getFieldErrors()) {
+            model.addAttribute(fe.getField() + "_error", true);
+        }
     }
 }

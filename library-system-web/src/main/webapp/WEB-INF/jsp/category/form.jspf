@@ -1,18 +1,17 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <form:form method="post" action="${actionUrl}"
            modelAttribute="category" cssClass="form-horizontal form-book">
-    <div class="form-group">
-        <form:label path="name" cssClass="col-sm-1 control-label">Name</form:label>
+    <div class="form-group ${name_error?'has-error':''}">
+        <form:label path="name" cssClass="col-sm-1 control-label">
+            <fmt:message key="category.name"/>
+        </form:label>
         <div class="col-sm-5">
             <form:input path="name" cssClass="form-control"/>
             <form:errors path="name" cssClass="help-block"/>
-            <c:if test="${name_error}">
-                <span class="help-block">Category with this name already exists.</span>
-            </c:if>
         </div>
     </div>
-    <%--<form:hidden path="id"/>--%>
     <div class="col-sm-offset-1 col-sm-5">
-        <button class="btn btn-primary" type="submit">Save</button>
-        <a href="${backUrl}" class="btn btn-default">Back</a>
+        <button class="btn btn-primary" type="submit"><fmt:message key="save"/></button>
+        <a href="${backUrl}" class="btn btn-default"><fmt:message key="back"/></a>
     </div>
 </form:form>
