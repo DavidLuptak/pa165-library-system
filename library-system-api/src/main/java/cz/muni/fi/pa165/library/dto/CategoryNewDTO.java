@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.library.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -19,6 +20,7 @@ public class CategoryNewDTO {
     }
 
     public CategoryNewDTO(String name) {
+        bookIds = new ArrayList<>();
         this.name = name;
     }
 
