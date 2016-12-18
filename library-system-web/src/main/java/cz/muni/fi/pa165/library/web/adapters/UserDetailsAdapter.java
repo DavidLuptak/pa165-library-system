@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.library.web.security;
+package cz.muni.fi.pa165.library.web.adapters;
 
 import cz.muni.fi.pa165.library.dto.UserDTO;
 import java.util.ArrayList;

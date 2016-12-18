@@ -8,6 +8,16 @@ public class UserAuthenticateDTO {
     private Long userId;
     private String password;
 
+    public UserAuthenticateDTO() {
+        this.userId = null;
+        this.password = null;
+    }
+    
+    public UserAuthenticateDTO(Long userId, String password) {
+        this.userId = userId;
+        this.password = password;
+    }
+
     public Long getUserId() {
         return userId;
     }

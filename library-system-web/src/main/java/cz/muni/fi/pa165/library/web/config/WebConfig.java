@@ -27,8 +27,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
  */
 @EnableWebMvc
 @Configuration
-@Import({SampleDataConfiguration.class})
-@ComponentScan(basePackages = "cz.muni.fi.pa165.library.web.controllers")
+@Import({SampleDataConfiguration.class, WebApplicationSecurityConfiguration.class})
+@ComponentScan(basePackages = "cz.muni.fi.pa165.library.web")
 public class WebConfig extends WebMvcConfigurerAdapter{
 
     final static Logger log = LoggerFactory.getLogger(WebConfig.class);

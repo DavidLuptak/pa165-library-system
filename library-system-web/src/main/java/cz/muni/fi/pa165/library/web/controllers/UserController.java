@@ -6,23 +6,18 @@ import cz.muni.fi.pa165.library.dto.UserDTO;
 import cz.muni.fi.pa165.library.facade.BookFacade;
 import cz.muni.fi.pa165.library.facade.LoanFacade;
 import cz.muni.fi.pa165.library.facade.UserFacade;
+import cz.muni.fi.pa165.library.web.adapters.UserDetailsAdapter;
 import cz.muni.fi.pa165.library.web.exceptions.WebSecurityException;
-import cz.muni.fi.pa165.library.web.security.UserDetailsAdapter;
 import java.util.List;
 import javassist.NotFoundException;
 import javax.inject.Inject;
-import javax.validation.Valid;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  *

@@ -55,17 +55,15 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <c:if test="${empty authenticatedUser}">
-                        <a href="${pageContext.request.contextPath}/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
-                    </c:if>
-                    <c:if test="${not empty authenticatedUser}">
-                        <a href="${pageContext.request.contextPath}/login/logout?logout=true">
-                            <c:out value="${authenticatedUser.firstName}"/>&nbsp;<c:out value="${authenticatedUser.lastName}"/>&nbsp;
-                            <span class="glyphicon glyphicon-log-out"></span> Logout
-                        </a>
-                    </c:if>
-                </li>
+                <c:choose>
+                    <c:when test="${not empty pageContext.request.remoteUser}">
+                        <li><a href="${pageContext.request.contextPath}/user"><c:out value="${pageContext.request.remoteUser}"/></a></li>
+                        <li><a href="${pageContext.request.contextPath}/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                    </c:when>
+                    <c:otherwise>
+                      <li><a href="${pageContext.request.contextPath}/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    </c:otherwise>
+                </c:choose>
             </ul>
         </div>
 
