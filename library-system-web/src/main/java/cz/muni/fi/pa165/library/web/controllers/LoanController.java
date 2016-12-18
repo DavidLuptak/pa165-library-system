@@ -9,15 +9,14 @@ import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.BookFacade;
 import cz.muni.fi.pa165.library.facade.LoanFacade;
 import cz.muni.fi.pa165.library.facade.UserFacade;
+import cz.muni.fi.pa165.library.web.validator.LoanReturnDateValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -47,6 +46,9 @@ public class LoanController extends LibraryParentController{
 
     @Inject
     private BookFacade bookFacade;
+
+    @Inject
+    private LoanReturnDateValidator loanReturnDateValidator;
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String create(Model model) {
@@ -124,13 +126,23 @@ public class LoanController extends LibraryParentController{
     @RequestMapping(value = "/return", method = RequestMethod.POST)
     public String ret(@Valid @ModelAttribute("loan") LoanDTO loan,
                       BindingResult br, RedirectAttributes redirectAttributes,
+                      Model model,
                       UriComponentsBuilder uriBuilder) {
         if (br.hasErrors()) {
-            return "loan/return";
+            redirectAttributes.addFlashAttribute("alert_warn", "Return date must be after Loan date");
+            return "redirect:" + uriBuilder.path("/loan/return/" + loan.getId()).toUriString();
         }
         loanFacade.returnLoan(loan);
         redirectAttributes.addFlashAttribute("alert_info", "Loan was updated");
         return "redirect:" + uriBuilder.path("/loan/detail/" + loan.getId()).toUriString();
+    }
+
+
+    @InitBinder
+    protected void initUniqueConstraintBinder(WebDataBinder binder) {
+
+        if (binder.getTarget() instanceof LoanDTO)
+            binder.addValidators(loanReturnDateValidator);
     }
 
 }
