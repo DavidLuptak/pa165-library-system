@@ -4,19 +4,17 @@ import cz.muni.fi.pa165.library.dto.UserDTO;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.UserFacade;
 import cz.muni.fi.pa165.library.rest.ApiUris;
+import cz.muni.fi.pa165.library.rest.exception.ResourceNotDeletableException;
 import cz.muni.fi.pa165.library.rest.exception.ResourceNotFoundException;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
-import javax.inject.Inject;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
- *
  * @author Bedrich Said
  */
 @RestController
@@ -54,7 +52,7 @@ public class UserController {
             }
         }
     }
-    
+
     /**
      * Get user by id
      * <p>
@@ -81,7 +79,8 @@ public class UserController {
      * </p>
      *
      * @param id of the user to delete
-     * @throws ResourceNotFoundException if the user not found
+     * @throws ResourceNotFoundException     if the user not found
+     * @throws ResourceNotDeletableException if the user cannot be deleted
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public final void deleteUser(@PathVariable("id") long id) throws ResourceNotFoundException {
@@ -89,6 +88,8 @@ public class UserController {
             userFacade.delete(id);
         } catch (NoEntityFoundException | IllegalArgumentException e) {
             throw new ResourceNotFoundException(e);
+        } catch (DataAccessException e) {
+            throw new ResourceNotDeletableException(e);
         }
     }
 }
