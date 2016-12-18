@@ -31,13 +31,11 @@
                         <th scope="row" class="col-sm-4">Loan Return BookState</th>
                         <td><c:out value="${loan.returnBookState}"/></td>
                     </tr>
-
                     <c:if test="${loan.returnDate != null}">
                     <tr>
                         <th scope="row" class="col-sm-3">Return Date</th>
                         <td><javatime:format value="${loan.returnDate}" pattern="dd.MM.yyyy HH:mm"/></td>
                     </tr>
-
                     </c:if>
                     <tr>
                         <td></td>

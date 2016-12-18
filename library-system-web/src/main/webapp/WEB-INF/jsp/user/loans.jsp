@@ -13,6 +13,7 @@
             <th>Last Name</th>
             <th>Book</th>
             <th>LoanDate</th>
+            <th>ReturnDate</th>
         </tr>
         </thead>
         <tbody>
@@ -22,6 +23,7 @@
                 <td><c:out value="${loan.user.lastName}"/></td>
                 <td><c:out value="${loan.bookCopy.book.title}"/></td>
                 <td><javatime:format value="${loan.loanDate}" pattern="dd.MM.yyyy HH:mm"/></td>
+                <td><javatime:format value="${loan.returnDate}" pattern="dd.MM.yyyy HH:mm"/></td>
                 <td>
                     <a class="btn btn-default" href="${pageContext.request.contextPath}/loan/detail/${loan.id}">
                         <span class="glyphicon glyphicon-search" title="Detail"></span>
