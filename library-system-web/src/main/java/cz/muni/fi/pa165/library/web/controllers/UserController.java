@@ -49,6 +49,7 @@ public class UserController extends LibraryParentController{
         return "user/detail";
     }
 
+    // not used
     @RequestMapping(path = "/create", method = RequestMethod.GET)
     public String createUserView(Model model) {
         if (!model.containsAttribute("user")) {
@@ -58,6 +59,7 @@ public class UserController extends LibraryParentController{
         return "user/create";
     }
 
+    // not used
     @RequestMapping(path = "/{id}/update", method = RequestMethod.GET)
     public String updateUserView(
             @PathVariable long id,
@@ -90,7 +92,7 @@ public class UserController extends LibraryParentController{
         }
         List<UserDTO> users = userFacade.findAll();
         model.addAttribute("users", users);
-        return "user/list";
+        return "user/index";
     }
 
     @RequestMapping(path = "/{id}/delete")
@@ -119,9 +121,13 @@ public class UserController extends LibraryParentController{
 
     @RequestMapping(value = {"/{id}/loans", }, method = RequestMethod.GET)
     public String allLoans(@PathVariable long id, Model model) {
-        model.addAttribute("returned", loanFacade.findReturnedUserLoans(id));
-        model.addAttribute("loaned", loanFacade.findNotReturnedUserLoans(id));
-        model.addAttribute("user", getLoggedUser());
+        try {
+            model.addAttribute("returned", loanFacade.findReturnedUserLoans(id));
+            model.addAttribute("loaned", loanFacade.findNotReturnedUserLoans(id));
+            model.addAttribute("user", getLoggedUser());
+        } catch (IllegalArgumentException | NoEntityFoundException e) {
+            return "user/noUser";
+        }
         return "loan/index";
     }
     @RequestMapping(value = {"/detail"}, method = RequestMethod.GET)
