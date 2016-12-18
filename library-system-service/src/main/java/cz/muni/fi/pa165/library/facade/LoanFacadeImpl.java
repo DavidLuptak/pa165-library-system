@@ -123,6 +123,16 @@ public class LoanFacadeImpl implements LoanFacade {
     }
 
     @Override
+    public List<LoanDTO> findAllReturned() {
+        return beanMappingService.mapTo(loanService.findAllReturned(), LoanDTO.class);
+    }
+
+    @Override
+    public List<LoanDTO> findAllNotReturned() {
+        return beanMappingService.mapTo(loanService.findAllNotReturned(), LoanDTO.class);
+    }
+
+    @Override
     public List<LoanDTO> findNotReturnedUserLoans(Long userId) {
         if (userId == null) {
             throw new IllegalArgumentException("User id cannot be null.");

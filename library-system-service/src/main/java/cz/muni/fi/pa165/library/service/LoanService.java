@@ -65,6 +65,11 @@ public interface LoanService {
      */
     List<Loan> findAll();
 
+    List<Loan> findAllReturned();
+
+    List<Loan> findAllNotReturned();
+
+
     /**
      * Returns user's loans which are not returned
      *

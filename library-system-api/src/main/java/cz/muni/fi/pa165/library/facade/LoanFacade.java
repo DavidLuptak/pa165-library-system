@@ -71,6 +71,10 @@ public interface LoanFacade {
      */
     List<LoanDTO> findAll();
 
+    List<LoanDTO> findAllReturned();
+
+    List<LoanDTO> findAllNotReturned();
+
     /**
      * Returns user's loans which are not returned
      *

@@ -102,6 +102,30 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
+    public List<Loan> findAllReturned() {
+        try {
+            return loanDao.findAll().stream()
+                .filter(loan -> loan.isReturned())
+                .sorted((l1, l2) -> l1.getLoanDate().compareTo(l2.getLoanDate()))
+                .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
+    }
+
+    @Override
+    public List<Loan> findAllNotReturned() {
+        try {
+            return loanDao.findAll().stream()
+                .filter(loan -> !loan.isReturned())
+                .sorted((l1, l2) -> l1.getLoanDate().compareTo(l2.getLoanDate()))
+                .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        }
+    }
+
+    @Override
     public List<Loan> findNotReturnedUserLoans(User user) {
         if (user == null) {
             throw new IllegalArgumentException("User cannot be null.");
