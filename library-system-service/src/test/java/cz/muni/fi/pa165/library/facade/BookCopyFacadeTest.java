@@ -76,6 +76,7 @@ public class BookCopyFacadeTest extends AbstractTransactionalTestNGSpringContext
         bookCopy1.setId(2L);
 
         bookDTO = new BookDTO();
+        bookDTO.setId(book1.getId());
         bookDTO.setTitle(book1.getTitle());
         bookDTO.setAuthor(book1.getAuthor());
         bookDTO.setIsbn(book1.getIsbn());

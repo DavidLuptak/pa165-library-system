@@ -39,6 +39,7 @@ public class BookCopyFacadeImpl implements BookCopyFacade {
         }
         Book book = new Book();
         book.setId(bookCopyNewDTO.getBook().getId());
+        book.setIsbn(bookCopyNewDTO.getBook().getIsbn());
         BookCopy bookCopy = new BookCopy(book);
         bookCopyService.create(bookCopy);
         return bookCopy.getId();
