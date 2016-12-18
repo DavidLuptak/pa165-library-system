@@ -59,7 +59,7 @@
             <div class="form-group">
                 <form:label path="returnDate" cssClass="col-sm-2 control-label">Return Date</form:label>
                 <div class="col-sm-5">
-                    <form:input path="returnDate" cssClass="form-control datepicker"/>
+                    <form:input readonly="true" path="returnDate" cssClass="form-control datepicker"/>
                     <form:errors path="returnDate" cssClass="help-block"/>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                 <div class="col-sm-5">
                     <form:select path="returnBookState" cssClass="form-control" >
                         <c:forEach items="${bookStates}" var="bookState">
-                            <form:option value="${bookState}">${bookState}</form:option>
+                            <form:option value="${bookState}">${bookState.toString()}</form:option>
                         </c:forEach>
                     </form:select>
                     <form:errors path="returnBookState" cssClass="help-block"/>

@@ -112,6 +112,11 @@ public class LoanController extends LibraryParentController{
                       UriComponentsBuilder uriBuilder) {
         try {
             LoanDTO loan = loanFacade.findById(id);
+            if (loan.getReturnDate() != null) {
+                return "redirect:" + uriBuilder.path("/loan/index/").toUriString();
+
+            }
+            loan.setReturnDate(LocalDateTime.now());
             model.addAttribute("loan", loan);
             LinkedList<BookState> states = new LinkedList<>(BookState.all());
             states.removeIf(b -> b.isLighter(loan.getBookCopy().getBookState()));
@@ -129,8 +134,7 @@ public class LoanController extends LibraryParentController{
                       Model model,
                       UriComponentsBuilder uriBuilder) {
         if (br.hasErrors()) {
-            redirectAttributes.addFlashAttribute("alert_warn", "Return date must be after Loan date");
-            return "redirect:" + uriBuilder.path("/loan/return/" + loan.getId()).toUriString();
+            return "loan/return";
         }
         loanFacade.returnLoan(loan);
         redirectAttributes.addFlashAttribute("alert_info", "Loan was updated");

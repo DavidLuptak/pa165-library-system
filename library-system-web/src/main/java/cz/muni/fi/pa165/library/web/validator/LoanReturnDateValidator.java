@@ -23,8 +23,9 @@ public class LoanReturnDateValidator implements Validator {
     public void validate(Object target, Errors errors) {
         LoanDTO loanDTO= LoanDTO.class.cast(target);
 
-        if (loanDTO.getReturnDate() != null && loanDTO.getReturnDate().isAfter(loanDTO.getLoanDate())) return;
+        if (loanDTO.getReturnDate() != null && loanDTO.getReturnDate().isBefore(loanDTO.getLoanDate())) {
 
-        errors.rejectValue("returnDate", "loan.returnDate_invalid");
+            errors.rejectValue("returnDate", "loan.returnDate_invalid");
+        }
     }
 }
