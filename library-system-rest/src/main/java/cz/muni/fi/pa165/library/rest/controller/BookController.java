@@ -13,6 +13,7 @@ import cz.muni.fi.pa165.library.rest.exception.ResourceNotModifiedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -123,6 +124,7 @@ public class BookController {
     @RequestMapping(method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.CREATED)
     public final BookDTO createBook(@RequestBody BookNewDTO book) {
         LOGGER.debug("createBook({})", book);
 

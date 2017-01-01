@@ -156,7 +156,7 @@ public class BookControllerTest extends AbstractTestNGSpringContextTests {
 
         mockMvc.perform(post(ApiUris.ROOT_URI_BOOKS)
                 .contentType(MediaType.APPLICATION_JSON_VALUE).content(json))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test
