@@ -1,10 +1,10 @@
-package cz.muni.fi.pa165.library.web.controllers;
+package cz.muni.fi.pa165.library.web.controller;
 
 import cz.muni.fi.pa165.library.dto.UserDTO;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.LoanFacade;
 import cz.muni.fi.pa165.library.facade.UserFacade;
-import cz.muni.fi.pa165.library.web.exceptions.WebSecurityException;
+import cz.muni.fi.pa165.library.web.exception.WebSecurityException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,12 +17,11 @@ import javax.inject.Inject;
 import java.util.List;
 
 /**
- *
  * @author Bedrich Said
  */
 @Controller
 @RequestMapping("/user")
-public class UserController extends LibraryParentController{
+public class UserController extends LibraryParentController {
     @Inject
     private UserFacade userFacade;
 
@@ -67,7 +66,7 @@ public class UserController extends LibraryParentController{
     ) {
         try {
             checkCanManageProfile(id);
-        } catch(WebSecurityException e) {
+        } catch (WebSecurityException e) {
             return "user/noUser";
         }
         model.addAttribute("action", "Update");
@@ -75,7 +74,7 @@ public class UserController extends LibraryParentController{
             UserDTO userDTO;
             try {
                 userDTO = userFacade.findById(id);
-            } catch(NoEntityFoundException | IllegalArgumentException e) {
+            } catch (NoEntityFoundException | IllegalArgumentException e) {
                 return "user/noUser";
             }
             model.addAttribute("user", userDTO);
@@ -87,7 +86,7 @@ public class UserController extends LibraryParentController{
     public String listView(Model model) {
         try {
             checkIsAdmin();
-        } catch(WebSecurityException e) {
+        } catch (WebSecurityException e) {
             return "unauthorized";
         }
         List<UserDTO> users = userFacade.findAll();
@@ -102,7 +101,7 @@ public class UserController extends LibraryParentController{
     ) {
         try {
             checkIsAdmin();
-        } catch(WebSecurityException e) {
+        } catch (WebSecurityException e) {
             return "unauthorized";
         }
         try {
@@ -119,7 +118,7 @@ public class UserController extends LibraryParentController{
         return "user/index";
     }
 
-    @RequestMapping(value = {"/{id}/loans", }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/{id}/loans",}, method = RequestMethod.GET)
     public String allLoans(@PathVariable long id, Model model) {
         try {
             model.addAttribute("returned", loanFacade.findReturnedUserLoans(id));
@@ -130,6 +129,7 @@ public class UserController extends LibraryParentController{
         }
         return "loan/index";
     }
+
     @RequestMapping(value = {"/detail"}, method = RequestMethod.GET)
     public String detail(Model model) {
         model.addAttribute("user", getLoggedUser());
@@ -138,17 +138,18 @@ public class UserController extends LibraryParentController{
 
     /**
      * User can view only his own profile, only administrator can see all profiles
+     *
      * @param id of the profile that will be managed
      * @throws WebSecurityException when the current user has no rights to manage the profile
      */
-    private void checkCanManageProfile(long id) throws WebSecurityException{
+    private void checkCanManageProfile(long id) throws WebSecurityException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         long currentUserId = userFacade.findByEmail(auth.getName()).getId();
         if (currentUserId != id && !userFacade.findByEmail(auth.getName()).isAdmin()) {
             throw new WebSecurityException("Non-admin cannot see other acounts.");
         }
     }
-    
+
     private void checkIsAdmin() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!userFacade.findByEmail(auth.getName()).isAdmin()) {

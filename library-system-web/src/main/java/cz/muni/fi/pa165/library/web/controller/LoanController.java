@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.library.web.controllers;
+package cz.muni.fi.pa165.library.web.controller;
 
 import cz.muni.fi.pa165.library.dto.LoanDTO;
 import cz.muni.fi.pa165.library.dto.LoanNewDTO;
