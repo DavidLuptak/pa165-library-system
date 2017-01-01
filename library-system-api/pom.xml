@@ -5,7 +5,7 @@
     <parent>
         <groupId>cz.muni.fi.pa165</groupId>
         <artifactId>library-system</artifactId>
-        <version>0.3</version>
+        <version>0.4-SNAPSHOT</version>
     </parent>
 
     <artifactId>library-system-api</artifactId>
