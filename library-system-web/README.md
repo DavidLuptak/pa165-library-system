@@ -18,4 +18,4 @@ The web application is available at <http://localhost:8080/pa165>.
 
 ## Hint
 
-`978-0-321-35668-0` is a valid ISBN which is not persisted yet (not loaded at startup | not included in sample data).
+`978-3-16-148410-0` is a valid ISBN which is not persisted yet (not loaded at startup | not included in sample data).
