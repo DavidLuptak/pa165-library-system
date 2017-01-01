@@ -25,6 +25,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Lenka (433591)
@@ -183,8 +184,10 @@ public class BookController extends LibraryParentController {
 
         List<String> categoryNames = bookDTO.getCategoryNames();
 
-        List<CategoryDTO> categories = new ArrayList<>();
-        categoryNames.forEach(c -> categories.add(categoryFacade.findByName(c)));
+        List<CategoryDTO> categories = categoryNames
+                .stream()
+                .map(categoryFacade::findByName)
+                .collect(Collectors.toList());
 
         List<Long> categoryIds = new ArrayList<>();
         categories.forEach(c -> categoryIds.add(c.getId()));
@@ -200,8 +203,10 @@ public class BookController extends LibraryParentController {
         BookNewDTO bookNewDTO = (BookNewDTO) dto;
         List<Long> categoryIds = bookNewDTO.getCategoryIds();
 
-        List<CategoryDTO> categories = new ArrayList<>();
-        categoryIds.forEach(id -> categories.add(categoryFacade.findById(id)));
+        List<CategoryDTO> categories = categoryIds
+                .stream()
+                .map(categoryFacade::findById)
+                .collect(Collectors.toList());
 
         List<String> categoryNames = bookDTO.getCategoryNames();
         categories.forEach(c -> categoryNames.add(c.getName()));
