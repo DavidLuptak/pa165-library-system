@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.library.web.controller;
 
+import cz.muni.fi.pa165.library.dto.BookDTO;
 import cz.muni.fi.pa165.library.dto.LoanDTO;
 import cz.muni.fi.pa165.library.dto.LoanNewDTO;
 import cz.muni.fi.pa165.library.dto.UserDTO;
@@ -24,6 +25,7 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Martin
@@ -43,11 +45,17 @@ public class LoanController extends LibraryParentController {
     private BookFacade bookFacade;
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String create(Model model) {
+    public String create(Model model, RedirectAttributes redirectAttributes,
+                         UriComponentsBuilder uriBuilder) {
+        List<BookDTO> books = bookFacade.findLoanableBooks();
+        if (books.size() == 0) {
+            redirectAttributes.addFlashAttribute("alert_danger", "No books are available.");
+            return "redirect:" + uriBuilder.path("/loan").toUriString();
+        }
         UserDTO loggedUser = getLoggedUser();
         LoanNewDTO loan = new LoanNewDTO(loggedUser.getId(), null, LocalDateTime.now());
         model.addAttribute("loan", loan);
-        model.addAttribute("books", bookFacade.findLoanableBooks());
+        model.addAttribute("books", books);
         return "loan/create";
     }
 
