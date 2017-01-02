@@ -6,11 +6,9 @@
 
 <my:pagetemplate title="Loans">
 <jsp:attribute name="body">
-    <c:if test="${!loggedUser.isAdmin()}">
     <a class="btn btn-default" href="${pageContext.request.contextPath}/loan/create">
         <span class="glyphicon glyphicon-plus"></span> <fmt:message key="loan.new"/>
     </a>
-    </c:if>
  <div id="loans">
      <ul>
          <li><a href="#loaned"><fmt:message key="loan.loaned"/></a></li>
