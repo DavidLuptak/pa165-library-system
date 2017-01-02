@@ -72,6 +72,19 @@
                 <tr>
                     <td><c:out value="${copy.key.bookState}"/></td>
                     <td><c:out value="${copy.value}"/></td>
+                            <c:if test="${loggedUser.isAdmin() && copy.value == 'Yes'}">
+                <td class="table-buttons">
+                    <a class="btn btn-default" title="Edit"
+                       href="${pageContext.request.contextPath}/book/${book.id}/editCopy/${copy.key.id}">
+                        <span class="sr-only"><fmt:message key="edit"/></span> <!-- it's not visible on hover -->
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </a>
+                    <a class="btn btn-danger" title="Delete"
+                                           href="${pageContext.request.contextPath}/book/${book.id}/deleteCopy/${copy.key.id}">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </a>
+                    <td>
+                            </c:if>
                 </tr>
             </c:forEach>
             </tbody>

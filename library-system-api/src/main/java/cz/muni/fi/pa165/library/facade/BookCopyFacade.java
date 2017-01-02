@@ -39,6 +39,16 @@ public interface BookCopyFacade {
      */
     void delete(Long id);
 
+
+    /**
+     * Soft Deletes the given bookCopy from the database
+     *
+     * @param id of bookCopy to be deleted
+     * @throws IllegalArgumentException if id is null
+     * @throws NoEntityFoundException   if bookCopy cant be retrieved from database
+     */
+    void softDelete(Long id);
+
     /**
      * Finds a bookCopy with the given id in the database
      *

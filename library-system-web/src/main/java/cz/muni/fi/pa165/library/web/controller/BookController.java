@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.library.web.controller;
 
 import cz.muni.fi.pa165.library.dto.*;
+import cz.muni.fi.pa165.library.entity.BookCopy;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.BookCopyFacade;
 import cz.muni.fi.pa165.library.facade.BookFacade;
@@ -171,6 +172,55 @@ public class BookController extends LibraryParentController {
             redirectAttributes.addFlashAttribute("alert_danger", "Book not found.");
         }
         return "redirect:" + uriBuilder.path("/book/detail/" + id).toUriString();
+    }
+
+    @RequestMapping(value = "{bookId}/deleteCopy/{bookCopyId}", method = RequestMethod.GET)
+    public String deleteCopy(@PathVariable long bookId, @PathVariable long bookCopyId, RedirectAttributes redirectAttributes,
+                             UriComponentsBuilder uriBuilder) {
+
+        try {
+            bookCopyFacade.softDelete(bookCopyId);
+            redirectAttributes.addFlashAttribute("alert_info", "BookCopy soft deleted");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("alert_danger", "BookCopy could not be deleted because it is loaned right now");
+        }
+        return "redirect:" + uriBuilder.path("/book/detail" + bookId).toUriString();
+    }
+
+    @RequestMapping(value = "{bookId}/editCopy/{bookCopyId}", method = RequestMethod.GET)
+    public String editCopy(@PathVariable long bookId, @PathVariable long bookCopyId, Model model, RedirectAttributes redirectAttributes,
+                           UriComponentsBuilder uriBuilder) {
+
+        try {
+            BookCopyDTO bookCopyDTO = bookCopyFacade.findById(bookCopyId);
+            model.addAttribute("bookCopyDto", bookCopyDTO);
+        } catch (NoEntityFoundException e) {
+            redirectAttributes.addFlashAttribute("alert_warning", "BookCopy " + bookCopyId + " was not found");
+            return "redirect:" + uriBuilder.path("/book/detail/" + bookId).toUriString();
+        }
+        return "book/${bookId}/editCopy";
+    }
+
+    @RequestMapping(value = "{bookId}/editCopy", method = RequestMethod.POST)
+    public String editCopy(@Valid @ModelAttribute("bookCopyDto") BookCopyDTO bookCopyDTO,
+                       BindingResult br,
+                       @PathVariable long bookId,
+                       Model model,
+                       RedirectAttributes redirectAttributes,
+                       UriComponentsBuilder uriBuilder) {
+        if (br.hasErrors()) {
+            addValidationErrors(br, model);
+            return "book/${bookId}/editCopy";
+        }
+
+        try {
+            bookCopyFacade.update(bookCopyDTO);
+            redirectAttributes.addFlashAttribute("alert_info", "BookCopy state was updated");
+        } catch (NoEntityFoundException e) {
+            redirectAttributes.addFlashAttribute("alert_danger", "BookCopy cannot be updated");
+        }
+
+        return "redirect:" + uriBuilder.path("/book/detail/" + bookId).toUriString();
     }
 
     @ModelAttribute("categories")
