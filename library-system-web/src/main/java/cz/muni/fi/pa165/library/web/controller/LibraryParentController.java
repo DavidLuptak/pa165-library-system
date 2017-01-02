@@ -14,7 +14,7 @@ import javax.inject.Inject;
 /**
  * Parent controller for all application controllers
  */
-public class LibraryParentController {
+public abstract class LibraryParentController {
 
     @Inject
     private UserFacade userFacade;
