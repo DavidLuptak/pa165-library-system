@@ -1,8 +1,10 @@
 package cz.muni.fi.pa165.library.entity;
 
 import cz.muni.fi.pa165.library.enums.BookState;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,6 +35,9 @@ public class BookCopy {
 
     @NotNull
     private BookState bookState;
+
+    @NotNull
+    private boolean deleted = false;
 
     public BookCopy() {
         loans = new ArrayList<>();
@@ -72,6 +77,14 @@ public class BookCopy {
 
     public void setBookState(BookState bookState) {
         this.bookState = bookState;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     public List<Loan> getLoans() {

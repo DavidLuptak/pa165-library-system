@@ -28,6 +28,9 @@ public class Book {
     private String author;
 
     @NotNull
+    private boolean deleted = false;
+
+    @NotNull
     @Column(nullable = false, unique = true)
     private String isbn;
 
@@ -46,6 +49,14 @@ public class Book {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     public Long getId() {

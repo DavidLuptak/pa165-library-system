@@ -26,6 +26,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -61,7 +62,7 @@ public class BookController extends LibraryParentController {
 
     @RequestMapping(value = {"", "/", "/index"}, method = RequestMethod.GET)
     public String index(Model model) {
-        model.addAttribute("books", bookFacade.findAll());
+        model.addAttribute("books", bookFacade.findAll().stream().filter(x -> !x.isDeleted()).collect(Collectors.toList()));
         return "book/index";
     }
 
@@ -72,7 +73,7 @@ public class BookController extends LibraryParentController {
             model.addAttribute("book", bookFacade.findById(id));
 
             List<Pair<BookCopyDTO, String>> bookCopies = new LinkedList<>();
-            for (BookCopyDTO copy : bookFacade.findById(id).getBookCopies()) {
+            for (BookCopyDTO copy : bookFacade.findById(id).getBookCopies().stream().filter(c -> !c.isDeleted()).collect(Collectors.toList())) {
                 String available = "Yes";
                 for (LoanDTO loan : loanFacade.findAllNotReturned()) {
                     if (copy.equals(loan.getBookCopy())) {
@@ -81,6 +82,7 @@ public class BookController extends LibraryParentController {
                 }
                 bookCopies.add(new Pair<>(copy, available));
             }
+
             model.addAttribute("copies", bookCopies);
 
         } catch (NoEntityFoundException e) {
@@ -105,7 +107,7 @@ public class BookController extends LibraryParentController {
             bookFacade.delete(id);
             redirectAttributes.addFlashAttribute("alert_info", "Book was deleted");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("alert_danger", "Book could not be deleted because it has some book copies or belongs to some category.");
+            redirectAttributes.addFlashAttribute("alert_danger", "Book could not be deleted because it has some book copies.");
         }
         return "redirect:" + uriBuilder.path("/book/index").toUriString();
     }
@@ -179,47 +181,11 @@ public class BookController extends LibraryParentController {
                              UriComponentsBuilder uriBuilder) {
 
         try {
-            bookCopyFacade.softDelete(bookCopyId);
+            bookCopyFacade.delete(bookCopyId);
             redirectAttributes.addFlashAttribute("alert_info", "BookCopy soft deleted");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("alert_danger", "BookCopy could not be deleted because it is loaned right now");
         }
-        return "redirect:" + uriBuilder.path("/book/detail" + bookId).toUriString();
-    }
-
-    @RequestMapping(value = "{bookId}/editCopy/{bookCopyId}", method = RequestMethod.GET)
-    public String editCopy(@PathVariable long bookId, @PathVariable long bookCopyId, Model model, RedirectAttributes redirectAttributes,
-                           UriComponentsBuilder uriBuilder) {
-
-        try {
-            BookCopyDTO bookCopyDTO = bookCopyFacade.findById(bookCopyId);
-            model.addAttribute("bookCopyDto", bookCopyDTO);
-        } catch (NoEntityFoundException e) {
-            redirectAttributes.addFlashAttribute("alert_warning", "BookCopy " + bookCopyId + " was not found");
-            return "redirect:" + uriBuilder.path("/book/detail/" + bookId).toUriString();
-        }
-        return "book/${bookId}/editCopy";
-    }
-
-    @RequestMapping(value = "{bookId}/editCopy", method = RequestMethod.POST)
-    public String editCopy(@Valid @ModelAttribute("bookCopyDto") BookCopyDTO bookCopyDTO,
-                       BindingResult br,
-                       @PathVariable long bookId,
-                       Model model,
-                       RedirectAttributes redirectAttributes,
-                       UriComponentsBuilder uriBuilder) {
-        if (br.hasErrors()) {
-            addValidationErrors(br, model);
-            return "book/${bookId}/editCopy";
-        }
-
-        try {
-            bookCopyFacade.update(bookCopyDTO);
-            redirectAttributes.addFlashAttribute("alert_info", "BookCopy state was updated");
-        } catch (NoEntityFoundException e) {
-            redirectAttributes.addFlashAttribute("alert_danger", "BookCopy cannot be updated");
-        }
-
         return "redirect:" + uriBuilder.path("/book/detail/" + bookId).toUriString();
     }
 

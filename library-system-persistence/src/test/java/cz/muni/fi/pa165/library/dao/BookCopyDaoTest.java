@@ -192,8 +192,22 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testDeleteBookCopy() {
         bookCopyDao.delete(dbBookCopy11);
-        assertNull(bookCopyDao.findById(dbBookCopy11.getId()));
+        assertNotNull(bookCopyDao.findById(dbBookCopy11.getId()));
+        assertTrue(bookCopyDao.findById(dbBookCopy11.getId()).isDeleted());
         assertNotNull(bookCopyDao.findById(dbBookCopy21.getId()));
+    }
+
+    @Test
+    public void testDeleteBookCopyForBook(){
+        em.flush();
+        em.clear();
+        assertEquals(bookDao.findById(dbBook1.getId()).getBookCopies().size(), 2);
+        bookCopyDao.delete(dbBookCopy11);
+        em.flush();
+        em.clear();
+        for (BookCopy bookCopy : bookDao.findById(dbBook1.getId()).getBookCopies()){
+            assertFalse(bookCopy.isDeleted());
+        }
     }
 
 }

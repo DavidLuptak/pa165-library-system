@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.library.dto;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,6 +25,9 @@ public class BookDTO {
     @NotBlank(message = "Can't be empty!")
     private String isbn;
 
+    @NotNull
+    private boolean deleted;
+
     private List<String> categoryNames;
     private List<BookCopyDTO> bookCopies;
 
@@ -38,6 +42,14 @@ public class BookDTO {
         this.isbn = isbn;
         this.categoryNames = categoryNames;
         this.bookCopies = bookCopies;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     public Long getId() {

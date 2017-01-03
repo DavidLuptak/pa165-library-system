@@ -32,7 +32,8 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public void delete(Book book) {
-        em.remove(findById(book.getId()));
+        book.setDeleted(true);
+        em.merge(book);
     }
 
     @Override

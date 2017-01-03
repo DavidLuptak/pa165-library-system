@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.library.dao.BookCopyDao;
 import cz.muni.fi.pa165.library.dao.BookDao;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.BookCopy;
+import cz.muni.fi.pa165.library.entity.Category;
 import cz.muni.fi.pa165.library.exception.LibraryDAOException;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public void delete(Book book) {
         if (book == null) throw new IllegalArgumentException("book is null");
+        if (book.getBookCopies().stream().filter(x -> !x.isDeleted()).collect(Collectors.toList()).size() != 0) throw new IllegalArgumentException("book has copies");
         try {
+            for(Category category : book.getCategories()){
+                category.removeBook(book);
+            }
             bookDao.delete(book);
         } catch (Exception e) {
             throw new LibraryDAOException(e.getMessage(),e.getCause());

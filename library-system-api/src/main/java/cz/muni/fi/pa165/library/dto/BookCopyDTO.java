@@ -21,6 +21,9 @@ public class BookCopyDTO {
     @NotNull
     private BookState bookState;
 
+    @NotNull
+    private boolean deleted;
+
     private final List<LoanDTO> loans;
 
     public BookCopyDTO() {
@@ -31,6 +34,14 @@ public class BookCopyDTO {
         this.book = book;
         this.bookState = bookState;
         this.loans = loans;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     public Long getId() {

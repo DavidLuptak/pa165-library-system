@@ -32,7 +32,8 @@ public class BookCopyDaoImpl implements BookCopyDao {
 
     @Override
     public void delete(BookCopy bookCopy) {
-        em.remove(findById(bookCopy.getId()));
+        bookCopy.setDeleted(true);
+        em.merge(bookCopy);
     }
 
     @Override

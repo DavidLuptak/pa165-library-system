@@ -193,7 +193,7 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testDelete() {
         bookDao.delete(book2);
-        assertNull(bookDao.findById(book2.getId()));
+        assertNotNull(bookDao.findById(book2.getId()));
     }
 
     @Test(expectedExceptions = DataAccessException.class)
