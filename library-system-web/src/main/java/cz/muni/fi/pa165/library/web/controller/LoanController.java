@@ -62,18 +62,22 @@ public class LoanController extends LibraryParentController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(@Valid @ModelAttribute LoanNewDTO loan, BindingResult br,
                          RedirectAttributes redirectAttributes,
-                         UriComponentsBuilder uriBuilder) {
+                         UriComponentsBuilder uriBuilder, Model model) {
         if (br.hasErrors()) {
-
             return "loan/create";
         } else {
             try {
-                loanFacade.create(loan);
-                redirectAttributes.addFlashAttribute("alert_info", "Loan was successfully created.");
+                if (loan.getBookIds().size() == 0) {
+                    redirectAttributes.addFlashAttribute("alert_info", "Select books to loan.");
+                    return "redirect:" + uriBuilder.path("/loan/create").toUriString();
+                }
+                else {
+                    loanFacade.create(loan);
+                    redirectAttributes.addFlashAttribute("alert_info", "Loan was successfully created.");
+                }
             } catch (NoEntityFoundException | IllegalArgumentException e) {
                 redirectAttributes.addFlashAttribute("alert_danger", "Loan could not be created.");
             }
-
             return "redirect:" + uriBuilder.path("/loan").toUriString();
         }
     }

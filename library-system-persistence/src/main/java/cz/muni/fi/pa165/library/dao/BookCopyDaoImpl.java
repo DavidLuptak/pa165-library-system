@@ -32,6 +32,7 @@ public class BookCopyDaoImpl implements BookCopyDao {
 
     @Override
     public void delete(BookCopy bookCopy) {
+        if (findById(bookCopy.getId()) == null) throw new IllegalArgumentException("Trying to delete not existing bookCopy");
         bookCopy.setDeleted(true);
         em.merge(bookCopy);
     }

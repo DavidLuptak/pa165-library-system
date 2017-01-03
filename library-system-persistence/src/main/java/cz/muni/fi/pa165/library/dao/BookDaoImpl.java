@@ -32,6 +32,7 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public void delete(Book book) {
+        if (findById(book.getId()) == null) throw new IllegalArgumentException("Trying to delete not existing book");
         book.setDeleted(true);
         em.merge(book);
     }
