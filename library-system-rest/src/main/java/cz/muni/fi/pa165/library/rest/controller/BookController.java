@@ -54,10 +54,10 @@ public class BookController {
             try {
                 List<BookDTO> bookDTOList = new ArrayList<>();
                 bookDTOList.add(bookFacade.findByIsbn(isbn));
-                LOGGER.debug("getBook()?isbn found {}", bookDTOList.get(0));
+                LOGGER.debug("getBook()?isbn={} found {}", isbn, bookDTOList.get(0));
                 return bookDTOList;
             } catch (NoEntityFoundException | IllegalArgumentException ex) {
-                LOGGER.debug("getBook()?isbn", ex);
+                LOGGER.error("getBook()?isbn={}", isbn, ex);
                 throw new ResourceNotFoundException(ex);
             }
         }
@@ -72,14 +72,16 @@ public class BookController {
      * @return DTO object of the book
      * @throws ResourceNotFoundException if the book is not available in the system
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{id}",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public final BookDTO getBook(@PathVariable("id") long id) {
         LOGGER.debug("getBook({})", id);
 
         try {
             return bookFacade.findById(id);
         } catch (NoEntityFoundException | IllegalArgumentException ex) {
-            LOGGER.error("getBook()", ex);
+            LOGGER.error("getBook({})", id, ex);
             throw new ResourceNotFoundException(ex);
         }
 
@@ -94,17 +96,19 @@ public class BookController {
      * @throws ResourceNotFoundException     if the book is not available in the system
      * @throws ResourceNotDeletableException if the book cannot be deleted
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/{id}",
+            method = RequestMethod.DELETE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public final void deleteBook(@PathVariable("id") long id) {
         LOGGER.debug("deleteBook({})", id);
 
         try {
             bookFacade.delete(id);
         } catch (NoEntityFoundException | IllegalArgumentException ex) {
-            LOGGER.error("deleteBook()", ex);
+            LOGGER.error("deleteBook({})", id, ex);
             throw new ResourceNotFoundException(ex);
         } catch (DataAccessException ex) {
-            LOGGER.error("deleteBook() constraint violation", ex);
+            LOGGER.error("deleteBook({}) constraint violation", id, ex);
             throw new ResourceNotDeletableException(ex);
         }
 
@@ -132,7 +136,7 @@ public class BookController {
             Long id = bookFacade.create(book);
             return bookFacade.findById(id);
         } catch (Exception ex) {
-            LOGGER.error("createBook()", ex);
+            LOGGER.error("createBook({})", book, ex);
             throw new ResourceAlreadyExistingException(ex);
         }
 
@@ -162,7 +166,7 @@ public class BookController {
         try {
             existing = bookFacade.findById(id);
         } catch (NoEntityFoundException | IllegalArgumentException ex) {
-            LOGGER.error("updateBook()", ex);
+            LOGGER.error("updateBook({})", id, ex);
             throw new ResourceNotFoundException(ex);
         }
 
@@ -173,7 +177,7 @@ public class BookController {
             bookFacade.update(toBeUpdated);
             return toBeUpdated;
         } catch (Exception ex) {
-            LOGGER.error("updateBook()", ex);
+            LOGGER.error("updateBook({})", id, ex);
             throw new ResourceNotModifiedException(ex);
         }
     }
