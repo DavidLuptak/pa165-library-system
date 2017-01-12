@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Martin
@@ -102,6 +103,11 @@ public class BookFacadeImpl implements BookFacade {
         if (book == null) {
             throw new NoEntityFoundException("Book not found during delete.");
         }
+        if (book.getBookCopies().stream().filter(x -> !x.isDeleted()).collect(Collectors.toList()).size() != 0) {
+            throw new IllegalArgumentException("Book has copies.");
+        }
+        book.getCategories().forEach(category -> category.removeBook(book));
+
         bookService.delete(book);
     }
 

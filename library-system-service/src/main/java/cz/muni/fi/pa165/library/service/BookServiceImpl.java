@@ -4,7 +4,6 @@ import cz.muni.fi.pa165.library.dao.BookCopyDao;
 import cz.muni.fi.pa165.library.dao.BookDao;
 import cz.muni.fi.pa165.library.entity.Book;
 import cz.muni.fi.pa165.library.entity.BookCopy;
-import cz.muni.fi.pa165.library.entity.Category;
 import cz.muni.fi.pa165.library.exception.LibraryDAOException;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +29,7 @@ public class BookServiceImpl implements BookService {
         try {
             bookDao.create(book);
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -40,21 +39,17 @@ public class BookServiceImpl implements BookService {
         try {
             return bookDao.update(book);
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
     @Override
     public void delete(Book book) {
         if (book == null) throw new IllegalArgumentException("book is null");
-        if (book.getBookCopies().stream().filter(x -> !x.isDeleted()).collect(Collectors.toList()).size() != 0) throw new IllegalArgumentException("book has copies");
         try {
-            for(Category category : book.getCategories()){
-                category.removeBook(book);
-            }
             bookDao.delete(book);
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -64,7 +59,7 @@ public class BookServiceImpl implements BookService {
         try {
             return bookDao.findById(id);
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -74,7 +69,7 @@ public class BookServiceImpl implements BookService {
         try {
             return bookDao.findByAuthor(author);
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -85,7 +80,7 @@ public class BookServiceImpl implements BookService {
         try {
             return bookDao.findByTitle(title);
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
@@ -104,30 +99,30 @@ public class BookServiceImpl implements BookService {
         try {
             return bookDao.findAll();
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
     @Override
     public List<Book> findLoanableBooks() {
-        try{
+        try {
             return bookDao.findAll().stream().filter(this::isLoanable).collect(Collectors.toList());
         } catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 
     @Override
     public boolean isLoanable(Book book) {
-        if(book == null) throw new IllegalArgumentException("book is null");
-        try{
+        if (book == null) throw new IllegalArgumentException("book is null");
+        try {
             return bookCopyDao.findByBook(book).
                     stream().
                     filter(BookCopy::isLoanable).
                     findFirst().
                     isPresent();
-        }catch (Exception e) {
-            throw new LibraryDAOException(e.getMessage(),e.getCause());
+        } catch (Exception e) {
+            throw new LibraryDAOException(e.getMessage(), e.getCause());
         }
     }
 }
