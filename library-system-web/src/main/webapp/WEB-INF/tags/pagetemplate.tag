@@ -28,6 +28,8 @@
     <!-- custom css style -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
 
+    <!-- custom favicon -->
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
     <jsp:invoke fragment="head"/>
 </head>
 <body>
