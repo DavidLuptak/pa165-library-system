@@ -52,17 +52,17 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
     public void setUp() {
         book1 = new Book();
         book1.setTitle("Book Title 1");
-        book1.setIsbn("1L");
+        book1.setIsbn("978-3-16-148410-0");
         book1.setAuthor("AB");
 
         book2 = new Book();
         book2.setTitle("Very Long Long Long Long Long Book Title 2");
-        book2.setIsbn("2L");
+        book2.setIsbn("978-0-321-35668-0");
         book2.setAuthor("CD");
 
         book3 = new Book();
         book3.setTitle("Light Damaged Book Title 3");
-        book3.setIsbn("3L");
+        book3.setIsbn("0321193687");
         book3.setAuthor("EF");
 
         bookDao.create(book1);
@@ -167,7 +167,7 @@ public class BookDaoTest extends AbstractTestNGSpringContextTests {
 
         Book anotherBookOfTheSameAuthor = new Book();
         anotherBookOfTheSameAuthor.setTitle("Another title");
-        anotherBookOfTheSameAuthor.setIsbn("Another isbn");
+        anotherBookOfTheSameAuthor.setIsbn("9780764543852");
         anotherBookOfTheSameAuthor.setAuthor(book1.getAuthor());
         bookDao.create(anotherBookOfTheSameAuthor);
         expected.add(anotherBookOfTheSameAuthor);

@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.library.web.validator;
 import cz.muni.fi.pa165.library.dto.BookNewDTO;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.BookFacade;
-import org.apache.commons.validator.routines.ISBNValidator;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -31,18 +30,12 @@ public class BookCreateValidator implements Validator {
     public void validate(Object target, Errors errors) {
         BookNewDTO bookNewDTO = BookNewDTO.class.cast(target);
 
-        ISBNValidator isbnValidator = new ISBNValidator();
-
         try {
             bookFacade.findByIsbn(bookNewDTO.getIsbn());
             errors.rejectValue("isbn", "book.isbn_unique");
             // new isbn is not unique
         } catch (NoEntityFoundException | IllegalArgumentException e) {
             // new isbn is unique
-            // check isbn for validity
-            if (!isbnValidator.isValid(bookNewDTO.getIsbn())) {
-                errors.rejectValue("isbn", "book.isbn_invalid");
-            }
         }
     }
 }

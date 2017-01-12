@@ -1,5 +1,7 @@
 package cz.muni.fi.pa165.library.entity;
 
+import cz.muni.fi.pa165.library.validation.ValidIsbn;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ public class Book {
 
     @NotNull
     @Column(nullable = false, unique = true)
+    @ValidIsbn
     private String isbn;
 
     @ManyToMany(mappedBy = "books")

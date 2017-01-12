@@ -55,19 +55,19 @@ public class CategoryDaoTest extends AbstractTestNGSpringContextTests {
     public void setUp() {
         dbBook1 = new Book();
         dbBook1.setTitle("Book Title 1");
-        dbBook1.setIsbn("1L");
+        dbBook1.setIsbn("978-3-16-148410-0");
         dbBook1.setAuthor("AB");
         bookDao.create(dbBook1);
 
         dbBook2 = new Book();
         dbBook2.setTitle("Very Long Long Long Long Long Book Title 2");
-        dbBook2.setIsbn("2L");
+        dbBook2.setIsbn("978-0-321-35668-0");
         dbBook2.setAuthor("CD");
         bookDao.create(dbBook2);
 
         dbBook3 = new Book();
         dbBook3.setTitle("Light Damaged Book Title 3");
-        dbBook3.setIsbn("3L");
+        dbBook3.setIsbn("0321193687");
         dbBook3.setAuthor("EF");
         bookDao.create(dbBook3);
 

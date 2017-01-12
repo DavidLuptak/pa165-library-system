@@ -22,6 +22,7 @@
         <module>library-system-sample-data</module>
         <module>library-system-rest</module>
         <module>library-system-web</module>
+        <module>library-system-validation</module>
     </modules>
 
     <developers>

@@ -79,12 +79,12 @@ public class BookCopyDaoTest extends AbstractTestNGSpringContextTests {
         dbBook1 = new Book();
         dbBook1.setTitle("dbBook1Title");
         dbBook1.setAuthor("dbBook1Author");
-        dbBook1.setIsbn("0-14-020652-3");
+        dbBook1.setIsbn("978-3-16-148410-0");
 
         dbBook2 = new Book();
         dbBook2.setTitle("dbBook2Title");
         dbBook2.setAuthor("dbBook2Author");
-        dbBook2.setIsbn("0-14-020652-4");
+        dbBook2.setIsbn("978-0-321-35668-0");
         bookDao.create(dbBook1);
         bookDao.create(dbBook2);
 

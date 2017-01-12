@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.library.dto;
 
+import cz.muni.fi.pa165.library.validation.ValidIsbn;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
@@ -23,6 +24,7 @@ public class BookDTO {
     private String author;
 
     @NotBlank(message = "Can't be empty!")
+    @ValidIsbn
     private String isbn;
 
     @NotNull

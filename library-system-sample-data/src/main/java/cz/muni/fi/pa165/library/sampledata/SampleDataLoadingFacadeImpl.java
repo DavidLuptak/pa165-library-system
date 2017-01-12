@@ -51,11 +51,11 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 
         //Books
         Book book1 = book("Joshua Bloch", "Effective Java 2nd Edition", "978-0-321-35668-0");
-        Book book2 = book("Rod Johnson", "Expert One-on-One J2EE Design and Development", "978-0764543852");
-        Book book3 = book("Jane Austen", "Pride and Prejudice", "978-0-345-35768-0");
-        Book book4 = book("J. K. Rowling", "Harry Potter and the Chamber of Secrets", "958-1-321-36153-0");
-        Book book5 = book("Robert C. Martin", "Clean Code: A Handbook of Agile Software Craftsmanship", "978-0132350884");
-        Book book6 = book("Erich Gamma et al.", "Design Patterns: Elements of Reusable Object-Oriented Software", "978-0201633610");
+        Book book2 = book("Rod Johnson", "Expert One-on-One J2EE Design and Development", "9780764543852");
+        Book book3 = book("Jane Austen", "Pride and Prejudice", "9781503290563");
+        Book book4 = book("J. K. Rowling", "Harry Potter and the Chamber of Secrets", "9780439064873");
+        Book book5 = book("Robert C. Martin", "Clean Code: A Handbook of Agile Software Craftsmanship", "9780132350884");
+        Book book6 = book("Erich Gamma et al.", "Design Patterns: Elements of Reusable Object-Oriented Software", "9780201633610");
         Book book7 = book("Martin Fowler", "UML Distilled", "0321193687");
 
         LOGGER.info("Books loaded.");

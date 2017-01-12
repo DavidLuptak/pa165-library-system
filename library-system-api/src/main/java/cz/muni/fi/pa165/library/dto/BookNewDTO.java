@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.library.dto;
 
+import cz.muni.fi.pa165.library.validation.ValidIsbn;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Min;
@@ -21,6 +22,7 @@ public class BookNewDTO {
     private String author;
 
     @NotBlank(message = "Please enter a value.")
+    @ValidIsbn
     private String isbn;
 
     @Min(value = 0, message = "Number of copies must be more than 0.")
