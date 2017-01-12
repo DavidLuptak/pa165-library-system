@@ -53,9 +53,11 @@
                 <li>
                     <a href="${pageContext.request.contextPath}/category">Categories</a>
                 </li>
-                <li>
-                    <a href="${pageContext.request.contextPath}/loan">Loans</a>
-                </li>
+                <c:if test="${not empty loggedUser}">
+                    <li>
+                        <a href="${pageContext.request.contextPath}/loan">Loans</a>
+                    </li>
+                </c:if>
                 <c:if test="${loggedUser.isAdmin()}">
                     <li>
                         <a href="${pageContext.request.contextPath}/user">Users</a>
