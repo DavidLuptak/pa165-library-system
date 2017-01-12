@@ -24,7 +24,7 @@
                     </tr>
                     <tr>
                         <th scope="row" class="col-sm-4"><fmt:message key="book.copies_number"/></th>
-                        <td><c:out value="${book.bookCopies.size()}"/></td>
+                        <td><c:out value="${copies.size()}"/></td>
                     </tr>
                     <c:if test="${not empty book.categoryNames}">
                          <tr>
@@ -51,6 +51,12 @@
                                 <a class="btn btn-warning"
                                    href="${pageContext.request.contextPath}/book/edit/${book.id}"><fmt:message key="edit"/></a>
                             </c:if>
+                            <c:if test="${loggedUser.isAdmin()}">
+                                <c:if test="${empty copies}">
+                                <a class="btn btn-danger"
+                                   href="${pageContext.request.contextPath}/book/delete/${book.id}"><fmt:message key="delete"/></a>
+                                </c:if>
+                            </c:if>
                         </td>
                     </tr>
                 </table>
@@ -58,7 +64,7 @@
 
         </div>
 
-        <c:if test="${not empty book.bookCopies}">
+        <c:if test="${not empty copies}">
              <h3><fmt:message key="book.copies_list"/></h3>
         <table class="table table-striped table-hover table-books">
             <thead>
