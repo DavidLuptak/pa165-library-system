@@ -146,7 +146,7 @@ public class UserController extends LibraryParentController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         long currentUserId = userFacade.findByEmail(auth.getName()).getId();
         if (currentUserId != id && !userFacade.findByEmail(auth.getName()).isAdmin()) {
-            throw new WebSecurityException("Non-admin cannot see other acounts.");
+            throw new WebSecurityException("Non-admin cannot see other accounts.");
         }
     }
 

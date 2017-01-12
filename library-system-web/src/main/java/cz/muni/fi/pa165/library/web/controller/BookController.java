@@ -86,7 +86,7 @@ public class BookController extends LibraryParentController {
             model.addAttribute("copies", bookCopies);
 
         } catch (NoEntityFoundException e) {
-            redirectAttributes.addFlashAttribute("alert_warning", "Book " + id + " was not found");
+            redirectAttributes.addFlashAttribute("alert_warning", "Book " + id + " was not found.");
             return "redirect:" + uriBuilder.path("/book").toUriString();
         }
         return "book/detail";
@@ -105,7 +105,7 @@ public class BookController extends LibraryParentController {
 
         try {
             bookFacade.delete(id);
-            redirectAttributes.addFlashAttribute("alert_info", "Book was deleted");
+            redirectAttributes.addFlashAttribute("alert_info", "Book was deleted.");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("alert_danger", "Book could not be deleted because it has some book copies.");
         }
@@ -123,7 +123,7 @@ public class BookController extends LibraryParentController {
 
         bookFacade.create(book);
 
-        redirectAttributes.addFlashAttribute("alert_info", "Book " + book.getTitle() + " was created");
+        redirectAttributes.addFlashAttribute("alert_success", "Book " + book.getTitle() + " was created.");
         return "redirect:" + uriBuilder.path("/book/index").toUriString();
     }
 
@@ -134,7 +134,7 @@ public class BookController extends LibraryParentController {
             BookUpdateDTO bookUpdateDTO = mapBookDTOtoBookNewOrUpdateDTO(bookFacade.findById(id), BookUpdateDTO.class);
             model.addAttribute("book", bookUpdateDTO);
         } catch (NoEntityFoundException e) {
-            redirectAttributes.addFlashAttribute("alert_warning", "Book " + id + " was not found");
+            redirectAttributes.addFlashAttribute("alert_warning", "Book " + id + " was not found.");
             return "redirect:" + uriBuilder.path("/book/index").toUriString();
         }
         return "book/edit";
@@ -155,9 +155,9 @@ public class BookController extends LibraryParentController {
         try {
             BookDTO bookDTO = mapNewOrUpdateBookDTOtoBookDTO(book);
             bookFacade.update(bookDTO);
-            redirectAttributes.addFlashAttribute("alert_info", "Book " + book.getTitle() + " was updated");
+            redirectAttributes.addFlashAttribute("alert_success", "Book " + book.getTitle() + " was updated.");
         } catch (NoEntityFoundException e) {
-            redirectAttributes.addFlashAttribute("alert_danger", "Book " + book.getTitle() + " cannot be updated");
+            redirectAttributes.addFlashAttribute("alert_danger", "Book " + book.getTitle() + " cannot be updated.");
         }
 
         return "redirect:" + uriBuilder.path("/book/detail/" + book.getId()).toUriString();
@@ -171,7 +171,7 @@ public class BookController extends LibraryParentController {
             bookCopyFacade.create(new BookCopyNewDTO(book));
             redirectAttributes.addFlashAttribute("alert_info", "Copy added.");
         } catch (NoEntityFoundException e) {
-            redirectAttributes.addFlashAttribute("alert_danger", "Book not found.");
+            redirectAttributes.addFlashAttribute("alert_warning", "Book not found.");
         }
         return "redirect:" + uriBuilder.path("/book/detail/" + id).toUriString();
     }
@@ -184,7 +184,7 @@ public class BookController extends LibraryParentController {
             bookCopyFacade.delete(bookCopyId);
             redirectAttributes.addFlashAttribute("alert_info", "BookCopy soft deleted");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("alert_danger", "BookCopy could not be deleted because it is loaned right now");
+            redirectAttributes.addFlashAttribute("alert_danger", "BookCopy could not be deleted because it is loaned right now.");
         }
         return "redirect:" + uriBuilder.path("/book/detail/" + bookId).toUriString();
     }

@@ -214,7 +214,7 @@ public class CategoryController extends LibraryParentController {
 
         try {
             categoryFacade.delete(id);
-            redirectAttributes.addFlashAttribute("alert_success", "Category deleted.");
+            redirectAttributes.addFlashAttribute("alert_info", "Category deleted.");
         } catch (NoEntityFoundException | IllegalArgumentException ex) {
             LOGGER.debug("Category of id {} not found.", id);
 

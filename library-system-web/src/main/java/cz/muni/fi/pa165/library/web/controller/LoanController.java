@@ -68,12 +68,12 @@ public class LoanController extends LibraryParentController {
         } else {
             try {
                 if (loan.getBookIds().size() == 0) {
-                    redirectAttributes.addFlashAttribute("alert_info", "Select books to loan.");
+                    redirectAttributes.addFlashAttribute("alert_warning", "Select books to loan.");
                     return "redirect:" + uriBuilder.path("/loan/create").toUriString();
                 }
                 else {
                     loanFacade.create(loan);
-                    redirectAttributes.addFlashAttribute("alert_info", "Loan was successfully created.");
+                    redirectAttributes.addFlashAttribute("alert_success", "Loan was successfully created.");
                 }
             } catch (NoEntityFoundException | IllegalArgumentException e) {
                 redirectAttributes.addFlashAttribute("alert_danger", "Loan could not be created.");
@@ -101,7 +101,7 @@ public class LoanController extends LibraryParentController {
         try {
             model.addAttribute("loan", loanFacade.findById(id));
         } catch (NoEntityFoundException e) {
-            redirectAttributes.addFlashAttribute("alert_warning", "Loan " + id + " was not found");
+            redirectAttributes.addFlashAttribute("alert_warning", "Loan " + id + " was not found.");
             return "redirect:" + uriBuilder.path("/loan").toUriString();
         }
         return "loan/detail";
@@ -123,7 +123,7 @@ public class LoanController extends LibraryParentController {
             states.removeIf(b -> b.isLighter(loan.getBookCopy().getBookState()));
             model.addAttribute("bookStates", states);
         } catch (NoEntityFoundException | IllegalArgumentException e) {
-            redirectAttributes.addFlashAttribute("alert_warning", "Loan was not found");
+            redirectAttributes.addFlashAttribute("alert_warning", "Loan was not found.");
             return "redirect:" + uriBuilder.path("/loan/detail/" + id).toUriString();
         }
         return "loan/return";
@@ -138,7 +138,7 @@ public class LoanController extends LibraryParentController {
             return "loan/return";
         }
         loanFacade.returnLoan(loan);
-        redirectAttributes.addFlashAttribute("alert_info", "Loan was updated");
+        redirectAttributes.addFlashAttribute("alert_success", "Loan was returned.");
         return "redirect:" + uriBuilder.path("/loan/detail/" + loan.getId()).toUriString();
     }
 }
