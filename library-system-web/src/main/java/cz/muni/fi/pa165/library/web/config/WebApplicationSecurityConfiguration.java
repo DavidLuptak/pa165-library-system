@@ -52,8 +52,6 @@ public class WebApplicationSecurityConfiguration extends WebSecurityConfigurerAd
                 .antMatchers("/category/create/**").hasAnyRole("ADMIN")
                 .antMatchers("/category/edit/**").hasAnyRole("ADMIN")
                 .antMatchers("/category/delete/**").hasAnyRole("ADMIN")
-                .antMatchers("/book/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/category/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/loan/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/user/detail").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/user/**").hasAnyRole("ADMIN")
