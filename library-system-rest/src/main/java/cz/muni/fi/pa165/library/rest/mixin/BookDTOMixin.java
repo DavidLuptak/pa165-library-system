@@ -6,6 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * @author Dávid Lupták
  * @version 9.12.2016
  */
-@JsonIgnoreProperties({"bookCopies"})
+@JsonIgnoreProperties({"bookCopies","deleted"})
 public abstract class BookDTOMixin {
 }
