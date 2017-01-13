@@ -6,6 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <my:pagetemplate>
+<jsp:attribute name="title"><fmt:message key="library_system"/></jsp:attribute>
 <jsp:attribute name="body">
 
     <div class="jumbotron content-center">
