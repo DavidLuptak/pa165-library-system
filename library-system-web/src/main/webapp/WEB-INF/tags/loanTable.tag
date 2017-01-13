@@ -36,11 +36,13 @@
                 <td><javatime:format value="${loan.returnDate}" pattern="dd.MM.yyyy HH:mm"/></td>
             </c:if>
             <td>
-                <a class="btn btn-default" title="Detail" href="${pageContext.request.contextPath}/loan/detail/${loan.id}">
+                <fmt:message key="detail" var="detailString"/>
+                <a class="btn btn-default" title="${detailString}" href="${pageContext.request.contextPath}/loan/detail/${loan.id}">
                     <span class="glyphicon glyphicon-search"></span>
                 </a>
                 <c:if test="${loan.returnDate == null && user.isAdmin()}">
-                    <a style="color: white" class="btn btn-danger" title="Return" href="${pageContext.request.contextPath}/loan/return/${loan.id}">
+                    <fmt:message key="loan.return" var="returnString"/>
+                    <a style="color: white" class="btn btn-danger" title="${returnString}" href="${pageContext.request.contextPath}/loan/return/${loan.id}">
                         <span class="glyphicon glyphicon-ok-sign"></span>
                     </a>
                 </c:if>

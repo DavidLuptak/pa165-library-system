@@ -14,18 +14,18 @@ import java.util.List;
 public class BookNewDTO {
 
     @NotBlank(message = "Please enter a value.")
-    @Size(max = 100, message = "Enter no more than 100 characters.")
+    @Size(max = 100, message = "Enter no more than {max} characters.")
     private String title;
 
     @NotBlank(message = "Please enter a value.")
-    @Size(max = 50, message = "Enter no more than 50 characters.")
+    @Size(max = 50, message = "Enter no more than {max} characters.")
     private String author;
 
     @NotBlank(message = "Please enter a value.")
     @ValidIsbn
     private String isbn;
 
-    @Min(value = 0, message = "Number of copies must be more than 0.")
+    @Min(value = 0, message = "Number of copies must be more than {value}.")
     private int copies;
 
     private List<Long> categoryIds = new ArrayList<>();

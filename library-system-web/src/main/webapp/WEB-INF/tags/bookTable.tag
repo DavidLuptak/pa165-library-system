@@ -21,11 +21,13 @@
             <td><c:out value="${book.author}"/></td>
             <td><c:out value="${book.isbn}"/></td>
             <td>
-                <a class="btn btn-default" title="Detail" href="${pageContext.request.contextPath}/book/detail/${book.id}">
+                <fmt:message key="detail" var="detailString"/>
+                <a class="btn btn-default" title="${detailString}" href="${pageContext.request.contextPath}/book/detail/${book.id}">
                     <span class="glyphicon glyphicon-search"></span>
                 </a>
                 <c:if test="${loggedUser.isAdmin()}">
-                    <a class="btn btn-danger" title="Delete" href="${pageContext.request.contextPath}/book/delete/${book.id}">
+                    <fmt:message key="delete" var="deleteString"/>
+                    <a class="btn btn-danger" title="${deleteString}" href="${pageContext.request.contextPath}/book/delete/${book.id}">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
                 </c:if>

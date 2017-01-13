@@ -12,23 +12,23 @@
                 <table class="table table-detail">
                     <tbody>
                     <tr>
-                        <th scope="row" class="col-sm-4">First Name</th>
+                        <th scope="row" class="col-sm-4"><fmt:message key="user.name"/></th>
                         <td><c:out value="${user.firstName}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="col-sm-4">Last Name</th>
+                        <th scope="row" class="col-sm-4"><fmt:message key="user.surname"/></th>
                         <td><c:out value="${user.lastName}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="col-sm-4">Email</th>
+                        <th scope="row" class="col-sm-4"><fmt:message key="user.email"/></th>
                         <td><c:out value="${user.email}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="col-sm-4">Address</th>
+                        <th scope="row" class="col-sm-4"><fmt:message key="user.address"/></th>
                         <td><c:out value="${user.address}"/></td>
                     </tr>
                     <tr>
-                        <th scope="row" class="col-sm-4">Role</th>
+                        <th scope="row" class="col-sm-4"><fmt:message key="user.role"/></th>
                         <td><c:out value="${user.userRole}"/></td>
                     </tr>
                     </tbody>

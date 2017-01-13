@@ -8,11 +8,11 @@
     <table class="table table-striped table-hover table-books">
         <thead>
         <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Address</th>
-            <th>Role</th>
+            <th><fmt:message key="user.name"/></th>
+            <th><fmt:message key="user.surname"/></th>
+            <th><fmt:message key="user.email"/></th>
+            <th><fmt:message key="user.address"/></th>
+            <th><fmt:message key="user.role"/></th>
         </tr>
         </thead>
         <tbody>

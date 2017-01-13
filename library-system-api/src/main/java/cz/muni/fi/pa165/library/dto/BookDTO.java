@@ -16,11 +16,11 @@ public class BookDTO {
     private Long id;
 
     @NotBlank(message = "Can't be empty!")
-    @Size(max = 100, message = "Enter no more than 100 characters.")
+    @Size(max = 100, message = "Enter no more than {max} characters.")
     private String title;
 
     @NotBlank(message = "Can't be empty!")
-    @Size(max = 50, message = "Enter no more than 50 characters.")
+    @Size(max = 50, message = "Enter no more than {max} characters.")
     private String author;
 
     @NotBlank(message = "Can't be empty!")

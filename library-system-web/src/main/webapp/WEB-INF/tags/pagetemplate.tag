@@ -5,7 +5,7 @@
 <%@ attribute name="scripts" fragment="true" required="false" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="my" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="${pageContext.request.locale}">
@@ -48,19 +48,19 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="${pageContext.request.contextPath}/book">Books</a>
+                    <a href="${pageContext.request.contextPath}/book"><fmt:message key="book.title"/></a>
                 </li>
                 <li>
-                    <a href="${pageContext.request.contextPath}/category">Categories</a>
+                    <a href="${pageContext.request.contextPath}/category"><fmt:message key="category.title"/></a>
                 </li>
                 <c:if test="${not empty loggedUser}">
                     <li>
-                        <a href="${pageContext.request.contextPath}/loan">Loans</a>
+                        <a href="${pageContext.request.contextPath}/loan"><fmt:message key="loan.title"/></a>
                     </li>
                 </c:if>
                 <c:if test="${loggedUser.isAdmin()}">
                     <li>
-                        <a href="${pageContext.request.contextPath}/user">Users</a>
+                        <a href="${pageContext.request.contextPath}/user"><fmt:message key="user.title"/></a>
                     </li>
                 </c:if>
             </ul>
@@ -68,10 +68,10 @@
                 <c:choose>
                     <c:when test="${not empty pageContext.request.remoteUser}">
                         <li><a href="${pageContext.request.contextPath}/user/detail"><c:out value="${pageContext.request.remoteUser}"/></a></li>
-                        <li><a href="${pageContext.request.contextPath}/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                        <li><a href="${pageContext.request.contextPath}/logout"><span class="glyphicon glyphicon-log-in"></span> <fmt:message key="user.logout"/></a></li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href="${pageContext.request.contextPath}/index"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        <li><a href="${pageContext.request.contextPath}/index"><span class="glyphicon glyphicon-log-in"></span> <fmt:message key="user.login"/></a></li>
                     </c:otherwise>
                 </c:choose>
             </ul>
