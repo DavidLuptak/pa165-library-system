@@ -1,10 +1,8 @@
 package cz.muni.fi.pa165.library.entity;
 
 import cz.muni.fi.pa165.library.enums.BookState;
-import org.hibernate.annotations.*;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -95,7 +93,7 @@ public class BookCopy {
         loans.add(loan);
     }
 
-    public boolean isLoanable(){
+    public boolean isLoanable() {
         return !loans.stream().
                 filter(x -> !x.isReturned()).
                 findFirst().

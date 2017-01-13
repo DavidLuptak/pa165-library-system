@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.library.web.controller;
 
 import cz.muni.fi.pa165.library.dto.*;
-import cz.muni.fi.pa165.library.entity.BookCopy;
 import cz.muni.fi.pa165.library.exception.NoEntityFoundException;
 import cz.muni.fi.pa165.library.facade.BookCopyFacade;
 import cz.muni.fi.pa165.library.facade.BookFacade;
@@ -26,7 +25,6 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
